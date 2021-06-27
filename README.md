@@ -1,25 +1,26 @@
-## Minimal UI(Free version)
+# Minimal UI(Free version)
 
-[![Minimal UI KIT](https://www.dropbox.com/s/cg8fwosrrs53zgp/cover.jpg?dl=1)](https://minimal-free.vercel.app/)
+![Product Gif](https://www.dropbox.com/s/cg8fwosrrs53zgp/cover.jpg?dl=1)
 
 > Free React Admin Dashboard made with Material UI components and React.
 
-| [FREE Version](https://minimal-free.vercel.app/) | [PRO Version](https://material-ui.com/store/items/minimal-dashboard/) |
-| ------------------------------------------------ | :-------------------------------------------------------------------- |
-| **7** Demo Pages                                 | **38** demo pages                                                     |
-| -                                                | ✔ TypeScript version                                                  |
-| -                                                | ✔ Design files (sketch & figma)                                       |
-|                                                  | [Learn more](https://docs-minimals.vercel.app/package)                |
+| [FREE Version](https://minimal-kit-react.vercel.app/) | [PRO Version](https://material-ui.com/store/items/minimal-dashboard/) |
+| ----------------------------------------------------- | :-------------------------------------------------------------------- |
+| **7** Demo Pages                                      | **38** demo pages                                                     |
+| -                                                     | ✔ [More components](https://minimals.cc/components)                   |
+| -                                                     | ✔ TypeScript version                                                  |
+| -                                                     | ✔ Design files (sketch & figma)                                       |
+|                                                       |                                                                       |
 
 ## Page Demo
 
-- [Dashboard](https://minimal-free.vercel.app/dashboard/app)
-- [Users](https://minimal-free.vercel.app/dashboard/user)
-- [Product](https://minimal-free.vercel.app/dashboard/products)
-- [Blog](https://minimal-free.vercel.app/dashboard/blog)
-- [Login](https://minimal-free.vercel.app/login)
-- [Register](https://minimal-free.vercel.app/register)
-- [Not Found](https://minimal-free.vercel.app/404)
+- [Dashboard](https://minimal-kit-react.vercel.app/dashboard/app)
+- [Users](https://minimal-kit-react.vercel.app/dashboard/user)
+- [Product](https://minimal-kit-react.vercel.app/dashboard/products)
+- [Blog](https://minimal-kit-react.vercel.app/dashboard/blog)
+- [Login](https://minimal-kit-react.vercel.app/login)
+- [Register](https://minimal-kit-react.vercel.app/register)
+- [Not Found](https://minimal-kit-react.vercel.app/404)
 
 ## Quick start
 
