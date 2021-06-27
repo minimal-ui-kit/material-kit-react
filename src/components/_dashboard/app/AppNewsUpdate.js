@@ -41,7 +41,7 @@ function NewsItem({ news }) {
         sx={{ width: 48, height: 48, borderRadius: 1.5 }}
       />
       <Box sx={{ minWidth: 240 }}>
-        <Link component={RouterLink} to="#" color="inherit">
+        <Link to="#" color="inherit" underline="hover" component={RouterLink}>
           <Typography variant="subtitle2" noWrap>
             {title}
           </Typography>
