@@ -1,6 +1,6 @@
 # Minimal UI(Free version)
 
-![Product Gif](https://www.dropbox.com/s/cg8fwosrrs53zgp/cover.jpg?dl=1)
+![title](public/static/preview.png)
 
 > Free React Admin Dashboard made with Material UI components and React.
 
