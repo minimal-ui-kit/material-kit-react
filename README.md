@@ -1,16 +1,19 @@
-# Minimal UI(Free version)
+## Minimal UI [(Free version)](https://minimal-kit-react.vercel.app/)
 
-![title](public/static/preview.png)
+![license](https://img.shields.io/badge/license-MIT-blue.svg)
 
 > Free React Admin Dashboard made with Material UI components and React.
 
-| [FREE Version](https://minimal-kit-react.vercel.app/) | [PRO Version](https://material-ui.com/store/items/minimal-dashboard/) |
-| ----------------------------------------------------- | :-------------------------------------------------------------------- |
-| **7** Demo Pages                                      | **38** demo pages                                                     |
-| -                                                     | ✔ [More components](https://minimals.cc/components)                   |
-| -                                                     | ✔ TypeScript version                                                  |
-| -                                                     | ✔ Design files (sketch & figma)                                       |
-|                                                       |                                                                       |
+![preview](public/static/preview.png)
+
+| [Minimal Kit FREE](https://minimal-kit-react.vercel.app/) | [Minimal Kit PRO](https://material-ui.com/store/items/minimal-dashboard/) |
+| --------------------------------------------------------- | :------------------------------------------------------------------------ |
+| **7** Demo Pages                                          | **38** demo pages                                                         |
+| -                                                         | ✓ Multi Language                                                          |
+| -                                                         | ✓ Dark/Light Mode 🌓                                                      |
+| -                                                         | ✓ [More components](https://minimals.cc/components)                       |
+| -                                                         | ✓ TypeScript version                                                      |
+| -                                                         | ✓ Design files (sketch & figma)                                           |
 
 ## Page Demo
 
@@ -24,9 +27,7 @@
 
 ## Quick start
 
-- Node js 14+
-
-- Npm js 6+
+- Recommended `node js 14+` and `npm 6+`
 
 - Install dependencies: `npm install` or `yarn`
 
