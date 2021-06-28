@@ -8,7 +8,7 @@
 
 | [Minimal Kit FREE](https://minimal-kit-react.vercel.app/) | [Minimal Kit PRO](https://material-ui.com/store/items/minimal-dashboard/) |
 | --------------------------------------------------------- | :------------------------------------------------------------------------ |
-| **7** Demo Pages                                          | **38** demo pages                                                         |
+| **7** Demo Pages                                          | **40** demo pages                                                         |
 | -                                                         | ✓ Multi Language                                                          |
 | -                                                         | ✓ Dark/Light Mode 🌓                                                      |
 | -                                                         | ✓ [More components](https://minimals.cc/components)                       |
@@ -25,7 +25,7 @@
 - [Register](https://minimal-kit-react.vercel.app/register)
 - [Not Found](https://minimal-kit-react.vercel.app/404)
 
-## Quick start
+## Getting Started
 
 - Recommended `node js 14+` and `npm 6+`
 
@@ -35,7 +35,7 @@
 
 ## License
 
-- Licensed under MIT (https://github.com/minimal-ui-kit/minimal.free/blob/main/LICENSE.md)
+- Distributed under the MIT License. See [LICENSE](https://github.com/minimal-ui-kit/minimal.free/blob/main/LICENSE.md) for more information.
 
 ## Contact Us
 
