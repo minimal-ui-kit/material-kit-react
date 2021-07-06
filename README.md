@@ -7,13 +7,13 @@
 ![preview](public/static/preview.png)
 
 | [Minimal Free](https://minimal-kit-react.vercel.app/) | [Minimal](https://material-ui.com/store/items/minimal-dashboard/) |
-| --------------------------------------------------------- | :------------------------------------------------------------------------ |
-| **7** Demo pages                                          | **40** demo pages                                                         |
-| -                                                         | ✓ Multi-language                                                          |
-| -                                                         | ✓ Dark/Light Mode 🌓                                                      |
-| -                                                         | ✓ [More components](https://minimals.cc/components)                       |
-| -                                                         | ✓ TypeScript version                                                      |
-| -                                                         | ✓ Design files (Figma & Sketch)                                           |
+| ----------------------------------------------------- | :---------------------------------------------------------------- |
+| **7** Demo pages                                      | **40** demo pages                                                 |
+| -                                                     | ✓ Multi-language                                                  |
+| -                                                     | ✓ Dark/Light Mode 🌓                                              |
+| -                                                     | ✓ [More components](https://minimals.cc/components)               |
+| -                                                     | ✓ TypeScript version                                              |
+| -                                                     | ✓ Design files (Figma & Sketch)                                   |
 
 ## Page demo
 
@@ -28,7 +28,7 @@
 ## Getting started
 
 - Recommended `node js 14+` and `npm 6+`
-- Install dependencies: `npm install` or `yarn`
+- Install dependencies: `npm install` or `yarn install`
 - Start the server: `npm run start` or `yarn start`
 
 ## License
