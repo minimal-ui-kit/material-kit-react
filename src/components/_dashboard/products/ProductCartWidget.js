@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react';
 import shoppingCartFill from '@iconify/icons-eva/shopping-cart-fill';
 // material
-import { experimentalStyled as styled } from '@material-ui/core/styles';
+import { styled } from '@material-ui/core/styles';
 import { Badge } from '@material-ui/core';
 
 // ----------------------------------------------------------------------

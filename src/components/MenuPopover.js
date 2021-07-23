@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 // material
 import { Popover } from '@material-ui/core';
-import { alpha, experimentalStyled as styled } from '@material-ui/core/styles';
+import { alpha, styled } from '@material-ui/core/styles';
 
 // ----------------------------------------------------------------------
 

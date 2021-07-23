@@ -5,12 +5,12 @@ import { NavLink as RouterLink, matchPath, useLocation } from 'react-router-dom'
 import arrowIosForwardFill from '@iconify/icons-eva/arrow-ios-forward-fill';
 import arrowIosDownwardFill from '@iconify/icons-eva/arrow-ios-downward-fill';
 // material
-import { alpha, useTheme, experimentalStyled as styled } from '@material-ui/core/styles';
-import { Box, List, ListItem, Collapse, ListItemText, ListItemIcon } from '@material-ui/core';
+import { alpha, useTheme, styled } from '@material-ui/core/styles';
+import { Box, List, Collapse, ListItemText, ListItemIcon, ListItemButton } from '@material-ui/core';
 
 // ----------------------------------------------------------------------
 
-const ListItemStyle = styled((props) => <ListItem button disableGutters {...props} />)(
+const ListItemStyle = styled((props) => <ListItemButton disableGutters {...props} />)(
   ({ theme }) => ({
     ...theme.typography.body2,
     height: 48,

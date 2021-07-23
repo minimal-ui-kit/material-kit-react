@@ -18,12 +18,12 @@ import {
   Avatar,
   Tooltip,
   Divider,
-  ListItem,
   IconButton,
   Typography,
   ListItemText,
   ListSubheader,
-  ListItemAvatar
+  ListItemAvatar,
+  ListItemButton
 } from '@material-ui/core';
 // utils
 import { mockImgAvatar } from '../../utils/mockImages';
@@ -129,8 +129,7 @@ function NotificationItem({ notification }) {
   const { avatar, title } = renderContent(notification);
 
   return (
-    <ListItem
-      button
+    <ListItemButton
       to="#"
       disableGutters
       component={RouterLink}
@@ -163,7 +162,7 @@ function NotificationItem({ notification }) {
           </Typography>
         }
       />
-    </ListItem>
+    </ListItemButton>
   );
 }
 
@@ -194,8 +193,9 @@ export default function NotificationsPopover() {
     <>
       <IconButton
         ref={anchorRef}
-        onClick={handleOpen}
+        size="large"
         color={open ? 'primary' : 'default'}
+        onClick={handleOpen}
         sx={{
           ...(open && {
             bgcolor: (theme) => alpha(theme.palette.primary.main, theme.palette.action.focusOpacity)

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import SimpleBarReact from 'simplebar-react';
 // material
-import { alpha, experimentalStyled as styled } from '@material-ui/core/styles';
+import { alpha, styled } from '@material-ui/core/styles';
 import { Box } from '@material-ui/core';
 
 // ----------------------------------------------------------------------
