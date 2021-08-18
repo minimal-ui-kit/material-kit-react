@@ -8,7 +8,7 @@
 
 | [Minimal Free](https://minimal-kit-react.vercel.app/) | [Minimal](https://material-ui.com/store/items/minimal-dashboard/) |
 | ----------------------------------------------------- | :---------------------------------------------------------------- |
-| **7** Demo pages                                      | **40** demo pages                                                 |
+| **7** Demo pages                                      | **42+** demo pages                                                |
 | -                                                     | ✓ Multi-language                                                  |
 | -                                                     | ✓ Dark/Light Mode 🌓                                              |
 | -                                                     | ✓ [More components](https://minimals.cc/components)               |
