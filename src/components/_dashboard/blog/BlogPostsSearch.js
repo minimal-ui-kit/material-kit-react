@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
 import searchFill from '@iconify/icons-eva/search-fill';
 // material
-import { styled } from '@material-ui/core/styles';
-import { Box, TextField, Autocomplete, InputAdornment } from '@material-ui/core';
+import { styled } from '@mui/material/styles';
+import { Box, TextField, Autocomplete, InputAdornment } from '@mui/material';
 
 // ----------------------------------------------------------------------
 

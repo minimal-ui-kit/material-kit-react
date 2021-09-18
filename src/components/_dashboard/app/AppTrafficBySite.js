@@ -6,7 +6,7 @@ import twitterFill from '@iconify/icons-eva/twitter-fill';
 import facebookFill from '@iconify/icons-eva/facebook-fill';
 import linkedinFill from '@iconify/icons-eva/linkedin-fill';
 // material
-import { Box, Grid, Card, Paper, Typography, CardHeader, CardContent } from '@material-ui/core';
+import { Box, Grid, Card, Paper, Typography, CardHeader, CardContent } from '@mui/material';
 // utils
 import { fShortenNumber } from '../../../utils/formatNumber';
 

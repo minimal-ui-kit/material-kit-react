@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 // material
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import ShopProductCard from './ProductCard';
 
 // ----------------------------------------------------------------------

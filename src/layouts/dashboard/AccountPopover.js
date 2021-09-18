@@ -5,8 +5,8 @@ import personFill from '@iconify/icons-eva/person-fill';
 import settings2Fill from '@iconify/icons-eva/settings-2-fill';
 import { Link as RouterLink } from 'react-router-dom';
 // material
-import { alpha } from '@material-ui/core/styles';
-import { Button, Box, Divider, MenuItem, Typography, Avatar, IconButton } from '@material-ui/core';
+import { alpha } from '@mui/material/styles';
+import { Button, Box, Divider, MenuItem, Typography, Avatar, IconButton } from '@mui/material';
 // components
 import MenuPopover from '../../components/MenuPopover';
 //

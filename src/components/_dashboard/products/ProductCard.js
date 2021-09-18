@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
 // material
-import { Box, Card, Link, Typography, Stack } from '@material-ui/core';
-import { styled } from '@material-ui/core/styles';
+import { Box, Card, Link, Typography, Stack } from '@mui/material';
+import { styled } from '@mui/material/styles';
 // utils
 import { fCurrency } from '../../../utils/formatNumber';
 //

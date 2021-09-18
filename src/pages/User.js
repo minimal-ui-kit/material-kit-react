@@ -19,7 +19,7 @@ import {
   Typography,
   TableContainer,
   TablePagination
-} from '@material-ui/core';
+} from '@mui/material';
 // components
 import Page from '../components/Page';
 import Label from '../components/Label';

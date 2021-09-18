@@ -3,7 +3,7 @@ import { useState } from 'react';
 import chevronUpFill from '@iconify/icons-eva/chevron-up-fill';
 import chevronDownFill from '@iconify/icons-eva/chevron-down-fill';
 // material
-import { Menu, Button, MenuItem, Typography } from '@material-ui/core';
+import { Menu, Button, MenuItem, Typography } from '@mui/material';
 
 // ----------------------------------------------------------------------
 

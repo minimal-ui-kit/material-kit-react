@@ -1,8 +1,8 @@
 import { Icon } from '@iconify/react';
 import appleFilled from '@iconify/icons-ant-design/apple-filled';
 // material
-import { alpha, styled } from '@material-ui/core/styles';
-import { Card, Typography } from '@material-ui/core';
+import { alpha, styled } from '@mui/material/styles';
+import { Card, Typography } from '@mui/material';
 // utils
 import { fShortenNumber } from '../../../utils/formatNumber';
 
