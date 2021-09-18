@@ -19,7 +19,7 @@ export default function Router() {
       path: '/dashboard',
       element: <DashboardLayout />,
       children: [
-        { path: '/', element: <Navigate to="/dashboard/app" replace /> },
+        { element: <Navigate to="/dashboard/app" replace /> },
         { path: 'app', element: <DashboardApp /> },
         { path: 'user', element: <User /> },
         { path: 'products', element: <Products /> },
@@ -37,7 +37,6 @@ export default function Router() {
         { path: '*', element: <Navigate to="/404" /> }
       ]
     },
-
     { path: '*', element: <Navigate to="/404" replace /> }
   ]);
 }

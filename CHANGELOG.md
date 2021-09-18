@@ -1,5 +1,10 @@
 ### v1.2.0
 
+###### Sep 18, 2021
+
+- Support MIU v5.0.0 official release
+- Upgrade some dependencies to the latest versions
+
 ###### Aug 18, 2021
 
 - Update `src/theme/typography.js`
