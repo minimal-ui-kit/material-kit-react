@@ -11,7 +11,7 @@ import {
   ProductFilterSidebar
 } from '../components/_dashboard/products';
 //
-import PRODUCTS from '../_mocks_/products';
+import HISTORYS from '../_mocks_/products';
 
 // ----------------------------------------------------------------------
 
@@ -47,10 +47,10 @@ export default function EcommerceShop() {
   };
 
   return (
-    <Page title="Dashboard: Products | Minimal-UI">
+    <Page title="Dashboard: History">
       <Container>
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Products
+          Book History
         </Typography>
 
         <Stack
@@ -72,7 +72,7 @@ export default function EcommerceShop() {
           </Stack>
         </Stack>
 
-        <ProductList products={PRODUCTS} />
+        <ProductList products={HISTORYS} />
         <ProductCartWidget />
       </Container>
     </Page>

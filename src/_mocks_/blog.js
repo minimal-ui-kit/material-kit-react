@@ -31,9 +31,9 @@ const POST_TITLES = [
 	'How to Animate a SVG with border-image',
 ];
 
-const posts = [...Array(23)].map((_, index) => ({
+const posts = [...Array(24)].map((_, index) => ({
 	id: faker.datatype.uuid(),
-	cover: mockImgCover(index + 1),
+	cover: /*'https://source.unsplash.com/random'*/mockImgCover(index + 1),
 	title: POST_TITLES[index],
 	createdAt: faker.date.past(),
 	view: faker.datatype.number(),
