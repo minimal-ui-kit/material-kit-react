@@ -25,7 +25,7 @@ export default function Blog() {
 			<Container>
 				<Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
 					<Typography variant="h4" gutterBottom>
-						Blog
+						Books
 					</Typography>
 					<Button
 						variant="contained"
@@ -33,7 +33,7 @@ export default function Blog() {
 						to="#"
 						startIcon={<Icon icon={plusFill} />}
 					>
-						New Post
+						도서 신청
 					</Button>
 				</Stack>
 
