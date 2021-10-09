@@ -34,7 +34,7 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-const TOTAL = 1723315;
+const TOTAL = 21340000;
 
 export default function AppItemOrders() {
   return (
@@ -44,7 +44,7 @@ export default function AppItemOrders() {
       </IconWrapperStyle>
       <Typography variant="h3">{fShortenNumber(TOTAL)}</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        Item Orders
+        Leads
       </Typography>
     </RootStyle>
   );
