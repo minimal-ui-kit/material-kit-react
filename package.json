@@ -49,6 +49,7 @@
     "apexcharts": "^3.28.3",
     "change-case": "^4.1.2",
     "date-fns": "^2.24.0",
+    "emotion": "^11.0.0",
     "faker": "^5.5.3",
     "formik": "^2.2.9",
     "framer-motion": "^4.1.17",
@@ -64,6 +65,7 @@
     "react-scripts": "^4.0.1",
     "simplebar": "^5.3.5",
     "simplebar-react": "^2.3.5",
+    "stylis-plugin-rtl": "^2.1.1",
     "web-vitals": "^2.1.0",
     "yup": "^0.32.9"
   },

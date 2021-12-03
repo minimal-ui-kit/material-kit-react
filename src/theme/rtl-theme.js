@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 // material
 import { createTheme } from '@mui/material/styles';
 //
@@ -10,12 +11,13 @@ import shadows, { customShadows } from './shadows';
 // ----------------------------------------------------------------------
 
 const themeOptions = () => ({
-  palette,
-  shape,
-  typography,
-  shadows,
-  customShadows
+    direction: 'ltr',
+    palette,
+    shape,
+    typography,
+    shadows,
+    customShadows
 });
 
-export const theme = createTheme(themeOptions());
-theme.components = componentsOverride(theme);
+export const rtlTheme = createTheme(themeOptions());
+rtlTheme.components = componentsOverride(rtlTheme);
