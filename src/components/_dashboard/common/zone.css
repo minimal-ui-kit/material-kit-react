@@ -1,0 +1,63 @@
+.zone {
+  height: 48px;
+  width: 48px;
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  justify-content: center;
+}
+.zone23 span {
+  flex: 50%;
+  align-items: center;
+  line-height: 8px;
+}
+
+.zone33 span {
+  flex: 33.33%;
+  align-items: center;
+  line-height: 8px;
+}
+
+.zone span div {
+  display: inline-block;
+  border: 1px solid #333;
+  border-radius: 4px;
+  width: 8px;
+  height: 8px;
+  line-height: 8px;
+}
+.switch-on .zone span div {
+  border-color: white;
+}
+
+.switch-on .zone33center span:nth-child(5) div,
+.switch-on .zone33center span:nth-child(6) div,
+.switch-on .zone33center span:nth-child(8) div,
+.switch-on .zone33center span:nth-child(9) div,
+.switch-on .zone33ac span:nth-child(2) div,
+.switch-on .zone33ac span:nth-child(3) div,
+.switch-on .zone33left span:nth-child(3n+1) div,
+.switch-on .zone23left span:nth-child(odd) div,
+.switch-on .zone23right span:nth-child(even) div,
+.switch-on .zone23top span:nth-child(-n+2) div,
+.switch-on .zone23bottom span:nth-last-child(-n+2) div,
+.switch-on .zone23center span:nth-child(3) div,
+.switch-on .zone23center span:nth-child(4) div {
+  background-color: white;
+}
+
+.switch-off .zone33center span:nth-child(5) div,
+.switch-off .zone33center span:nth-child(6) div,
+.switch-off .zone33center span:nth-child(8) div,
+.switch-off .zone33center span:nth-child(9) div,
+.switch-off .zone33ac span:nth-child(2) div,
+.switch-off .zone33ac span:nth-child(3) div,
+.switch-off .zone33left span:nth-child(3n+1) div,
+.switch-off .zone23left span:nth-child(odd) div,
+.switch-off .zone23right span:nth-child(even) div,
+.switch-off .zone23top span:nth-child(-n+2) div,
+.switch-off .zone23bottom span:nth-last-child(-n+2) div,
+.switch-off .zone23center span:nth-child(3) div,
+.switch-off .zone23center span:nth-child(4) div {
+  background-color: #666666;
+}

@@ -1,15 +1,12 @@
 import { Icon } from '@iconify/react';
 import pieChart2Fill from '@iconify/icons-eva/pie-chart-2-fill';
-import peopleFill from '@iconify/icons-eva/people-fill';
-import shoppingBagFill from '@iconify/icons-eva/shopping-bag-fill';
-import fileTextFill from '@iconify/icons-eva/file-text-fill';
-import lockFill from '@iconify/icons-eva/lock-fill';
-import personAddFill from '@iconify/icons-eva/person-add-fill';
-import alertTriangleFill from '@iconify/icons-eva/alert-triangle-fill';
-
+import tvFill from '@iconify/icons-eva/tv-fill';
+import monitorFill from '@iconify/icons-eva/monitor-fill';
+import Iconm from '@mdi/react';
 // ----------------------------------------------------------------------
 
 const getIcon = (name) => <Icon icon={name} width={22} height={22} />;
+const getIconM = (name) => <Iconm path={name} width={22} height={22} />;
 
 const sidebarConfig = [
   {
@@ -18,34 +15,40 @@ const sidebarConfig = [
     icon: getIcon(pieChart2Fill)
   },
   {
-    title: 'user',
-    path: '/dashboard/user',
-    icon: getIcon(peopleFill)
+    title: 'drawing room',
+    path: '/dashboard/drawing',
+    icon: getIcon(tvFill)
   },
   {
-    title: 'product',
-    path: '/dashboard/products',
-    icon: getIcon(shoppingBagFill)
+    title: 'office room',
+    path: '/dashboard/office',
+    icon: getIcon(monitorFill)
   },
   {
-    title: 'blog',
-    path: '/dashboard/blog',
-    icon: getIcon(fileTextFill)
+    title: 'dining & balcony',
+    path: '/dashboard/balcony',
+    icon: getIconM(mdiFoodForkDrink)
   },
   {
-    title: 'login',
-    path: '/login',
-    icon: getIcon(lockFill)
+    title: 'living',
+    path: '/dashboard/living',
+    icon: getIconM(mdiSofa)
+  }
+  ,
+  {
+    title: 'bedroom',
+    path: '/dashboard/bedroom',
+    icon: getIconM(mdiBed)
   },
   {
-    title: 'register',
-    path: '/register',
-    icon: getIcon(personAddFill)
+    title: 'kids',
+    path: '/dashboard/kids',
+    icon: getIconM(mdiTeddyBear)
   },
   {
-    title: 'Not found',
-    path: '/404',
-    icon: getIcon(alertTriangleFill)
+    title: 'kitchen',
+    path: '/dashboard/kitchen',
+    icon: getIconM(mdiCountertop)
   }
 ];
 

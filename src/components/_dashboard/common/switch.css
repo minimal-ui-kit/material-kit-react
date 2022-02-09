@@ -1,0 +1,52 @@
+input {
+  display: none;
+}
+
+Button.switch-on,
+Button.switch-off {
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  font-weight: 400;
+  padding: 0;
+}
+
+Button.switch-off {
+  color: rgb(100, 100, 100);
+  opacity: 0.6;
+}
+
+Button.switch-on .content,
+Button.switch-off .content {
+  padding: 7px 21px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.MuiSlider-vertical {
+  margin-left: 24px;
+  height: 100px;
+}
+
+.MuiSlider-rail {
+  color: transparent;
+}
+.MuiSlider-mark {
+  border-radius: 8px;
+}
+.MuiSlider-thumb {
+  border-radius: 12px;
+  width: 14px;
+  height: 14px;
+}
+
+.MuiSlider-markActive ~ .MuiSlider-mark {
+  color: transparent;
+  border: 2px solid #3366ff;
+}
+
+.MuiSlider-mark {
+  width: 10px;
+  height: 10px;
+}
