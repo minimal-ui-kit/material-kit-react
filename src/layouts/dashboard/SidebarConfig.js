@@ -3,6 +3,9 @@ import pieChart2Fill from '@iconify/icons-eva/pie-chart-2-fill';
 import tvFill from '@iconify/icons-eva/tv-fill';
 import monitorFill from '@iconify/icons-eva/monitor-fill';
 import Iconm from '@mdi/react';
+import { mdiFoodForkDrink, mdiSofa,mdiBed, mdiTeddyBear, mdiCountertop } from '@mdi/js';
+
+
 // ----------------------------------------------------------------------
 
 const getIcon = (name) => <Icon icon={name} width={22} height={22} />;
