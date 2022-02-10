@@ -25,7 +25,6 @@ class OfficeRoom extends React.Component {
       loading: true,
       ofan: 'OFF',
       olight2: 'OFF',
-      olight3: 'OFF',
       olight4: 'OFF',
       olight5: 'OFF',
       olight6: 'OFF',
@@ -103,7 +102,7 @@ class OfficeRoom extends React.Component {
         var speed = data['1'].speed;
         this.setState({ ofanspeed: Math.round(speed / 20) });
         this.setState({ olight2: data['2'].power });
-        this.setState({ olight3: data['3'].power });
+        this.setState({ lines: data['3'].power });
         this.setState({ olight4: data['4'].power });
         this.setState({ olight5: data['5'].power });
         this.setState({ olight6: data['6'].power });
@@ -181,7 +180,7 @@ class OfficeRoom extends React.Component {
               <CardContent style={{ display: 'flex', alignItems: 'center' }}>
                 <Grid container spacing={2}>
                   <Grid item>
-                    <SwitchCustomIcon sVal={this.state.olight3} sID="olight3" sIcon={FaPagelines} sName="Nano lines" stateHandler={stateHandler.bind(this)}></SwitchCustomIcon>
+                    <SwitchCustomIcon sVal={this.state.lines} sID="lines" sIcon={FaPagelines} sName="Nano lines" stateHandler={stateHandler.bind(this)}></SwitchCustomIcon>
                   </Grid>
                   <Grid item>
                     <Switch sVal={this.state.olight4} sID="olight4" sIcon={mdiLightbulbVariantOutline} sName="Light 4" stateHandler={stateHandler.bind(this)}></Switch>
