@@ -181,7 +181,7 @@ class OfficeRoom extends React.Component {
               <CardContent style={{ display: 'flex', alignItems: 'center' }}>
                 <Grid container spacing={2}>
                   <Grid item>
-                    <Switch sVal={this.state.olight3} sID="olight3" sIcon={mdiLightbulbVariantOutline} sName="Light 3" stateHandler={stateHandler.bind(this)}></Switch>
+                    <SwitchCustomIcon sVal={this.state.olight3} sID="olight3" sIcon={FaPagelines} sName="Nano lines" stateHandler={stateHandler.bind(this)}></SwitchCustomIcon>
                   </Grid>
                   <Grid item>
                     <Switch sVal={this.state.olight4} sID="olight4" sIcon={mdiLightbulbVariantOutline} sName="Light 4" stateHandler={stateHandler.bind(this)}></Switch>
@@ -198,9 +198,9 @@ class OfficeRoom extends React.Component {
                   <Grid item>
                     <Switch sVal={this.state.ogyser} sID="ogyser" sIcon={mdiWaterBoiler} sName="Gyser" stateHandler={stateHandler.bind(this)}></Switch>
                   </Grid>
-                  <Grid item>
+                  {/* <Grid item>
                     <SwitchCustomIcon sVal={this.state.lines} sID="lines" sIcon={FaPagelines} sName="Nano Lines" stateHandler={stateHandler.bind(this)}></SwitchCustomIcon>
-                  </Grid>                  
+                  </Grid>                   */}
                 </Grid>
               </CardContent>
             </Card>
