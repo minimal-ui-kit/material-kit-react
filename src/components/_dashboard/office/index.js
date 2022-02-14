@@ -4,7 +4,7 @@ import Switch from '../common/Switch';
 import Curtain from '../common/Curtain';
 import Zone from '../common/Zone';
 import Fan from '../common/Fan';
-import { mdiLightbulbVariantOutline, mdiCurtains, mdiCurtainsClosed, mdiWaterBoiler, mdiStringLights } from '@mdi/js';
+import { mdiLightbulbVariantOutline, mdiWaterBoiler, mdiStringLights } from '@mdi/js';
 import Grid from '@mui/material/Grid';
 import Slider from '@mui/material/Slider';
 import Card from '@mui/material/Card';
@@ -17,7 +17,6 @@ import { decodeHtml } from './../../../utils/commons';
 import { FaPagelines } from 'react-icons/fa';
 import SwitchCustomIcon from '../common/SwitchCustomIcon';
 import { HexColorPicker } from 'react-colorful';
-import { debounce } from 'lodash';
 import './../common/common.css';
 
 const gateway = 'http://192.168.88.122:1880';
