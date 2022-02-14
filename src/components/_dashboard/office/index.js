@@ -1,4 +1,5 @@
 import React from 'react';
+import * as _ from 'underscore';
 import Switch from '../common/Switch';
 import Curtain from '../common/Curtain';
 import Zone from '../common/Zone';
@@ -12,12 +13,15 @@ import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import IconButton from '@mui/material/IconButton';
-import Paper from '@mui/material/Paper';
-import {decodeHtml } from './../../../utils/commons';
+import { decodeHtml } from './../../../utils/commons';
 import { FaPagelines } from 'react-icons/fa';
 import SwitchCustomIcon from '../common/SwitchCustomIcon';
+import { HexColorPicker } from 'react-colorful';
+import { debounce } from 'lodash';
+import './../common/common.css';
 
 const gateway = 'http://192.168.88.122:1880';
+
 class OfficeRoom extends React.Component {
   constructor(props) {
     super(props);
@@ -39,8 +43,10 @@ class OfficeRoom extends React.Component {
       osheer: 'CLOSE',
       oblackout: 'CLOSE',
       ogyser: 'OFF',
-      lines: 'OFF'
+      lines: 'OFF',
+      color: '#FFFFFF'
     };
+    this.handleInputThrottled = _.throttle(this.handleLinesColor, 1000)
   }
 
   stateHandler(obj, val) {
@@ -48,6 +54,11 @@ class OfficeRoom extends React.Component {
       [obj]: val
     });
   }
+
+  handleLinesColor = (e) => {
+    this.setState({ color: e });
+      fetch(gateway + '/linescolor/' + e.substring(1)).then((response) => response.json());
+  };
 
   handleColor = (e, v) => {
     fetch(gateway + '/ocolor/' + v * 20).then((response) => response.json());
@@ -62,28 +73,24 @@ class OfficeRoom extends React.Component {
     fetch(gateway + '/osheercurtainstatus')
       .then((response) => response.text())
       .then((data) => {
-        //console.log('osheercurtainstatus : ' + decodeHtml(data));
         data = JSON.parse(decodeHtml(data));
         this.setState({ osheer: data['1'].curtain });
       });
     fetch(gateway + '/ogyserstatus')
       .then((response) => response.text())
       .then((data) => {
-        //console.log('ogyserstatus : ' + decodeHtml(data));
         data = JSON.parse(decodeHtml(data));
         this.setState({ ogyser: data['2'].power });
       });
     fetch(gateway + '/oblackoutcurtainstatus')
       .then((response) => response.text())
       .then((data) => {
-        //console.log('oblackoutcurtainstatus : ' + decodeHtml(data));
         data = JSON.parse(decodeHtml(data));
         this.setState({ oblackout: data['1'].curtain });
       });
     fetch(gateway + '/oboardmainstatus')
       .then((response) => response.text())
       .then((data) => {
-        //console.log('oboardmainstatus : ' + decodeHtml(data));
         data = JSON.parse(decodeHtml(data));
         var speed = data['1'].speed;
         this.setState({ obrightness: Math.round(speed / 20) });
@@ -96,7 +103,6 @@ class OfficeRoom extends React.Component {
     fetch(gateway + '/oboardtwostatus')
       .then((response) => response.text())
       .then((data) => {
-        //console.log(decodeHtml(data));
         data = JSON.parse(decodeHtml(data));
         this.setState({ ofan: data['1'].power });
         var speed = data['1'].speed;
@@ -182,6 +188,13 @@ class OfficeRoom extends React.Component {
                   <Grid item>
                     <SwitchCustomIcon sVal={this.state.lines} sID="lines" sIcon={FaPagelines} sName="Nano lines" stateHandler={stateHandler.bind(this)}></SwitchCustomIcon>
                   </Grid>
+                  {this.state.lines === 'ON' ? (
+                    <Grid item>
+                      <HexColorPicker color={this.state.color} onChange={this.handleInputThrottled} />
+                    </Grid>
+                  ) : (
+                    ''
+                  )}
                   <Grid item>
                     <Switch sVal={this.state.olight4} sID="olight4" sIcon={mdiLightbulbVariantOutline} sName="Light 4" stateHandler={stateHandler.bind(this)}></Switch>
                   </Grid>
@@ -214,7 +227,7 @@ class OfficeRoom extends React.Component {
                     <Curtain sVal={this.state.oblackout} sID="oblackout" sName="Blackout curtain" stateHandler={stateHandler.bind(this)}></Curtain>
                   </Grid>
                   <Grid item>
-                    <Fan sVal={this.state.ofan} sFval={this.state.ofanspeed} sID="ofan" sIDFS="ofanspeed" sName="Fan" stateHandler={stateHandler.bind(this)}/>
+                    <Fan sVal={this.state.ofan} sFval={this.state.ofanspeed} sID="ofan" sIDFS="ofanspeed" sName="Fan" stateHandler={stateHandler.bind(this)} />
                   </Grid>
                 </Grid>
               </CardContent>

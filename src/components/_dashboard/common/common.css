@@ -1,0 +1,11 @@
+.MuiGrid-item .react-colorful {
+    width: 130px;
+    height: 100px;
+}
+.MuiGrid-item .react-colorful__pointer {
+    width: 18px;
+    height: 18px;
+}
+.MuiGrid-item .react-colorful__hue.react-colorful__last-control {
+    height: 10px;
+}
