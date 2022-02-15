@@ -5,7 +5,7 @@ import { styled } from '@mui/material/styles';
 //
 import DashboardNavbar from './DashboardNavbar';
 import DashboardSidebar from './DashboardSidebar';
-
+import './app.css';
 // ----------------------------------------------------------------------
 
 const APP_BAR_MOBILE = 64;

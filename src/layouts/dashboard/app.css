@@ -1,0 +1,10 @@
+.simplebar-content a.MuiListItemButton-root {
+    color: rgb(255, 255, 255, 0.6);
+}
+.simplebar-content a.MuiListItemButton-root.active {
+    color: rgb(255, 255, 255, 1);
+}
+.simplebar-wrapper {
+    background: #0843c5;
+    color: white !important;
+}
