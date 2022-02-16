@@ -13,7 +13,8 @@ import { InlineIcon } from '@iconify/react';
 import { mdiFoodForkDrink } from '@mdi/js';
 import Iconm from '@mdi/react';
 import { mdiCountertop, mdiTeddyBear, mdiBed, mdiSofa } from '@mdi/js';
-
+import ReactWeather from 'react-open-weather';
+import 'react-open-weather/lib/css/ReactWeather.css';
 class DashboardApp extends React.Component {
   constructor(props) {
     super(props);
@@ -34,6 +35,9 @@ class DashboardApp extends React.Component {
             <CardHeader title="Rooms" />
             <CardContent>
               <Grid container spacing={2}>
+                <Grid item>
+                  <ReactWeather forecast="5days" apikey="7ad07aac9b0943040a4abdd2c23dfc4e" type="city" city="Hyderabad" />
+                </Grid>
                 <Grid item>{this.NavLink('/dashboard/drawing', 'Drawing', tvFill, true)}</Grid>
                 <Grid item>{this.NavLink('/dashboard/office', 'Office', monitorFill, true)}</Grid>
                 <Grid item>{this.NavLink('/dashboard/kids', 'Kids', mdiTeddyBear, false)}</Grid>
@@ -52,7 +56,7 @@ class DashboardApp extends React.Component {
   NavLink(path, val, icon, isCustomm) {
     return (
       <NavLink style={{ textDecoration: 'none' }} to={path}>
-        <Button style={{ background: '#444444', color: 'white', height: 100 }} value="office" variant="contained" size="large" color="primary" disableFocusRipple={true}>
+        <Button style={{ background: '#ffffff', color: '#00AB55', height: 100, fontWeight: 600 }} value="office" variant="contained" size="large" color="primary" disableFocusRipple={true}>
           <div className="content">
             {!isCustomm ? <Iconm path={icon} width={48} height={48} /> : <InlineIcon width={'48'} icon={icon} />}
             <div>{val}</div>
