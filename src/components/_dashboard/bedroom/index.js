@@ -15,7 +15,7 @@ import IconButton from '@mui/material/IconButton';
 import {decodeHtml } from '../../../utils/commons';
 
 const gateway = 'http://192.168.88.122:1880';
-class OfficeRoom extends React.Component {
+class BedRoom extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -204,4 +204,4 @@ class OfficeRoom extends React.Component {
     );
   }
 }
-export default OfficeRoom;
+export default BedRoom;

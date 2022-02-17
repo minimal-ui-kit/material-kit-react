@@ -28,26 +28,30 @@ class DashboardApp extends React.Component {
     return (
       <Page title="Myhome E302">
         <Container maxWidth="xl">
-          <Box sx={{ pb: 5 }}>
+          <Box sx={{ pb: 3 }}>
             <Typography variant="h4">Dashboard</Typography>
           </Box>
-          <Card>
-            <CardHeader title="Rooms" />
-            <CardContent>
-              <Grid container spacing={2}>
-                <Grid item>
-                  <ReactWeather forecast="5days" apikey="7ad07aac9b0943040a4abdd2c23dfc4e" type="city" city="Hyderabad" />
-                </Grid>
-                <Grid item>{this.NavLink('/dashboard/drawing', 'Drawing', tvFill, true)}</Grid>
-                <Grid item>{this.NavLink('/dashboard/office', 'Office', monitorFill, true)}</Grid>
-                <Grid item>{this.NavLink('/dashboard/kids', 'Kids', mdiTeddyBear, false)}</Grid>
-                <Grid item>{this.NavLink('/dashboard/living', 'Living', mdiSofa, false)}</Grid>
-                <Grid item>{this.NavLink('/dashboard/balcony', 'Dinning, Balcony', mdiFoodForkDrink, false)}</Grid>
-                <Grid item>{this.NavLink('/dashboard/bedroom', 'Bedroom', mdiBed, false)}</Grid>
-                <Grid item>{this.NavLink('/dashboard/kitchen', 'Kitchen', mdiCountertop, false)}</Grid>
-              </Grid>
-            </CardContent>
-          </Card>
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+              <ReactWeather forecast="5days" apikey="7ad07aac9b0943040a4abdd2c23dfc4e" type="city" city="Hyderabad" />
+            </Grid>
+            <Grid item xs={8}>
+              <Card>
+                <CardHeader title="Rooms" />
+                <CardContent>
+                  <Grid container spacing={2}>
+                    <Grid item>{this.NavLink('/dashboard/drawing', 'Drawing', tvFill, true)}</Grid>
+                    <Grid item>{this.NavLink('/dashboard/office', 'Office', monitorFill, true)}</Grid>
+                    <Grid item>{this.NavLink('/dashboard/kids', 'Kids', mdiTeddyBear, false)}</Grid>
+                    <Grid item>{this.NavLink('/dashboard/living', 'Living', mdiSofa, false)}</Grid>
+                    <Grid item>{this.NavLink('/dashboard/balcony', 'Dinning, Balcony', mdiFoodForkDrink, false)}</Grid>
+                    <Grid item>{this.NavLink('/dashboard/bedroom', 'Bedroom', mdiBed, false)}</Grid>
+                    <Grid item>{this.NavLink('/dashboard/kitchen', 'Kitchen', mdiCountertop, false)}</Grid>
+                  </Grid>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
         </Container>
       </Page>
     );
@@ -56,10 +60,10 @@ class DashboardApp extends React.Component {
   NavLink(path, val, icon, isCustomm) {
     return (
       <NavLink style={{ textDecoration: 'none' }} to={path}>
-        <Button style={{ background: '#ffffff', color: '#00AB55', height: 100, fontWeight: 600 }} value="office" variant="contained" size="large" color="primary" disableFocusRipple={true}>
+        <Button style={{ background: '#f1f1f4', color: '#6244e4', height: 100, fontWeight: 800, border: 0 }} value="office" variant="outlined" size="large" disableFocusRipple={true}>
           <div className="content">
             {!isCustomm ? <Iconm path={icon} width={48} height={48} /> : <InlineIcon width={'48'} icon={icon} />}
-            <div>{val}</div>
+            <div style={{color: '#666666'}}>{val}</div>
           </div>
         </Button>
       </NavLink>

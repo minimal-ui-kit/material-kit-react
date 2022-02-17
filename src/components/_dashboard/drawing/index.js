@@ -203,7 +203,7 @@ class OfficeRoom extends React.Component {
               <CardHeader title="Scenes" />
               <CardContent style={{ display: 'flex', alignItems: 'center' }}>
                 <Grid item xs={6}>
-                  <Button style={{ height: 100 }} variant="contained" onClick={this.handleMovieMode} size="large" color="primary" disableFocusRipple={true}>
+                  <Button style={{ height: 100 }} variant="contained" onClick={this.handleMovieMode} size="large" color="secondary" disableFocusRipple={true}>
                     <div className="content">
                       <Icon path={mdiMovieOpen} size={2} />
                       <div>Movie mode</div>

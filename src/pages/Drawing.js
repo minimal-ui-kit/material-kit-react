@@ -2,7 +2,7 @@
 import { Box, Grid, Container, Typography } from '@mui/material';
 // components
 import Page from '../components/Page';
-import OfficeRoom from '../components/_dashboard/drawing';
+import DrawingRoom from '../components/_dashboard/drawing';
 import { Icon, InlineIcon } from '@iconify/react';
 import tvFill from '@iconify/icons-eva/tv-fill';
 // ----------------------------------------------------------------------
@@ -17,7 +17,7 @@ export default function Drawing() {
             Drawing Room
           </Typography>
         </Box>
-        <OfficeRoom />
+        <DrawingRoom />
       </Container>
     </Page>
   );
