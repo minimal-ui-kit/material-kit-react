@@ -18,9 +18,22 @@ import { FaPagelines } from 'react-icons/fa';
 import SwitchCustomIcon from '../common/SwitchCustomIcon';
 import { HexColorPicker } from 'react-colorful';
 import './../common/common.css';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import FormHelperText from '@mui/material/FormHelperText';
 
 const gateway = 'http://192.168.88.122:1880';
-
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: 48 * 4.5 + 8,
+      width: 250
+    }
+  }
+};
 class OfficeRoom extends React.Component {
   constructor(props) {
     super(props);
@@ -43,9 +56,11 @@ class OfficeRoom extends React.Component {
       oblackout: 'CLOSE',
       ogyser: 'OFF',
       lines: 'OFF',
-      color: '#FFFFFF'
+      color: '#FFFFFF',
+      effects: [],
+      selectedEffect: ''
     };
-    this.handleInputThrottled = _.throttle(this.handleLinesColor, 1000)
+    this.handleInputThrottled = _.throttle(this.handleLinesColor, 1000);
   }
 
   stateHandler(obj, val) {
@@ -54,9 +69,15 @@ class OfficeRoom extends React.Component {
     });
   }
 
+  handleEffect = (e) => {
+    console.log(e.target.value);
+    this.setState({ selectedEffect: e.target.value });
+    fetch(gateway + '/lineseffect/' + e.target.value).then((response) => response.json());
+  };
+
   handleLinesColor = (e) => {
     this.setState({ color: e });
-      fetch(gateway + '/linescolor/' + e.substring(1)).then((response) => response.json());
+    fetch(gateway + '/linescolor/' + e.substring(1)).then((response) => response.json());
   };
 
   handleColor = (e, v) => {
@@ -86,6 +107,13 @@ class OfficeRoom extends React.Component {
       .then((data) => {
         data = JSON.parse(decodeHtml(data));
         this.setState({ oblackout: data['1'].curtain });
+      });
+    fetch(gateway + '/getlineseffects')
+      .then((response) => response.text())
+      .then((data) => {
+        data = JSON.parse(decodeHtml(data));
+        this.setState({ selectedEffect: data['selected'] });
+        this.setState({ effects: data['available'] });
       });
     fetch(gateway + '/oboardmainstatus')
       .then((response) => response.text())
@@ -188,9 +216,23 @@ class OfficeRoom extends React.Component {
                     <SwitchCustomIcon sVal={this.state.lines} sID="lines" sIcon={FaPagelines} sName="Nano lines" stateHandler={stateHandler.bind(this)}></SwitchCustomIcon>
                   </Grid>
                   {this.state.lines === 'ON' ? (
-                    <Grid item>
-                      <HexColorPicker color={this.state.color} onChange={this.handleInputThrottled} />
-                    </Grid>
+                    <>
+                      <Grid item>
+                        <FormControl sx={{ m: 1, width: 300, mt: 3 }}>
+                          <InputLabel id="demo-simple-select-helper-label">Scene name</InputLabel>
+                          <Select label="Scene name" labelId="demo-simple-select-helper-label" id="demo-simple-select-helper" value={this.state.selectedEffect} onChange={this.handleEffect}>
+                            {this.state.effects.map((name) => (
+                              <MenuItem key={name} value={name}>
+                                {name}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                      </Grid>
+                      <Grid item>
+                        <HexColorPicker color={this.state.color} onChange={this.handleInputThrottled} />
+                      </Grid>
+                    </>
                   ) : (
                     ''
                   )}
