@@ -4,7 +4,7 @@ import SwitchCustomIcon from '../common/SwitchCustomIcon';
 import Zone from '../common/Zone';
 import Curtain from '../common/Curtain';
 import Fan from '../common/Fan';
-import { mdiMovieOpen, mdiLedStripVariant, mdiLightbulbVariantOutline, mdiTelevision, mdiCoachLamp, mdiVanityLight, mdiStringLights, mdiChandelier, mdiClockDigital } from '@mdi/js';
+import { mdiMovieOpen, mdiLedStripVariant, mdiLightbulbVariantOutline, mdiTelevision, mdiCoachLamp, mdiVanityLight, mdiStringLights, mdiChandelier, mdiEiffelTower  } from '@mdi/js';
 import Grid from '@mui/material/Grid';
 import Slider from '@mui/material/Slider';
 import Card from '@mui/material/Card';
@@ -186,7 +186,7 @@ class Living extends React.Component {
                     <SwitchCustomIcon sVal={this.state.lcurtainlight} sID="lcurtainlight" sIcon={GiTheaterCurtains} sName="Curtain light" stateHandler={stateHandler.bind(this)}></SwitchCustomIcon>
                   </Grid>
                   <Grid item>
-                    <Switch sVal={this.state.ldigitalclock} sID="ldigitalclock" sIcon={mdiClockDigital} sName="Digital Clock" stateHandler={stateHandler.bind(this)}></Switch>
+                    <Switch sVal={this.state.ldigitalclock} sID="ldigitalclock" sIcon={mdiEiffelTower } sName="Eiffel Tower" stateHandler={stateHandler.bind(this)}></Switch>
                   </Grid>
                   <Grid item>
                     <Switch sVal={this.state.ltv} sID="ltv" sIcon={mdiTelevision} sName="Frame TV" stateHandler={stateHandler.bind(this)}></Switch>

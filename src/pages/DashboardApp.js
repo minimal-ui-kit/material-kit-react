@@ -5,8 +5,6 @@ import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import Page from '../components/Page';
 import React from 'react';
-import Icon from '@mdi/react';
-import { mdiMovieOpen, mdiLedStripVariant, mdiWallSconceFlat, mdiTelevision, mdiCoachLamp, mdiVanityLight, mdiStringLights, mdiCheckboxBlankCircleOutline, mdiCircle } from '@mdi/js';
 import tvFill from '@iconify/icons-eva/tv-fill';
 import monitorFill from '@iconify/icons-eva/monitor-fill';
 import { InlineIcon } from '@iconify/react';
@@ -32,10 +30,7 @@ class DashboardApp extends React.Component {
             <Typography variant="h4">Dashboard</Typography>
           </Box>
           <Grid container spacing={2}>
-            <Grid item xs={4}>
-              <ReactWeather forecast="5days" apikey="7ad07aac9b0943040a4abdd2c23dfc4e" type="city" city="Hyderabad" />
-            </Grid>
-            <Grid item xs={8}>
+            <Grid item xs={9}>
               <Card>
                 <CardHeader title="Rooms" />
                 <CardContent>
@@ -51,6 +46,9 @@ class DashboardApp extends React.Component {
                 </CardContent>
               </Card>
             </Grid>
+            <Grid item xs={3}>
+              <ReactWeather forecast="5days" apikey="7ad07aac9b0943040a4abdd2c23dfc4e" type="city" city="Hyderabad" />
+            </Grid>
           </Grid>
         </Container>
       </Page>
@@ -60,10 +58,10 @@ class DashboardApp extends React.Component {
   NavLink(path, val, icon, isCustomm) {
     return (
       <NavLink style={{ textDecoration: 'none' }} to={path}>
-        <Button style={{ background: '#f1f1f4', color: '#6244e4', height: 100, fontWeight: 800, border: 0 }} value="office" variant="outlined" size="large" disableFocusRipple={true}>
+        <Button style={{ background: '#f1f1f470', color: '#999999', height: 100, fontWeight: 800, border: 0 }} value="office" variant="outlined" size="large" disableFocusRipple={true}>
           <div className="content">
             {!isCustomm ? <Iconm path={icon} width={48} height={48} /> : <InlineIcon width={'48'} icon={icon} />}
-            <div style={{color: '#666666'}}>{val}</div>
+            <div style={{ color: '#666666' }}>{val}</div>
           </div>
         </Button>
       </NavLink>
