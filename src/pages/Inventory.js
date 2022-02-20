@@ -24,18 +24,22 @@ import {
 import Page from '../components/Page';
 import Scrollbar from '../components/Scrollbar';
 import SearchNotFound from '../components/SearchNotFound';
-import { UserListHead, UserListToolbar, UserMoreMenu } from '../components/_dashboard/user';
+import {
+  InventoryListHead,
+  InventoryListToolbar,
+  InventoryMoreMenu
+} from '../components/_dashboard/inventory';
 //
-import USERLIST from '../_mocks_/user';
+import INVENTORY_LIST from '../_mocks_/inventory';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Name', alignRight: false },
-  { id: 'email', label: 'Email', alignRight: false },
-  { id: 'phone', label: 'Phone Number', alignRight: false },
-  // { id: 'role', label: 'Role', alignRight: false },
-  // { id: 'isVerified', label: 'Verified', alignRight: false },
+  { id: 'productName', label: 'Product Name', alignRight: false },
+  // { id: 'wholesaler', label: 'Wholesaler', alignRight: false },
+  { id: 'price', label: 'Price', alignRight: false },
+  { id: 'quantity', label: 'Quantity', alignRight: false },
+  // { id: 'priceSale', label: 'Sale Price', alignRight: false },
   // { id: 'status', label: 'Status', alignRight: false },
   { id: '' }
 ];
@@ -75,7 +79,7 @@ export default function User() {
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState('asc');
   const [selected, setSelected] = useState([]);
-  const [orderBy, setOrderBy] = useState('name');
+  const [orderBy, setOrderBy] = useState('productName');
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -87,7 +91,7 @@ export default function User() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = USERLIST.map((n) => n.name);
+      const newSelecteds = INVENTORY_LIST.map((n) => n.productName);
       setSelected(newSelecteds);
       return;
     }
@@ -125,23 +129,31 @@ export default function User() {
     setFilterName(event.target.value);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - USERLIST.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - INVENTORY_LIST.length) : 0;
 
-  const filteredUsers = applySortFilter(USERLIST, getComparator(order, orderBy), filterName);
+  const filteredUsers = applySortFilter(INVENTORY_LIST, getComparator(order, orderBy), filterName);
 
   const isUserNotFound = filteredUsers.length === 0;
 
   return (
-    <Page title="User | Minimal-UI">
+    <Page title="Inventory | Minimal-UI">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            User
+            Inventory
           </Typography>
+          <Button
+            variant="contained"
+            component={RouterLink}
+            to="#"
+            startIcon={<Icon icon={plusFill} />}
+          >
+            Add Product
+          </Button>
         </Stack>
 
         <Card>
-          <UserListToolbar
+          <InventoryListToolbar
             numSelected={selected.length}
             filterName={filterName}
             onFilterName={handleFilterByName}
@@ -150,11 +162,11 @@ export default function User() {
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
-                <UserListHead
+                <InventoryListHead
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={USERLIST.length}
+                  rowCount={INVENTORY_LIST.length}
                   numSelected={selected.length}
                   onRequestSort={handleRequestSort}
                   onSelectAllClick={handleSelectAllClick}
@@ -163,40 +175,48 @@ export default function User() {
                   {filteredUsers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                      const { id, name, phone, email, coverPhoto } = row;
-                      const isItemSelected = selected.indexOf(name) !== -1;
+                      const {
+                        id,
+                        productName,
+                        // wholesaler,
+                        productImage,
+                        quantity,
+                        price
+                        // priceSale,
+                        // status
+                      } = row;
+                      const isItemSelected = selected.indexOf(productName) !== -1;
 
                       return (
                         <TableRow
                           hover
                           key={id}
                           tabIndex={-1}
+                          role="checkbox"
                           selected={isItemSelected}
                           aria-checked={isItemSelected}
                         >
                           <TableCell padding="checkbox">
                             <Checkbox
                               checked={isItemSelected}
-                              onChange={(event) => handleClick(event, name)}
+                              onChange={(event) => handleClick(event, productName)}
                             />
                           </TableCell>
                           <TableCell component="th" scope="row" padding="none">
                             <Stack direction="row" alignItems="center" spacing={2}>
-                              <Avatar alt={name} src={coverPhoto} />
+                              <Avatar alt={productName} src={productImage} />
                               <Typography variant="subtitle2" noWrap>
-                                {name}
+                                {productName}
                               </Typography>
                             </Stack>
                           </TableCell>
-                          <TableCell align="left">{email}</TableCell>
-                          <TableCell align="left">{phone}</TableCell>
+                          {/* <TableCell align="left">{wholesaler}</TableCell> */}
+                          <TableCell align="left">${price}</TableCell>
+                          <TableCell align="left">{quantity}</TableCell>
+                          {/* <TableCell align="left">{priceSale ? 'Yes' : 'No'}</TableCell> */}
+                          {/* <TableCell align="left">{status ? 'In-stock' : 'Back Order'}</TableCell> */}
                           <TableCell align="right">
-                            <Button variant="contained" component={RouterLink} to="inventory">
-                              Go to Inventory
-                            </Button>
-                          </TableCell>
-                          <TableCell align="right">
-                            <UserMoreMenu />
+                            <InventoryMoreMenu />
                           </TableCell>
                         </TableRow>
                       );
@@ -223,7 +243,7 @@ export default function User() {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={USERLIST.length}
+            count={INVENTORY_LIST.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

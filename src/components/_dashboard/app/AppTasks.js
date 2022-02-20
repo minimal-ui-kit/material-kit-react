@@ -14,11 +14,11 @@ import {
 // ----------------------------------------------------------------------
 
 const TASKS = [
-  'Create FireStone Logo',
-  'Add SCSS and JS files if required',
+  'Complete monthly inventory check',
+  'Review new product list',
   'Stakeholder Meeting',
   'Scoping & Estimations',
-  'Sprint Showcase'
+  'Select Q2 budget'
 ];
 
 // ----------------------------------------------------------------------

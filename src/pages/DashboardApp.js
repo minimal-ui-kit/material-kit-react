@@ -7,15 +7,14 @@ import {
   AppNewUsers,
   AppBugReports,
   AppItemOrders,
-  AppNewsUpdate,
   AppWeeklySales,
   AppOrderTimeline,
   AppCurrentVisits,
   AppWebsiteVisits,
   AppTrafficBySite,
-  AppCurrentSubject,
   AppConversionRates
 } from '../components/_dashboard/app';
+import Account from '../_mocks_/account';
 
 // ----------------------------------------------------------------------
 
@@ -24,7 +23,7 @@ export default function DashboardApp() {
     <Page title="Dashboard | Minimal-UI">
       <Container maxWidth="xl">
         <Box sx={{ pb: 5 }}>
-          <Typography variant="h4">Hi, Welcome back</Typography>
+          <Typography variant="h4">Hi, Welcome back {Account.displayFirstName}!</Typography>
         </Box>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
@@ -45,7 +44,7 @@ export default function DashboardApp() {
           </Grid>
 
           <Grid item xs={12} md={6} lg={4}>
-            <AppCurrentVisits />
+            <AppOrderTimeline />
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>
@@ -53,15 +52,7 @@ export default function DashboardApp() {
           </Grid>
 
           <Grid item xs={12} md={6} lg={4}>
-            <AppCurrentSubject />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={8}>
-            <AppNewsUpdate />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
-            <AppOrderTimeline />
+            <AppCurrentVisits />
           </Grid>
 
           <Grid item xs={12} md={6} lg={4}>

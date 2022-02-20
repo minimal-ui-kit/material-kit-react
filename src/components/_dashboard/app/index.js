@@ -1,4 +1,4 @@
-export { default as AppBugReports } from './AppBugReports';
+export { default as AppBugReports } from './ImportantReport';
 export { default as AppConversionRates } from './AppConversionRates';
 export { default as AppCurrentSubject } from './AppCurrentSubject';
 export { default as AppCurrentVisits } from './AppCurrentVisits';
