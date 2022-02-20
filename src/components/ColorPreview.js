@@ -1,3 +1,4 @@
+/* eslint-disable */ 
 import PropTypes from 'prop-types';
 // material
 import { alpha, styled } from '@mui/material/styles';

@@ -11,6 +11,7 @@ import Products from './pages/Products';
 import User from './pages/User';
 import Inventory from './pages/Inventory';
 import Settings from './pages/Settings';
+import Item from './pages/Item';
 
 // ----------------------------------------------------------------------
 
@@ -25,6 +26,7 @@ export default function Router() {
         { path: 'user', element: <User /> },
         { path: 'inventory', element: <Inventory /> },
         { path: 'products', element: <Products /> },
+        { path: 'products/item', element: <Item /> },
         { path: 'settings', element: <Settings /> },
       ]
     },
