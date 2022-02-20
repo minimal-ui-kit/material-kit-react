@@ -30,7 +30,7 @@ class DashboardApp extends React.Component {
             <Typography variant="h4">Dashboard</Typography>
           </Box>
           <Grid container spacing={2}>
-            <Grid item xs={9}>
+            <Grid sm={12} md={6} item lg={9}>
               <Card>
                 <CardHeader title="Rooms" />
                 <CardContent>
@@ -46,7 +46,7 @@ class DashboardApp extends React.Component {
                 </CardContent>
               </Card>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item sm={12} md={6} lg={3}>
               <ReactWeather forecast="5days" apikey="7ad07aac9b0943040a4abdd2c23dfc4e" type="city" city="Hyderabad" />
             </Grid>
           </Grid>
