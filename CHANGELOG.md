@@ -6,6 +6,8 @@
 - Source code improvement
 - Upgrade some dependencies to the latest versions
 
+---
+
 ### v1.2.0
 
 ###### Sep 18, 2021
