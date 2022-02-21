@@ -4,14 +4,16 @@ import { Link as RouterLink, useLocation } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
 import { Box, Link, Button, Drawer, Typography, Avatar, Stack } from '@mui/material';
+// mocks_
+import account from '../../_mocks_/account';
+// hooks
+import useResponsive from '../../hooks/useResponsive';
 // components
 import Logo from '../../components/Logo';
 import Scrollbar from '../../components/Scrollbar';
 import NavSection from '../../components/NavSection';
-import { MHidden } from '../../components/@material-extend';
 //
 import sidebarConfig from './SidebarConfig';
-import account from '../../_mocks_/account';
 
 // ----------------------------------------------------------------------
 
@@ -29,7 +31,7 @@ const AccountStyle = styled('div')(({ theme }) => ({
   alignItems: 'center',
   padding: theme.spacing(2, 2.5),
   borderRadius: Number(theme.shape.borderRadius) * 1.5,
-  backgroundColor: theme.palette.grey[200]
+  backgroundColor: theme.palette.grey[500_12]
 }));
 
 // ----------------------------------------------------------------------
@@ -42,6 +44,8 @@ DashboardSidebar.propTypes = {
 export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
   const { pathname } = useLocation();
 
+  const isDesktop = useResponsive('up', 'lg');
+
   useEffect(() => {
     if (isOpenSidebar) {
       onCloseSidebar();
@@ -52,8 +56,8 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
   const renderContent = (
     <Scrollbar
       sx={{
-        height: '100%',
-        '& .simplebar-content': { height: '100%', display: 'flex', flexDirection: 'column' }
+        height: 1,
+        '& .simplebar-content': { height: 1, display: 'flex', flexDirection: 'column' }
       }}
     >
       <Box sx={{ px: 2.5, py: 3, display: 'inline-flex' }}>
@@ -84,13 +88,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         <Stack
           alignItems="center"
           spacing={3}
-          sx={{
-            p: 2.5,
-            pt: 5,
-            borderRadius: 2,
-            position: 'relative',
-            bgcolor: 'grey.200'
-          }}
+          sx={{ pt: 5, borderRadius: 2, position: 'relative' }}
         >
           <Box
             component="img"
@@ -108,7 +106,6 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
           </Box>
 
           <Button
-            fullWidth
             href="https://material-ui.com/store/items/minimal-dashboard/"
             target="_blank"
             variant="contained"
@@ -122,7 +119,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
 
   return (
     <RootStyle>
-      <MHidden width="lgUp">
+      {!!isDesktop && (
         <Drawer
           open={isOpenSidebar}
           onClose={onCloseSidebar}
@@ -132,9 +129,9 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         >
           {renderContent}
         </Drawer>
-      </MHidden>
+      )}
 
-      <MHidden width="lgDown">
+      {isDesktop && (
         <Drawer
           open
           variant="persistent"
@@ -148,7 +145,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         >
           {renderContent}
         </Drawer>
-      </MHidden>
+      )}
     </RootStyle>
   );
 }

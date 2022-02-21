@@ -9,7 +9,7 @@ import {
   ProductList,
   ProductCartWidget,
   ProductFilterSidebar
-} from '../components/_dashboard/products';
+} from '../sections/@dashboard/products';
 //
 import PRODUCTS from '../_mocks_/products';
 

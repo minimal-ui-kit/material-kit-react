@@ -4,8 +4,6 @@ import { styled } from '@mui/material/styles';
 import { Typography } from '@mui/material';
 // components
 import Logo from '../components/Logo';
-//
-import { MHidden } from '../components/@material-extend';
 
 // ----------------------------------------------------------------------
 
@@ -36,16 +34,15 @@ export default function AuthLayout({ children }) {
     <HeaderStyle>
       <Logo />
 
-      <MHidden width="smDown">
-        <Typography
-          variant="body2"
-          sx={{
-            mt: { md: -2 }
-          }}
-        >
-          {children}
-        </Typography>
-      </MHidden>
+      <Typography
+        variant="body2"
+        sx={{
+          display: { xs: 'none', sm: 'block' },
+          mt: { md: -2 }
+        }}
+      >
+        {children}
+      </Typography>
     </HeaderStyle>
   );
 }

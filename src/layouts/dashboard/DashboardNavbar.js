@@ -4,7 +4,6 @@ import { alpha, styled } from '@mui/material/styles';
 import { Box, Stack, AppBar, Toolbar, IconButton } from '@mui/material';
 // components
 import Iconify from '../../components/Iconify';
-import { MHidden } from '../../components/@material-extend';
 //
 import Searchbar from './Searchbar';
 import AccountPopover from './AccountPopover';
@@ -45,11 +44,12 @@ export default function DashboardNavbar({ onOpenSidebar }) {
   return (
     <RootStyle>
       <ToolbarStyle>
-        <MHidden width="lgUp">
-          <IconButton onClick={onOpenSidebar} sx={{ mr: 1, color: 'text.primary' }}>
-            <Iconify icon="eva:menu-2-fill" />
-          </IconButton>
-        </MHidden>
+        <IconButton
+          onClick={onOpenSidebar}
+          sx={{ mr: 1, color: 'text.primary', display: { lg: 'none' } }}
+        >
+          <Iconify icon="eva:menu-2-fill" />
+        </IconButton>
 
         <Searchbar />
         <Box sx={{ flexGrow: 1 }} />

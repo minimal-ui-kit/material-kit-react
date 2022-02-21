@@ -15,7 +15,7 @@ import {
   AppTrafficBySite,
   AppCurrentSubject,
   AppConversionRates
-} from '../components/_dashboard/app';
+} from '../sections/@dashboard/app';
 
 // ----------------------------------------------------------------------
 
