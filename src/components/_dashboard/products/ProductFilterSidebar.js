@@ -1,9 +1,5 @@
 import PropTypes from 'prop-types';
-import { Icon } from '@iconify/react';
 import { Form, FormikProvider } from 'formik';
-import closeFill from '@iconify/icons-eva/close-fill';
-import roundClearAll from '@iconify/icons-ic/round-clear-all';
-import roundFilterList from '@iconify/icons-ic/round-filter-list';
 // material
 import {
   Box,
@@ -21,6 +17,7 @@ import {
   FormControlLabel
 } from '@mui/material';
 //
+import Iconify from '../../Iconify';
 import Scrollbar from '../../Scrollbar';
 import ColorManyPicker from '../../ColorManyPicker';
 
@@ -75,7 +72,7 @@ export default function ShopFilterSidebar({
       <Button
         disableRipple
         color="inherit"
-        endIcon={<Icon icon={roundFilterList} />}
+        endIcon={<Iconify icon="ic:round-filter-list" />}
         onClick={onOpenFilter}
       >
         Filters&nbsp;
@@ -101,7 +98,7 @@ export default function ShopFilterSidebar({
                 Filters
               </Typography>
               <IconButton onClick={onCloseFilter}>
-                <Icon icon={closeFill} width={20} height={20} />
+                <Iconify icon="eva:close-fill" width={20} height={20} />
               </IconButton>
             </Stack>
 
@@ -143,14 +140,14 @@ export default function ShopFilterSidebar({
 
                 <div>
                   <Typography variant="subtitle1" gutterBottom>
-                    Colour
+                    Colors
                   </Typography>
                   <ColorManyPicker
                     name="colors"
                     colors={FILTER_COLOR_OPTIONS}
                     onChange={handleChange}
                     onChecked={(color) => values.colors.includes(color)}
-                    sx={{ maxWidth: 36 * 4 }}
+                    sx={{ maxWidth: 38 * 4 }}
                   />
                 </div>
 
@@ -215,7 +212,7 @@ export default function ShopFilterSidebar({
                 color="inherit"
                 variant="outlined"
                 onClick={onResetFilter}
-                startIcon={<Icon icon={roundClearAll} />}
+                startIcon={<Iconify icon="ic:round-clear-all" />}
               >
                 Clear All
               </Button>

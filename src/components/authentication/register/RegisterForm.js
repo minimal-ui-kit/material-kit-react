@@ -1,13 +1,12 @@
 import * as Yup from 'yup';
 import { useState } from 'react';
-import { Icon } from '@iconify/react';
 import { useFormik, Form, FormikProvider } from 'formik';
-import eyeFill from '@iconify/icons-eva/eye-fill';
-import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 import { useNavigate } from 'react-router-dom';
 // material
 import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+// component
+import Iconify from '../../Iconify';
 
 // ----------------------------------------------------------------------
 
@@ -82,7 +81,7 @@ export default function RegisterForm() {
               endAdornment: (
                 <InputAdornment position="end">
                   <IconButton edge="end" onClick={() => setShowPassword((prev) => !prev)}>
-                    <Icon icon={showPassword ? eyeFill : eyeOffFill} />
+                    <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
                   </IconButton>
                 </InputAdornment>
               )

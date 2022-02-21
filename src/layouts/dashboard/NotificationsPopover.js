@@ -4,10 +4,6 @@ import { noCase } from 'change-case';
 import { useRef, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { set, sub, formatDistanceToNow } from 'date-fns';
-import { Icon } from '@iconify/react';
-import bellFill from '@iconify/icons-eva/bell-fill';
-import clockFill from '@iconify/icons-eva/clock-fill';
-import doneAllFill from '@iconify/icons-eva/done-all-fill';
 // material
 import { alpha } from '@mui/material/styles';
 import {
@@ -28,6 +24,7 @@ import {
 // utils
 import { mockImgAvatar } from '../../utils/mockImages';
 // components
+import Iconify from '../../components/Iconify';
 import Scrollbar from '../../components/Scrollbar';
 import MenuPopover from '../../components/MenuPopover';
 
@@ -157,7 +154,7 @@ function NotificationItem({ notification }) {
               color: 'text.disabled'
             }}
           >
-            <Box component={Icon} icon={clockFill} sx={{ mr: 0.5, width: 16, height: 16 }} />
+            <Iconify icon="eva:clock-fill" sx={{ mr: 0.5, width: 16, height: 16 }} />
             {formatDistanceToNow(new Date(notification.createdAt))}
           </Typography>
         }
@@ -203,7 +200,7 @@ export default function NotificationsPopover() {
         }}
       >
         <Badge badgeContent={totalUnRead} color="error">
-          <Icon icon={bellFill} width={20} height={20} />
+          <Iconify icon="eva:bell-fill" width={20} height={20} />
         </Badge>
       </IconButton>
 
@@ -224,7 +221,7 @@ export default function NotificationsPopover() {
           {totalUnRead > 0 && (
             <Tooltip title=" Mark all as read">
               <IconButton color="primary" onClick={handleMarkAllAsRead}>
-                <Icon icon={doneAllFill} width={20} height={20} />
+                <Iconify icon="eva:done-all-fill" width={20} height={20} />
               </IconButton>
             </Tooltip>
           )}

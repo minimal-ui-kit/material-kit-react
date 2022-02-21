@@ -1,15 +1,14 @@
 import faker from 'faker';
 import PropTypes from 'prop-types';
-import { Icon } from '@iconify/react';
 import { formatDistance } from 'date-fns';
 import { Link as RouterLink } from 'react-router-dom';
-import arrowIosForwardFill from '@iconify/icons-eva/arrow-ios-forward-fill';
 // material
 import { Box, Stack, Link, Card, Button, Divider, Typography, CardHeader } from '@mui/material';
 // utils
 import { mockImgCover } from '../../../utils/mockImages';
 //
 import Scrollbar from '../../Scrollbar';
+import Iconify from '../../Iconify';
 
 // ----------------------------------------------------------------------
 
@@ -78,7 +77,7 @@ export default function AppNewsUpdate() {
           size="small"
           color="inherit"
           component={RouterLink}
-          endIcon={<Icon icon={arrowIosForwardFill} />}
+          endIcon={<Iconify icon="eva:arrow-ios-forward-fill" />}
         >
           View all
         </Button>

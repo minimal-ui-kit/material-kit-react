@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types';
-import { Icon } from '@iconify/react';
-import menu2Fill from '@iconify/icons-eva/menu-2-fill';
 // material
 import { alpha, styled } from '@mui/material/styles';
 import { Box, Stack, AppBar, Toolbar, IconButton } from '@mui/material';
 // components
+import Iconify from '../../components/Iconify';
 import { MHidden } from '../../components/@material-extend';
 //
 import Searchbar from './Searchbar';
@@ -48,7 +47,7 @@ export default function DashboardNavbar({ onOpenSidebar }) {
       <ToolbarStyle>
         <MHidden width="lgUp">
           <IconButton onClick={onOpenSidebar} sx={{ mr: 1, color: 'text.primary' }}>
-            <Icon icon={menu2Fill} />
+            <Iconify icon="eva:menu-2-fill" />
           </IconButton>
         </MHidden>
 

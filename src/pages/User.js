@@ -1,8 +1,6 @@
 import { filter } from 'lodash';
-import { Icon } from '@iconify/react';
 import { sentenceCase } from 'change-case';
 import { useState } from 'react';
-import plusFill from '@iconify/icons-eva/plus-fill';
 import { Link as RouterLink } from 'react-router-dom';
 // material
 import {
@@ -24,6 +22,7 @@ import {
 import Page from '../components/Page';
 import Label from '../components/Label';
 import Scrollbar from '../components/Scrollbar';
+import Iconify from '../components/Iconify';
 import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../components/_dashboard/user';
 //
@@ -142,7 +141,7 @@ export default function User() {
             variant="contained"
             component={RouterLink}
             to="#"
-            startIcon={<Icon icon={plusFill} />}
+            startIcon={<Iconify icon="eva:plus-fill" />}
           >
             New User
           </Button>

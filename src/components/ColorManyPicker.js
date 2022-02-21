@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
-import { Icon } from '@iconify/react';
-import checkmarkFill from '@iconify/icons-eva/checkmark-fill';
 // material
 import { Box, Checkbox } from '@mui/material';
+//
+import Iconify from './Iconify';
 
 // ----------------------------------------------------------------------
 
@@ -30,7 +30,7 @@ function IconColor({ sx, ...other }) {
       }}
       {...other}
     >
-      <Icon icon={checkmarkFill} />
+      <Iconify icon="eva:checkmark-fill" />
     </Box>
   );
 }

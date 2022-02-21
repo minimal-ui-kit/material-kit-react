@@ -1,9 +1,5 @@
 import PropTypes from 'prop-types';
-import { Icon } from '@iconify/react';
-import eyeFill from '@iconify/icons-eva/eye-fill';
 import { Link as RouterLink } from 'react-router-dom';
-import shareFill from '@iconify/icons-eva/share-fill';
-import messageCircleFill from '@iconify/icons-eva/message-circle-fill';
 // material
 import { alpha, styled } from '@mui/material/styles';
 import { Box, Link, Card, Grid, Avatar, Typography, CardContent } from '@mui/material';
@@ -12,6 +8,7 @@ import { fDate } from '../../../utils/formatTime';
 import { fShortenNumber } from '../../../utils/formatNumber';
 //
 import SvgIconStyle from '../../SvgIconStyle';
+import Iconify from '../../Iconify';
 
 // ----------------------------------------------------------------------
 
@@ -66,9 +63,9 @@ export default function BlogPostCard({ post, index }) {
   const latestPost = index === 1 || index === 2;
 
   const POST_INFO = [
-    { number: comment, icon: messageCircleFill },
-    { number: view, icon: eyeFill },
-    { number: share, icon: shareFill }
+    { number: comment, icon: 'eva:message-circle-fill' },
+    { number: view, icon: 'eva:eye-fill' },
+    { number: share, icon: 'eva:share-fill' }
   ];
 
   return (
@@ -171,7 +168,7 @@ export default function BlogPostCard({ post, index }) {
                   })
                 }}
               >
-                <Box component={Icon} icon={info.icon} sx={{ width: 16, height: 16, mr: 0.5 }} />
+                <Iconify icon={info.icon} sx={{ width: 16, height: 16, mr: 0.5 }} />
                 <Typography variant="caption">{fShortenNumber(info.number)}</Typography>
               </Box>
             ))}

@@ -1,51 +1,45 @@
-import { Icon } from '@iconify/react';
-import pieChart2Fill from '@iconify/icons-eva/pie-chart-2-fill';
-import peopleFill from '@iconify/icons-eva/people-fill';
-import shoppingBagFill from '@iconify/icons-eva/shopping-bag-fill';
-import fileTextFill from '@iconify/icons-eva/file-text-fill';
-import lockFill from '@iconify/icons-eva/lock-fill';
-import personAddFill from '@iconify/icons-eva/person-add-fill';
-import alertTriangleFill from '@iconify/icons-eva/alert-triangle-fill';
+// component
+import Iconify from '../../components/Iconify';
 
 // ----------------------------------------------------------------------
 
-const getIcon = (name) => <Icon icon={name} width={22} height={22} />;
+const getIcon = (name) => <Iconify icon={name} width={22} height={22} />;
 
 const sidebarConfig = [
   {
     title: 'dashboard',
     path: '/dashboard/app',
-    icon: getIcon(pieChart2Fill)
+    icon: getIcon('eva:pie-chart-2-fill')
   },
   {
     title: 'user',
     path: '/dashboard/user',
-    icon: getIcon(peopleFill)
+    icon: getIcon('eva:people-fill')
   },
   {
     title: 'product',
     path: '/dashboard/products',
-    icon: getIcon(shoppingBagFill)
+    icon: getIcon('eva:shopping-bag-fill')
   },
   {
     title: 'blog',
     path: '/dashboard/blog',
-    icon: getIcon(fileTextFill)
+    icon: getIcon('eva:file-text-fill')
   },
   {
     title: 'login',
     path: '/login',
-    icon: getIcon(lockFill)
+    icon: getIcon('eva:lock-fill')
   },
   {
     title: 'register',
     path: '/register',
-    icon: getIcon(personAddFill)
+    icon: getIcon('eva:person-add-fill')
   },
   {
     title: 'Not found',
     path: '/404',
-    icon: getIcon(alertTriangleFill)
+    icon: getIcon('eva:alert-triangle-fill')
   }
 ];
 

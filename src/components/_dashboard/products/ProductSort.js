@@ -1,9 +1,8 @@
-import { Icon } from '@iconify/react';
 import { useState } from 'react';
-import chevronUpFill from '@iconify/icons-eva/chevron-up-fill';
-import chevronDownFill from '@iconify/icons-eva/chevron-down-fill';
 // material
 import { Menu, Button, MenuItem, Typography } from '@mui/material';
+// component
+import Iconify from '../../Iconify';
 
 // ----------------------------------------------------------------------
 
@@ -31,7 +30,7 @@ export default function ShopProductSort() {
         color="inherit"
         disableRipple
         onClick={handleOpen}
-        endIcon={<Icon icon={open ? chevronUpFill : chevronDownFill} />}
+        endIcon={<Iconify icon={open ? 'eva:chevron-up-fill' : 'eva:chevron-down-fill'} />}
       >
         Sort By:&nbsp;
         <Typography component="span" variant="subtitle2" sx={{ color: 'text.secondary' }}>

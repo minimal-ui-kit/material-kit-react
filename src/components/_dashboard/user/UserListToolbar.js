@@ -1,12 +1,7 @@
 import PropTypes from 'prop-types';
-import { Icon } from '@iconify/react';
-import searchFill from '@iconify/icons-eva/search-fill';
-import trash2Fill from '@iconify/icons-eva/trash-2-fill';
-import roundFilterList from '@iconify/icons-ic/round-filter-list';
 // material
 import { styled } from '@mui/material/styles';
 import {
-  Box,
   Toolbar,
   Tooltip,
   IconButton,
@@ -14,6 +9,8 @@ import {
   OutlinedInput,
   InputAdornment
 } from '@mui/material';
+// component
+import Iconify from '../../Iconify';
 
 // ----------------------------------------------------------------------
 
@@ -66,7 +63,7 @@ export default function UserListToolbar({ numSelected, filterName, onFilterName 
           placeholder="Search user..."
           startAdornment={
             <InputAdornment position="start">
-              <Box component={Icon} icon={searchFill} sx={{ color: 'text.disabled' }} />
+              <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
             </InputAdornment>
           }
         />
@@ -75,13 +72,13 @@ export default function UserListToolbar({ numSelected, filterName, onFilterName 
       {numSelected > 0 ? (
         <Tooltip title="Delete">
           <IconButton>
-            <Icon icon={trash2Fill} />
+            <Iconify icon="eva:trash-2-fill" />
           </IconButton>
         </Tooltip>
       ) : (
         <Tooltip title="Filter list">
           <IconButton>
-            <Icon icon={roundFilterList} />
+            <Iconify icon="ic:round-filter-list" />
           </IconButton>
         </Tooltip>
       )}
