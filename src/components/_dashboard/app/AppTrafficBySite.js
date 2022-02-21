@@ -1,4 +1,4 @@
-import faker from 'faker';
+import { faker } from '@faker-js/faker';
 import PropTypes from 'prop-types';
 // material
 import { Box, Grid, Card, Paper, Typography, CardHeader, CardContent } from '@mui/material';

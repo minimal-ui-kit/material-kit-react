@@ -4,7 +4,6 @@ import { useMemo } from 'react';
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider, createTheme, StyledEngineProvider } from '@mui/material/styles';
 //
-import shape from './shape';
 import palette from './palette';
 import typography from './typography';
 import componentsOverride from './overrides';
@@ -20,7 +19,7 @@ export default function ThemeConfig({ children }) {
   const themeOptions = useMemo(
     () => ({
       palette,
-      shape,
+      shape: { borderRadius: 8 },
       typography,
       shadows,
       customShadows

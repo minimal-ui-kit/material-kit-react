@@ -21,8 +21,8 @@ const RootStyle = styled('div')(({ theme }) => ({
   boxShadow: theme.customShadows.z20,
   color: theme.palette.text.primary,
   backgroundColor: theme.palette.background.paper,
-  borderTopLeftRadius: theme.shape.borderRadiusMd,
-  borderBottomLeftRadius: theme.shape.borderRadiusMd,
+  borderTopLeftRadius: Number(theme.shape.borderRadius) * 2,
+  borderBottomLeftRadius: Number(theme.shape.borderRadius) * 2,
   transition: theme.transitions.create('opacity'),
   '&:hover': { opacity: 0.72 }
 }));

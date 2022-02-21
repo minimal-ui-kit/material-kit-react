@@ -1,4 +1,4 @@
-import faker from 'faker';
+import { faker } from '@faker-js/faker';
 // utils
 import { mockImgCover } from '../utils/mockImages';
 

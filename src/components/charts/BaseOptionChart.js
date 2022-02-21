@@ -23,7 +23,7 @@ export function BaseOptionChartStyle() {
             border: 0,
             boxShadow: theme.customShadows.z24,
             color: theme.palette.text.primary,
-            borderRadius: theme.shape.borderRadiusSm,
+            borderRadius: Number(theme.shape.borderRadius) * 1.5,
             '&:before': { borderBottomColor: 'transparent' },
             '&:after': { borderBottomColor: alpha(theme.palette.background.default, 0.72) }
           },
@@ -31,7 +31,7 @@ export function BaseOptionChartStyle() {
             ...background,
             border: 0,
             boxShadow: theme.customShadows.z24,
-            borderRadius: theme.shape.borderRadiusSm,
+            borderRadius: Number(theme.shape.borderRadius) * 1.5,
             '& .apexcharts-tooltip-title': {
               border: 0,
               textAlign: 'center',
