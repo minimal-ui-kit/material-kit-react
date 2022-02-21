@@ -15,6 +15,7 @@ import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import Icon from '@mdi/react';
 import {decodeHtml } from './../../../utils/commons';
+
 const gateway = 'http://192.168.88.122:1880';
 class OfficeRoom extends React.Component {
   constructor(props) {
@@ -203,7 +204,7 @@ class OfficeRoom extends React.Component {
               <CardHeader title="Scenes" />
               <CardContent style={{ display: 'flex', alignItems: 'center' }}>
                 <Grid item xs={6}>
-                  <Button style={{ height: 100 }} variant="contained" onClick={this.handleMovieMode} size="large" color="secondary" disableFocusRipple={true}>
+                  <Button style={{ height: 100 }} variant="outlined" onClick={this.handleMovieMode} size="large" color="secondary" disableFocusRipple={true}>
                     <div className="content">
                       <Icon path={mdiMovieOpen} size={2} />
                       <div>Movie mode</div>

@@ -8,3 +8,8 @@
     background: #0843c5;
     color: white !important;
 }
+
+.rw-main {
+    background-image: linear-gradient(to bottom, #1336a6, #284cb8, #3a61ca, #4c77db, #5f8deb) !important;
+  }
+  

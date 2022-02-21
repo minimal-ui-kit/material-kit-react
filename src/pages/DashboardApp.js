@@ -13,6 +13,8 @@ import Iconm from '@mdi/react';
 import { mdiCountertop, mdiTeddyBear, mdiBed, mdiSofa } from '@mdi/js';
 import ReactWeather from 'react-open-weather';
 import 'react-open-weather/lib/css/ReactWeather.css';
+import Scenes from '../components/_dashboard/Scenes';
+
 class DashboardApp extends React.Component {
   constructor(props) {
     super(props);
@@ -31,6 +33,12 @@ class DashboardApp extends React.Component {
           </Box>
           <Grid container spacing={2}>
             <Grid sm={12} md={6} item lg={8}>
+              <Card style={{ marginBottom: 18 }}>
+                <CardHeader title="Scenes" />
+                <CardContent>
+                    <Scenes />
+                </CardContent>
+              </Card>
               <Card>
                 <CardHeader title="Rooms" />
                 <CardContent>
@@ -60,7 +68,7 @@ class DashboardApp extends React.Component {
       <NavLink style={{ textDecoration: 'none' }} to={path}>
         <Button style={{ background: '#f1f1f470', color: '#999999', height: 100, fontWeight: 800, border: 0 }} value="office" variant="outlined" size="large" disableFocusRipple={true}>
           <div className="content">
-            {!isCustomm ? <Iconm path={icon} width={48} height={48} /> : <InlineIcon width={'48'} icon={icon} />}
+            {!isCustomm ? <Iconm path={icon} width={42} height={42} /> : <InlineIcon width={'42'} icon={icon} />}
             <div style={{ color: '#666666' }}>{val}</div>
           </div>
         </Button>

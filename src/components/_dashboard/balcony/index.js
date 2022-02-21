@@ -227,7 +227,7 @@ class BalconyArea extends React.Component {
               <CardHeader title="Scenes" />
               <CardContent style={{ display: 'flex', alignItems: 'center' }}>
                 <Grid item xs={6}>
-                  <Button style={{ height: 100 }} variant="contained" onClick={this.handleCozyMode} size="large" color="primary" disableFocusRipple={true}>
+                  <Button style={{ height: 100 }} variant="outlined" onClick={this.handleCozyMode} size="large" color="secondary" disableFocusRipple={true}>
                     <div className="content">
                       <GiCandleFlame size={48} />
                       <div>Cozy mode</div>
