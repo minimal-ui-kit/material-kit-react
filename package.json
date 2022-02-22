@@ -5,7 +5,8 @@
   "version": "1.2.0",
   "private": false,
   "scripts": {
-    "start": "set PORT=3001 && react-scripts start",
+    "start": "PORT=3001 react-scripts start",
+    "startpc": "set PORT=3001 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
