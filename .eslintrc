@@ -1,73 +1,121 @@
 {
-  "root": true,
-  "env": {
-    "browser": true,
-    "node": true
-  },
-  "extends": [
-    "airbnb",
-    "prettier",
-    "plugin:jsx-a11y/recommended",
-    "plugin:react-hooks/recommended"
-  ],
-  "plugins": [
-    "prettier",
-    "react",
-    "react-hooks"
-  ],
   "parser": "@babel/eslint-parser",
   "parserOptions": {
-    "ecmaVersion": 8,
-    "requireConfigFile": false,
-    "ecmaFeatures": {
-      "experimentalObjectRestSpread": true,
-      "impliedStrict": true
-    }
+    "sourceType": "module"
   },
+  "extends": [
+    "react-app",
+    "react-app/jest"
+  ],
   "rules": {
-    "import": 0,
-    "max-len": 0,
-    "no-alert": 0,
-    "no-shadow": 0,
-    "no-console": 0,
-    "comma-dangle": 0,
-    "import/no-cycle": 0,
-    "react/prop-types": 1,
-    "no-return-assign": 0,
-    "consistent-return": 1,
-    "no-param-reassign": 0,
-    "react/display-name": 0,
-    "no-use-before-define": 0,
-    "no-underscore-dangle": 0,
-    "react/button-has-type": 1,
-    "react/no-children-prop": 0,
-    "react/forbid-prop-types": 0,
-    "jsx-a11y/anchor-is-valid": 0,
-    "react/react-in-jsx-scope": 0,
-    "react/no-array-index-key": 0,
-    "react/no-unused-prop-types": 1,
-    "react/require-default-props": 0,
-    "react/no-unescaped-entities": 0,
-    "import/prefer-default-export": 0,
-    "react/jsx-props-no-spreading": 0,
-    "react/jsx-filename-extension": 0,
-    "react/destructuring-assignment": 0,
-    "import/no-extraneous-dependencies": 0,
-    "react/jsx-key": 1,
-    "react-hooks/rules-of-hooks": 2,
-    "no-unused-vars": [
-      1,
+    // Layout & Formatting
+    // See more on https://eslint.org/docs/rules/#layout-formatting
+    "indent": [ // стиль отступов
+      "warn",
+      2, // 2 отступа
+      { "ignoredNodes": ["TemplateLiteral"] }
+    ],
+    "quotes": [ // использования обратных кавычек, двойных или одинарных кавычек
+      "warn",
+      "single" // Одинарные ковычки
+    ],
+    "comma-dangle": [ // использование конечных запятых в литералах объектов и массивов
+      "warn",
+      // наличия запятых в конце, когда последний элемент находится в строке,
+      // и запрещает использование конечных запятых, когда последний элемент находится на той же строке
+      "always-multiline"
+    ],
+    "semi": [ // последовательное использование точек с запятой
+      "warn",
+      "never" // запрещает точки с запятой в конце операторов (за исключением устранения неоднозначности операторов)
+    ],
+    "no-trailing-spaces": [ // запрещает завершающие пробелы (пробелы, табуляции и другие символы пробелов Unicode) в конце строк
+      "warn"
+    ],
+    "linebreak-style": [ // обеспечивает согласованные окончания строк независимо от операционной системы
+      "warn",
+      "unix"
+    ],
+    "array-bracket-spacing": [ // обеспечивает постоянный интервал внутри скобок массива
+      "warn",
+      "never" // внутри скобок массива не должно быть отступов
+    ],
+    "arrow-parens": [ // требует заключения в круглые скобки параметров стрелочной функции независимо от арности
+      "warn",
+      "as-needed", // не применять скобки, где их можно опустить
+      { "requireForBlockBody": true }
+    ],
+    "arrow-spacing": [ // стиль интервалов до / после стрелки функции стрелки
+      "warn",
       {
-        "ignoreRestSiblings": false
+        "before": true, // должно быть один или несколько пробелов после стрелки
+        "after": true // должно быть один или несколько пробелов до стрелки
       }
     ],
-    "prettier/prettier": [
-      2,
+    "block-spacing": [ // постоянный интервал внутри токена открытого блока и следующего токена в той же строке
+      "warn",
+      "always" // требуется один или несколько пробелов
+    ],
+    "comma-spacing": [ // интервал до и после запятых в объявлениях переменных, литералах массива, литералах объектов, параметрах функций и последовательностях
+      "warn",
       {
-        "printWidth": 100,
-        "singleQuote": true,
-        "trailingComma": "none",
-        "tabWidth": 2
+        "before": false, // не должно быть пробелов до запятой
+        "after": true // должно быть один или несколько пробелов после запятой
+      }
+    ],
+    "computed-property-spacing": [ // интервал внутри скобок вычисляемых свойств
+      "warn",
+      "never" // запрещает пробелы внутри скобок вычисляемых свойств
+    ],
+    "func-call-spacing": [ // использование пробелов между именем функции и открывающей круглой скобкой, которая ее вызывает
+      "warn",
+      "never" // не допускает пробелов между именем функции и открывающей скобкой
+    ],
+    "implicit-arrow-linebreak": [ // согласованного местоположения стрелочной функции, содержащей неявный возврат
+      "warn",
+      "beside" // требуется новая строка перед телом функции стрелки
+    ],
+    "jsx-quotes": [ // последовательного использования двойных или одинарных кавычек в атрибутах JSX
+      "warn",
+      "prefer-single" // одинарные кавычки для всех значений атрибутов JSX
+    ],
+    "lines-between-class-members": [ // линии между членами класса
+      "warn",
+      "always" // требуется пустая строка после членов класса
+    ],
+    "new-parens": [ // использование круглых скобок при вызове конструктора без аргументов с использованием ключевого слова new
+      "warn",
+      "always" // круглые скобки после нового конструктора без аргументов
+    ],
+    "object-curly-newline": [ // разрыв строки между {и его следующим токеном, и между} и его предыдущим токеном объектных литералов или деструктурирующих назначений
+      "warn",
+      { "consistent": true }
+    ],
+    "object-curly-spacing": [ // интервал внутри фигурных скобок литералов объектов, деструктурирующих назначений и спецификаторов импорта / экспорта
+      "warn",
+      "always" // требуется интервал внутри фигурных скобок (кроме {})
+    ],
+    "space-before-blocks": [ // интервалов перед блоками. Применяется только к блокам, которые не начинаются с новой строки
+      "warn",
+      "always" // требует одного аргумента. блоки всегда должны иметь хотя бы один предшествующий пробел
+    ],
+    "space-before-function-paren": [ // интервала перед скобками функций
+      "warn",
+      {
+        "anonymous": "always", // для анонимных функциональных выражений требуется пробел, за которым следует (
+        "named": "always", // для именованных функциональных выражений требуется пробел, за которым следует (
+        "asyncArrow": "always" // для выражений асинхронных стрелочных функций требуется пробел, за которым следует (
+      }
+    ],
+    "space-in-parens": [ // постоянный интервал непосредственно внутри круглых скобок
+      "warn",
+      "never" // принудительно устанавливает нулевые пробелы внутри круглых скобок
+    ],
+    "switch-colon-spacing": [ // интервалом между двоеточиями в предложениях case и default в операторах switch
+      "warn",
+      {
+        "after": true, // требует одного или нескольких пробелов после двоеточия
+        "before": false // запрещает перед двоеточиями
       }
     ]
   }
