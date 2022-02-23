@@ -1,22 +1,22 @@
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 // material
-import { MenuItem, TextField } from '@mui/material';
+import { MenuItem, TextField } from '@mui/material'
 
 // ----------------------------------------------------------------------
 
 BlogPostsSort.propTypes = {
   options: PropTypes.array,
-  onSort: PropTypes.func
-};
+  onSort: PropTypes.func,
+}
 
-export default function BlogPostsSort({ options, onSort }) {
+export default function BlogPostsSort ({ options, onSort }) {
   return (
-    <TextField select size="small" value="latest" onChange={onSort}>
-      {options.map((option) => (
+    <TextField select size='small' value='latest' onChange={onSort}>
+      {options.map(option => (
         <MenuItem key={option.value} value={option.value}>
           {option.label}
         </MenuItem>
       ))}
     </TextField>
-  );
+  )
 }

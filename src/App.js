@@ -1,15 +1,15 @@
 // routes
-import Router from './routes';
+import Router from './routes'
 // theme
-import ThemeConfig from './theme';
-import GlobalStyles from './theme/globalStyles';
+import ThemeConfig from './theme'
+import GlobalStyles from './theme/globalStyles'
 // components
-import ScrollToTop from './components/ScrollToTop';
-import { BaseOptionChartStyle } from './components/charts/BaseOptionChart';
+import ScrollToTop from './components/ScrollToTop'
+import { BaseOptionChartStyle } from './components/charts/BaseOptionChart'
 
 // ----------------------------------------------------------------------
 
-export default function App() {
+export default function App () {
   return (
     <ThemeConfig>
       <ScrollToTop />
@@ -17,5 +17,5 @@ export default function App() {
       <BaseOptionChartStyle />
       <Router />
     </ThemeConfig>
-  );
+  )
 }

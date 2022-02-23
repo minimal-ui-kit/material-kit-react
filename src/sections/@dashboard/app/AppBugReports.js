@@ -1,10 +1,10 @@
 // material
-import { alpha, styled } from '@mui/material/styles';
-import { Card, Typography } from '@mui/material';
+import { alpha, styled } from '@mui/material/styles'
+import { Card, Typography } from '@mui/material'
 // utils
-import { fShortenNumber } from '../../../utils/formatNumber';
+import { fShortenNumber } from '../../../utils/formatNumber'
 //
-import Iconify from '../../../components/Iconify';
+import Iconify from '../../../components/Iconify'
 
 // ----------------------------------------------------------------------
 
@@ -13,8 +13,8 @@ const RootStyle = styled(Card)(({ theme }) => ({
   textAlign: 'center',
   padding: theme.spacing(5, 0),
   color: theme.palette.error.darker,
-  backgroundColor: theme.palette.error.lighter
-}));
+  backgroundColor: theme.palette.error.lighter,
+}))
 
 const IconWrapperStyle = styled('div')(({ theme }) => ({
   margin: 'auto',
@@ -29,23 +29,23 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
   backgroundImage: `linear-gradient(135deg, ${alpha(theme.palette.error.dark, 0)} 0%, ${alpha(
     theme.palette.error.dark,
     0.24
-  )} 100%)`
-}));
+  )} 100%)`,
+}))
 
 // ----------------------------------------------------------------------
 
-const TOTAL = 234;
+const TOTAL = 234
 
-export default function AppBugReports() {
+export default function AppBugReports () {
   return (
     <RootStyle>
       <IconWrapperStyle>
-        <Iconify icon="ant-design:bug-filled" width={24} height={24} />
+        <Iconify icon='ant-design:bug-filled' width={24} height={24} />
       </IconWrapperStyle>
-      <Typography variant="h3">{fShortenNumber(TOTAL)}</Typography>
-      <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
+      <Typography variant='h3'>{fShortenNumber(TOTAL)}</Typography>
+      <Typography variant='subtitle2' sx={{ opacity: 0.72 }}>
         Bug Reports
       </Typography>
     </RootStyle>
-  );
+  )
 }
