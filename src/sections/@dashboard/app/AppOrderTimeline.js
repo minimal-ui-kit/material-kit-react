@@ -1,17 +1,17 @@
-import { faker } from '@faker-js/faker';
-import PropTypes from 'prop-types';
+import { faker } from '@faker-js/faker'
+import PropTypes from 'prop-types'
 // material
-import { Card, Typography, CardHeader, CardContent } from '@mui/material';
+import { Card, Typography, CardHeader, CardContent } from '@mui/material'
 import {
   Timeline,
   TimelineItem,
   TimelineContent,
   TimelineConnector,
   TimelineSeparator,
-  TimelineDot
-} from '@mui/lab';
+  TimelineDot,
+} from '@mui/lab'
 // utils
-import { fDateTime } from '../../../utils/formatTime';
+import { fDateTime } from '../../../utils/formatTime'
 
 // ----------------------------------------------------------------------
 
@@ -19,39 +19,39 @@ const TIMELINES = [
   {
     title: '1983, orders, $4220',
     time: faker.date.past(),
-    type: 'order1'
+    type: 'order1',
   },
   {
     title: '12 Invoices have been paid',
     time: faker.date.past(),
-    type: 'order2'
+    type: 'order2',
   },
   {
     title: 'Order #37745 from September',
     time: faker.date.past(),
-    type: 'order3'
+    type: 'order3',
   },
   {
     title: 'New order placed #XF-2356',
     time: faker.date.past(),
-    type: 'order4'
+    type: 'order4',
   },
   {
     title: 'New order placed #XF-2346',
     time: faker.date.past(),
-    type: 'order5'
-  }
-];
+    type: 'order5',
+  },
+]
 
 // ----------------------------------------------------------------------
 
 OrderItem.propTypes = {
   item: PropTypes.object,
-  isLast: PropTypes.bool
-};
+  isLast: PropTypes.bool,
+}
 
-function OrderItem({ item, isLast }) {
-  const { type, title, time } = item;
+function OrderItem ({ item, isLast }) {
+  const { type, title, time } = item
   return (
     <TimelineItem>
       <TimelineSeparator>
@@ -62,31 +62,31 @@ function OrderItem({ item, isLast }) {
               (type === 'order2' && 'success.main') ||
               (type === 'order3' && 'info.main') ||
               (type === 'order4' && 'warning.main') ||
-              'error.main'
+              'error.main',
           }}
         />
         {isLast ? null : <TimelineConnector />}
       </TimelineSeparator>
       <TimelineContent>
-        <Typography variant="subtitle2">{title}</Typography>
-        <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+        <Typography variant='subtitle2'>{title}</Typography>
+        <Typography variant='caption' sx={{ color: 'text.secondary' }}>
           {fDateTime(time)}
         </Typography>
       </TimelineContent>
     </TimelineItem>
-  );
+  )
 }
 
-export default function AppOrderTimeline() {
+export default function AppOrderTimeline () {
   return (
     <Card
       sx={{
         '& .MuiTimelineItem-missingOppositeContent:before': {
-          display: 'none'
-        }
+          display: 'none',
+        },
       }}
     >
-      <CardHeader title="Order Timeline" />
+      <CardHeader title='Order Timeline' />
       <CardContent>
         <Timeline>
           {TIMELINES.map((item, index) => (
@@ -95,5 +95,5 @@ export default function AppOrderTimeline() {
         </Timeline>
       </CardContent>
     </Card>
-  );
+  )
 }

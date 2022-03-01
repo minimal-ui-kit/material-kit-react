@@ -1,13 +1,13 @@
-import PropTypes from 'prop-types';
-import { Link as RouterLink } from 'react-router-dom';
+import PropTypes from 'prop-types'
+import { Link as RouterLink } from 'react-router-dom'
 // material
-import { Box, Card, Link, Typography, Stack } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Box, Card, Link, Typography, Stack } from '@mui/material'
+import { styled } from '@mui/material/styles'
 // utils
-import { fCurrency } from '../../../utils/formatNumber';
+import { fCurrency } from '../../../utils/formatNumber'
 //
-import Label from '../../../components/Label';
-import ColorPreview from '../../../components/ColorPreview';
+import Label from '../../../components/Label'
+import ColorPreview from '../../../components/ColorPreview'
 
 // ----------------------------------------------------------------------
 
@@ -16,31 +16,31 @@ const ProductImgStyle = styled('img')({
   width: '100%',
   height: '100%',
   objectFit: 'cover',
-  position: 'absolute'
-});
+  position: 'absolute',
+})
 
 // ----------------------------------------------------------------------
 
 ShopProductCard.propTypes = {
-  product: PropTypes.object
-};
+  product: PropTypes.object,
+}
 
-export default function ShopProductCard({ product }) {
-  const { name, cover, price, colors, status, priceSale } = product;
+export default function ShopProductCard ({ product }) {
+  const { name, cover, price, colors, status, priceSale } = product
 
   return (
     <Card>
       <Box sx={{ pt: '100%', position: 'relative' }}>
         {status && (
           <Label
-            variant="filled"
+            variant='filled'
             color={(status === 'sale' && 'error') || 'info'}
             sx={{
               zIndex: 9,
               top: 16,
               right: 16,
               position: 'absolute',
-              textTransform: 'uppercase'
+              textTransform: 'uppercase',
             }}
           >
             {status}
@@ -50,21 +50,21 @@ export default function ShopProductCard({ product }) {
       </Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>
-        <Link to="#" color="inherit" underline="hover" component={RouterLink}>
-          <Typography variant="subtitle2" noWrap>
+        <Link to='#' color='inherit' underline='hover' component={RouterLink}>
+          <Typography variant='subtitle2' noWrap>
             {name}
           </Typography>
         </Link>
 
-        <Stack direction="row" alignItems="center" justifyContent="space-between">
+        <Stack direction='row' alignItems='center' justifyContent='space-between'>
           <ColorPreview colors={colors} />
-          <Typography variant="subtitle1">
+          <Typography variant='subtitle1'>
             <Typography
-              component="span"
-              variant="body1"
+              component='span'
+              variant='body1'
               sx={{
                 color: 'text.disabled',
-                textDecoration: 'line-through'
+                textDecoration: 'line-through',
               }}
             >
               {priceSale && fCurrency(priceSale)}
@@ -75,5 +75,5 @@ export default function ShopProductCard({ product }) {
         </Stack>
       </Stack>
     </Card>
-  );
+  )
 }

@@ -1,2 +1,2 @@
-export * from './BounceIn';
-export * from './BounceOut';
+export * from './BounceIn'
+export * from './BounceOut'
