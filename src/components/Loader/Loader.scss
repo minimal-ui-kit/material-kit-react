@@ -1,0 +1,97 @@
+$green: #008744;
+$blue: #0057E7;
+$red: #D62D20;
+$yellow: #FFA700;
+$white: #EEE;
+
+// scaling... any units
+$width: 100px;
+
+.loader {
+  position: relative;
+  width: $width;
+  margin: 0 auto;
+
+  &::before {
+    display: block;
+    padding-top: 100%;
+    content: "";
+  }
+}
+
+.circular {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  animation: rotate 2s linear infinite;
+  transform-origin: center center;
+}
+
+.path {
+  animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+  stroke-dasharray: 1, 200;
+  stroke-dashoffset: 0;
+  stroke-linecap: round;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35px;
+  }
+
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124px;
+  }
+}
+
+@keyframes color {
+  100%,
+  0% {
+    stroke: $red;
+  }
+
+  40% {
+    stroke: $blue;
+  }
+
+  66% {
+    stroke: $green;
+  }
+
+  80%,
+  90% {
+    stroke: $yellow;
+  }
+}
+
+// demo-specific
+body {
+  background-color: $white;
+}
+
+.showbox {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 5%;
+}

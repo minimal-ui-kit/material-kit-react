@@ -1,21 +1,53 @@
-// routes
-import Router from './routes'
-// theme
-import ThemeConfig from './theme'
-import GlobalStyles from './theme/globalStyles'
-// components
-import ScrollToTop from './components/ScrollToTop'
-import { BaseOptionChartStyle } from './components/charts/BaseOptionChart'
+import { Component } from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { initSecurity, selectAuthModel } from '@src/store'
+import { Loader } from '@src/components'
+import { MainPage } from './pages'
+import './App.scss'
 
-// ----------------------------------------------------------------------
+class App extends Component {
+  static propTypes = {
+    auth: PropTypes.object,
+    initSecurity: PropTypes.func,
+    authModel: PropTypes.shape({
+      loaded: PropTypes.bool,
+      loading: PropTypes.bool,
+      error: PropTypes.string,
+      payload: PropTypes.object,
+    }),
+  }
 
-export default function App () {
-  return (
-    <ThemeConfig>
-      <ScrollToTop />
-      <GlobalStyles />
-      <BaseOptionChartStyle />
-      <Router />
-    </ThemeConfig>
-  )
+  componentDidMount () {
+    const params = new URLSearchParams(window.location.search)
+    const authCode = params.get('code')
+    this.props.initSecurity(authCode)
+  }
+
+  render () {
+    const { authModel } = this.props
+
+    return (
+      <BrowserRouter>
+        <Switch>
+          <Route path='/'>
+            {
+              authModel.loading || !authModel.loaded
+                ? <div className='app-loading'>
+                  <Loader />
+                </div>
+                : <MainPage auth={authModel.payload}></MainPage>
+            }
+          </Route>
+        </Switch>
+      </BrowserRouter>
+    )
+  }
 }
+
+const mapStateToProps = state => ({ authModel: selectAuthModel(state) })
+
+const mapDispatchToProps = { initSecurity }
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
