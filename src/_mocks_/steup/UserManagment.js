@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Table from '@mui/material/Table';
+import Card from '@mui/material/Card';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
@@ -21,6 +22,7 @@ const rows = [
 
 export default function UserManagment() {
   return (
+    <Card>
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
@@ -50,5 +52,6 @@ export default function UserManagment() {
         </TableBody>
       </Table>
     </TableContainer>
+    </Card>
   );
 }
