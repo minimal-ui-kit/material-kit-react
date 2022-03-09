@@ -20,9 +20,13 @@ const SORT_OPTIONS = [
 
 export default function Blog() {
   return (
-    <Page title="Dashboard: Blog | Minimal-UI">
+    <Page title="Dashboard: Blog ">
       <Container>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+      <Typography variant="h4" sx={{ mb: 5 }}>
+          Products
+        </Typography>
+        
+        {/* <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
             Blog
           </Typography>
@@ -45,7 +49,7 @@ export default function Blog() {
           {POSTS.map((post, index) => (
             <BlogPostCard key={post.id} post={post} index={index} />
           ))}
-        </Grid>
+        </Grid> */}
       </Container>
     </Page>
   );

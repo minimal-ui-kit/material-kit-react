@@ -1,7 +1,7 @@
 import { useFormik } from 'formik';
 import { useState } from 'react';
 // material
-import { Container, Stack, Typography } from '@mui/material';
+import { Container, Stack, Typography,Box ,Grid} from '@mui/material';
 // components
 import Page from '../components/Page';
 import {
@@ -12,68 +12,30 @@ import {
 } from '../sections/@dashboard/products';
 //
 import PRODUCTS from '../_mocks_/products';
+import UserManagment from 'src/_mocks_/steup/UserManagment';
 
 // ----------------------------------------------------------------------
 
 export default function EcommerceShop() {
   const [openFilter, setOpenFilter] = useState(false);
 
-  const formik = useFormik({
-    initialValues: {
-      gender: '',
-      category: '',
-      colors: '',
-      priceRange: '',
-      rating: ''
-    },
-    onSubmit: () => {
-      setOpenFilter(false);
-    }
-  });
-
-  const { resetForm, handleSubmit } = formik;
-
-  const handleOpenFilter = () => {
-    setOpenFilter(true);
-  };
-
-  const handleCloseFilter = () => {
-    setOpenFilter(false);
-  };
-
-  const handleResetFilter = () => {
-    handleSubmit();
-    resetForm();
-  };
+ 
 
   return (
-    <Page title="Dashboard: Products | Minimal-UI">
-      <Container>
-        <Typography variant="h4" sx={{ mb: 5 }}>
-          Products
-        </Typography>
+    <Page title="Dashboard: Products ">
+    <Container maxWidth="xl">
+        <Box sx={{ pb: 5 }}>
+          <Typography variant="h4">Hi, Welcome back</Typography>
+        </Box>
+        <Grid container spacing={3}>
+ 
+          <Grid item xs={12} sm={12} md={12}>
+            <UserManagment/>
+          </Grid>
+  
 
-        <Stack
-          direction="row"
-          flexWrap="wrap-reverse"
-          alignItems="center"
-          justifyContent="flex-end"
-          sx={{ mb: 5 }}
-        >
-          <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
-            <ProductFilterSidebar
-              formik={formik}
-              isOpenFilter={openFilter}
-              onResetFilter={handleResetFilter}
-              onOpenFilter={handleOpenFilter}
-              onCloseFilter={handleCloseFilter}
-            />
-            <ProductSort />
-          </Stack>
-        </Stack>
-
-        <ProductList products={PRODUCTS} />
-        <ProductCartWidget />
+        
+        </Grid>
       </Container>
     </Page>
   );
