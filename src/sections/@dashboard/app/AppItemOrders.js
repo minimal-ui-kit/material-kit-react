@@ -1,51 +1,75 @@
-// material
-import { alpha, styled } from '@mui/material/styles';
-import { Card, Typography } from '@mui/material';
-// utils
-import { fShortenNumber } from '../../../utils/formatNumber';
-//
-import Iconify from '../../../components/Iconify';
+import { Card, CardContent, Grid, Typography } from '@mui/material';
+// --------------------------------------------
+import CountUp from 'react-countup';
+// import { useSelector } from 'react-redux'
+import React, { useState, useEffect } from 'react'
 
-// ----------------------------------------------------------------------
 
-const RootStyle = styled(Card)(({ theme }) => ({
-  boxShadow: 'none',
-  textAlign: 'center',
-  padding: theme.spacing(5, 0),
-  color: theme.palette.warning.darker,
-  backgroundColor: theme.palette.warning.lighter
-}));
+export const AppItemOrders = (props) => {
 
-const IconWrapperStyle = styled('div')(({ theme }) => ({
-  margin: 'auto',
-  display: 'flex',
-  borderRadius: '50%',
-  alignItems: 'center',
-  width: theme.spacing(8),
-  height: theme.spacing(8),
-  justifyContent: 'center',
-  marginBottom: theme.spacing(3),
-  color: theme.palette.warning.dark,
-  backgroundImage: `linear-gradient(135deg, ${alpha(theme.palette.warning.dark, 0)} 0%, ${alpha(
-    theme.palette.warning.dark,
-    0.24
-  )} 100%)`
-}));
-
-// ----------------------------------------------------------------------
-
-const TOTAL = 1723315;
-
-export default function AppItemOrders() {
+  const [despiuteCount, setDisputeCount] = useState(0)
+  const [highestBid, setHighestBid] = useState(0)
+  // const wallet = useSelector(state => state.wallet)
+  // const myLeads = useSelector(state => state.myLeads)
+  // const userSubscriptions = useSelector(state => state.userSubscriptions)
+  // useEffect(() => {
+  //   console.log(myLeads)
+  //   let disputeCount = 0
+  //   myLeads.map(lead => {
+  //     if (lead.status === 'dispute') disputeCount++
+  //   })
+  //   setDisputeCount(disputeCount)
+  // }, [])
+  // // const classes = makeStyles();
+  // // higestBid
+  // useEffect(() => {
+  //   let highestBidCount = 0
+  //   userSubscriptions.map(sub => {
+  //     if (sub.topBidAmount <= sub.currentBitAmount) highestBidCount++
+  //   })
+  //   setHighestBid(highestBidCount)
+  // }, [])
   return (
-    <RootStyle>
-      <IconWrapperStyle>
-        <Iconify icon="ant-design:windows-filled" width={24} height={24} />
-      </IconWrapperStyle>
-      <Typography variant="h3">{fShortenNumber(TOTAL)}</Typography>
-      <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        Item Orders
-      </Typography>
-    </RootStyle>
-  );
-}
+    <Card {...props}>
+      <CardContent>
+        <Grid
+          container
+          spacing={3}
+          sx={{ justifyContent: 'space-between' }}
+        >
+          <Grid item>
+            <Typography
+              // color="textSecondary"
+              color="secondary"
+              gutterBottom
+              variant="overline"
+            >
+           Average Recipt
+            </Typography>
+            <Typography
+              color="textPrimary"
+              variant="h4"
+            >
+               <CountUp start={0} 
+              //  end={myLeads.length} 
+               duration={2} separator="," />
+            </Typography>
+          </Grid>
+          {/* <Grid item>
+          <Avatar
+            sx={{
+              backgroundColor: 'primary.main',
+              height: 56,
+              width: 56
+            }}
+          >
+            <AttachMoneyIcon />
+          </Avatar>
+        </Grid> */}
+        </Grid>
+      </CardContent>
+    </Card>
+  )
+};
+
+export default AppItemOrders;

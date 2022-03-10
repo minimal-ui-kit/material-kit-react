@@ -7,6 +7,7 @@ import Iconify from '../components/Iconify';
 import { BlogPostCard, BlogPostsSort, BlogPostsSearch } from '../sections/@dashboard/blog';
 //
 import POSTS from '../_mocks_/blog';
+import Tab from 'src/_mocks_/steup/Tab';
 
 // ----------------------------------------------------------------------
 
@@ -23,8 +24,10 @@ export default function Blog() {
     <Page title="Dashboard: Blog ">
       <Container>
       <Typography variant="h4" sx={{ mb: 5 }}>
-          Products
+          Setup
         </Typography>
+
+        <Tab/>
         
         {/* <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>

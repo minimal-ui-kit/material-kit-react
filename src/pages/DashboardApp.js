@@ -37,9 +37,9 @@ export default function DashboardApp() {
           <Grid item xs={12} sm={6} md={3}>
             <AppItemOrders />
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          {/* <Grid item xs={12} sm={6} md={3}>
             <AppBugReports />
-          </Grid>
+          </Grid> */}
 
           <Grid item xs={12} md={12} lg={12}>
             <TableCustomer/>
