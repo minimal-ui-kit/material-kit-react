@@ -68,7 +68,6 @@ export default function Managmentsetup() {
         aria-label="add">
         <AddIcon />
       </Fab>
-
     </Page>
   );
 }

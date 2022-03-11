@@ -111,39 +111,6 @@ export default function AddMenu(props) {
     setValues();
     onClose();
   };
-  //   const handleSubmit = () => {
-  //     setLoading(true);
-  //     if (
-  //       mobile !== "" &&
-  //       email !== "" &&
-  //       AddressLocation !== "" &&
-  //       zipcode !== "" &&
-  //       county !== ""
-  //     ) {
-  //       const config = {
-  //         method: "post",
-  //         url: "/leads",
-  //         withCredentials: true,
-  //         data: {
-  //           email,
-  //           mobile,
-  //           AddressLocation,
-  //           zipcode,
-  //           county,
-  //         },
-  //       };
-  //     }
-  //     setLoading(false);
-  //   };
-  //   const ClearAllFeilds = () => {
-  //     setError(false);
-  //     setMSG("");
-  //     setEmail("");
-  //     setMobile("");
-  //     setAddress("");
-  //     setZipcode("");
-  //     setCounty("");
-  //   };
 
   return (
     <Dialog
@@ -215,9 +182,6 @@ export default function AddMenu(props) {
             </Button>
             <Button
               color="secondary"
-              // disabled={formik.isSubmitting}
-              // fullWidth
-              // size="large"
               type="submit"
               variant="contained"
             >
@@ -226,20 +190,7 @@ export default function AddMenu(props) {
           </DialogActions>
         </form>
       </DialogContent>
-      {/* <DialogActions>
-
-        {/* <Button
-            color="secondary"
-            variant="contained"
-            disabled={formik.isSubmitting}
-            // onClick={handleSubmit}
-            type="submit"
-            
-          >
-              {formik.isSubmitting ? <CircularProgress /> : "Submit"}
-            
-          </Button> 
-      </DialogActions> */}
+  
     </Dialog>
   );
 }

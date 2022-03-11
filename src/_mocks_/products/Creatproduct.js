@@ -148,7 +148,7 @@ export default function AlertDialogSlide(props) {
       onClose={handleClose}
       aria-describedby="alert-dialog-slide-description"
     >
-      <DialogTitle>{`Create New Lead`}</DialogTitle>
+      <DialogTitle>{`Add Product`}</DialogTitle>
       <DialogContent>
         {msg !== "" && (
           <Alert severity={error ? "error" : "success"}>
