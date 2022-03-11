@@ -20,7 +20,7 @@ import sidebarConfig from './SidebarConfig';
 const DRAWER_WIDTH = 280;
 
 const RootStyle = styled('div')(({ theme }) => ({
-  [theme.breakpoints.up('lg')]: {
+  [theme.breakpoints.up('xl')]: {
     flexShrink: 0,
     width: DRAWER_WIDTH
   }
@@ -44,7 +44,7 @@ DashboardSidebar.propTypes = {
 export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
   const { pathname } = useLocation();
 
-  const isDesktop = useResponsive('up', 'lg');
+  const isDesktop = useResponsive('up', 'xl');
 
   useEffect(() => {
     if (isOpenSidebar) {
@@ -104,8 +104,8 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
 
       {isDesktop && (
         <Drawer
-          open
-          variant="persistent"
+        open={isOpenSidebar}
+          onClose={onCloseSidebar}
           PaperProps={{
             sx: {
               width: DRAWER_WIDTH,

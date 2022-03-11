@@ -1,6 +1,7 @@
 // material
 import { Box, Grid, Container, Typography } from '@mui/material';
 import TableCustomer from 'src/layouts/dashboard/Table_dhasbord';
+import Adminchart from 'src/sections/@dashboard/app/Chart';
 // components
 import Page from '../components/Page';
 import {
@@ -40,10 +41,21 @@ export default function DashboardApp() {
           {/* <Grid item xs={12} sm={6} md={3}>
             <AppBugReports />
           </Grid> */}
+          <Grid item xs={12} md={8} lg={8}>
+            <AppWebsiteVisits/>
+          </Grid>
+          <Grid item xs={12} md={4} lg={4}>
+            <Adminchart/>
+          </Grid>
+      
 
           <Grid item xs={12} md={12} lg={12}>
-            <TableCustomer/>
+            <TableCustomer />
           </Grid>
+       
+
+       
+
 
           {/* <Grid item xs={12} md={6} lg={4}>
             <AppCurrentVisits />
@@ -51,9 +63,9 @@ export default function DashboardApp() {
 
           <Grid item xs={12} md={6} lg={8}>
             <AppConversionRates />
-          </Grid> */}
+          </Grid>
 
-          {/* <Grid item xs={12} md={6} lg={4}>
+          <Grid item xs={12} md={6} lg={4}>
             <AppCurrentSubject />
           </Grid>
 

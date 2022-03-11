@@ -23,8 +23,25 @@ const sidebarConfig = [
   },
   {
     title: 'Setup',
-    path: '/dashboard/blog',
-    icon: getIcon('eva:file-text-fill')
+    icon: getIcon('eva:file-text-fill'),
+    children: [
+      {
+        title: 'User Managment',
+        path: '/dashboard/Managmentsetup',
+        icon: getIcon('eva:folder-fill')
+      },
+      {
+        title: 'Discount',
+        path: '/dashboard/Discount',
+        icon: getIcon('eva:folder-fill')
+      },
+      {
+        title: 'Transaction Type',
+        path: '/dashboard/TransactionType',
+        icon: getIcon('eva:folder-fill')
+      },
+    ]
+
   },
   // {
   //   title: 'login',
