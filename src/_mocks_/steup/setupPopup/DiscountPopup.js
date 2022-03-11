@@ -23,7 +23,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function AddTransactionType(props) {
+export default function DiscountPopup(props) {
   const { open, onClose } = props;
   const [loading, setLoading] = React.useState(false);
   const [email, setEmail] = React.useState("");
@@ -111,6 +111,39 @@ export default function AddTransactionType(props) {
     setValues();
     onClose();
   };
+  //   const handleSubmit = () => {
+  //     setLoading(true);
+  //     if (
+  //       mobile !== "" &&
+  //       email !== "" &&
+  //       AddressLocation !== "" &&
+  //       zipcode !== "" &&
+  //       county !== ""
+  //     ) {
+  //       const config = {
+  //         method: "post",
+  //         url: "/leads",
+  //         withCredentials: true,
+  //         data: {
+  //           email,
+  //           mobile,
+  //           AddressLocation,
+  //           zipcode,
+  //           county,
+  //         },
+  //       };
+  //     }
+  //     setLoading(false);
+  //   };
+  //   const ClearAllFeilds = () => {
+  //     setError(false);
+  //     setMSG("");
+  //     setEmail("");
+  //     setMobile("");
+  //     setAddress("");
+  //     setZipcode("");
+  //     setCounty("");
+  //   };
 
   return (
     <Dialog
@@ -129,7 +162,7 @@ export default function AddTransactionType(props) {
           </Alert>
         )}
         <form onSubmit={formik.handleSubmit} method="post">
-        <Stack spacing={3}>
+        <Stack spacing={2}>
           <TextField
             error={Boolean(formik.touched.name && formik.errors.name)}
             fullWidth
@@ -145,7 +178,28 @@ export default function AddTransactionType(props) {
             color="secondary"
           />
 
-        
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DateTimePicker
+              renderInput={(props) => <TextField {...props} />}
+              label="Start Date "
+              value={value}
+              margin="normal"
+              onChange={(newValue) => {
+                setValue(newValue);
+              }}
+            />
+          </LocalizationProvider>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DateTimePicker
+              renderInput={(props) => <TextField {...props} />}
+              label="DateTimePicker"
+              value={value}
+              margin="normal"
+              onChange={(newValue) => {
+                setValue(newValue);
+              }}
+            />
+          </LocalizationProvider>
           </Stack>
 
 
@@ -161,6 +215,9 @@ export default function AddTransactionType(props) {
             </Button>
             <Button
               color="secondary"
+              // disabled={formik.isSubmitting}
+              // fullWidth
+              // size="large"
               type="submit"
               variant="contained"
             >
@@ -169,7 +226,20 @@ export default function AddTransactionType(props) {
           </DialogActions>
         </form>
       </DialogContent>
-  
+      {/* <DialogActions>
+
+        {/* <Button
+            color="secondary"
+            variant="contained"
+            disabled={formik.isSubmitting}
+            // onClick={handleSubmit}
+            type="submit"
+            
+          >
+              {formik.isSubmitting ? <CircularProgress /> : "Submit"}
+            
+          </Button> 
+      </DialogActions> */}
     </Dialog>
   );
 }

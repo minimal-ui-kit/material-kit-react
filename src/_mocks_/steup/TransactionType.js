@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -10,6 +11,7 @@ import Page from '../..//components//Page';
 import { Container, Typography, Box, } from '@mui/material';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
+import AddTransactionType from './setupPopup/AddTransactionType';
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -24,6 +26,14 @@ const rows = [
 ];
 
 export default function TransactionType() {
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClickClose = () => {
+    setOpen(false);
+  };
   return (
     <Page title="Dashboard: Transaction Type ">
       <Container maxWidth="xl">
@@ -60,7 +70,9 @@ export default function TransactionType() {
           </Table>
         </TableContainer>
       </Container>
+      <AddTransactionType open={open}onClose={handleClickClose} />
       <Fab
+      onClick={handleClickOpen}
        sx={{ position: "fixed", bottom: 16, right: 16 }}
         color="secondary"
         aria-label="add">

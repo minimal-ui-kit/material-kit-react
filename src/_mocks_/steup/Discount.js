@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -10,6 +11,7 @@ import { Container, Typography, Box, } from '@mui/material';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import Page from '../..//components//Page';
+import DiscountPopup from './setupPopup/DiscountPopup';
 
 
 function createData(name, calories, fat, carbs, protein) {
@@ -25,7 +27,16 @@ const rows = [
 ];
 
 export default function Discount() {
+    const [open, setOpen] = useState(false);
+
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+    const handleClickClose = () => {
+      setOpen(false);
+    };
     return (
+        
         <Page title="Dashboard: Discount ">
             <Container maxWidth="xl">
                 <Box sx={{ pb: 5 }}>
@@ -60,7 +71,10 @@ export default function Discount() {
                         </TableBody>
                     </Table>
                 </TableContainer>
+                <DiscountPopup open={open}onClose={handleClickClose} />
+
                 <Fab
+                onClick={handleClickOpen}
                     sx={{ position: "fixed", bottom: 16, right: 16 }}
                     color="secondary"
                     aria-label="add">
