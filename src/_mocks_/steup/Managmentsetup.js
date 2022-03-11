@@ -7,6 +7,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Page from '../..//components//Page';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
 import { Container, Typography, Box, } from '@mui/material';
 
 
@@ -59,6 +61,14 @@ export default function Managmentsetup() {
           </Table>
         </TableContainer>
       </Container>
+
+      <Fab
+       sx={{ position: "fixed", bottom: 16, right: 16 }}
+        color="secondary"
+        aria-label="add">
+        <AddIcon />
+      </Fab>
+
     </Page>
   );
 }
