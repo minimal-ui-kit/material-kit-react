@@ -60,6 +60,12 @@ export default function TransactionType() {
           </Table>
         </TableContainer>
       </Container>
+      <Fab
+       sx={{ position: "fixed", bottom: 16, right: 16 }}
+        color="secondary"
+        aria-label="add">
+        <AddIcon />
+      </Fab>
     </Page>
   );
 }
