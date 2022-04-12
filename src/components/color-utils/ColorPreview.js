@@ -8,7 +8,7 @@ import { Box, Typography } from '@mui/material';
 const RootStyle = styled(Box)({
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'flex-end'
+  justifyContent: 'flex-end',
 });
 
 const IconStyle = styled('div')(({ theme }) => ({
@@ -17,14 +17,14 @@ const IconStyle = styled('div')(({ theme }) => ({
   width: theme.spacing(2),
   height: theme.spacing(2),
   border: `solid 2px ${theme.palette.background.paper}`,
-  boxShadow: `inset -1px 1px 2px ${alpha(theme.palette.common.black, 0.24)}`
+  boxShadow: `inset -1px 1px 2px ${alpha(theme.palette.common.black, 0.24)}`,
 }));
 
 // ----------------------------------------------------------------------
 
 ColorPreview.propTypes = {
   colors: PropTypes.array.isRequired,
-  limit: PropTypes.number
+  limit: PropTypes.number,
 };
 
 export default function ColorPreview({ colors, limit = 3, ...other }) {
