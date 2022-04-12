@@ -9,6 +9,8 @@
 - Update `src/theme`.
 - Upgrade some dependencies to the latest versions
 
+---
+
 ### v1.3.0
 
 ###### Feb 21, 2022
