@@ -1,13 +1,12 @@
 import { useRef, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-// material
+// @mui
 import { alpha } from '@mui/material/styles';
-import { Button, Box, Divider, MenuItem, Typography, Avatar, IconButton } from '@mui/material';
+import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton } from '@mui/material';
 // components
-import Iconify from '../../components/Iconify';
 import MenuPopover from '../../components/MenuPopover';
-//
-import account from '../../_mocks_/account';
+// mocks_
+import account from '../../_mock/account';
 
 // ----------------------------------------------------------------------
 
@@ -15,31 +14,33 @@ const MENU_OPTIONS = [
   {
     label: 'Home',
     icon: 'eva:home-fill',
-    linkTo: '/'
+    linkTo: '/',
   },
   {
     label: 'Profile',
     icon: 'eva:person-fill',
-    linkTo: '#'
+    linkTo: '#',
   },
   {
     label: 'Settings',
     icon: 'eva:settings-2-fill',
-    linkTo: '#'
-  }
+    linkTo: '#',
+  },
 ];
 
 // ----------------------------------------------------------------------
 
 export default function AccountPopover() {
   const anchorRef = useRef(null);
-  const [open, setOpen] = useState(false);
 
-  const handleOpen = () => {
-    setOpen(true);
+  const [open, setOpen] = useState(null);
+
+  const handleOpen = (event) => {
+    setOpen(event.currentTarget);
   };
+
   const handleClose = () => {
-    setOpen(false);
+    setOpen(null);
   };
 
   return (
@@ -48,9 +49,7 @@ export default function AccountPopover() {
         ref={anchorRef}
         onClick={handleOpen}
         sx={{
-          padding: 0,
-          width: 44,
-          height: 44,
+          p: 0,
           ...(open && {
             '&:before': {
               zIndex: 1,
@@ -59,22 +58,30 @@ export default function AccountPopover() {
               height: '100%',
               borderRadius: '50%',
               position: 'absolute',
-              bgcolor: (theme) => alpha(theme.palette.grey[900], 0.72)
-            }
-          })
+              bgcolor: (theme) => alpha(theme.palette.grey[900], 0.8),
+            },
+          }),
         }}
       >
         <Avatar src={account.photoURL} alt="photoURL" />
       </IconButton>
 
       <MenuPopover
-        open={open}
+        open={Boolean(open)}
+        anchorEl={open}
         onClose={handleClose}
-        anchorEl={anchorRef.current}
-        sx={{ width: 220 }}
+        sx={{
+          p: 0,
+          mt: 1.5,
+          ml: 0.75,
+          '& .MuiMenuItem-root': {
+            typography: 'body2',
+            borderRadius: 0.75,
+          },
+        }}
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
-          <Typography variant="subtitle1" noWrap>
+          <Typography variant="subtitle2" noWrap>
             {account.displayName}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
@@ -82,34 +89,21 @@ export default function AccountPopover() {
           </Typography>
         </Box>
 
-        <Divider sx={{ my: 1 }} />
+        <Divider sx={{ borderStyle: 'dashed' }} />
 
-        {MENU_OPTIONS.map((option) => (
-          <MenuItem
-            key={option.label}
-            to={option.linkTo}
-            component={RouterLink}
-            onClick={handleClose}
-            sx={{ typography: 'body2', py: 1, px: 2.5 }}
-          >
-            <Iconify
-              icon={option.icon}
-              sx={{
-                mr: 2,
-                width: 24,
-                height: 24
-              }}
-            />
+        <Stack sx={{ p: 1 }}>
+          {MENU_OPTIONS.map((option) => (
+            <MenuItem key={option.label} to={option.linkTo} component={RouterLink} onClick={handleClose}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </Stack>
 
-            {option.label}
-          </MenuItem>
-        ))}
+        <Divider sx={{ borderStyle: 'dashed' }} />
 
-        <Box sx={{ p: 2, pt: 1.5 }}>
-          <Button fullWidth color="inherit" variant="outlined">
-            Logout
-          </Button>
-        </Box>
+        <MenuItem onClick={handleClose} sx={{ m: 1 }}>
+          Logout
+        </MenuItem>
       </MenuPopover>
     </>
   );
