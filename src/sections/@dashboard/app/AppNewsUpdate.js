@@ -1,70 +1,29 @@
-import { faker } from '@faker-js/faker';
+// @mui
 import PropTypes from 'prop-types';
-import { formatDistance } from 'date-fns';
-import { Link as RouterLink } from 'react-router-dom';
-// material
 import { Box, Stack, Link, Card, Button, Divider, Typography, CardHeader } from '@mui/material';
 // utils
-import { mockImgCover } from '../../../utils/mockImages';
-//
-import Scrollbar from '../../../components/Scrollbar';
+import { fToNow } from '../../../utils/formatTime';
+// components
 import Iconify from '../../../components/Iconify';
+import Scrollbar from '../../../components/Scrollbar';
 
 // ----------------------------------------------------------------------
 
-const NEWS = [...Array(5)].map((_, index) => {
-  const setIndex = index + 1;
-  return {
-    title: faker.name.title(),
-    description: faker.lorem.paragraphs(),
-    image: mockImgCover(setIndex),
-    postedAt: faker.date.soon()
-  };
-});
-
-// ----------------------------------------------------------------------
-
-NewsItem.propTypes = {
-  news: PropTypes.object.isRequired
+AppNewsUpdate.propTypes = {
+  title: PropTypes.string,
+  subheader: PropTypes.string,
+  list: PropTypes.array.isRequired,
 };
 
-function NewsItem({ news }) {
-  const { image, title, description, postedAt } = news;
-
+export default function AppNewsUpdate({ title, subheader, list, ...other }) {
   return (
-    <Stack direction="row" alignItems="center" spacing={2}>
-      <Box
-        component="img"
-        alt={title}
-        src={image}
-        sx={{ width: 48, height: 48, borderRadius: 1.5 }}
-      />
-      <Box sx={{ minWidth: 240 }}>
-        <Link to="#" color="inherit" underline="hover" component={RouterLink}>
-          <Typography variant="subtitle2" noWrap>
-            {title}
-          </Typography>
-        </Link>
-        <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-          {description}
-        </Typography>
-      </Box>
-      <Typography variant="caption" sx={{ pr: 3, flexShrink: 0, color: 'text.secondary' }}>
-        {formatDistance(postedAt, new Date())}
-      </Typography>
-    </Stack>
-  );
-}
-
-export default function AppNewsUpdate() {
-  return (
-    <Card>
-      <CardHeader title="News Update" />
+    <Card {...other}>
+      <CardHeader title={title} subheader={subheader} />
 
       <Scrollbar>
         <Stack spacing={3} sx={{ p: 3, pr: 0 }}>
-          {NEWS.map((news) => (
-            <NewsItem key={news.title} news={news} />
+          {list.map((news) => (
+            <NewsItem key={news.id} news={news} />
           ))}
         </Stack>
       </Scrollbar>
@@ -72,16 +31,45 @@ export default function AppNewsUpdate() {
       <Divider />
 
       <Box sx={{ p: 2, textAlign: 'right' }}>
-        <Button
-          to="#"
-          size="small"
-          color="inherit"
-          component={RouterLink}
-          endIcon={<Iconify icon="eva:arrow-ios-forward-fill" />}
-        >
+        <Button size="small" color="inherit" endIcon={<Iconify icon={'eva:arrow-ios-forward-fill'} />}>
           View all
         </Button>
       </Box>
     </Card>
+  );
+}
+
+// ----------------------------------------------------------------------
+
+NewsItem.propTypes = {
+  news: PropTypes.shape({
+    description: PropTypes.string,
+    image: PropTypes.string,
+    postedAt: PropTypes.instanceOf(Date),
+    title: PropTypes.string,
+  }),
+};
+
+function NewsItem({ news }) {
+  const { image, title, description, postedAt } = news;
+
+  return (
+    <Stack direction="row" alignItems="center" spacing={2}>
+      <Box component="img" alt={title} src={image} sx={{ width: 48, height: 48, borderRadius: 1.5, flexShrink: 0 }} />
+
+      <Box sx={{ minWidth: 240, flexGrow: 1 }}>
+        <Link color="inherit" variant="subtitle2" noWrap>
+          {title}
+        </Link>
+
+        <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+          {description}
+        </Typography>
+      </Box>
+
+      <Typography variant="caption" sx={{ pr: 3, flexShrink: 0, color: 'text.secondary' }}>
+        {fToNow(postedAt)}
+      </Typography>
+    </Stack>
   );
 }

@@ -1,12 +1,13 @@
-import { merge } from 'lodash';
+import PropTypes from 'prop-types';
+import merge from 'lodash/merge';
 import ReactApexChart from 'react-apexcharts';
-// material
+// @mui
 import { useTheme, styled } from '@mui/material/styles';
 import { Card, CardHeader } from '@mui/material';
 // utils
 import { fNumber } from '../../../utils/formatNumber';
-//
-import { BaseOptionChart } from '../../../components/charts';
+// components
+import { BaseOptionChart } from '../../../components/chart';
 
 // ----------------------------------------------------------------------
 
@@ -18,32 +19,36 @@ const ChartWrapperStyle = styled('div')(({ theme }) => ({
   marginTop: theme.spacing(5),
   '& .apexcharts-canvas svg': { height: CHART_HEIGHT },
   '& .apexcharts-canvas svg,.apexcharts-canvas foreignObject': {
-    overflow: 'visible'
+    overflow: 'visible',
   },
   '& .apexcharts-legend': {
     height: LEGEND_HEIGHT,
     alignContent: 'center',
     position: 'relative !important',
     borderTop: `solid 1px ${theme.palette.divider}`,
-    top: `calc(${CHART_HEIGHT - LEGEND_HEIGHT}px) !important`
-  }
+    top: `calc(${CHART_HEIGHT - LEGEND_HEIGHT}px) !important`,
+  },
 }));
 
 // ----------------------------------------------------------------------
 
-const CHART_DATA = [4344, 5435, 1443, 4443];
+AppCurrentVisits.propTypes = {
+  title: PropTypes.string,
+  subheader: PropTypes.string,
+  chartColors: PropTypes.arrayOf(PropTypes.string),
+  chartData: PropTypes.array,
+};
 
-export default function AppCurrentVisits() {
+export default function AppCurrentVisits({ title, subheader, chartColors, chartData, ...other }) {
   const theme = useTheme();
 
+  const chartLabels = chartData.map((i) => i.label);
+
+  const chartSeries = chartData.map((i) => i.value);
+
   const chartOptions = merge(BaseOptionChart(), {
-    colors: [
-      theme.palette.primary.main,
-      theme.palette.info.main,
-      theme.palette.warning.main,
-      theme.palette.error.main
-    ],
-    labels: ['America', 'Asia', 'Europe', 'Africa'],
+    colors: chartColors,
+    labels: chartLabels,
     stroke: { colors: [theme.palette.background.paper] },
     legend: { floating: true, horizontalAlign: 'center' },
     dataLabels: { enabled: true, dropShadow: { enabled: false } },
@@ -52,20 +57,21 @@ export default function AppCurrentVisits() {
       y: {
         formatter: (seriesName) => fNumber(seriesName),
         title: {
-          formatter: (seriesName) => `#${seriesName}`
-        }
-      }
+          formatter: (seriesName) => `${seriesName}`,
+        },
+      },
     },
     plotOptions: {
-      pie: { donut: { labels: { show: false } } }
-    }
+      pie: { donut: { labels: { show: false } } },
+    },
   });
 
   return (
-    <Card>
-      <CardHeader title="Current Visits" />
+    <Card {...other}>
+      <CardHeader title={title} subheader={subheader} />
+
       <ChartWrapperStyle dir="ltr">
-        <ReactApexChart type="pie" series={CHART_DATA} options={chartOptions} height={280} />
+        <ReactApexChart type="pie" series={chartSeries} options={chartOptions} height={280} />
       </ChartWrapperStyle>
     </Card>
   );
