@@ -1,6 +1,4 @@
 import { faker } from '@faker-js/faker';
-// utils
-import { mockImgCover } from '../utils/mockImages';
 
 // ----------------------------------------------------------------------
 
@@ -28,12 +26,12 @@ const POST_TITLES = [
   'Akkers van Margraten',
   'Gradient Ticket icon',
   'Here’s a Dyson motorcycle concept that doesn’t ‘suck’!',
-  'How to Animate a SVG with border-image'
+  'How to Animate a SVG with border-image',
 ];
 
 const posts = [...Array(23)].map((_, index) => ({
   id: faker.datatype.uuid(),
-  cover: mockImgCover(index + 1),
+  cover: `/static/mock-images/covers/cover_${index + 1}.jpg`,
   title: POST_TITLES[index + 1],
   createdAt: faker.date.past(),
   view: faker.datatype.number(),
@@ -42,8 +40,8 @@ const posts = [...Array(23)].map((_, index) => ({
   favorite: faker.datatype.number(),
   author: {
     name: faker.name.findName(),
-    avatarUrl: `/static/mock-images/avatars/avatar_${index + 1}.jpg`
-  }
+    avatarUrl: `/static/mock-images/avatars/avatar_${index + 1}.jpg`,
+  },
 }));
 
 export default posts;

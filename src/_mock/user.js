@@ -1,13 +1,11 @@
 import { faker } from '@faker-js/faker';
 import { sample } from 'lodash';
-// utils
-import { mockImgAvatar } from '../utils/mockImages';
 
 // ----------------------------------------------------------------------
 
 const users = [...Array(24)].map((_, index) => ({
   id: faker.datatype.uuid(),
-  avatarUrl: mockImgAvatar(index + 1),
+  avatarUrl: `/static/mock-images/avatars/avatar_${index + 1}.jpg`,
   name: faker.name.findName(),
   company: faker.company.companyName(),
   isVerified: faker.datatype.boolean(),
@@ -22,8 +20,8 @@ const users = [...Array(24)].map((_, index) => ({
     'Backend Developer',
     'Full Stack Designer',
     'Front End Developer',
-    'Full Stack Developer'
-  ])
+    'Full Stack Developer',
+  ]),
 }));
 
 export default users;
