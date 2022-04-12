@@ -1,6 +1,17 @@
+### v1.4.0
+
+###### Apr 12, 2022
+
+- Update `src/components`.
+- Update `src/sections`.
+- Update `src/pages`.
+- Update `src/layouts`.
+- Update `src/theme`.
+- Upgrade some dependencies to the latest versions
+
 ### v1.3.0
 
-###### Feb 21, 2021
+###### Feb 21, 2022
 
 - Support react-script v5.0.0
 - Source code improvement
