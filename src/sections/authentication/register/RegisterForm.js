@@ -21,7 +21,8 @@ export default function RegisterForm() {
       .required('First name required'),
     lastName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Last name required'),
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
-    password: Yup.string().required('Password is required')
+    password: Yup.string().required('Password is required'),
+    company: Yup.string().required('Company is required')
   });
 
   const formik = useFormik({
@@ -29,7 +30,8 @@ export default function RegisterForm() {
       firstName: '',
       lastName: '',
       email: '',
-      password: ''
+      password: '',
+      company: ''
     },
     validationSchema: RegisterSchema,
     onSubmit: () => {
@@ -69,6 +71,15 @@ export default function RegisterForm() {
             {...getFieldProps('email')}
             error={Boolean(touched.email && errors.email)}
             helperText={touched.email && errors.email}
+          />
+
+          <TextField
+            fullWidth
+            autoComplete="company"
+            label="Company"
+            {...getFieldProps('company')}
+            error={Boolean(touched.company && errors.company)}
+            helperText={touched.company && errors.company}
           />
 
           <TextField
