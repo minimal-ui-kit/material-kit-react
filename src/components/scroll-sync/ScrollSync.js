@@ -56,6 +56,7 @@ export default class ScrollSync extends Component {
         this.panes[group].push(node)
       }
     })
+    node.prevScrollTop = node.scrollTop
     this.addEvents(node, groups)
   }
 
@@ -88,6 +89,7 @@ export default class ScrollSync extends Component {
 
   handlePaneScroll = (node, groups) => {
     if (!this.props.enabled) {
+      node.prevScrollTop = node.scrollTop
       return
     }
 
@@ -111,34 +113,13 @@ export default class ScrollSync extends Component {
         }
       })
     })
+    scrolledPane.prevScrollTop = scrolledPane.scrollTop
     if (this.props.onSync) this.props.onSync(scrolledPane)
   }
 
   syncScrollPosition(scrolledPane, pane) {
-    const {
-      scrollTop,
-      scrollHeight,
-      clientHeight,
-      scrollLeft,
-      scrollWidth,
-      clientWidth
-    } = scrolledPane
-
-    const scrollTopOffset = scrollHeight - clientHeight
-    const scrollLeftOffset = scrollWidth - clientWidth
-
-    const { proportional, vertical, horizontal } = this.props
-
-    /* Calculate the actual pane height */
-    const paneHeight = pane.scrollHeight - clientHeight
-    const paneWidth = pane.scrollWidth - clientWidth
-    /* Adjust the scrollTop position of it accordingly */
-    if (vertical && scrollTopOffset > 0) {
-      pane.scrollTop = proportional ? (paneHeight * scrollTop) / scrollTopOffset : scrollTop // eslint-disable-line
-    }
-    if (horizontal && scrollLeftOffset > 0) {
-      pane.scrollLeft = proportional ? (paneWidth * scrollLeft) / scrollLeftOffset : scrollLeft // eslint-disable-line
-    }
+    pane.scrollTop += scrolledPane.scrollTop - scrolledPane.prevScrollTop
+    pane.prevScrollTop = pane.scrollTop
   }
 
   render() {

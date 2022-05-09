@@ -84,7 +84,7 @@ export default function DiffView(props) {
         <ScrollSync enabled={synchronised}> 
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
                 <ScrollSyncPane>
-                    <div id="containerLeft" style={{overflow: 'auto', height: '200px', direction: 'rtl'}}>
+                    <div id="containerLeft" style={{overflow: 'auto', height: '400px', direction: 'rtl'}}>
                     <div style={{direction: 'ltr'}}>
                         {props.contentLeft}
                     </div>
@@ -92,7 +92,7 @@ export default function DiffView(props) {
                 </ScrollSyncPane>
                 <div style={{width:200}} />
                 <ScrollSyncPane>
-                    <div id="containerRight" style={{overflow: 'auto', height: '200px'}}>
+                    <div id="containerRight" style={{overflow: 'auto', height: '400px'}}>
                         {props.contentRight}
                     </div>
                 </ScrollSyncPane>
