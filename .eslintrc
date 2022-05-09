@@ -27,6 +27,7 @@
   "rules": {
     "no-shadow": 0,
     "no-console": 0,
+    "react/jsx-boolean-value": 0,
     "react/jsx-key": 1,
     "import/no-cycle": 0,
     "arrow-body-style": 1,
