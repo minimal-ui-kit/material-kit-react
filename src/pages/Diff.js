@@ -183,7 +183,9 @@ export default function Diff() {
 {
 //        Working
 }
+    <ScrollSync>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+        <ScrollSyncPane>
           <div id="containerLeft" style={{overflow: 'auto', height: '200px'}}>
                 <h1>Left Pane Content</h1>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aperiam doloribus
@@ -215,7 +217,9 @@ export default function Diff() {
                 <h1>Left Pane Content</h1>
                 <h1>Left Pane Content</h1>
           </div>
+        </ScrollSyncPane>
           <div style={{width:200}} />
+        <ScrollSyncPane>
           <div id="containerElement" style={{overflow: 'auto', height: '200px'}}>
                 <h1>Left Pane Content</h1>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aperiam doloribus
@@ -247,7 +251,9 @@ export default function Diff() {
                 <h1>right Pane Content</h1>
                 <h1>right Pane Content</h1>
           </div>
+        </ScrollSyncPane>
       </Stack>
+    </ScrollSync> 
           
           
           
