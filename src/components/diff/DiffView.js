@@ -11,75 +11,65 @@ import { ScrollSync, ScrollSyncPane } from '../scroll-sync'; // react-scroll-syn
 
 export default function DiffView(props) {
 
-    const [state, setState] = useState({synchronised:true, scrolling:"chill"});
+    const [state, setState] = useState({synchronised:true, scrollPromise:null});
 
     useEffect(() => {
-        console.log("useEffect", state)
-        if (state.scrolling === "chill") {
-            return
+        console.log(state)
+        if (state.scrollPromise !== null) {
+            state.scrollPromise.then(() => setState({synchronised:true,scrollPromise:null}))
         }
-        if (state.scrolling === "left") {
-            const scrollABit = new Promise((resolve, reject) => {
-
-                console.log("scrollabit left")
+    }, [state]);
+    
+    const scrollAndResync = (scrollfunc) => {
+        const scrollPromise = new Promise((resolve, reject) => {
                 Events.scrollEvent.register('end', () => {
                     resolve();
                     Events.scrollEvent.remove('end');
                 });
+                scrollfunc();
+        });
+        setState({synchronised:false,scrollPromise});
+    };
 
-                scroll.scrollMore(100, {
-                    duration: 800,
-                    delay: 0,
-                    smooth: 'easeInOutQuart',
-                    containerId: "containerLeft"
-                });
 
-            });
-            scrollABit.then(() => setState({synchronised:true,scrolling:"chill"}));
-            return
-        }
-        if (state.scrolling === "right") {
-            const scrollABit = new Promise((resolve, reject) => {
+    const scrollLeft = () => {
+        scroll.scrollMore(100, {
+            duration: 300,
+            delay: 0,
+            smooth: 'easeOutQuart',
+            containerId: "containerLeft"
+        });
+    }
 
-                console.log("scrollabit right")
-                Events.scrollEvent.register('end', () => {
-                    resolve();
-                    Events.scrollEvent.remove('end');
-                });
-
-                scroll.scrollMore(100, {
-                    duration: 800,
-                    delay: 0,
-                    smooth: 'easeInOutQuart',
-                    containerId: "containerRight"
-                });
-
-            });
-            scrollABit.then(() => setState({synchronised:true,scrolling:"chill"}));
-        }
-
-    }, [state]); // <- add the count variable here
+    const scrollRight = () => {
+        scroll.scrollMore(100, {
+            duration: 300,
+            delay: 0,
+            smooth: 'easeOutQuart',
+            containerId: "containerRight"
+        });
+    }
 
     const debug = [
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
             <Button
                 variant="contained"
-                onClick={() => setState({synchronised:false,scrolling:"left"})}>
+                onClick={() => scrollAndResync(scrollLeft)}>
                 Scroll Left
             </Button>
             <Button
-                onClick={() => setState({synchronised:true,scrolling:state.scrolling})}
+                onClick={() => setState({synchronised:true,scrollPromise:state.scrollPromise})}
                 variant="contained">
                 sync
             </Button>
             <Button
-                onClick={() => setState({synchronised:false,scrolling:state.scrolling})}
+                onClick={() => setState({synchronised:false,scrollPromise:state.scrollPromise})}
                 variant="contained">
                 unsync
             </Button>
             <Button
                 variant="contained"
-                onClick={() => setState({synchronised:false,scrolling:"right"})}>
+                onClick={() => scrollAndResync(scrollRight)}>
                 Scroll Right
             </Button>
         </Stack>
