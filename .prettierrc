@@ -2,5 +2,18 @@
   "printWidth": 100,
   "singleQuote": true,
   "trailingComma": "none",
-  "tabWidth": 2
+  "tabWidth": 2,
+  "rules": {
+    "no-unused-vars": ["warn"],
+    "prettier/prettier": ["error", {"singleQuote": false}],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-uses-react": 1,
+    "react/jsx-uses-vars": 1,
+    "react/react-in-jsx-scope": 1,
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react/display-name": 0,
+    "react/prop-types": [0, { "ignore": ["children"] }],
+    "jsx-a11y/anchor-is-valid": 0
+  }
 }

@@ -7,7 +7,6 @@ import AuthLayout from '../layouts/AuthLayout';
 // components
 import Page from '../components/Page';
 import { RegisterForm } from '../sections/authentication/register';
-import AuthSocial from '../sections/authentication/AuthSocial';
 
 // ----------------------------------------------------------------------
 
@@ -65,8 +64,6 @@ export default function Register() {
               Timesheet, temperature and all stats included.
             </Typography>
           </Box>
-
-          {/* <AuthSocial /> */}
 
           <RegisterForm />
 

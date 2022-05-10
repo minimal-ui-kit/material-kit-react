@@ -1,8 +1,8 @@
 // ----------------------------------------------------------------------
 
 const account = {
-  displayName: 'Jaydon Frankie',
-  email: 'demo@minimals.cc',
+  displayName: 'Administrator',
+  email: 'admin@gctza.co.za',
   photoURL: '/static/mock-images/avatars/avatar_default.jpg'
 };
 

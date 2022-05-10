@@ -3,18 +3,12 @@ import { Box, Grid, Container, Typography } from '@mui/material';
 // components
 import Page from '../components/Page';
 import {
-  AppTasks,
   AppNewUsers,
   AppBugReports,
   AppItemOrders,
-  AppNewsUpdate,
   AppWeeklySales,
-  AppOrderTimeline,
   AppCurrentVisits,
-  AppWebsiteVisits,
-  AppTrafficBySite,
-  AppCurrentSubject,
-  AppConversionRates
+  AppWebsiteVisits
 } from '../sections/@dashboard/app';
 
 // ----------------------------------------------------------------------
@@ -47,30 +41,6 @@ export default function DashboardApp() {
           <Grid item xs={12} md={6} lg={4}>
             <AppCurrentVisits />
           </Grid>
-
-          {/* <Grid item xs={12} md={6} lg={8}>
-            <AppConversionRates />
-          </Grid> */}
-
-          {/* <Grid item xs={12} md={6} lg={4}>
-            <AppCurrentSubject />
-          </Grid> */}
-
-          {/* <Grid item xs={12} md={6} lg={8}>
-            <AppNewsUpdate />
-          </Grid> */}
-
-          {/* <Grid item xs={12} md={6} lg={4}>
-            <AppOrderTimeline />
-          </Grid> */}
-
-          {/* <Grid item xs={12} md={6} lg={4}>
-            <AppTrafficBySite />
-          </Grid> */}
-
-          {/* <Grid item xs={12} md={6} lg={8}>
-            <AppTasks />
-          </Grid> */}
         </Grid>
       </Container>
     </Page>

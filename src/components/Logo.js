@@ -1,18 +1,14 @@
-import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
 // material
-import { Box } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
-Logo.propTypes = {
-  sx: PropTypes.object
-};
+Logo.propTypes = {};
 
-export default function Logo({ sx }) {
+export default function Logo() {
   return (
     <RouterLink to="/">
-      <img src="/static/logo.png" width={160} height={60}/>
+      <img src="/static/logo.png" width={160} height={60} alt="gct-logo" />
     </RouterLink>
   );
 }

@@ -7,7 +7,6 @@ import AuthLayout from '../layouts/AuthLayout';
 // components
 import Page from '../components/Page';
 import { LoginForm } from '../sections/authentication/login';
-import AuthSocial from '../sections/authentication/AuthSocial';
 
 // ----------------------------------------------------------------------
 
@@ -41,12 +40,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
 export default function Login() {
   return (
     <RootStyle title="Login | GCT">
-      <AuthLayout>
-        {/* Don’t have an account? &nbsp;
-        <Link underline="none" variant="subtitle2" component={RouterLink} to="/register">
-          Get started
-        </Link> */}
-      </AuthLayout>
+      <AuthLayout />
 
       <SectionStyle sx={{ display: { xs: 'none', md: 'flex' } }}>
         <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
@@ -61,9 +55,7 @@ export default function Login() {
             <Typography variant="h4" gutterBottom>
               Sign in to GCT admin portal
             </Typography>
-            {/* <Typography sx={{ color: 'text.secondary' }}>Enter your details below.</Typography> */}
           </Stack>
-          {/* <AuthSocial /> */}
 
           <LoginForm />
 
