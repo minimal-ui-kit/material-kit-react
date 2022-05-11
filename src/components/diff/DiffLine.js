@@ -15,14 +15,19 @@ import {
   TableContainer,
   TablePagination,
 } from '@mui/material';
+import Prism from 'prismjs';
+import 'prismjs/themes/prism.css';
+import 'prismjs/components/prism-python';
 import HunkSeparator from './HunkSeparator';
 
 export default function DiffLine(props) {
 
+    const language = Prism.highlight(props.change.content, Prism.languages.python, 'python');
+
     return (
         <tr>
-            <td>
-                {props.change.content}
+            <td style={{whiteSpace: 'pre-wrap'}}>
+                <span dangerouslySetInnerHTML={{ __html: language }} />
             </td>
         </tr>
     )
