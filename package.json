@@ -47,7 +47,6 @@
     "change-case": "^4.1.2",
     "date-fns": "^2.28.0",
     "formik": "^2.2.9",
-    "gitdiff-parser": "^0.2.2",
     "history": "^5.2.0",
     "lodash": "^4.17.21",
     "numeral": "^2.0.6",
