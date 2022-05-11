@@ -53,10 +53,16 @@ export default function DiffFile(props) {
 
     return (
         <StyledCard>
-            <h4 style={{textAlign: "center"}}>
-               [{props.left ? props.file.oldRevision : props.file.newRevision}] {props.left ? props.file.oldPath : props.file.newPath}
-            </h4>
-            {renderHunks()}
+            <table>
+                <thead><tr><td>
+                    <h4 style={{textAlign: "center"}}>
+                       [{props.left ? props.file.oldRevision : props.file.newRevision}] {props.left ? props.file.oldPath : props.file.newPath}
+                    </h4>
+                </td></tr></thead>
+                <tbody>
+                {renderHunks()}
+                </tbody>
+            </table>
         </StyledCard>
     )
 

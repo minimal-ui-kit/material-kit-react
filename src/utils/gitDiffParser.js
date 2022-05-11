@@ -1,15 +1,16 @@
+/* eslint-disable */
 /**
  * @file gitdiff 消息解析器
  * @author errorrik(errorrik@gmail.com)
  */
 
 (function (root) {
-    var STAT_START = 2;
-    var STAT_FILE_META = 3;
-    var STAT_HUNK = 5;
+    const STAT_START = 2;
+    const STAT_FILE_META = 3;
+    const STAT_HUNK = 5;
 
 
-    var parser = {
+    const parser = {
         /**
          * 解析 gitdiff 消息
          *
@@ -17,20 +18,20 @@
          * @return {Object}
          */
         parse: function (source) {
-            var infos = [];
-            var stat = STAT_START;
-            var currentInfo;
-            var currentHunk;
-            var changeOldLine;
-            var changeNewLine;
+            const infos = [];
+            let stat = STAT_START;
+            let currentInfo;
+            let currentHunk;
+            let changeOldLine;
+            let changeNewLine;
 
 
-            var lines = source.split('\n');
-            var linesLen = lines.length;
-            var i = 0;
+            const lines = source.split('\n');
+            const linesLen = lines.length;
+            let i = 0;
 
             while (i < linesLen) {
-                var line = lines[i];
+                const line = lines[i];
 
                 if (line.indexOf('diff --git') === 0) {
                     // read file
@@ -48,14 +49,14 @@
                     // 3. 如果有 rename from foo.js 这样的就是rename
                     // 4. 如果有 copy from foo.js 这样的就是copy
                     // 5. 其它情况是modify
-                    var currentInfoType = null;
+                    let currentInfoType = null;
 
 
                     // read type and index
-                    var simiLine;
+                    let simiLine;
                     simiLoop: while ((simiLine = lines[++i])) {
-                        var spaceIndex = simiLine.indexOf(' ');
-                        var infoType = spaceIndex > -1 ? simiLine.slice(0, spaceIndex) : infoType;
+                        let spaceIndex = simiLine.indexOf(' ');
+                        let infoType = spaceIndex > -1 ? simiLine.slice(0, spaceIndex) : infoType;
 
                         switch (infoType) {
                             case 'diff': // diff --git
@@ -64,7 +65,7 @@
 
                             case 'deleted':
                             case 'new':
-                                var leftStr = simiLine.slice(spaceIndex + 1);
+                                let leftStr = simiLine.slice(spaceIndex + 1);
                                 if (leftStr.indexOf('file mode') === 0) {
                                     currentInfo[infoType === 'new' ? 'newMode' : 'oldMode'] = leftStr.slice(10);
                                 }
@@ -75,8 +76,8 @@
                                 break;
 
                             case 'index':
-                                var segs = simiLine.slice(spaceIndex + 1).split(' ');
-                                var revs = segs[0].split('..');
+                                let segs = simiLine.slice(spaceIndex + 1).split(' ');
+                                let revs = segs[0].split('..');
                                 currentInfo.oldRevision = revs[0];
                                 currentInfo.newRevision = revs[1];
 
@@ -88,7 +89,7 @@
 
                             case 'copy':
                             case 'rename':
-                                var infoStr = simiLine.slice(spaceIndex + 1);
+                                let infoStr = simiLine.slice(spaceIndex + 1);
                                 if (infoStr.indexOf('from') === 0) {
                                     currentInfo.oldPath = infoStr.slice(5);
                                 }
@@ -99,8 +100,8 @@
                                 break;
 
                             case '---':
-                                var oldPath = simiLine.slice(spaceIndex + 1);
-                                var newPath = lines[++i].slice(4); // next line must be "+++ xxx"
+                                let oldPath = simiLine.slice(spaceIndex + 1);
+                                let newPath = lines[++i].slice(4); // next line must be "+++ xxx"
                                 if (oldPath === '/dev/null') {
                                     newPath = newPath.slice(2);
                                     currentInfoType = 'add';
@@ -133,7 +134,7 @@
                 }
                 else if (stat === STAT_HUNK) {
                     if (line.indexOf('@@') === 0) {
-                        var match = /^@@\s+-([0-9]+)(,([0-9]+))?\s+\+([0-9]+)(,([0-9]+))?/.exec(line)
+                        let match = /^@@\s+-([0-9]+)(,([0-9]+))?\s+\+([0-9]+)(,([0-9]+))?/.exec(line)
                         currentHunk = {
                             content: line,
                             oldStart: match[1] - 0,
@@ -148,8 +149,8 @@
                         changeNewLine = currentHunk.newStart;
                     }
                     else {
-                        var typeChar = line.slice(0, 1);
-                        var change = {
+                        let typeChar = line.slice(0, 1);
+                        let change = {
                             content: line.slice(1)
                         };
 
@@ -178,7 +179,7 @@
                                 break;
 
                             case '\\': // Seems "no newline" is the only case starting with /
-                                var lastChange = currentHunk.changes[currentHunk.changes.length - 1];
+                                let lastChange = currentHunk.changes[currentHunk.changes.length - 1];
                                 if (!lastChange.isDelete) {
                                     currentInfo.newEndingNewLine = false;
                                 }

@@ -7,7 +7,7 @@ import {
   Container,
   Typography,
 } from '@mui/material';
-import gitDiffParser from 'gitdiff-parser';
+import gitDiffParser from '../utils/gitDiffParser';
 
 // components
 import Page from '../components/Page';

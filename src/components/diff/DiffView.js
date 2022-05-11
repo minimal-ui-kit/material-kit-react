@@ -34,21 +34,34 @@ export default function DiffView(props) {
 
 
     const scrollLeft = () => {
-        scroll.scrollMore(100, {
-            duration: 300,
-            delay: 0,
-            smooth: 'easeOutQuart',
-            containerId: "containerLeft"
+    
+        scroller.scrollTo('@@ -6,9 +6,9 @@', {
+          duration: 500,
+          delay: 0,
+          smooth: 'easeOutQuart',
+          containerId: "containerLeft"
         });
+//        scroll.scrollMore(100, {
+//            duration: 300,
+//            delay: 0,
+//            smooth: 'easeOutQuart',
+//            containerId: "containerLeft"
+//        });
     }
 
     const scrollRight = () => {
-        scroll.scrollMore(100, {
-            duration: 300,
-            delay: 0,
-            smooth: 'easeOutQuart',
-            containerId: "containerRight"
+         scroller.scrollTo('@@ -6,9 +6,9 @@', {
+          duration: 500,
+          delay: 0,
+          smooth: 'easeOutQuart',
+          containerId: "containerRight"
         });
+//        scroll.scrollMore(100, {
+//            duration: 300,
+//            delay: 0,
+//            smooth: 'easeOutQuart',
+//            containerId: "containerRight"
+//        });
     }
 
     const debug = [
@@ -77,9 +90,9 @@ export default function DiffView(props) {
     ]
     const body = [
         <ScrollSync enabled={state.synchronised}> 
-            <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+            <Stack direction="row">
                 <ScrollSyncPane>
-                    <div id="containerLeft" style={{overflow: 'auto', height: '400px', width: '100%', direction: 'rtl'}}>
+                    <div id="containerLeft" style={{overflow: 'auto', height: '65vh', width: '100%', direction: 'rtl'}}>
                     <div style={{direction: 'ltr'}}>
                         {props.files.map(file => <DiffFile file={file} left={true}/>)}
                     </div>
@@ -87,7 +100,7 @@ export default function DiffView(props) {
                 </ScrollSyncPane>
                 <div style={{width:200}} />
                 <ScrollSyncPane>
-                    <div id="containerRight" style={{overflow: 'auto', height: '400px', width: '100%',}}>
+                    <div id="containerRight" style={{overflow: 'auto', height: '65vh', width: '100%',}}>
                         {props.files.map(file => <DiffFile file={file} left={false}/>)}
                     </div>
                 </ScrollSyncPane>
