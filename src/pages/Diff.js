@@ -22,82 +22,13 @@ import { leftText, rightText, diffText } from '../dummytext';
 
 
 export default function Diff() {
-  
-  const left = (
-    <>
-    <h1>Left Pane Content</h1>
-    <h1>Left Pane Content</h1>
-    <h1>Left Pane Content</h1>
-    <DiffFile/>
-    <DiffFile/>
-    <DiffFile/>
-    <h1>Left Pane Content</h1>
-    <h1>Left Pane Content</h1>
-    <h1>Left Pane Content</h1>
-    <h1>Left Pane Content</h1>
-    <h1>Left Pane Content</h1>
-    <h1>Left Pane Content</h1>
-    <h1>Left Pane Content</h1>
-    <h1>Left Pane Content</h1>
-    <h1>Left Pane Content</h1>
-    <h1>Left Pane Content</h1>
-    <h1>Left Pane Content</h1>
-    <h1>Left Pane Content</h1>
-    <h1>Left Pane Content</h1>
-    <h1>Left Pane Content</h1>
-    <h1>Left Pane Content</h1>
-    <h1>Left Pane Content</h1>
-    <h1>Left Pane Content</h1>
-    <h1>Left Pane Content</h1>
-    <h1>Left Pane Content</h1>
-    <h1>Left Pane Content</h1>
-    <h1>Left Pane Content</h1>
-    <h1>Left Pane Content</h1>
-    <h1>Left Pane Content</h1>
-    <h1>Left Pane Content</h1>
-    </>
-  )
-  const right = (
-    <>
-    <h1>Right Pane Content</h1>
-    <h1>Right Pane Content</h1>
-    <h1>Right Pane Content</h1>
-    <h1>Right Pane Content</h1>
-    <DiffFile/>
-    <DiffFile/>
-    <DiffFile/>
-    <h1>Right Pane Content</h1>
-    <h1>Right Pane Content</h1>
-    <h1>Right Pane Content</h1>
-    <h1>Right Pane Content</h1>
-    <h1>Right Pane Content</h1>
-    <h1>Right Pane Content</h1>
-    <h1>Right Pane Content</h1>
-    <h1>Right Pane Content</h1>
-    <h1>Right Pane Content</h1>
-    <h1>Right Pane Content</h1>
-    <h1>Right Pane Content</h1>
-    <h1>Right Pane Content</h1>
-    <h1>Right Pane Content</h1>
-    <h1>Right Pane Content</h1>
-    <h1>Right Pane Content</h1>
-    <h1>Right Pane Content</h1>
-    <h1>Right Pane Content</h1>
-    <h1>Right Pane Content</h1>
-    <h1>Right Pane Content</h1>
-    <h1>Right Pane Content</h1>
-    <h1>Right Pane Content</h1>
-    <h1>Right Pane Content</h1>
-    <h1>Right Pane Content</h1>
-    </>
-  )
-  
+
   const files = gitDiffParser.parse(diffText)
   console.log(files)
 
   return (
     <Page title="User">
-      <Container>
+      <Container maxWidth={false}>
       <DiffView debug files={files}/>
       </Container>
     </Page>

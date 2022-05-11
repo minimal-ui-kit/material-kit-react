@@ -15,7 +15,6 @@ export default function DiffView(props) {
     const [state, setState] = useState({synchronised:true, scrollPromise:null});
 
     useEffect(() => {
-        console.log(state)
         if (state.scrollPromise !== null) {
             state.scrollPromise.then(() => setState({synchronised:true,scrollPromise:null}))
         }
@@ -98,7 +97,7 @@ export default function DiffView(props) {
                     </div>
                     </div>
                 </ScrollSyncPane>
-                <div style={{width:200}} />
+                <div style={{width:100}} />
                 <ScrollSyncPane>
                     <div id="containerRight" style={{overflow: 'auto', height: '65vh', width: '100%',}}>
                         {props.files.map(file => <DiffFile file={file} left={false}/>)}

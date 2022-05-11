@@ -22,12 +22,13 @@ import HunkSeparator from './HunkSeparator';
 
 export default function DiffLine(props) {
 
+    // TODO: fix this line level highlight situation some time
     const language = Prism.highlight(props.change.content, Prism.languages.python, 'python');
 
     return (
         <tr>
-            <td style={{whiteSpace: 'pre-wrap'}}>
-                <span dangerouslySetInnerHTML={{ __html: language }} />
+            <td>
+                <pre style={{ whiteSpace: "pre-wrap"}} dangerouslySetInnerHTML={{ __html: language || " " }} />
             </td>
         </tr>
     )
