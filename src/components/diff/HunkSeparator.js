@@ -21,7 +21,7 @@ export default function HunkSeparator(props) {
 
     return (
         <tr>
-            <td>
+            <td colSpan={2}>
                 <Element name={props.hunkAfter ? props.hunkAfter.content : "end-anchor"}/>
                 <h5 style={{textAlign: "center"}}> {props.hunkAfter ? props.hunkAfter.content : "end separator"} </h5>
             </td>

@@ -100,7 +100,7 @@ export default function DiffView(props) {
                 <div style={{width:100}} />
                 <ScrollSyncPane>
                     <div id="containerRight" style={{overflow: 'auto', height: '65vh', width: '100%',}}>
-                        {props.files.map(file => <DiffFile file={file} left={false}/>)}
+                        {props.files.map(file => <DiffFile file={file}/>)}
                     </div>
                 </ScrollSyncPane>
             </Stack>

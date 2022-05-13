@@ -26,7 +26,17 @@ export default function DiffFile(props) {
     }));
     
     const renderChanges = (hunk) => {
-        return hunk.changes.map((change) => <DiffLine change={change}/>)
+        return hunk.changes.map((change) => {
+            if (props.left && (change.isNormal || change.isDelete)){
+                return <DiffLine change={change} left={props.left}/>
+            }
+            if (!props.left && (change.isNormal || change.isInsert)){
+                return <DiffLine change={change} left={props.left}/>
+            }
+            
+            return null // TODO filtering causes scroll-to to not lign up any more damn it!
+            
+        })
     }
     
     const renderHunks = () => {
@@ -39,6 +49,7 @@ export default function DiffFile(props) {
                         <HunkSeparator
                             hunkBefore={index === 0 ? null : hunks[index-1]}
                             hunkAfter={hunk}
+                            left = {props.left}
                         />,
                         renderChanges(hunk)
                 ]
@@ -54,11 +65,14 @@ export default function DiffFile(props) {
     return (
         <StyledCard>
             <table>
-                <thead><tr><td>
+                <thead>
+                <tr>
+                <td colSpan = {2}>
                     <h4 style={{textAlign: "center"}}>
                        [{props.left ? props.file.oldRevision : props.file.newRevision}] {props.left ? props.file.oldPath : props.file.newPath}
                     </h4>
-                </td></tr></thead>
+                </td>
+                </tr></thead>
                 <tbody>
                 {renderHunks()}
                 </tbody>

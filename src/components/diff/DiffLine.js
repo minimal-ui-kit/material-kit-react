@@ -27,9 +27,11 @@ export default function DiffLine(props) {
 
     return (
         <tr>
+            {props.left || <td><pre> {props.change.isNormal ? props.change.newLineNumber : props.change.lineNumber} </pre></td>}
             <td>
                 <pre style={{ whiteSpace: "pre-wrap"}} dangerouslySetInnerHTML={{ __html: language || " " }} />
             </td>
+            {props.left && <td><pre> {props.change.isNormal ? props.change.oldLineNumber : props.change.lineNumber} </pre></td>}
         </tr>
     )
 
