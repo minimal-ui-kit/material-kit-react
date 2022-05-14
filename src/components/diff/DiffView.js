@@ -34,7 +34,7 @@ export default function DiffView(props) {
 
     const scrollLeft = () => {
     
-        scroller.scrollTo('@@ -6,9 +6,9 @@', {
+        scroller.scrollTo('left-@@ -6,9 +6,9 @@', {
           duration: 500,
           delay: 0,
           smooth: 'easeOutQuart',
@@ -49,7 +49,7 @@ export default function DiffView(props) {
     }
 
     const scrollRight = () => {
-         scroller.scrollTo('@@ -6,9 +6,9 @@', {
+         scroller.scrollTo('right-@@ -6,9 +6,9 @@', {
           duration: 500,
           delay: 0,
           smooth: 'easeOutQuart',

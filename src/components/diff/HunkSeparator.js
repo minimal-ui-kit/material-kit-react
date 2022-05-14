@@ -18,14 +18,23 @@ import {
 } from '@mui/material';
 
 export default function HunkSeparator(props) {
+    
+    const calcName = () => {
+    
+        if (props.left) {
+            return props.hunkAfter ? `left-${props.hunkAfter.content}` : "left-end-anchor"
+        }
+        return props.hunkAfter ? `right-${props.hunkAfter.content}` : "right-end-anchor"
+        
+    }
 
-    return (
+    return [
+    <Element name={calcName()}/>,
         <tr>
             <td colSpan={2}>
-                <Element name={props.hunkAfter ? props.hunkAfter.content : "end-anchor"}/>
                 <h5 style={{textAlign: "center"}}> {props.hunkAfter ? props.hunkAfter.content : "end separator"} </h5>
             </td>
         </tr>
-    )
+    ]
     
 }
