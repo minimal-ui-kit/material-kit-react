@@ -20,6 +20,14 @@ import 'prismjs/themes/prism.css';
 import 'prismjs/components/prism-python';
 import HunkSeparator from './HunkSeparator';
 
+const lineNumStyle = {
+    userSelect: "none",
+    webkitTouchTallout: "none",
+    webkitUserSelect: "none",
+    mozUserSelect: "none",
+    msUserSelect: "none"
+}
+
 export default function DiffLine(props) {
 
     // TODO: fix this line level highlight situation some time
@@ -27,11 +35,11 @@ export default function DiffLine(props) {
 
     return (
         <tr>
-            {props.left || <td><pre> {props.change.isNormal ? props.change.newLineNumber : props.change.lineNumber} </pre></td>}
+            {props.left || <td style={lineNumStyle}><pre> {props.change.isNormal ? props.change.newLineNumber : props.change.lineNumber} </pre></td>}
             <td>
-                <pre style={{ whiteSpace: "pre-wrap"}} dangerouslySetInnerHTML={{ __html: language || " " }} />
+                <pre style={{ whiteSpace: "pre-wrap"}} dangerouslySetInnerHTML={{ __html: language }} />
             </td>
-            {props.left && <td><pre> {props.change.isNormal ? props.change.oldLineNumber : props.change.lineNumber} </pre></td>}
+            {props.left && <td style={lineNumStyle}><pre> {props.change.isNormal ? props.change.oldLineNumber : props.change.lineNumber} </pre></td>}
         </tr>
     )
 

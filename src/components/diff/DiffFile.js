@@ -34,7 +34,7 @@ export default function DiffFile(props) {
                 return <DiffLine change={change} left={props.left}/>
             }
             
-            return null // TODO filtering causes scroll-to to not lign up any more damn it!
+            return null
             
         })
     }
