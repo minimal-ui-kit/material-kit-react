@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { styled } from '@mui/material/styles';
+import { styled, useTheme} from '@mui/material/styles';
 import {
   Card,
   Table,
@@ -61,10 +61,20 @@ export default function DiffLine(props) {
         return false
 
     }
+    
+    const theme = useTheme();
+    const isPlaceholder = isPlaceholderLine()
+    
+    let RowStyle = {}
+    if (!props.change.isNormal && !isPlaceholder) {
+        RowStyle = {
+            background: props.change.isInsert ? theme.palette.success.lighter : theme.palette.error.lighter
+        }
+    }
 
     return (
-        <tr>
-            {props.left || <td style={{visibility:(isPlaceholderLine()?"hidden":"visible"), ...lineNumStyle}}>
+        <tr style = {RowStyle}>
+            {props.left || <td style={{visibility:(isPlaceholder ?"hidden":"visible"), ...lineNumStyle}}>
                                <pre> {props.change.isNormal ? props.change.newLineNumber : props.change.lineNumber} </pre>
                            </td>}
             <td style={{position: "relative"}}>
@@ -73,10 +83,10 @@ export default function DiffLine(props) {
                         <pre style={backgroundTextStyle}>{props.change.otherContent}</pre>,
                         <pre style={foregroundTextStyle} dangerouslySetInnerHTML={{ __html: language }} />
                     ] :
-                    <pre style={isPlaceholderLine() ? backgroundTextStyle : normalTextStyle} dangerouslySetInnerHTML={{ __html: language }} />
+                    <pre style={isPlaceholder ? backgroundTextStyle : normalTextStyle} dangerouslySetInnerHTML={{ __html: language }} />
                 }
             </td>
-            {props.left && <td style={{visibility:(isPlaceholderLine()?"hidden":"visible"), ...lineNumStyle}}>
+            {props.left && <td style={{visibility:(isPlaceholder?"hidden":"visible"), ...lineNumStyle}}>
                                <pre> {props.change.isNormal ? props.change.oldLineNumber : props.change.lineNumber} </pre>
                            </td>}
         </tr>

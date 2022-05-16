@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTheme} from '@mui/material/styles';
 import {
   Card,
   Stack,
@@ -62,6 +63,8 @@ export default function DiffView(props) {
 //            containerId: "containerRight"
 //        });
     }
+    
+    const theme = useTheme()
 
     const debug = [
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
@@ -91,15 +94,14 @@ export default function DiffView(props) {
         <ScrollSync enabled={state.synchronised}> 
             <Stack direction="row">
                 <ScrollSyncPane>
-                    <div id="containerLeft" style={{overflow: 'auto', height: '65vh', width: '100%', direction: 'rtl'}}>
+                    <div id="containerLeft" style={{overflow: 'auto', height: '65vh', width: '100%', direction: 'rtl', padding: theme.spacing(1)}}>
                     <div style={{direction: 'ltr'}}>
                         {props.files.map(file => <DiffFile file={file} left={true}/>)}
                     </div>
                     </div>
                 </ScrollSyncPane>
-                <div style={{width:100}} />
                 <ScrollSyncPane>
-                    <div id="containerRight" style={{overflow: 'auto', height: '65vh', width: '100%',}}>
+                    <div id="containerRight" style={{overflow: 'auto', height: '65vh', width: '100%', padding: theme.spacing(1)}}>
                         {props.files.map(file => <DiffFile file={file}/>)}
                     </div>
                 </ScrollSyncPane>

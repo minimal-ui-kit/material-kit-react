@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import {
   Card,
+  CardHeader,
   Table,
   Stack,
   Avatar,
@@ -176,18 +177,14 @@ export default function DiffFile(props) {
     }
 
     return (
-        <StyledCard>
-            <table>
-                <thead>
-                <tr>
-                <td colSpan = {2}>
-                    <h4 style={{textAlign: "center"}}>
-                       [{props.left ? props.file.oldRevision : props.file.newRevision}] {props.left ? props.file.oldPath : props.file.newPath}
-                    </h4>
-                </td>
-                </tr></thead>
+        <StyledCard sx={{ boxShadow: 3 }}>
+            <CardHeader 
+                style={{textAlign: "center"}} 
+                title={props.left ? props.file.oldPath : props.file.newPath}
+                subheader={props.left ? props.file.oldRevision : props.file.newRevision}/>
+            <table cellSpacing={0}>
                 <tbody>
-                {renderHunks()}
+                    {renderHunks()}
                 </tbody>
             </table>
         </StyledCard>
