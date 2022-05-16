@@ -26,6 +26,7 @@ const lineNumStyle = {
     webkitUserSelect: "none",
     mozUserSelect: "none",
     msUserSelect: "none",
+    verticalAlign: "top",
 };
 
 const normalTextStyle = {
