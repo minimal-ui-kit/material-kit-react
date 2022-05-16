@@ -86,7 +86,7 @@ export default function DiffLine(props) {
                     <pre style={isPlaceholder ? backgroundTextStyle : normalTextStyle} dangerouslySetInnerHTML={{ __html: language }} />
                 }
             </td>
-            {props.left && <td style={{visibility:(isPlaceholder?"hidden":"visible"), ...lineNumStyle}}>
+            {props.left && <td style={{visibility:(isPlaceholder?"hidden":"visible"), textAlign: 'right', ...lineNumStyle}}>
                                <pre> {props.change.isNormal ? props.change.oldLineNumber : props.change.lineNumber} </pre>
                            </td>}
         </tr>

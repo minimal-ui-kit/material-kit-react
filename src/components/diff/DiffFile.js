@@ -182,7 +182,7 @@ export default function DiffFile(props) {
                 style={{textAlign: "center"}} 
                 title={props.left ? props.file.oldPath : props.file.newPath}
                 subheader={props.left ? props.file.oldRevision : props.file.newRevision}/>
-            <table cellSpacing={0}>
+            <table cellSpacing={0} style={{width: '100%'}}>
                 <tbody>
                     {renderHunks()}
                 </tbody>
