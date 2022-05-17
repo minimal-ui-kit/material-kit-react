@@ -176,7 +176,7 @@ export default function DiffFile(props) {
     }
 
     return (
-        <StyledCard sx={{ boxShadow: 3 }}>
+        <StyledCard sx={{ boxShadow: 4 }}>
             <CardHeader 
                 style={{textAlign: "center"}} 
                 title={props.left ? props.file.oldPath : props.file.newPath}
