@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { styled } from '@mui/material/styles';
+import { styled, useTheme} from '@mui/material/styles';
 import { Element } from 'react-scroll'
 import {
   Card,
@@ -27,12 +27,14 @@ export default function HunkSeparator(props) {
         return props.hunkAfter ? `right-${props.hunkAfter.content}` : "right-end-anchor"
         
     }
+    
+    const theme = useTheme()
 
     return [
     <Element name={calcName()}/>,
-        <tr>
-            <td colSpan={2}>
-                <h5 style={{textAlign: "center"}}> {props.hunkAfter ? props.hunkAfter.content : "end separator"} </h5>
+        <tr style={{background: theme.palette.background.neutral, color: theme.palette.text.disabled}}>
+            <td colSpan={2} style={{textAlign: "center"}}>
+                {props.hunkAfter ? props.hunkAfter.content : "end separator"}
             </td>
         </tr>
     ]

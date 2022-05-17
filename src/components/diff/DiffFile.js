@@ -133,7 +133,6 @@ export default function DiffFile(props) {
         }
         
         hunk.changes.forEach((change) => {
-            console.log(state)
             const transitions = stateTransitions[state]
             if (change.isNormal) {
                 transitions.isNormal.action(change);
@@ -150,7 +149,7 @@ export default function DiffFile(props) {
         })
         finalizeBlock()
         
-        return retChanges.map((change) => {console.log(change.content); return <DiffLine change={change} left={props.left}/>})
+        return retChanges.map((change) => <DiffLine change={change} left={props.left}/>)
     }
     
     const renderHunks = () => {

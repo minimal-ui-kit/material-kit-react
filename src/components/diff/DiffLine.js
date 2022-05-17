@@ -20,22 +20,18 @@ import 'prismjs/themes/prism.css';
 import 'prismjs/components/prism-python';
 import HunkSeparator from './HunkSeparator';
 
-const lineNumStyle = {
-    userSelect: "none",
-    webkitTouchTallout: "none",
-    webkitUserSelect: "none",
-    mozUserSelect: "none",
-    msUserSelect: "none",
-    verticalAlign: "top",
-};
-
 const normalTextStyle = {
     whiteSpace: "pre-wrap",
 };
 
 const backgroundTextStyle = {
     ...normalTextStyle,
-    ...lineNumStyle,
+    userSelect: "none",
+    webkitTouchTallout: "none",
+    webkitUserSelect: "none",
+    mozUserSelect: "none",
+    msUserSelect: "none",
+    verticalAlign: "top",
     visibility: "hidden",
 };
 
@@ -71,13 +67,23 @@ export default function DiffLine(props) {
             background: props.change.isInsert ? theme.palette.success.lighter : theme.palette.error.lighter
         }
     }
+    
+    const lineNumStyle = {
+        userSelect: "none",
+        webkitTouchTallout: "none",
+        webkitUserSelect: "none",
+        mozUserSelect: "none",
+        msUserSelect: "none",
+        verticalAlign: "top",
+        color: theme.palette.grey[500],
+    };
 
     return (
         <tr style = {RowStyle}>
             {props.left || <td style={{visibility:(isPlaceholder ?"hidden":"visible"), ...lineNumStyle}}>
                                <pre> {props.change.isNormal ? props.change.newLineNumber : props.change.lineNumber} </pre>
                            </td>}
-            <td style={{position: "relative"}}>
+            <td style={{position: "relative", wordWrap: "anywhere"}}>
                 {props.change.otherContent ? 
                     [
                         <pre style={backgroundTextStyle}>{props.change.otherContent}</pre>,
