@@ -94,11 +94,9 @@ export default function DiffLine(props) {
     /**********************************************/
     /*   STYLE DEFINITIONS THAT DEPEND ON THEME   */
     /**********************************************/
-    let RowStyle = {}
+    const RowStyle = {}
     if (!props.change.isNormal && !isPlaceholder) {
-        RowStyle = {
-            background: props.change.isInsert ? theme.palette.success.lighter : theme.palette.error.lighter
-        }
+        RowStyle.background = props.change.isInsert ? theme.palette.success.lighter : theme.palette.error.lighter
     }
     
     const highlightStyle = {background: theme.palette.warning.light}

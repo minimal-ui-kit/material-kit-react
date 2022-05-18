@@ -30,13 +30,11 @@ export default function HunkSeparator(props) {
     
     const theme = useTheme()
 
-    return [
-    <Element name={calcName()}/>,
-        <tr style={{background: theme.palette.background.neutral, color: theme.palette.text.disabled}}>
+    return (
+        <tr id={calcName()} style={{background: theme.palette.background.neutral, color: theme.palette.text.disabled}}>
             <td colSpan={2} style={{textAlign: "center"}}>
                 {props.hunkAfter ? props.hunkAfter.content : "end separator"}
             </td>
-        </tr>
-    ]
+        </tr>)
     
 }

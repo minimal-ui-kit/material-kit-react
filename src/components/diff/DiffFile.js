@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 import {
   Card,
   CardHeader,
@@ -175,10 +175,19 @@ export default function DiffFile(props) {
     
     }
 
+    const theme = useTheme()
+
+    const fileHeaderStyle = {
+        textAlign: "center",
+        background: theme.palette.secondary.lighter,
+        padding: theme.spacing(1)
+    }
+        
+
     return (
         <StyledCard sx={{ boxShadow: 4 }}>
             <CardHeader 
-                style={{textAlign: "center"}} 
+                style={fileHeaderStyle} 
                 title={props.left ? props.file.oldPath : props.file.newPath}
                 subheader={props.left ? props.file.oldRevision : props.file.newRevision}/>
             <table cellSpacing={0} style={{width: '100%'}}>
