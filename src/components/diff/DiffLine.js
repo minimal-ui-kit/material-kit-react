@@ -70,9 +70,12 @@ const foregroundTextStyle = {
 
 export default function DiffLine(props) {
 
-    // TODO: fix this line level highlight situation some time
-    const language = Prism.highlight(props.change.content, Prism.languages.python, 'python');
+    const theme = useTheme();
     
+    
+    /*****************************************/
+    /*   INFO ABOUT THE LINE FOR LATER USE   */
+    /*****************************************/
     const isPlaceholderLine = () => {
 
         if (props.left){
@@ -83,10 +86,14 @@ export default function DiffLine(props) {
         return false
 
     }
-    
-    const theme = useTheme();
     const isPlaceholder = isPlaceholderLine()
+    const hasTextwrap = props.change.otherContent !== undefined;
+    const hasHighlight = props.change.highlight !== undefined;
     
+    
+    /**********************************************/
+    /*   STYLE DEFINITIONS THAT DEPEND ON THEME   */
+    /**********************************************/
     let RowStyle = {}
     if (!props.change.isNormal && !isPlaceholder) {
         RowStyle = {
@@ -94,6 +101,10 @@ export default function DiffLine(props) {
         }
     }
     
+    const highlightStyle = {background: theme.palette.warning.light}
+    if (props.change.isInsert) highlightStyle.background = theme.palette.success.light
+    if (props.change.isDelete) highlightStyle.background = theme.palette.error.light
+
     const lineNumStyle = {
         ...commonPreStyle,
         ...unselectable,
@@ -102,35 +113,60 @@ export default function DiffLine(props) {
         textAlign: props.left ? "right" : "left",
     };
     
-    const highlightStyle = {background: theme.palette.warning.lighter} 
-    if (props.change.isInsert) highlightStyle.background = theme.palette.success.light
-    if (props.change.isDelete) highlightStyle.background = theme.palette.error.light
-
+    
+    /***************************/
+    /*   LINE NUMBER WRAPPER   */
+    /***************************/
+    const wrapInLineNumber = (input) => {
+        return (
+            <tr style = {RowStyle}>
+                {props.left || // line number on left if its the right side container
+                    <td style={lineNumStyle}>
+                       <pre> {props.change.isNormal ? props.change.newLineNumber : props.change.lineNumber} </pre>
+                   </td>}
+                {input}
+                {props.left && // line number on right if its the left side container
+                    <td style={lineNumStyle}>
+                       <pre> {props.change.isNormal ? props.change.oldLineNumber : props.change.lineNumber} </pre>
+                   </td>}
+            </tr>)
+    }
+    
+    
+    /******************************/
+    /*   BUILDER FOR EACH LAYER   */
+    /******************************/
+    const buildTextWrapLayer = () => {
+        if (isPlaceholder) return
+        if (!hasTextwrap) return
+        return <pre style={backgroundTextStyle}>{props.change.otherContent}</pre>
+    }
     
     const buildHighlightLayer = () => {
-        if (!props.change.highlight) return
+        if (isPlaceholder) return
+        if (!hasHighlight) return
         
-        console.log(props.change.highlight);
-        
+        // filter invalid values
+        const preFiltered = props.change.highlight.filter((current) => {
+            return (current.length === 2
+                    && current[0]>=0
+                    && current[0]<=props.change.content.length
+                    && current[1]>=0
+                    && current[1]<=props.change.content.length
+                    && current[0]<current[1])
+        });
+
         // sort highlights by start index
-        props.change.highlight.sort((a, b) => {return b[0] - a[0]});
-        console.log(props.change.highlight);
+        preFiltered.sort((a, b) => {return a[0] - b[0]});
         
         // filter out overlapping highlights.
         // if they are overlapping only the one
         // that starts the earliest will be shown
-        // also filter invalid values
-        const filtered = props.change.highlight.sort((current, index, arr) => {
-            return (current.length === 2
-                    && index>0 ? arr[index-1][1]<=current[1] : true)
-                    && current[0]>=0
-                    && current[0]<props.change.content.length
-                    && current[1]>=0
-                    && current[1]<props.change.content.length
-                    && current[0]<current[1]
+        const filtered = preFiltered.filter((current, index, arr) => {
+            return index>0 ? arr[index-1][1]<=current[0] : true
         });
-        console.log(filtered);
         
+        // fill the highlight into an array
         const retArray = []
         filtered.forEach((value, index, arr) => {
             if (index === 0) retArray.push(props.change.content.slice(0,value[0]))
@@ -138,37 +174,30 @@ export default function DiffLine(props) {
             retArray.push(<span style={highlightStyle}>{props.change.content.slice(value[0],value[1])}</span>)
             if (index === filtered.length-1) retArray.push(props.change.content.slice(value[1]))
         })
-        return retArray
+        
+        if (hasTextwrap) return <pre style={middleTextStyle}>{retArray}</pre> // there is a textwrap layer behind
+        if (props.change.isNormal){ // only highlight the right side of normal lines
+            return props.left || <pre style={{...backgroundTextStyle, visibility: "visible"}}>{retArray}</pre>
+        }
+        return <pre style={{...backgroundTextStyle, visibility: "visible"}}>{retArray}</pre> // there is no layer behind
     }
 
-    return (
-        <tr style = {RowStyle}>
-            {props.left || // line number on left if its the right side container
-                <td style={lineNumStyle}>
-                   <pre> {props.change.isNormal ? props.change.newLineNumber : props.change.lineNumber} </pre>
-               </td>}
-            
-            <td style={tdStyle}>
-                {props.change.otherContent ? // has text wrap and possibly highlight
-                    <>
-                        <pre style={backgroundTextStyle}>{props.change.otherContent}</pre> {/* text wrap layer */}
-                        {props.change.highlight && <pre style={middleTextStyle}>{buildHighlightLayer()}</pre>} {/* highlight layer */}
-                        <pre style={foregroundTextStyle} dangerouslySetInnerHTML={{ __html: language }} /> {/* displayed text */}
-                    </> : 
-                    props.change.highlight ? // no text wrap but has highlight
-                        <>
-                            <pre style={{...backgroundTextStyle, visibility: "visible"}}>{buildHighlightLayer()}</pre> {/* highlight on text wrap */}
-                            <pre style={foregroundTextStyle} dangerouslySetInnerHTML={{ __html: language }} /> {/* displayed text */}
-                        </>: // no text wrap and no highlight
-                            <pre style={isPlaceholder ? backgroundTextStyle : commonPreStyle} dangerouslySetInnerHTML={{ __html: language }} /> // normal displayed text
-                    
-                }
-            </td>
+    const buildForeGroundLayer = () => {
+        if (isPlaceholder) return <pre style={backgroundTextStyle}>{props.change.content}</pre>
+        // TODO: fix this line level highlight situation some time
+        const highlightedHtml = Prism.highlight(props.change.content, Prism.languages.python, 'python');
+        if (hasTextwrap || hasHighlight) return <pre style={foregroundTextStyle} dangerouslySetInnerHTML={{ __html: highlightedHtml }} />
+        return <pre style={commonPreStyle} dangerouslySetInnerHTML={{ __html: highlightedHtml }} />
+    }
 
-            {props.left && // line number on right if its the left side container
-                <td style={lineNumStyle}>
-                   <pre> {props.change.isNormal ? props.change.oldLineNumber : props.change.lineNumber} </pre>
-               </td>}
-        </tr>
-    )
+
+    /************************/
+    /*   RETURN THE THING   */
+    /************************/
+    return wrapInLineNumber(
+        <td style={tdStyle}>
+            {buildTextWrapLayer()}
+            {buildHighlightLayer()}
+            {buildForeGroundLayer()}
+        </td>)
 }

@@ -47,7 +47,7 @@
     "react-hooks/rules-of-hooks": 2,
     "no-promise-executor-return": 0,
     "no-unsafe-optional-chaining": 0,
-    "no-nested-ternary": 0,
+    "spaced-comment": 0,
     "react/static-property-placement": 0,
     "react/require-default-props": 0,
     "react/no-unescaped-entities": 0,
