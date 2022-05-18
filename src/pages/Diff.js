@@ -25,6 +25,8 @@ export default function Diff() {
 
   const files = gitDiffParser.parse(diffText)
   console.log(files)
+  files[0].hunks[2].changes[3].highlight = [[24,40]]
+  files[0].hunks[2].changes[4].highlight = [[24,47]]
 
   return (
     <Page title="User">
