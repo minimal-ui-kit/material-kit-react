@@ -117,7 +117,7 @@ export default function DiffLine(props) {
     /***************************/
     const wrapInLineNumber = (input) => {
         return (
-            <tr style = {RowStyle}>
+            <tr style = {RowStyle} id={props.id}>
                 {props.left || // line number on left if its the right side container
                     <td style={lineNumStyle}>
                        <pre> {props.change.isNormal ? props.change.newLineNumber : props.change.lineNumber} </pre>

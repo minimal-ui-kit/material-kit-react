@@ -19,19 +19,10 @@ import {
 
 export default function HunkSeparator(props) {
     
-    const calcName = () => {
-    
-        if (props.left) {
-            return props.hunkAfter ? `left-${props.hunkAfter.content}` : "left-end-anchor"
-        }
-        return props.hunkAfter ? `right-${props.hunkAfter.content}` : "right-end-anchor"
-        
-    }
-    
     const theme = useTheme()
 
     return (
-        <tr id={calcName()} style={{background: theme.palette.background.neutral, color: theme.palette.text.disabled}}>
+        <tr id={props.id} style={{background: theme.palette.background.neutral, color: theme.palette.text.disabled}}>
             <td colSpan={2} style={{textAlign: "center"}}>
                 {props.hunkAfter ? props.hunkAfter.content : "end separator"}
             </td>
