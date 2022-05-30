@@ -135,8 +135,10 @@
                 else if (stat === STAT_HUNK) {
                     if (line.indexOf('@@') === 0) {
                         let match = /^@@\s+-([0-9]+)(,([0-9]+))?\s+\+([0-9]+)(,([0-9]+))?/.exec(line)
+                        const endIndex = line.indexOf('@@',1)+2
                         currentHunk = {
-                            content: line,
+                            content: line.slice(0,endIndex),
+                            header: line.slice(endIndex),
                             oldStart: match[1] - 0,
                             newStart: match[4] - 0,
                             oldLines: match[3] - 0 || 1,

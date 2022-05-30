@@ -60,7 +60,8 @@ export default function DiffView(props) {
         height: '65vh',
         width: '100%',
         padding: theme.spacing(1),
-        fontSize: "88%",
+        fontSize: "12px",
+        lineHeight: "20px",
         scrollbarWidth: 'thin'
     }
 
