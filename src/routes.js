@@ -10,7 +10,6 @@ import Login from './pages/Login';
 import NotFound from './pages/Page404';
 import Register from './pages/Register';
 import Products from './pages/Products';
-import DashboardApp from './pages/DashboardApp';
 
 // ----------------------------------------------------------------------
 
@@ -20,7 +19,6 @@ export default function Router() {
       path: '/dashboard',
       element: <DashboardLayout />,
       children: [
-        { path: 'app', element: <DashboardApp /> },
         { path: 'user', element: <User /> },
         { path: 'diff', element: <Diff /> },
         { path: 'products', element: <Products /> },

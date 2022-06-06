@@ -1,20 +1,7 @@
-import { useState, useEffect } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import {
   Card,
-  CardHeader,
-  Table,
-  Stack,
-  Avatar,
-  Button,
-  Checkbox,
-  TableRow,
-  TableBody,
-  TableCell,
-  Container,
-  Typography,
-  TableContainer,
-  TablePagination,
+  CardHeader
 } from '@mui/material';
 import HunkSeparator from './HunkSeparator';
 import DiffLine from './DiffLine';
@@ -188,7 +175,7 @@ export default function DiffFile(props) {
     
     const renderHunks = () => {
         if (props.file.hunks.length <= 0) {
-            return
+            return (null);
         }
         const endHunkId = hashHunkSeparator(props.left, filePath, fileRevision, "end hunk")
         return [

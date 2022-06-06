@@ -1,5 +1,3 @@
-import { faker } from '@faker-js/faker';
-
 // ----------------------------------------------------------------------
 
 const POST_TITLES = [
@@ -30,16 +28,16 @@ const POST_TITLES = [
 ];
 
 const posts = [...Array(23)].map((_, index) => ({
-  id: faker.datatype.uuid(),
+  id: '8a7cd51c-9c4b-4167-a42d-b438f854ed0b',
   cover: `/static/mock-images/covers/cover_${index + 1}.jpg`,
   title: POST_TITLES[index + 1],
-  createdAt: faker.date.past(),
-  view: faker.datatype.number(),
-  comment: faker.datatype.number(),
-  share: faker.datatype.number(),
-  favorite: faker.datatype.number(),
+  createdAt: "2022-06-05T15:08:24.818Z",
+  view: 2,
+  comment: 3,
+  share: 4,
+  favorite: 5,
   author: {
-    name: faker.name.findName(),
+    name: "fake author Name",
     avatarUrl: `/static/mock-images/avatars/avatar_${index + 1}.jpg`,
   },
 }));

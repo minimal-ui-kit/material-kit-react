@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import { set, sub } from 'date-fns';
 import { noCase } from 'change-case';
-import { faker } from '@faker-js/faker';
 import { useState, useRef } from 'react';
 // @mui
 import {
@@ -30,7 +29,7 @@ import MenuPopover from '../../components/MenuPopover';
 
 const NOTIFICATIONS = [
   {
-    id: faker.datatype.uuid(),
+    id: '64373946-51c5-4967-8d42-04f7b54f7810',
     title: 'Your order is placed',
     description: 'waiting for shipping',
     avatar: null,
@@ -39,8 +38,8 @@ const NOTIFICATIONS = [
     isUnRead: true,
   },
   {
-    id: faker.datatype.uuid(),
-    title: faker.name.findName(),
+    id: '5f2de9a0-87d9-4d55-8491-61ffe164f505',
+    title: 'Notification Title Placegholder',
     description: 'answered to your comment on the Minimal',
     avatar: '/static/mock-images/avatars/avatar_2.jpg',
     type: 'friend_interactive',
@@ -48,7 +47,7 @@ const NOTIFICATIONS = [
     isUnRead: true,
   },
   {
-    id: faker.datatype.uuid(),
+    id: 'a9a58b22-6e44-499c-92d5-8435e35b6df9',
     title: 'You have new message',
     description: '5 unread messages',
     avatar: null,
@@ -57,7 +56,7 @@ const NOTIFICATIONS = [
     isUnRead: false,
   },
   {
-    id: faker.datatype.uuid(),
+    id: '57b2bafc-656f-4e0a-96d9-70ce3783cade',
     title: 'You have new mail',
     description: 'sent from Guido Padberg',
     avatar: null,
@@ -66,7 +65,7 @@ const NOTIFICATIONS = [
     isUnRead: false,
   },
   {
-    id: faker.datatype.uuid(),
+    id: '6ccc8dee-bd70-4740-b29e-adb48b5c7ee2',
     title: 'Delivery processing',
     description: 'Your order is being shipped',
     avatar: null,

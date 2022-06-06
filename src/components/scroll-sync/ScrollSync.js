@@ -16,14 +16,12 @@ export default class ScrollSync extends Component {
      */
     onSync: PropTypes.func,
     children: PropTypes.element.isRequired,
-    proportional: PropTypes.bool,
     vertical: PropTypes.bool,
     horizontal: PropTypes.bool,
     enabled: PropTypes.bool
   };
 
   static defaultProps = {
-    proportional: true,
     vertical: true,
     horizontal: true,
     enabled: true

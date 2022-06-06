@@ -1,21 +1,4 @@
-import { useState, useEffect } from 'react';
-import { styled, useTheme} from '@mui/material/styles';
-import { Element } from 'react-scroll'
-import {
-  Card,
-  Table,
-  Stack,
-  Avatar,
-  Button,
-  Checkbox,
-  TableRow,
-  TableBody,
-  TableCell,
-  Container,
-  Typography,
-  TableContainer,
-  TablePagination,
-} from '@mui/material';
+import { useTheme} from '@mui/material/styles';
 
 export default function HunkSeparator(props) {
     

@@ -1,13 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useTheme} from '@mui/material/styles';
 import {
-  Card,
   Stack,
-  Button,
-  Container,
-  Typography,
+  Button
 } from '@mui/material';
-import { Element, animateScroll as scroll, scroller, Events } from 'react-scroll'
+import { scroller, Events } from 'react-scroll'
 import DiffFile from './DiffFile';
 import { ScrollSync, ScrollSyncPane } from '../scroll-sync'; // react-scroll-sync';
 import { hashFileHeader } from '../../utils/diffRefs'
@@ -45,10 +42,10 @@ export default function DiffView(props) {
     }
 
     const scrollRight = () => {
-         scroller.scrollTo('d054b94c', {
+         scroller.scrollTo('3a85cb28', {
+          smooth: 'easeOutQuart',
           duration: 500,
           delay: 0,
-          smooth: 'easeOutQuart',
           containerId: "containerRight"
         });
     }

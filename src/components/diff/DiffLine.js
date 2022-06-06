@@ -1,24 +1,7 @@
-import { useState, useEffect } from 'react';
-import { styled, useTheme} from '@mui/material/styles';
-import {
-  Card,
-  Table,
-  Stack,
-  Avatar,
-  Button,
-  Checkbox,
-  TableRow,
-  TableBody,
-  TableCell,
-  Container,
-  Typography,
-  TableContainer,
-  TablePagination,
-} from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import Prism from 'prismjs';
 import 'prismjs/themes/prism.css';
 import 'prismjs/components/prism-python';
-import HunkSeparator from './HunkSeparator';
 
 const tdStyle = {
     position: "relative",
@@ -115,54 +98,52 @@ export default function DiffLine(props) {
     /***************************/
     /*   LINE NUMBER WRAPPER   */
     /***************************/
-    const wrapInLineNumber = (input) => {
-        return (
-            <tr style = {RowStyle} id={props.id}>
-                {props.left || // line number on left if its the right side container
-                    <td style={lineNumStyle}>
-                       <pre> {props.change.isNormal ? props.change.newLineNumber : props.change.lineNumber} </pre>
-                   </td>}
-                {input}
-                {props.left && // line number on right if its the left side container
-                    <td style={lineNumStyle}>
-                       <pre> {props.change.isNormal ? props.change.oldLineNumber : props.change.lineNumber} </pre>
-                   </td>}
-            </tr>)
-    }
+    const wrapInLineNumber = (input) => (
+        <tr style = {RowStyle} id={props.id}>
+            {props.left || // line number on left if its the right side container
+                <td style={lineNumStyle}>
+                   <pre> {props.change.isNormal ? props.change.newLineNumber : props.change.lineNumber} </pre>
+               </td>}
+            {input}
+            {props.left && // line number on right if its the left side container
+                <td style={lineNumStyle}>
+                   <pre> {props.change.isNormal ? props.change.oldLineNumber : props.change.lineNumber} </pre>
+               </td>}
+        </tr>)
     
     
     /******************************/
     /*   BUILDER FOR EACH LAYER   */
     /******************************/
     const buildTextWrapLayer = () => {
-        if (isPlaceholder) return
-        if (!hasTextwrap) return
+        if (isPlaceholder) return (null);
+        if (!hasTextwrap) return (null);
         return <pre style={backgroundTextStyle}>{props.change.otherContent}</pre>
     }
     
     const buildHighlightLayer = () => {
-        if (isPlaceholder) return
-        if (!hasHighlight) return
+        if (isPlaceholder) return (null);
+        if (!hasHighlight) return (null);
         
         // filter invalid values
-        const preFiltered = props.change.highlight.filter((current) => {
-            return (current.length === 2
-                    && current[0]>=0
-                    && current[0]<=props.change.content.length
-                    && current[1]>=0
-                    && current[1]<=props.change.content.length
-                    && current[0]<current[1])
-        });
+        const preFiltered = props.change.highlight.filter((current) => (
+            current.length === 2
+            && current[0]>=0
+            && current[0]<=props.change.content.length
+            && current[1]>=0
+            && current[1]<=props.change.content.length
+            && current[0]<current[1])
+        );
 
         // sort highlights by start index
-        preFiltered.sort((a, b) => {return a[0] - b[0]});
+        preFiltered.sort((a, b) => a[0] - b[0]);
         
         // filter out overlapping highlights.
         // if they are overlapping only the one
         // that starts the earliest will be shown
-        const filtered = preFiltered.filter((current, index, arr) => {
-            return index>0 ? arr[index-1][1]<=current[0] : true
-        });
+        const filtered = preFiltered.filter((current, index, arr) => (
+            index>0 ? arr[index-1][1]<=current[0] : true
+        ));
         
         // fill the highlight into an array
         const retArray = []

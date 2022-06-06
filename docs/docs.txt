@@ -1,0 +1,48 @@
+
+state is a File[]
+
+File {
+    hunks: Hunk[];
+    oldEndingNewLine: boolean;
+    newEndingNewLine: boolean;
+    oldMode: string;                -> "100644"
+    newMode: string;                -> "100644"
+    similarity?: number;
+    oldRevision: string;            -> "72db9651b0e7"
+    newRevision: string;            -> "e06e6a6307fa"
+    oldPath: string;                -> "django/core/management/templates.py"
+    newPath: string;                -> "django/core/management/templates.py"
+    isBinary?: boolean;
+    type: 'add' | 'delete' | 'modify' ｜ 'rename';
+}
+
+Hunk {
+    header: string;                 -> " def cleanup_url(url):"
+    info: string;                   -> "@@ -327,7 +327,7 @@"
+    highlight: [[int, int], ... ]   -> [from_index, to_index]
+    oldStart: number;
+    newStart: number;
+    oldLines: number;
+    newLines: number;
+    changes: Change[];
+}
+
+Change {
+    content: string;
+    type: 'insert' | 'delete' | 'normal';
+    isInsert?: boolean;
+    isDelete?: boolean;
+    isNormal?: boolean;
+    lineNumber?: number;
+    oldLineNumber?: number;
+    newLineNumber?: number;
+}
+
+RenderedLine {
+    
+}
+
+TextLine
+
+
+
