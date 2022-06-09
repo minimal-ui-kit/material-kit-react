@@ -19,8 +19,12 @@ const navConfig = [
   {
     title: 'vehículos',
     path: '/dashboard/products',
-    icon: getIcon('eva:shopping-bag-fill'),
-  }
+    icon: getIcon('fa-solid:car-alt'),
+  },
+  // {
+  //   title: 'Cerrar Sesión',
+  //   icon: getIcon('fa-solid:car-alt'),
+  // },
 ];
 
 export default navConfig;
