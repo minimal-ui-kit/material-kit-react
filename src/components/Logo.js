@@ -15,7 +15,7 @@ export default function Logo({ disabledLink = false, sx }) {
     <Box
       component="img"
       src="https://res.cloudinary.com/dmaviub4l/image/upload/v1653989340/ihrda8sczta1nboafcdq.png"
-      sx={{ width: 100, height: 40, ...sx }}
+      sx={{ width: 150, height: 60, ...sx }}
     />
   );
 

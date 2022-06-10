@@ -6,13 +6,15 @@ import { useFormik, Form, FormikProvider } from 'formik';
 import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // component
+import { useDispatch } from 'react-redux';
 import Iconify from '../../../components/Iconify';
+import { startLoginEmailPassword } from '../../../redux/actions/authReducer';
 
 // ----------------------------------------------------------------------
 
 export default function LoginForm() {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
 
   const LoginSchema = Yup.object().shape({
@@ -26,10 +28,13 @@ export default function LoginForm() {
       password: '',
     },
     validationSchema: LoginSchema,
-    onSubmit: () => {
+    onSubmit: ( { setSubmitting, values}) => {
+      setSubmitting(false);
+          dispatch(startLoginEmailPassword(values.email, values.password));
       navigate('/dashboard', { replace: true });
     },
-  });
+  })
+  
 
   const { errors, touched, isSubmitting, handleSubmit, getFieldProps } = formik;
 
@@ -38,6 +43,7 @@ export default function LoginForm() {
   };
 
   return (
+    
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Stack spacing={3}>
@@ -75,7 +81,7 @@ export default function LoginForm() {
           fullWidth
           size="large"
           type="submit"
-          variant="contained"
+          variant="contained" color="success"
           loading={isSubmitting}
         >
           Login

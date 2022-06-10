@@ -25,6 +25,11 @@ const navConfig = [
   //   title: 'Cerrar Sesión',
   //   icon: getIcon('fa-solid:car-alt'),
   // },
+  {
+    title: 'login',
+    path: '/login',
+    icon: getIcon('eva:lock-fill'),
+  },
 ];
 
 export default navConfig;
