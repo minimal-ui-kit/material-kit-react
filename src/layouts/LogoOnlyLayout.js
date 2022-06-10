@@ -2,7 +2,6 @@ import { Outlet } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
 // components
-import Logo from '../components/Logo';
 
 // ----------------------------------------------------------------------
 
@@ -23,9 +22,7 @@ const HeaderStyle = styled('header')(({ theme }) => ({
 export default function LogoOnlyLayout() {
   return (
     <>
-      <HeaderStyle>
-        <Logo />
-      </HeaderStyle>
+     
       <Outlet />
     </>
   );

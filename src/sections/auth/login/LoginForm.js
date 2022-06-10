@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
 // material
 import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
@@ -28,10 +28,10 @@ export default function LoginForm() {
       password: '',
     },
     validationSchema: LoginSchema,
-    onSubmit: ( { setSubmitting, values}) => {
+    onSubmit: ( { setSubmitting, values}) => {      
       setSubmitting(false);
           dispatch(startLoginEmailPassword(values.email, values.password));
-      navigate('/dashboard', { replace: true });
+          
     },
   })
   
@@ -83,7 +83,7 @@ export default function LoginForm() {
           type="submit"
           variant="contained" color="success"
           loading={isSubmitting}
-        >
+         >
           Login
         </LoadingButton>
       </Form>

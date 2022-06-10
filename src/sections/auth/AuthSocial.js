@@ -1,7 +1,7 @@
 // material
 import { Stack, Button, Divider, Typography } from '@mui/material';
 import { useDispatch } from 'react-redux';
-import { startGoogleLogin } from '../../redux/actions/authReducer'
+import { startFacebookLogin, startGoogleLogin } from '../../redux/actions/authReducer'
 import Iconify from '../../components/Iconify';
 
 // ----------------------------------------------------------------------
@@ -15,7 +15,7 @@ export default function AuthSocial() {
           <Iconify icon="eva:google-fill" color="#DF3E30" width={22} height={22} />
         </Button>
 
-        <Button fullWidth size="large" color="inherit" variant="outlined">
+        <Button fullWidth size="large" color="inherit" variant="outlined" onClick={() => dispatch(startFacebookLogin())}>
           <Iconify icon="eva:facebook-fill" color="#1877F2" width={22} height={22} />
         </Button>
       </Stack>

@@ -10,7 +10,7 @@ const navConfig = [
     title: 'dashboard',
     path: '/dashboard/app',
     icon: getIcon('eva:pie-chart-2-fill'),
-  },
+    },
   {
     title: 'usuarios',
     path: '/dashboard/user',
@@ -21,15 +21,16 @@ const navConfig = [
     path: '/dashboard/products',
     icon: getIcon('fa-solid:car-alt'),
   },
-  // {
-  //   title: 'Cerrar Sesión',
-  //   icon: getIcon('fa-solid:car-alt'),
-  // },
   {
-    title: 'login',
+    title: 'Cerrar Sesión',
     path: '/login',
     icon: getIcon('eva:lock-fill'),
   },
+  // {
+  //   title: 'login',
+  //   path: '/login',
+  //   icon: getIcon('eva:lock-fill'),
+  // },
 ];
 
 export default navConfig;
