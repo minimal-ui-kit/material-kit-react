@@ -3,12 +3,11 @@ import {
   deleteUser,
   getAuth,
   signInWithEmailAndPassword,
-  signInWithPopup,
   signOut,
   updateProfile,
 } from "firebase/auth";
 import Swal from "sweetalert2";
-import { facebook, google } from "../../firebase/ConfigFirebase";
+
 import { types } from "../types/types";
 
 // Async Login with email and password
@@ -32,42 +31,6 @@ export const login = (uid, displayName) => ({
     displayName,
   },
 });
-
-// Login with google
-export const startGoogleLogin = () => (dispatch) => {
-    const auth = getAuth();
-    signInWithPopup(auth, google)
-      .then(({ user }) => {
-        dispatch(login(user.uid, user.displayName));
-        Swal.fire(
-          "Bien Hecho!",
-          "Inicio de sesión con google exitoso",
-          "success"
-        );
-      })
-      .catch((error) => {
-        console.log(error);
-        Swal.fire("Oops...", "Ha ocurrido un error", "error");
-      });
-  };
-
-// Login with facebook
-export const startFacebookLogin = () => (dispatch) => {
-    const auth = getAuth();
-    signInWithPopup(auth, facebook)
-      .then(({ user }) => {
-        dispatch(login(user.uid, user.displayName));
-        Swal.fire(
-          "Bien Hecho!",
-          "Inicio de sesión con facebook exitoso",
-          "success"
-        );
-      })
-      .catch((error) => {
-        console.log(error);
-        Swal.fire("Oops...", "Ha ocurrido un error", "error");
-      });
-  };
 
 // Sign up with email and password
 export const startSignUpEmailPassword = (email, password, name) => (dispatch) => {
