@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import { useState } from 'react';
+import { styled } from '@mui/material/styles';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { useNavigate } from 'react-router-dom';
 // material
@@ -12,12 +13,14 @@ import {
   RadioGroup,
   FormControlLabel,
   FormControl,
-  FormLabel
+  FormLabel,
+  Button
 } from '@mui/material';
+// import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import { LoadingButton } from '@mui/lab';
+import _ from 'lodash';
 // component
 import Iconify from '../../../components/Iconify';
-
 // ----------------------------------------------------------------------
 
 export default function RegisterForm() {
@@ -66,6 +69,9 @@ export default function RegisterForm() {
   });
 
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
+  const Input = styled('input')({
+    display: 'none'
+  });
 
   return (
     <FormikProvider value={formik}>
@@ -164,6 +170,17 @@ export default function RegisterForm() {
               <FormControlLabel value="male" control={<Radio />} label="Male" />
             </RadioGroup>
           </FormControl>
+
+          {/* <Stack direction="row" alignItems="center" spacing={2}>
+            <Input accept="image/*" id="contained-button-file" multiple type="file" />
+            <Button variant="contained" component="span">
+              Upload
+            </Button>
+            <Input accept="image/*" id="icon-button-file" type="file" />
+            <IconButton color="primary" aria-label="upload picture" component="span">
+              <PhotoCamera />
+            </IconButton>
+          </Stack> */}
 
           <LoadingButton
             fullWidth
