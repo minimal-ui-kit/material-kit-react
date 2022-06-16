@@ -40,7 +40,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
 export default function Login() {
   return (
     <RootStyle title="Login | GCT">
-      <AuthLayout />
+      {/* <AuthLayout /> */}
 
       <SectionStyle sx={{ display: { xs: 'none', md: 'flex' } }}>
         <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>

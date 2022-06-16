@@ -135,12 +135,12 @@ export default function User() {
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            User
+            Users
           </Typography>
           <Button
             variant="contained"
             component={RouterLink}
-            to="#"
+            to="/register"
             startIcon={<Iconify icon="eva:plus-fill" />}
           >
             New User

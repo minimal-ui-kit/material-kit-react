@@ -3,7 +3,17 @@ import { useState } from 'react';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { useNavigate } from 'react-router-dom';
 // material
-import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
+import {
+  Stack,
+  TextField,
+  IconButton,
+  InputAdornment,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  FormControl,
+  FormLabel
+} from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // component
 import Iconify from '../../../components/Iconify';
@@ -22,7 +32,11 @@ export default function RegisterForm() {
     lastName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Last name required'),
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
     password: Yup.string().required('Password is required'),
-    company: Yup.string().required('Company is required')
+    company: Yup.string().required('Company is required'),
+    tagid: Yup.string().required('TagID is required'),
+    ethnicity: Yup.string().required('Ethnicity is required'),
+    username: Yup.string().required('Username is required'),
+    gender: Yup.string().required('Gender is required')
   });
 
   const formik = useFormik({
@@ -31,7 +45,19 @@ export default function RegisterForm() {
       lastName: '',
       email: '',
       password: '',
-      company: ''
+      company: '',
+      online: 0,
+      tagid: '',
+      hours: 0,
+      temperature: 25,
+      role: 1,
+      gender: 0,
+      ethnicity: '',
+      accessType: 1,
+      status: 0,
+      username: '',
+      biometricId: '0000000',
+      faceId: '999999'
     },
     validationSchema: RegisterSchema,
     onSubmit: () => {
@@ -100,6 +126,44 @@ export default function RegisterForm() {
             error={Boolean(touched.password && errors.password)}
             helperText={touched.password && errors.password}
           />
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+            <TextField
+              fullWidth
+              label="Tag ID"
+              {...getFieldProps('tagid')}
+              error={Boolean(touched.tagid && errors.tagid)}
+              helperText={touched.tagid && errors.tagid}
+            />
+
+            <TextField
+              fullWidth
+              label="Ethnicity"
+              {...getFieldProps('ethnicity')}
+              error={Boolean(touched.ethnicity && errors.ethnicity)}
+              helperText={touched.ethnicity && errors.ethnicity}
+            />
+          </Stack>
+
+          <TextField
+            fullWidth
+            label="Username"
+            {...getFieldProps('username')}
+            error={Boolean(touched.username && errors.username)}
+            helperText={touched.username && errors.username}
+          />
+
+          <FormControl>
+            <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
+            <RadioGroup
+              aria-labelledby="demo-radio-buttons-group-label"
+              defaultValue="female"
+              name="radio-buttons-group"
+              {...getFieldProps('gender')}
+            >
+              <FormControlLabel value="female" control={<Radio />} label="Female" />
+              <FormControlLabel value="male" control={<Radio />} label="Male" />
+            </RadioGroup>
+          </FormControl>
 
           <LoadingButton
             fullWidth
@@ -108,7 +172,7 @@ export default function RegisterForm() {
             variant="contained"
             loading={isSubmitting}
           >
-            Register
+            Add User
           </LoadingButton>
         </Stack>
       </Form>
