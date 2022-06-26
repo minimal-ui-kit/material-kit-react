@@ -8,7 +8,7 @@ import Register from './pages/Register';
 import DashboardApp from './pages/DashboardApp';
 import Products from './pages/Products';
 import Blog from './pages/Blog';
-import User from './pages/User';
+import User from './pages/Test';
 import NotFound from './pages/Page404';
 import Auth from './pages/Auth';
 

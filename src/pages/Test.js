@@ -1,8 +1,8 @@
 /* eslint-disable */
 
+import React, { Component } from 'react';
 import { filter } from 'lodash';
 import { sentenceCase } from 'change-case';
-import React, { Component } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 // material
 import {
@@ -34,12 +34,12 @@ import USERLIST from '../_api_/user';
 const TABLE_HEAD = [
   { id: 'name', label: 'Name', alignRight: false },
   { id: 'company', label: 'Company', alignRight: false },
+  { id: 'username', label: 'Username', alignRight: false },
   { id: 'status', label: 'Status', alignRight: false },
   { id: 'ethnicity', label: 'Ethnicity', alignRight: false },
   { id: 'email', label: 'Email', alignRight: false },
   { id: 'hours', label: 'Time', alignRight: false },
   { id: 'gender', label: 'Gender', alignRight: false },
-  { id: 'username', label: 'Username', alignRight: false },
   { id: '' }
 ];
 
@@ -82,7 +82,7 @@ class User extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: 0,
+      name: '',
       order: 'asc',
       selected: [],
       orderBy: 'name',
@@ -90,7 +90,23 @@ class User extends Component {
       rowsPerPage: 5,
       ARRAY_TO_USE: []
     };
+    this.forceUpdate();
+    this.displayData = this.displayData.bind(this);
+    this.displayData();
   }
+
+  componentDidUpdate() {
+    this.handleChangeRowsPerPage
+    //this.render()
+  }
+
+  alertName = () => {
+    alert(this.state.name);
+  };
+
+  handleNameInput = (e) => {
+    this.setState({ name: e.target.value });
+  };
 
   handleRequestSort = (event, property) => {
     const isAsc = this.state.orderBy === property && this.state.order === 'asc';
@@ -99,6 +115,7 @@ class User extends Component {
   };
 
   handleSelectAllClick = (event) => {
+    this.displayData();
     if (event.target.checked) {
       const newSelecteds = USERLIST.map((n) => n.name);
       setSelected(newSelecteds);
@@ -155,83 +172,19 @@ class User extends Component {
   isUserNotFound = this.state?.filteredUsers?.length === 0;
 
   displayData = () => {
-    const { page, order, selected, orderBy, filterName, rowsPerPage } = this.state;
-
     USERLIST.then((ARRAY_TO_USE) => {
       console.log('Dude: => ', ARRAY_TO_USE);
-      // this.setState({ ARRAY_TO_USE: ARRAY_TO_USE });
-      <TableBody>
-        {this.filteredUsers(ARRAY_TO_USE)
-          ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-          .map((row) => {
-            const {
-              id,
-              name,
-              company,
-              status,
-              avatarUrl,
-              ethnicity,
-              email,
-              hours,
-              gender,
-              username
-            } = row;
-            const isItemSelected = selected.indexOf(name) !== -1;
-
-            return (
-              <TableRow
-                hover
-                key={id}
-                tabIndex={-1}
-                role="checkbox"
-                selected={isItemSelected}
-                aria-checked={isItemSelected}
-              >
-                <TableCell padding="checkbox">
-                  <Checkbox
-                    checked={isItemSelected}
-                    onChange={(event) => this.handleClick(event, name)}
-                  />
-                </TableCell>
-                <TableCell component="th" scope="row" padding="none">
-                  <Stack direction="row" alignItems="center" spacing={2}>
-                    <Avatar alt={name} src={avatarUrl} />
-                    <Typography variant="subtitle2" noWrap>
-                      {name}
-                    </Typography>
-                  </Stack>
-                </TableCell>
-                <TableCell align="left">{company}</TableCell>
-                <TableCell align="left">{username}</TableCell>
-                <TableCell align="left">
-                  <Label variant="ghost" color={(status === 'banned' && 'error') || 'success'}>
-                    {status}
-                  </Label>
-                </TableCell>
-                <TableCell align="left">{ethnicity}</TableCell>
-                <TableCell align="left">{email}</TableCell>
-                <TableCell align="left">{hours}</TableCell>
-                <TableCell align="left">{gender}</TableCell>
-
-                <TableCell align="right">
-                  <UserMoreMenu />
-                </TableCell>
-              </TableRow>
-            );
-          })}
-        {this.emptyRows(ARRAY_TO_USE) > 0 && (
-          <TableRow style={{ height: 53 * this.emptyRows(ARRAY_TO_USE) }}>
-            <TableCell colSpan={6} />
-          </TableRow>
-        )}
-      </TableBody>;
+      this.setState({ ARRAY_TO_USE: ARRAY_TO_USE });
     });
+    this.forceUpdate();
   };
+
 
   render() {
     const { page, order, selected, orderBy, filterName, ARRAY_TO_USE, rowsPerPage } = this.state;
+
     return (
-      <Page title="User | Minimal-UI">
+      <Page title="User | GCT">
         <Container>
           <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
             <Typography variant="h4" gutterBottom>
@@ -249,7 +202,7 @@ class User extends Component {
 
           <Card>
             <UserListToolbar
-              numSelected={selected.length}
+              numSelected={selected?.length}
               filterName={filterName}
               onFilterName={this.handleFilterByName}
             />
@@ -262,23 +215,82 @@ class User extends Component {
                     orderBy={orderBy}
                     headLabel={TABLE_HEAD}
                     rowCount={ARRAY_TO_USE.length}
-                    numSelected={this.state.selected.length}
+                    numSelected={selected?.length}
                     onRequestSort={this.handleRequestSort}
-                    onSelectAllClick={handleSelectAllClick}
+                    onSelectAllClick={this.handleSelectAllClick}
                   />
-                  {/* {this.displayData} */}
-                  {/* <TableBody>
-                        <TableRow>
-                          <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
-                            Loading users..
-                          </TableCell>
-                        </TableRow>
-                      </TableBody> */}
+
+                  <TableBody>
+                    {this.filteredUsers(ARRAY_TO_USE)
+                      ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                      .map((row) => {
+                        const {
+                          id,
+                          name,
+                          company,
+                          username,
+                          avatarUrl,
+                          ethnicity,
+                          email,
+                          hours,
+                          gender,
+                          status
+                        } = row;
+                        const isItemSelected = selected.indexOf(name) !== -1;
+
+                        return (
+                          <TableRow
+                            hover
+                            key={id}
+                            tabIndex={-1}
+                            role="checkbox"
+                            selected={isItemSelected}
+                            aria-checked={isItemSelected}
+                          >
+                            <TableCell padding="checkbox">
+                              <Checkbox
+                                checked={isItemSelected}
+                                onChange={(event) => this.handleClick(event, name)}
+                              />
+                            </TableCell>
+                            <TableCell component="th" scope="row" padding="none">
+                              <Stack direction="row" alignItems="center" spacing={2}>
+                                <Avatar alt={name} src={avatarUrl} />
+                                <Typography variant="subtitle2" noWrap>
+                                  {name}
+                                </Typography>
+                              </Stack>
+                            </TableCell>
+                            <TableCell align="left">{company}</TableCell>
+                            <TableCell align="left">{username}</TableCell>
+                            <TableCell align="left">
+                              <Label variant="ghost" color={(status === 'banned' && 'error') || 'success'}>
+                                {status}
+                              </Label>
+                            </TableCell>
+                            <TableCell align="left">{ethnicity}</TableCell>
+                            <TableCell align="left">{email}</TableCell>
+                            <TableCell align="left">{hours}</TableCell>
+                            <TableCell align="left">{gender}</TableCell>
+
+                            <TableCell align="right">
+                              <UserMoreMenu />
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })} {console.log('Inside: => ', ARRAY_TO_USE)}
+                    {this.emptyRows(ARRAY_TO_USE) > 0 && (
+                      <TableRow style={{ height: 53 * this.emptyRows(ARRAY_TO_USE) }}>
+                        <TableCell colSpan={6} />
+                      </TableRow>
+                    )}
+                  </TableBody>
+                 
                   {this.isUserNotFound && (
                     <TableBody>
                       <TableRow>
                         <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
-                          <SearchNotFound searchQuery={this.state.filterName} />
+                          <SearchNotFound searchQuery={filterName} />
                         </TableCell>
                       </TableRow>
                     </TableBody>

@@ -11,7 +11,7 @@ import {
   ProductFilterSidebar
 } from '../sections/@dashboard/products';
 //
-import PRODUCTS from '../_mocks_/products';
+import USERLIST from '../_api_/user';
 
 // ----------------------------------------------------------------------
 

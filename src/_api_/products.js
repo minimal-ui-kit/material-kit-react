@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { faker } from '@faker-js/faker';
 import { sample } from 'lodash';
 // utils
@@ -15,21 +17,7 @@ const PRODUCT_NAME = [
   'Nike Air Max Zephyr',
   'Jordan Delta',
   'Air Jordan XXXV PF',
-  'Nike Waffle Racer Crater',
-  'Kyrie 7 EP Sisterhood',
-  'Nike Air Zoom BB NXT',
-  'Nike Air Force 1 07 LX',
-  'Nike Air Force 1 Shadow SE',
-  'Nike Air Zoom Tempo NEXT%',
-  'Nike DBreak-Type',
-  'Nike Air Max Up',
-  'Nike Air Max 270 React ENG',
-  'NikeCourt Royale',
-  'Nike Air Zoom Pegasus 37 Premium',
-  'Nike Air Zoom SuperRep',
-  'NikeCourt Royale',
-  'Nike React Art3mis',
-  'Nike React Infinity Run Flyknit A.I.R. Chaz Bear'
+  'Nike Waffle Racer Crater'
 ];
 const PRODUCT_COLOR = [
   '#00AB55',

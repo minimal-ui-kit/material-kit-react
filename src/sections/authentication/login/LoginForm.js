@@ -17,6 +17,7 @@ import { LoadingButton } from '@mui/lab';
 import Iconify from '../../../components/Iconify';
 
 // ----------------------------------------------------------------------
+const BASE_URL = "'https://gct-ac-api.herokuapp.com/"
 
 export default function LoginForm() {
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ export default function LoginForm() {
     },
     validationSchema: LoginSchema,
     onSubmit: () => {
-      navigate('/dashboard', { replace: true });
+      validateLoginUser();
     }
   });
 
@@ -44,6 +45,26 @@ export default function LoginForm() {
   const handleShowPassword = () => {
     setShowPassword((show) => !show);
   };
+
+  const validateLoginUser = async () => {
+    const loginObject = {
+      email : {...getFieldProps('email')},
+      password : {...getFieldProps('password')}
+    }
+
+    try {
+      const response = await axios.post(BASE_URL + 'login',loginObject);
+      if (response){
+        navigate('/dashboard', { replace: true });
+      }
+      navigate('/login', { replace: true });
+
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  };
+  
 
   return (
     <FormikProvider value={formik}>

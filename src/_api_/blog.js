@@ -1,9 +1,11 @@
+/* eslint-disable */
+
 import { faker } from '@faker-js/faker';
 // utils
 import { mockImgCover } from '../utils/mockImages';
 
 // ----------------------------------------------------------------------
-
+  
 const POST_TITLES = [
   'Whiteboard Templates By Industry Leaders',
   'Tesla Cybertruck-inspired camper trailer for Tesla fans who can’t just wait for the truck!',

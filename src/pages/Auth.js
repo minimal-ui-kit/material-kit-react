@@ -1,12 +1,7 @@
-import { Link as RouterLink } from 'react-router-dom';
-// material
 import { styled } from '@mui/material/styles';
-import { Card, Stack, Link, Container, Typography, Alert } from '@mui/material';
-// layouts
-import AuthLayout from '../layouts/AuthLayout';
+import { Card, Stack, Container, Typography, Alert } from '@mui/material';
 // components
 import Page from '../components/Page';
-import { LoginForm } from '../sections/authentication/login';
 
 // ----------------------------------------------------------------------
 
@@ -35,18 +30,21 @@ const ContentStyle = styled('div')(({ theme }) => ({
   padding: theme.spacing(12, 0)
 }));
 
+const accessGranted = '/static/illustrations/tick.png';
+const accessDenied = '/static/illustrations/cross.png';
+const idle = '/static/illustrations/idle.jpg';
+
 // ----------------------------------------------------------------------
 
 export default function Auth() {
   return (
     <RootStyle title="Authentication | GCT">
       {/* <AuthLayout /> */}
-
       <SectionStyle sx={{ display: { xs: 'none', md: 'flex' } }}>
-        <Typography variant="h3" sx={{ px: 5, mt: 5, mb: 3 }}>
-          Hi, [Name Surname] Your Access Is
+        <Typography variant="h3" sx={{ px: 5, mt: 0, mb: 3 }}>
+          Access Denied
         </Typography>
-        <img src="/static/illustrations/tick.png" alt="access-granted" />
+        <img src={accessDenied} alt="access outcome" />
       </SectionStyle>
 
       <Container maxWidth="sm">
