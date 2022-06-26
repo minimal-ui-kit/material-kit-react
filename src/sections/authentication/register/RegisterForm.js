@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import * as Yup from 'yup';
 import { useState } from 'react';
 import { styled } from '@mui/material/styles';
@@ -26,6 +28,14 @@ import Iconify from '../../../components/Iconify';
 export default function RegisterForm() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const axios = require('axios');
+
+  const headers = {
+    'Content-Type': 'application/json;charset=UTF-8',
+    "Access-Control-Allow-Origin": "*",
+    'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, OPTIONS',
+    'Access-Control-Allow-Headers': '*'
+};
 
   const RegisterSchema = Yup.object().shape({
     firstName: Yup.string()
@@ -41,6 +51,26 @@ export default function RegisterForm() {
     username: Yup.string().required('Username is required'),
     gender: Yup.string().required('Gender is required')
   });
+
+  const addUsers = async (userObject) => {
+    try {
+      const response = await axios.post('https://gct-ac-api.herokuapp.com/registeruser',userObject,{
+        mode: 'cors',
+        headers: headers
+    });
+    console.log(response)
+      if(response){
+        navigate('/dashboard', { replace: true });
+      }
+      else{
+        navigate('/register', { replace: true });
+      }
+    
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -64,7 +94,28 @@ export default function RegisterForm() {
     },
     validationSchema: RegisterSchema,
     onSubmit: () => {
-      navigate('/dashboard', { replace: true });
+      const registrationObject = {
+        tenantID: 5,
+        firstName: {...getFieldProps('firstName')}.value,
+        lastName: {...getFieldProps('lastName')}.value,
+        email: {...getFieldProps('email')}.value,
+        password: {...getFieldProps('password')}.value,
+        company: {...getFieldProps('company')}.value,
+        online: 0,
+        tagid: {...getFieldProps('tagid')}.value,
+        hours: 0,
+        temperature: 25,
+        role: 1,
+        gender: 0,
+        ethnicity: {...getFieldProps('ethnicity')}.value,
+        accessType: 1,
+        status: 0,
+        username: {...getFieldProps('username')}.value,
+        biometricId: '0000000',
+        faceId: '999999'
+      };
+      console.log("Values: ", registrationObject);
+      addUsers(registrationObject);
     }
   });
 
