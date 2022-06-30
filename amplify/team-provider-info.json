@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-matrialkitreact-dev-221952-authRole",
+      "UnauthRoleArn": "arn:aws:iam::907487616395:role/amplify-matrialkitreact-dev-221952-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::907487616395:role/amplify-matrialkitreact-dev-221952-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-matrialkitreact-dev-221952-deployment",
+      "UnauthRoleName": "amplify-matrialkitreact-dev-221952-unauthRole",
+      "StackName": "amplify-matrialkitreact-dev-221952",
+      "StackId": "arn:aws:cloudformation:us-east-1:907487616395:stack/amplify-matrialkitreact-dev-221952/f3d24ee0-f86e-11ec-800c-0afd7e0a1493",
+      "AmplifyAppId": "d3q8ilw7kl93fn"
+    }
+  }
+}
