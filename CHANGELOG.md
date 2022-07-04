@@ -1,3 +1,12 @@
+### v1.5.0
+
+###### Jul 04, 2022
+
+- Support react 18.
+- Upgrade some dependencies to the latest versions
+
+---
+
 ### v1.4.0
 
 ###### Apr 12, 2022

@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { Form, FormikProvider, useFormik } from 'formik';
+// form
+import { useForm, Controller } from 'react-hook-form';
 // @mui
 import { Card, Stack, Divider, Checkbox, MenuItem, IconButton, CardHeader, FormControlLabel } from '@mui/material';
 // components
@@ -16,28 +17,36 @@ AppTasks.propTypes = {
 };
 
 export default function AppTasks({ title, subheader, list, ...other }) {
-  const formik = useFormik({
-    initialValues: {
-      checked: [list[2].id],
-    },
-    onSubmit: (values) => {
-      console.log(values);
+  const { control } = useForm({
+    defaultValues: {
+      taskCompleted: ['2'],
     },
   });
-
-  const { values, handleSubmit } = formik;
 
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
+      <Controller
+        name="taskCompleted"
+        control={control}
+        render={({ field }) => {
+          const onSelected = (task) =>
+            field.value.includes(task) ? field.value.filter((value) => value !== task) : [...field.value, task];
 
-      <FormikProvider value={formik}>
-        <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-          {list.map((task) => (
-            <TaskItem key={task.id} task={task} checked={values.checked.includes(task.id)} formik={formik} />
-          ))}
-        </Form>
-      </FormikProvider>
+          return (
+            <>
+              {list.map((task) => (
+                <TaskItem
+                  key={task.id}
+                  task={task}
+                  checked={field.value.includes(task.id)}
+                  onChange={() => field.onChange(onSelected(task.id))}
+                />
+              ))}
+            </>
+          );
+        }}
+      />
     </Card>
   );
 }
@@ -45,14 +54,15 @@ export default function AppTasks({ title, subheader, list, ...other }) {
 // ----------------------------------------------------------------------
 
 TaskItem.propTypes = {
-  formik: PropTypes.object,
   checked: PropTypes.bool,
-  task: PropTypes.object,
+  onChange: PropTypes.func,
+  task: PropTypes.shape({
+    id: PropTypes.string,
+    label: PropTypes.string,
+  }),
 };
 
-function TaskItem({ formik, task, checked, ...other }) {
-  const { getFieldProps } = formik;
-
+function TaskItem({ task, checked, onChange }) {
   const [open, setOpen] = useState(null);
 
   const handleOpenMenu = (event) => {
@@ -65,22 +75,22 @@ function TaskItem({ formik, task, checked, ...other }) {
 
   const handleMarkComplete = () => {
     handleCloseMenu();
-    console.log('MARK COMPLETE', task);
+    console.log('MARK COMPLETE', task.id);
   };
 
   const handleShare = () => {
     handleCloseMenu();
-    console.log('SHARE', task);
+    console.log('SHARE', task.id);
   };
 
   const handleEdit = () => {
     handleCloseMenu();
-    console.log('EDIT', task);
+    console.log('EDIT', task.id);
   };
 
   const handleDelete = () => {
     handleCloseMenu();
-    console.log('DELETE', task);
+    console.log('DELETE', task.id);
   };
 
   return (
@@ -96,7 +106,7 @@ function TaskItem({ formik, task, checked, ...other }) {
       }}
     >
       <FormControlLabel
-        control={<Checkbox {...getFieldProps('checked')} value={task.id} checked={checked} {...other} />}
+        control={<Checkbox checked={checked} onChange={onChange} />}
         label={task.label}
         sx={{ flexGrow: 1, m: 0 }}
       />
@@ -141,7 +151,7 @@ MoreMenuButton.propTypes = {
   actions: PropTypes.node.isRequired,
   onClose: PropTypes.func,
   onOpen: PropTypes.func,
-  open: PropTypes.object,
+  open: PropTypes.bool,
 };
 
 function MoreMenuButton({ actions, open, onOpen, onClose }) {
@@ -155,6 +165,8 @@ function MoreMenuButton({ actions, open, onOpen, onClose }) {
         open={Boolean(open)}
         anchorEl={open}
         onClose={onClose}
+        anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         arrow="right-top"
         sx={{
           mt: -0.5,
