@@ -1,0 +1,40 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Push
+
+on:
+  push:
+    branches: 
+      - master
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Docker image and push to Container Registry
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build backend Image
+        id: build-backend-image
+        uses: redhat-actions/buildah-build@v2
+        with:
+          image: backend
+          tags: latest ${{ github.sha }}
+          containerfiles: |
+            ./Dockerfile
+
+      - name: Push To Dockerhub Container Registry
+        id: push-to-registry
+        uses: redhat-actions/push-to-registry@v2
+        with:
+          image: ${{ steps.build-backend-image.outputs.image }}
+          tags: ${{ steps.build-backend-image.outputs.tags }}
+          registry: registry-1.docker.io/lmilbaum
+          username: lmilbaum
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+
+      - name: Print backend image url
+        run: echo "Image pushed to ${{ steps.push-to-registry.outputs.registry-paths }}"
