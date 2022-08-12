@@ -64,9 +64,8 @@ export default function LoginForm() {
     try {
       await axios.post(BASE_URL + 'login',{loginObject},{
         mode: 'cors',
-        headers: headers,
-        withCredentials: true,
-      })
+        headers: headers
+            })
       .then(function(response) {
         console.log('Authenticated');
         navigate('/dashboard', { replace: true });
