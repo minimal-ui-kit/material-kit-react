@@ -20,6 +20,13 @@ import Iconify from '../../../components/Iconify';
 
 // ----------------------------------------------------------------------
 const BASE_URL = "https://gct-ac-api.herokuapp.com/"
+const axios = require('axios');
+const headers = {
+  'Content-Type': 'application/json;charset=UTF-8',
+  "Access-Control-Allow-Origin": "*",
+  'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, OPTIONS',
+  'Access-Control-Allow-Headers': '*'
+};
 
 export default function LoginForm() {
   const navigate = useNavigate();
@@ -55,17 +62,25 @@ export default function LoginForm() {
     }
 
     try {
-      const response = true;//await axios.post(BASE_URL + 'login',loginObject);
-      console.log(response);
-      if (response){
+      await axios.post(BASE_URL + 'login',{loginObject},{
+        mode: 'cors',
+        headers: headers,
+        withCredentials: true,
+      })
+      .then(function(response) {
+        console.log('Authenticated');
         navigate('/dashboard', { replace: true });
-      }
-      navigate('/login', { replace: true });
 
+      }).catch(function(error) {
+        console.log('Error on Authentication');
+        navigate('/login', { replace: true });
+
+      });
     } catch (err) {
       console.log(err);
       throw err;
     }
+ 
   };
   
 
