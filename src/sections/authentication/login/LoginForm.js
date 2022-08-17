@@ -19,7 +19,8 @@ import { LoadingButton } from '@mui/lab';
 import Iconify from '../../../components/Iconify';
 
 // ----------------------------------------------------------------------
-const BASE_URL = "https://gct-ac-api.herokuapp.com/"
+const dev_BASE_URL = "http://localhost:8080/" 
+const BASE_URL = "https://gct-ac-api.herokuapp.com/" 
 const axios = require('axios');
 const headers = {
   'Content-Type': 'application/json;charset=UTF-8',
@@ -62,16 +63,16 @@ export default function LoginForm() {
     }
 
     try {
-      await axios.post(BASE_URL + 'login',{loginObject},{
+      await axios.post(BASE_URL + 'login',loginObject,{
         mode: 'cors',
         headers: headers
             })
       .then(function(response) {
-        console.log('Authenticated');
+        console.log('Authenticated',response);
         navigate('/dashboard', { replace: true });
 
       }).catch(function(error) {
-        console.log('Error on Authentication');
+        console.log('Error on Authentication',error);
         navigate('/login', { replace: true });
 
       });
