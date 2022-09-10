@@ -68,9 +68,9 @@ export default function Register() {
           <Logo />
           {smUp && (
             <Typography variant="body2" sx={{ mt: { md: -2 } }}>
-              Already have an account? {''}
+              Đã có tài khoản? {''}
               <Link variant="subtitle2" component={RouterLink} to="/login">
-                Login
+                Đăng nhập
               </Link>
             </Typography>
           )}
@@ -79,7 +79,7 @@ export default function Register() {
         {mdUp && (
           <SectionStyle>
             <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-              Manage the job more effectively with Minimal
+              Bước vào cánh cửa pha chế
             </Typography>
             <img alt="register" src="/static/illustrations/illustration_register.png" />
           </SectionStyle>
@@ -88,7 +88,11 @@ export default function Register() {
         <Container>
           <ContentStyle>
             <Typography variant="h4" gutterBottom>
+<<<<<<< Updated upstream
               Get started absolutely free.
+=======
+              Đăng ký.
+>>>>>>> Stashed changes
             </Typography>
 
             <Typography sx={{ color: 'text.secondary', mb: 5 }}>Free forever. No credit card needed.</Typography>
@@ -98,22 +102,22 @@ export default function Register() {
             <RegisterForm />
 
             <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
-              By registering, I agree to Minimal&nbsp;
+              Khi đăng ký tức là bạn hoàn toàn đồng ý với &nbsp;
               <Link underline="always" color="text.primary" href="#">
-                Terms of Service
+                Điều khoản dịch vụ
               </Link>
-              {''}and{''}
+              {''} và {''}
               <Link underline="always" color="text.primary" href="#">
-                Privacy Policy
+                Chính sách bảo mật
               </Link>
               .
             </Typography>
 
             {!smUp && (
               <Typography variant="body2" sx={{ mt: 3, textAlign: 'center' }}>
-                Already have an account?{' '}
+                Đã có tài khoản?{' '}
                 <Link variant="subtitle2" to="/login" component={RouterLink}>
-                  Login
+                  Đăng nhập
                 </Link>
               </Typography>
             )}

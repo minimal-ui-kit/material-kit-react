@@ -24,7 +24,7 @@ export default function EcommerceShop() {
     <Page title="Dashboard: Products">
       <Container>
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Products
+          Tất cả khoá học
         </Typography>
 
         <Stack direction="row" flexWrap="wrap-reverse" alignItems="center" justifyContent="flex-end" sx={{ mb: 5 }}>
@@ -33,13 +33,18 @@ export default function EcommerceShop() {
               isOpenFilter={openFilter}
               onOpenFilter={handleOpenFilter}
               onCloseFilter={handleCloseFilter}
+<<<<<<< Updated upstream
             />
             <ProductSort />
+=======
+            /> */}
+            {/* <ProductSort /> */}
+>>>>>>> Stashed changes
           </Stack>
         </Stack>
 
         <ProductList products={PRODUCTS} />
-        <ProductCartWidget />
+        {/* <ProductCartWidget /> */}
       </Container>
     </Page>
   );

@@ -16,13 +16,23 @@ import DashboardApp from './pages/DashboardApp';
 export default function Router() {
   return useRoutes([
     {
-      path: '/dashboard',
+      path: '/',
       element: <DashboardLayout />,
       children: [
-        { path: 'app', element: <DashboardApp /> },
+        { path: '', element: <DashboardApp /> },
+        // { path: 'home', element: <DashboardApp /> },
         { path: 'user', element: <User /> },
         { path: 'products', element: <Products /> },
-        { path: 'blog', element: <Blog /> },
+        { path: '*', element: <Navigate to="/404" /> },
+      ],
+    },
+    {
+      path: '/products/*',
+      element: <DashboardLayout />,
+      children: [
+        { path: 'item_1', element: <DashboardApp /> },
+        { path: 'item_2', element: <User /> },
+        { path: 'item_3', element: <Products /> },
       ],
     },
     {
@@ -33,15 +43,25 @@ export default function Router() {
       path: 'register',
       element: <Register />,
     },
-    {
-      path: '/',
-      element: <LogoOnlyLayout />,
-      children: [
-        { path: '/', element: <Navigate to="/dashboard/app" /> },
-        { path: '404', element: <NotFound /> },
-        { path: '*', element: <Navigate to="/404" /> },
-      ],
-    },
+    // {
+    //   path: 'khoa_hoc',
+    //   element: <Register />,
+    //   children: [
+    //     { path: 'app', element: <DashboardApp /> },
+    //     { path: 'user', element: <User /> },
+    //     { path: 'products', element: <Products /> },
+    //     { path: 'blog', element: <Blog /> },
+    //   ],
+    // },
+    // {
+    //   path: '/',
+    //   element: <LogoOnlyLayout />,
+    //   children: [
+    //     { path: '/', element: <Navigate to="/dashboard/app" /> },
+    //     // { path: '404', element: <NotFound /> },
+    //     { path: '*', element: <Navigate to="/404" /> },
+    //   ],
+    // },
     {
       path: '*',
       element: <Navigate to="/404" replace />,

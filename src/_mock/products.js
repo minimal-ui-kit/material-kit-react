@@ -4,6 +4,7 @@ import { sample } from 'lodash';
 // ----------------------------------------------------------------------
 
 const PRODUCT_NAME = [
+<<<<<<< Updated upstream
   'Nike Air Force 1 NDESTRUKT',
   'Nike Space Hippie 04',
   'Nike Air Zoom Pegasus 37 A.I.R. Chaz Bear',
@@ -28,6 +29,14 @@ const PRODUCT_NAME = [
   'NikeCourt Royale',
   'Nike React Art3mis',
   'Nike React Infinity Run Flyknit A.I.R. Chaz Bear',
+=======
+  'Khoá học pha chế 1',
+  'Khoá học pha chế 2',
+  'Khoá học pha chế 3',
+  'Khoá học pha chế 4',
+  'Khoá học pha chế 5',
+  'Khoá học pha chế 6',
+>>>>>>> Stashed changes
 ];
 const PRODUCT_COLOR = ['#00AB55', '#000000', '#FFFFFF', '#FFC0CB', '#FF4842', '#1890FF', '#94D82D', '#FFC107'];
 
@@ -40,7 +49,8 @@ const products = [...Array(24)].map((_, index) => {
     id: faker.datatype.uuid(),
     cover: `/static/mock-images/products/product_${setIndex}.jpg`,
     name: PRODUCT_NAME[index],
-    price: faker.datatype.number({ min: 4, max: 99, precision: 0.01 }),
+    detail: `/products/item_${index+1}`,
+    price: faker.datatype.number({ min: 0.4, max: 3, precision: 0.1 }),
     priceSale: setIndex % 3 ? null : faker.datatype.number({ min: 19, max: 29, precision: 0.01 }),
     colors:
       (setIndex === 1 && PRODUCT_COLOR.slice(0, 2)) ||

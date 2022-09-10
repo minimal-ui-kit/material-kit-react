@@ -6,24 +6,30 @@ import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton } from '@
 // components
 import MenuPopover from '../../components/MenuPopover';
 // mocks_
-import account from '../../_mock/account';
+import Account from '../../_mock/account';
 
 // ----------------------------------------------------------------------
 
 const MENU_OPTIONS = [
   {
-    label: 'Home',
-    icon: 'eva:home-fill',
+    label: 'Tên tài khoản',
+    // icon: 'eva:person-outline',
     linkTo: '/',
   },
+  
   {
-    label: 'Profile',
-    icon: 'eva:person-fill',
+    label: 'Khoá học đã mua',
+    // icon: 'eva:settings-2-fill',
     linkTo: '#',
   },
   {
-    label: 'Settings',
-    icon: 'eva:settings-2-fill',
+    label: 'Số dư',
+    // icon: 'eva:person-fill',
+    linkTo: '#',
+  },
+  {
+    label: 'Nạp tiền',
+    // icon: 'eva:settings-2-fill',
     linkTo: '#',
   },
 ];
@@ -63,7 +69,7 @@ export default function AccountPopover() {
           }),
         }}
       >
-        <Avatar src={account.photoURL} alt="photoURL" />
+        <Avatar src={Account.photoURL} alt="photoURL" />
       </IconButton>
 
       <MenuPopover
@@ -82,10 +88,10 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {account.displayName}
+            {Account.displayName}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {account.email}
+            {Account.user}
           </Typography>
         </Box>
 
@@ -102,7 +108,7 @@ export default function AccountPopover() {
         <Divider sx={{ borderStyle: 'dashed' }} />
 
         <MenuItem onClick={handleClose} sx={{ m: 1 }}>
-          Logout
+          Đăng Xuất
         </MenuItem>
       </MenuPopover>
     </>
