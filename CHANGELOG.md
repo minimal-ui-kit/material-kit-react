@@ -1,3 +1,12 @@
+### v1.6.0
+
+###### Oct 17, 2022
+
+- Upgrade and restructure the directory.
+- Upgrade some dependencies to the latest versions
+
+---
+
 ### v1.5.0
 
 ###### Jul 04, 2022
