@@ -1,23 +1,22 @@
 import PropTypes from 'prop-types';
-import { Link as RouterLink } from 'react-router-dom';
-// material
+// @mui
 import { alpha, styled } from '@mui/material/styles';
 import { Box, Link, Card, Grid, Avatar, Typography, CardContent } from '@mui/material';
 // utils
 import { fDate } from '../../../utils/formatTime';
 import { fShortenNumber } from '../../../utils/formatNumber';
 //
-import SvgIconStyle from '../../../components/SvgIconStyle';
-import Iconify from '../../../components/Iconify';
+import SvgColor from '../../../components/svg-color';
+import Iconify from '../../../components/iconify';
 
 // ----------------------------------------------------------------------
 
-const CardMediaStyle = styled('div')({
+const StyledCardMedia = styled('div')({
   position: 'relative',
   paddingTop: 'calc(100% * 3 / 4)',
 });
 
-const TitleStyle = styled(Link)({
+const StyledTitle = styled(Link)({
   height: 44,
   overflow: 'hidden',
   WebkitLineClamp: 2,
@@ -25,7 +24,7 @@ const TitleStyle = styled(Link)({
   WebkitBoxOrient: 'vertical',
 });
 
-const AvatarStyle = styled(Avatar)(({ theme }) => ({
+const StyledAvatar = styled(Avatar)(({ theme }) => ({
   zIndex: 9,
   width: 32,
   height: 32,
@@ -34,7 +33,7 @@ const AvatarStyle = styled(Avatar)(({ theme }) => ({
   bottom: theme.spacing(-2),
 }));
 
-const InfoStyle = styled('div')(({ theme }) => ({
+const StyledInfo = styled('div')(({ theme }) => ({
   display: 'flex',
   flexWrap: 'wrap',
   justifyContent: 'flex-end',
@@ -42,7 +41,7 @@ const InfoStyle = styled('div')(({ theme }) => ({
   color: theme.palette.text.disabled,
 }));
 
-const CoverImgStyle = styled('img')({
+const StyledCover = styled('img')({
   top: 0,
   width: '100%',
   height: '100%',
@@ -71,7 +70,7 @@ export default function BlogPostCard({ post, index }) {
   return (
     <Grid item xs={12} sm={latestPostLarge ? 12 : 6} md={latestPostLarge ? 6 : 3}>
       <Card sx={{ position: 'relative' }}>
-        <CardMediaStyle
+        <StyledCardMedia
           sx={{
             ...((latestPostLarge || latestPost) && {
               pt: 'calc(100% * 4 / 3)',
@@ -92,9 +91,9 @@ export default function BlogPostCard({ post, index }) {
             }),
           }}
         >
-          <SvgIconStyle
+          <SvgColor
             color="paper"
-            src="/static/icons/shape-avatar.svg"
+            src="/assets/icons/shape-avatar.svg"
             sx={{
               width: 80,
               height: 36,
@@ -105,7 +104,7 @@ export default function BlogPostCard({ post, index }) {
               ...((latestPostLarge || latestPost) && { display: 'none' }),
             }}
           />
-          <AvatarStyle
+          <StyledAvatar
             alt={author.name}
             src={author.avatarUrl}
             sx={{
@@ -119,8 +118,8 @@ export default function BlogPostCard({ post, index }) {
             }}
           />
 
-          <CoverImgStyle alt={title} src={cover} />
-        </CardMediaStyle>
+          <StyledCover alt={title} src={cover} />
+        </StyledCardMedia>
 
         <CardContent
           sx={{
@@ -136,12 +135,10 @@ export default function BlogPostCard({ post, index }) {
             {fDate(createdAt)}
           </Typography>
 
-          <TitleStyle
-            to="#"
+          <StyledTitle
             color="inherit"
             variant="subtitle2"
             underline="hover"
-            component={RouterLink}
             sx={{
               ...(latestPostLarge && { typography: 'h5', height: 60 }),
               ...((latestPostLarge || latestPost) && {
@@ -150,9 +147,9 @@ export default function BlogPostCard({ post, index }) {
             }}
           >
             {title}
-          </TitleStyle>
+          </StyledTitle>
 
-          <InfoStyle>
+          <StyledInfo>
             {POST_INFO.map((info, index) => (
               <Box
                 key={index}
@@ -169,7 +166,7 @@ export default function BlogPostCard({ post, index }) {
                 <Typography variant="caption">{fShortenNumber(info.number)}</Typography>
               </Box>
             ))}
-          </InfoStyle>
+          </StyledInfo>
         </CardContent>
       </Card>
     </Grid>

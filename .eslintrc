@@ -2,7 +2,7 @@
   "root": true,
   "env": {
     "browser": true,
-    "node": true
+    "es2021": true
   },
   "extends": [
     "airbnb",
@@ -26,17 +26,21 @@
   },
   "rules": {
     "no-new": 0,
+    "no-alert": 0,
     "no-shadow": 0,
     "no-console": 0,
     "react/jsx-key": 1,
     "import/no-cycle": 0,
     "arrow-body-style": 1,
     "react/prop-types": 1,
-    "consistent-return": 1,
     "no-param-reassign": 0,
+    "no-nested-ternary": 0,
+    "default-param-last": 0,
     "no-use-before-define": 0,
     "no-underscore-dangle": 0,
+    "no-extra-boolean-cast": 1,
     "react/button-has-type": 1,
+    "no-restricted-exports": 0,
     "react/no-children-prop": 0,
     "react/forbid-prop-types": 0,
     "jsx-a11y/anchor-is-valid": 0,
@@ -51,6 +55,7 @@
     "import/prefer-default-export": 0,
     "react/jsx-props-no-spreading": 0,
     "react/jsx-filename-extension": 0,
+    "react/jsx-no-duplicate-props": 0,
     "react/jsx-no-useless-fragment": 0,
     "react/jsx-curly-brace-presence": 0,
     "react/destructuring-assignment": 0,

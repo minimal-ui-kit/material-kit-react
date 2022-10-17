@@ -5,11 +5,11 @@ import { Card, Typography } from '@mui/material';
 // utils
 import { fShortenNumber } from '../../../utils/formatNumber';
 // components
-import Iconify from '../../../components/Iconify';
+import Iconify from '../../../components/iconify';
 
 // ----------------------------------------------------------------------
 
-const IconWrapperStyle = styled('div')(({ theme }) => ({
+const StyledIcon = styled('div')(({ theme }) => ({
   margin: 'auto',
   display: 'flex',
   borderRadius: '50%',
@@ -43,7 +43,7 @@ export default function AppWidgetSummary({ title, total, icon, color = 'primary'
       }}
       {...other}
     >
-      <IconWrapperStyle
+      <StyledIcon
         sx={{
           color: (theme) => theme.palette[color].dark,
           backgroundImage: (theme) =>
@@ -54,7 +54,7 @@ export default function AppWidgetSummary({ title, total, icon, color = 'primary'
         }}
       >
         <Iconify icon={icon} width={24} height={24} />
-      </IconWrapperStyle>
+      </StyledIcon>
 
       <Typography variant="h3">{fShortenNumber(total)}</Typography>
 

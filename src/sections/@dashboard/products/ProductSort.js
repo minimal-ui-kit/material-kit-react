@@ -1,8 +1,8 @@
 import { useState } from 'react';
-// material
+// @mui
 import { Menu, Button, MenuItem, Typography } from '@mui/material';
 // component
-import Iconify from '../../../components/Iconify';
+import Iconify from '../../../components/iconify';
 
 // ----------------------------------------------------------------------
 
@@ -10,7 +10,7 @@ const SORT_BY_OPTIONS = [
   { value: 'featured', label: 'Featured' },
   { value: 'newest', label: 'Newest' },
   { value: 'priceDesc', label: 'Price: High-Low' },
-  { value: 'priceAsc', label: 'Price: Low-High' }
+  { value: 'priceAsc', label: 'Price: Low-High' },
 ];
 
 export default function ShopProductSort() {

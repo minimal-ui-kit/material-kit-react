@@ -1,11 +1,10 @@
 import PropTypes from 'prop-types';
-import merge from 'lodash/merge';
 import ReactApexChart from 'react-apexcharts';
 // @mui
 import { styled } from '@mui/material/styles';
 import { Card, CardHeader } from '@mui/material';
 // components
-import { BaseOptionChart } from '../../../components/chart';
+import { useChart } from '../../../components/chart';
 
 // ----------------------------------------------------------------------
 
@@ -13,7 +12,7 @@ const CHART_HEIGHT = 392;
 
 const LEGEND_HEIGHT = 72;
 
-const ChartWrapperStyle = styled('div')(({ theme }) => ({
+const StyledChartWrapper = styled('div')(({ theme }) => ({
   height: CHART_HEIGHT,
   marginTop: theme.spacing(2),
   '& .apexcharts-canvas svg': {
@@ -42,7 +41,7 @@ AppCurrentSubject.propTypes = {
 };
 
 export default function AppCurrentSubject({ title, subheader, chartData, chartColors, chartLabels, ...other }) {
-  const chartOptions = merge(BaseOptionChart(), {
+  const chartOptions = useChart({
     stroke: { width: 2 },
     fill: { opacity: 0.48 },
     legend: { floating: true, horizontalAlign: 'center' },
@@ -60,9 +59,9 @@ export default function AppCurrentSubject({ title, subheader, chartData, chartCo
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
 
-      <ChartWrapperStyle dir="ltr">
+      <StyledChartWrapper dir="ltr">
         <ReactApexChart type="radar" series={chartData} options={chartOptions} height={340} />
-      </ChartWrapperStyle>
+      </StyledChartWrapper>
     </Card>
   );
 }

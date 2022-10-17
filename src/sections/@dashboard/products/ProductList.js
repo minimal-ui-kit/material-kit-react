@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
-// material
+// @mui
 import { Grid } from '@mui/material';
 import ShopProductCard from './ProductCard';
 
 // ----------------------------------------------------------------------
 
 ProductList.propTypes = {
-  products: PropTypes.array.isRequired
+  products: PropTypes.array.isRequired,
 };
 
 export default function ProductList({ products, ...other }) {

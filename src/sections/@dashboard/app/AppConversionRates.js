@@ -1,12 +1,11 @@
 import PropTypes from 'prop-types';
-import merge from 'lodash/merge';
 import ReactApexChart from 'react-apexcharts';
 // @mui
 import { Box, Card, CardHeader } from '@mui/material';
 // utils
 import { fNumber } from '../../../utils/formatNumber';
 // components
-import { BaseOptionChart } from '../../../components/chart';
+import { useChart } from '../../../components/chart';
 
 // ----------------------------------------------------------------------
 
@@ -21,7 +20,7 @@ export default function AppConversionRates({ title, subheader, chartData, ...oth
 
   const chartSeries = chartData.map((i) => i.value);
 
-  const chartOptions = merge(BaseOptionChart(), {
+  const chartOptions = useChart({
     tooltip: {
       marker: { show: false },
       y: {

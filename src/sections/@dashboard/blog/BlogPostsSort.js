@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
-// material
+// @mui
 import { MenuItem, TextField } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
 BlogPostsSort.propTypes = {
   options: PropTypes.array,
-  onSort: PropTypes.func
+  onSort: PropTypes.func,
 };
 
 export default function BlogPostsSort({ options, onSort }) {

@@ -1,44 +1,39 @@
 import { Navigate, useRoutes } from 'react-router-dom';
 // layouts
 import DashboardLayout from './layouts/dashboard';
-import LogoOnlyLayout from './layouts/LogoOnlyLayout';
+import SimpleLayout from './layouts/simple';
 //
-import Blog from './pages/Blog';
-import User from './pages/User';
-import Login from './pages/Login';
-import NotFound from './pages/Page404';
-import Register from './pages/Register';
-import Products from './pages/Products';
-import DashboardApp from './pages/DashboardApp';
+import BlogPage from './pages/BlogPage';
+import UserPage from './pages/UserPage';
+import LoginPage from './pages/LoginPage';
+import Page404 from './pages/Page404';
+import ProductsPage from './pages/ProductsPage';
+import DashboardAppPage from './pages/DashboardAppPage';
 
 // ----------------------------------------------------------------------
 
 export default function Router() {
-  return useRoutes([
+  const routes = useRoutes([
     {
       path: '/dashboard',
       element: <DashboardLayout />,
       children: [
-        { path: 'app', element: <DashboardApp /> },
-        { path: 'user', element: <User /> },
-        { path: 'products', element: <Products /> },
-        { path: 'blog', element: <Blog /> },
+        { element: <Navigate to="/dashboard/app" />, index: true },
+        { path: 'app', element: <DashboardAppPage /> },
+        { path: 'user', element: <UserPage /> },
+        { path: 'products', element: <ProductsPage /> },
+        { path: 'blog', element: <BlogPage /> },
       ],
     },
     {
       path: 'login',
-      element: <Login />,
+      element: <LoginPage />,
     },
     {
-      path: 'register',
-      element: <Register />,
-    },
-    {
-      path: '/',
-      element: <LogoOnlyLayout />,
+      element: <SimpleLayout />,
       children: [
-        { path: '/', element: <Navigate to="/dashboard/app" /> },
-        { path: '404', element: <NotFound /> },
+        { element: <Navigate to="/dashboard/app" />, index: true },
+        { path: '404', element: <Page404 /> },
         { path: '*', element: <Navigate to="/404" /> },
       ],
     },
@@ -47,4 +42,6 @@ export default function Router() {
       element: <Navigate to="/404" replace />,
     },
   ]);
+
+  return routes;
 }

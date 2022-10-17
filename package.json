@@ -2,7 +2,7 @@
   "name": "@minimal/material-kit-react",
   "author": "minimals.cc",
   "licence": "MIT",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "private": false,
   "scripts": {
     "start": "react-scripts start",
@@ -17,8 +17,7 @@
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "react-app"
     ]
   },
   "babel": {
@@ -39,17 +38,15 @@
     ]
   },
   "dependencies": {
-    "@emotion/react": "^11.9.3",
-    "@emotion/styled": "^11.9.3",
-    "@faker-js/faker": "^7.3.0",
-    "@hookform/resolvers": "^2.9.3",
-    "@iconify/react": "^3.2.2",
-    "@mui/lab": "^5.0.0-alpha.88",
-    "@mui/material": "^5.8.6",
-    "@testing-library/jest-dom": "^5.16.4",
-    "apexcharts": "^3.35.3",
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@faker-js/faker": "^7.6.0",
+    "@iconify/react": "^4.0.0",
+    "@mui/lab": "^5.0.0-alpha.103",
+    "@mui/material": "^5.10.9",
+    "apexcharts": "^3.36.0",
     "change-case": "^4.1.2",
-    "date-fns": "^2.28.0",
+    "date-fns": "^2.29.3",
     "history": "^5.3.0",
     "lodash": "^4.17.21",
     "numeral": "^2.0.6",
@@ -58,31 +55,29 @@
     "react-apexcharts": "^1.4.0",
     "react-dom": "^18.2.0",
     "react-helmet-async": "^1.3.0",
-    "react-hook-form": "^7.33.1",
-    "react-router-dom": "^6.3.0",
+    "react-hook-form": "^7.37.0",
+    "react-router-dom": "^6.4.2",
     "react-scripts": "^5.0.1",
-    "simplebar": "^5.3.8",
-    "simplebar-react": "^2.4.1",
-    "web-vitals": "^2.1.4",
-    "yup": "^0.32.11"
+    "simplebar-react": "^2.4.3",
+    "web-vitals": "^3.0.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.18.6",
-    "@babel/eslint-parser": "^7.18.2",
-    "@svgr/webpack": "^6.2.1",
-    "eslint": "^8.19.0",
+    "@babel/core": "^7.19.3",
+    "@babel/eslint-parser": "^7.19.1",
+    "@svgr/webpack": "^6.5.0",
+    "eslint": "^8.25.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-flowtype": "^8.0.3",
     "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jsx-a11y": "^6.6.0",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-react": "^7.30.1",
+    "eslint-plugin-react": "^7.31.10",
     "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "^2.7.1"
   },
   "overrides": {
-    "@svgr/webpack": "^6.2.1"
+    "@svgr/webpack": "^6.5.0"
   }
 }

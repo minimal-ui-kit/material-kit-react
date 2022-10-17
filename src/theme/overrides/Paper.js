@@ -6,7 +6,6 @@ export default function Paper() {
       defaultProps: {
         elevation: 0,
       },
-
       styleOverrides: {
         root: {
           backgroundImage: 'none',

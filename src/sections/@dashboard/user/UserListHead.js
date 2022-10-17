@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-// material
+// @mui
 import { Box, Checkbox, TableRow, TableCell, TableHead, TableSortLabel } from '@mui/material';
 
 // ----------------------------------------------------------------------

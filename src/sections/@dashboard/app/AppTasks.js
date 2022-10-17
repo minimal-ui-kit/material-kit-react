@@ -3,10 +3,19 @@ import { useState } from 'react';
 // form
 import { useForm, Controller } from 'react-hook-form';
 // @mui
-import { Card, Stack, Divider, Checkbox, MenuItem, IconButton, CardHeader, FormControlLabel } from '@mui/material';
+import {
+  Card,
+  Stack,
+  Divider,
+  Popover,
+  Checkbox,
+  MenuItem,
+  IconButton,
+  CardHeader,
+  FormControlLabel,
+} from '@mui/material';
 // components
-import Iconify from '../../../components/Iconify';
-import MenuPopover from '../../../components/MenuPopover';
+import Iconify from '../../../components/iconify';
 
 // ----------------------------------------------------------------------
 
@@ -111,76 +120,49 @@ function TaskItem({ task, checked, onChange }) {
         sx={{ flexGrow: 1, m: 0 }}
       />
 
-      <MoreMenuButton
-        open={open}
-        onClose={handleCloseMenu}
-        onOpen={handleOpenMenu}
-        actions={
-          <>
-            <MenuItem onClick={handleMarkComplete}>
-              <Iconify icon={'eva:checkmark-circle-2-fill'} />
-              Mark Complete
-            </MenuItem>
-
-            <MenuItem onClick={handleEdit}>
-              <Iconify icon={'eva:edit-fill'} />
-              Edit
-            </MenuItem>
-
-            <MenuItem onClick={handleShare}>
-              <Iconify icon={'eva:share-fill'} />
-              Share
-            </MenuItem>
-
-            <Divider sx={{ borderStyle: 'dashed' }} />
-
-            <MenuItem onClick={handleDelete} sx={{ color: 'error.main' }}>
-              <Iconify icon={'eva:trash-2-outline'} />
-              Delete
-            </MenuItem>
-          </>
-        }
-      />
-    </Stack>
-  );
-}
-
-// ----------------------------------------------------------------------
-
-MoreMenuButton.propTypes = {
-  actions: PropTypes.node.isRequired,
-  onClose: PropTypes.func,
-  onOpen: PropTypes.func,
-  open: PropTypes.bool,
-};
-
-function MoreMenuButton({ actions, open, onOpen, onClose }) {
-  return (
-    <>
-      <IconButton size="large" color="inherit" sx={{ opacity: 0.48 }} onClick={onOpen}>
-        <Iconify icon={'eva:more-vertical-fill'} width={20} height={20} />
+      <IconButton size="large" color="inherit" sx={{ opacity: 0.48 }} onClick={handleOpenMenu}>
+        <Iconify icon={'eva:more-vertical-fill'} />
       </IconButton>
 
-      <MenuPopover
+      <Popover
         open={Boolean(open)}
         anchorEl={open}
-        onClose={onClose}
+        onClose={handleCloseMenu}
         anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        arrow="right-top"
-        sx={{
-          mt: -0.5,
-          width: 'auto',
-          '& .MuiMenuItem-root': {
-            px: 1,
-            typography: 'body2',
-            borderRadius: 0.75,
-            '& svg': { mr: 2, width: 20, height: 20 },
+        PaperProps={{
+          sx: {
+            p: 1,
+            '& .MuiMenuItem-root': {
+              px: 1,
+              typography: 'body2',
+              borderRadius: 0.75,
+            },
           },
         }}
       >
-        {actions}
-      </MenuPopover>
-    </>
+        <MenuItem onClick={handleMarkComplete}>
+          <Iconify icon={'eva:checkmark-circle-2-fill'} sx={{ mr: 2 }} />
+          Mark Complete
+        </MenuItem>
+
+        <MenuItem onClick={handleEdit}>
+          <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
+          Edit
+        </MenuItem>
+
+        <MenuItem onClick={handleShare}>
+          <Iconify icon={'eva:share-fill'} sx={{ mr: 2 }} />
+          Share
+        </MenuItem>
+
+        <Divider sx={{ borderStyle: 'dashed' }} />
+
+        <MenuItem onClick={handleDelete} sx={{ color: 'error.main' }}>
+          <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
+          Delete
+        </MenuItem>
+      </Popover>
+    </Stack>
   );
 }

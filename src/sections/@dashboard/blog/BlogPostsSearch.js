@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import { Autocomplete, InputAdornment, Popper, TextField } from '@mui/material';
 // components
-import Iconify from '../../../components/Iconify';
+import Iconify from '../../../components/iconify';
 
 // ----------------------------------------------------------------------
 
-const PopperStyle = styled((props) => <Popper placement="bottom-start" {...props} />)({
+const StyledPopper = styled((props) => <Popper placement="bottom-start" {...props} />)({
   width: '280px !important',
 });
 
@@ -24,7 +24,7 @@ export default function BlogPostsSearch({ posts }) {
       sx={{ width: 280 }}
       autoHighlight
       popupIcon={null}
-      PopperComponent={PopperStyle}
+      PopperComponent={StyledPopper}
       options={posts}
       getOptionLabel={(post) => post.title}
       isOptionEqualToValue={(option, value) => option.id === value.id}

@@ -4,11 +4,11 @@
 
 > Free React Admin Dashboard made with Material-UI components and React.
 
-![preview](public/static/preview.jpg)
+![preview](public/assets/preview.jpg)
 
 | [Minimal Free](https://minimal-kit-react.vercel.app/) | [Minimal](https://material-ui.com/store/items/minimal-dashboard/) |
 | ----------------------------------------------------- | :---------------------------------------------------------------- |
-| **7** Demo pages                                      | **50+** demo pages                                                |
+| **6** Demo pages                                      | **50+** demo pages                                                |
 | -                                                     | ✓ Multi-language                                                  |
 | -                                                     | ✓ Dark/Light Mode 🌓                                              |
 | -                                                     | ✓ [More components](https://minimals.cc/components)               |
@@ -23,12 +23,11 @@
 - [Product](https://minimal-kit-react.vercel.app/dashboard/products)
 - [Blog](https://minimal-kit-react.vercel.app/dashboard/blog)
 - [Login](https://minimal-kit-react.vercel.app/login)
-- [Register](https://minimal-kit-react.vercel.app/register)
 - [Not Found](https://minimal-kit-react.vercel.app/404)
 
 ## Getting started
 
-- Recommended `node js 14.x` and `npm 6+`. (suggestion v14.17.3 / v16.15.0)
+- Recommended `node js 16.x` and `npm 6+`. (suggestion v16.15.0)
 - Install dependencies: `npm install` / `yarn install`
 - Start the project: `npm run start` / `yarn start`
 
