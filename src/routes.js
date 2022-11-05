@@ -4,6 +4,7 @@ import DashboardLayout from './layouts/dashboard';
 import LogoOnlyLayout from './layouts/LogoOnlyLayout';
 //
 import Login from './pages/Login';
+import Gyser from './pages/Gyser';
 import Register from './pages/Register';
 import DashboardApp from './pages/DashboardApp';
 import Products from './pages/Products';
@@ -33,6 +34,7 @@ export default function Router() {
         { path: '/', element: <Auth /> },
         { path: '/app', element: <Navigate to="/dashboard" /> },
         { path: 'login', element: <Login /> },
+        { path: 'gyser', element: <Gyser /> },
         { path: 'register', element: <Register /> },
         { path: '404', element: <NotFound /> },
         { path: '*', element: <Navigate to="/404" /> }
