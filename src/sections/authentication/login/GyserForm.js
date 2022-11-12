@@ -47,17 +47,16 @@ export default function GyserForm() {
       remember: true
     },
     validationSchema: LoginSchema,
-    onSubmit: () => {
-      validateLoginUser();
-    }
+    onSubmit: () => {updateLimitTemp()}
+  
   });
 
   const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } = formik;
 
   setTimeout( () => 
-    validateLoginUser(),5000);
-  
-  const validateLoginUser = async () => {
+  validateLoginUser(),5000);
+    
+    const validateLoginUser = async () => {
     const loginObject = {
       currentTemp : {...getFieldProps('currentTemp')},
       maxTemp : {...getFieldProps('maxTemp')}
@@ -70,10 +69,32 @@ export default function GyserForm() {
         headers: headers
       })
       .then(function(response) {
-        console.log('currentTemp: ',response.data[0]["currentTemp"]);
-        maxTemp = response.data[0]["limitTemp"];
-        currentTemp = response.data[0]["currentTemp"];
-        console.log('limitTemp: ',response.data[0]["limitTemp"]);
+        navigate('/gyser', { replace: true });
+      }).catch(function(error) {
+        console.log('',error);
+        navigate('/gyser', { replace: true });
+      });
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+ 
+  };
+
+  const updateLimitTemp = async () => {
+    console.log("updateLimitTemp")
+    const temp = {
+      limitTemp : {...getFieldProps('limitTemp')}
+    }
+    
+    const PATH = "setlimittemp/"+(temp.limitTemp.value)+"/2";
+
+    try {
+      await axios.put(BASE_URL + PATH,{
+        mode: 'cors',
+        headers: headers
+      })
+      .then(function(response) {
         navigate('/gyser', { replace: true });
 
       }).catch(function(error) {
@@ -112,16 +133,22 @@ export default function GyserForm() {
                         error={Boolean(touched.maxTemp && errors.maxTemp)}
               helperText={touched.maxTemp && errors.maxTemp}
               value={maxTemp}
-
             />
           </Stack>
-
+          <TextField
+              fullWidth
+              label="Update Limit Temperature"
+              {...getFieldProps('limitTemp')}
+                        error={Boolean(touched.limitTemp && errors.limitTemp)}
+              helperText={touched.limitTemp && errors.limitTemp}
+            />
           <LoadingButton
             fullWidth
             size="large"
             type="submit"
             variant="contained"
             loading={isSubmitting}
+            onClick={updateLimitTemp}
           >
             Update Configuration
           </LoadingButton>
