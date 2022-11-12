@@ -1,6 +1,6 @@
 {
-  "short_name": "Minimal App",
-  "name": "React Material Minimal UI Kit",
+  "short_name": "Demo App",
+  "name": "Demo App",
   "icons": [
     {
       "src": "favicon/android-chrome-192x192.png",
