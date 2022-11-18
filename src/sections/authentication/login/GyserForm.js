@@ -47,22 +47,23 @@ export default function GyserForm() {
       remember: true
     },
     validationSchema: LoginSchema,
-    onSubmit: () => {updateLimitTemp()}
-  
+    onSubmit: () => {
+      validateLoginUser();
+      updateLimitTemp()
+    }
   });
 
   const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } = formik;
 
   setTimeout( () => 
-  validateLoginUser(),5000);
-    
+    validateLoginUser(),5000);
+  
     const validateLoginUser = async () => {
     const loginObject = {
       currentTemp : {...getFieldProps('currentTemp')},
       maxTemp : {...getFieldProps('maxTemp')}
     }
     
-
     try {
       await axios.get(BASE_URL + 'buckets/2',{
         mode: 'cors',
@@ -78,7 +79,6 @@ export default function GyserForm() {
       console.log(err);
       throw err;
     }
- 
   };
 
   const updateLimitTemp = async () => {
