@@ -55,14 +55,14 @@ export default function GyserForm() {
 
   const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } = formik;
 
-  setTimeout( () => 
-    validateLoginUser(),5000);
+  setTimeout(()=> validateLoginUser(),10000);
   
-    const validateLoginUser = async () => {
-    const loginObject = {
-      currentTemp : {...getFieldProps('currentTemp')},
-      maxTemp : {...getFieldProps('maxTemp')}
-    }
+    let validateLoginUser = async () => {
+      console.log("Func called:  ")
+    // initialValues = {
+    //   currentTemp : {...getFieldProps('currentTemp')},
+    //   maxTemp : {...getFieldProps('maxTemp')}
+    // }
     
     try {
       await axios.get(BASE_URL + 'buckets/2',{
@@ -70,6 +70,9 @@ export default function GyserForm() {
         headers: headers
       })
       .then(function(response) {
+        console.log("response: ",response.data[0].currentTemp)
+        currentTemp = response.data[0].currentTemp
+        maxTemp = response.data[0].limitTemp
         navigate('/gyser', { replace: true });
       }).catch(function(error) {
         console.log('',error);
