@@ -88,8 +88,11 @@ export default function UserPage() {
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const handleOpenMenu = (event) => {
+  const [targetId, setTargetId] = useState(0);
+
+  const handleOpenMenu = (event, id) => {
     setOpen(event.currentTarget);
+    setTargetId(id);
   };
 
   const handleCloseMenu = () => {
@@ -142,9 +145,17 @@ export default function UserPage() {
 
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - USERLIST.length) : 0;
 
-  const filteredUsers = applySortFilter(USERLIST, getComparator(order, orderBy), filterName);
+  const [filteredUsers, setFilteredUsers] = useState(
+    applySortFilter(USERLIST, getComparator(order, orderBy), filterName)
+  );
 
   const isNotFound = !filteredUsers.length && !!filterName;
+
+  const deleteUser = () => {
+    const newUsers = filteredUsers.filter((user) => user.id !== targetId);
+    setFilteredUsers(newUsers);
+    setOpen(null);
+  };
 
   return (
     <>
@@ -208,7 +219,7 @@ export default function UserPage() {
                         </TableCell>
 
                         <TableCell align="right">
-                          <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
+                          <IconButton size="large" color="inherit" onClick={(e) => handleOpenMenu(e, id)}>
                             <Iconify icon={'eva:more-vertical-fill'} />
                           </IconButton>
                         </TableCell>
@@ -284,7 +295,7 @@ export default function UserPage() {
           Edit
         </MenuItem>
 
-        <MenuItem sx={{ color: 'error.main' }}>
+        <MenuItem sx={{ color: 'error.main' }} onClick={deleteUser}>
           <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
           Delete
         </MenuItem>
