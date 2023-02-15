@@ -16,6 +16,24 @@ const GREY = {
   900: '#161C24',
 };
 
+const REDBLACK = {
+  black: '#000000',
+  red: '#A63D40',
+  orange: '#FFFFFF',
+  green: '#90A959',
+  blue: '#6494AA',
+  white: '#FFFFFF',
+};
+
+const DEVOPS = {
+  blue: '#50B8B8',
+  darkblue: '#275E77',
+  main: '#275E77',
+  darkyellow: '#F4A128',
+  yellow: '#F4D34E',
+  contrastText: '#fff',
+};
+
 const PRIMARY = {
   lighter: '#D1E9FC',
   light: '#76B0F1',
@@ -72,6 +90,8 @@ const ERROR = {
 
 const palette = {
   common: { black: '#000', white: '#fff' },
+  redblack: REDBLACK,
+  devops: DEVOPS,
   primary: PRIMARY,
   secondary: SECONDARY,
   info: INFO,

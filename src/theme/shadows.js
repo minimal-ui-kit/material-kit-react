@@ -5,11 +5,11 @@ import palette from './palette';
 
 // ----------------------------------------------------------------------
 
-const color = palette.grey[500];
+const color = palette.grey[900];
 
 export default function shadows() {
-  const transparent1 = alpha(color, 0.2);
-  const transparent2 = alpha(color, 0.14);
+  const transparent1 = alpha(color, .1);
+  const transparent2 = alpha(color, .3);
   const transparent3 = alpha(color, 0.12);
   return [
     'none',

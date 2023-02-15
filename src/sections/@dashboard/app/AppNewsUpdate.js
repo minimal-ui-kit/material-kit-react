@@ -13,11 +13,21 @@ AppNewsUpdate.propTypes = {
   title: PropTypes.string,
   subheader: PropTypes.string,
   list: PropTypes.array.isRequired,
+  sx: PropTypes.object,
 };
 
-export default function AppNewsUpdate({ title, subheader, list, ...other }) {
+export default function AppNewsUpdate({ height, color, sx, title, subheader, list, ...other }) {
   return (
-    <Card {...other}>
+    <Card 
+      sx={{
+        py: height,
+        boxShadow: 10,
+        textAlign: 'center',
+        color: (theme) => theme.palette[color].darker,
+        bgcolor: (theme) => theme.palette[color].orange,
+        ...sx,
+      }}    
+      {...other}>
       <CardHeader title={title} subheader={subheader} />
 
       <Scrollbar>
@@ -30,8 +40,9 @@ export default function AppNewsUpdate({ title, subheader, list, ...other }) {
 
       <Divider />
 
-      <Box sx={{ p: 2, textAlign: 'right' }}>
-        <Button size="small" color="inherit" endIcon={<Iconify icon={'eva:arrow-ios-forward-fill'} />}>
+      <Box sx={{ p: 2, textAlign: 'center' }}>
+        <Button variant="contained" size="large" align="center">Make your own list!</Button>
+        <Button variant="contained" size="large" endIcon={<Iconify icon={'eva:arrow-ios-forward-fill'} />}>
           View all
         </Button>
       </Box>
@@ -54,7 +65,7 @@ function NewsItem({ news }) {
   const { image, title, description, postedAt } = news;
 
   return (
-    <Stack direction="row" alignItems="center" spacing={2}>
+    <Stack direction="column" alignItems="center" spacing={2}>
       <Box component="img" alt={title} src={image} sx={{ width: 48, height: 48, borderRadius: 1.5, flexShrink: 0 }} />
 
       <Box sx={{ minWidth: 240, flexGrow: 1 }}>

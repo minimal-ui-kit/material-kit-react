@@ -1,5 +1,6 @@
 // @mui
 import { GlobalStyles as MUIGlobalStyles } from '@mui/material';
+import Background from '../images/backgroundTestHarmony1.png';
 
 // ----------------------------------------------------------------------
 
@@ -11,6 +12,7 @@ export default function GlobalStyles() {
           boxSizing: 'border-box',
         },
         html: {
+          fontSize: 20,
           margin: 0,
           padding: 0,
           width: '100%',
@@ -22,6 +24,12 @@ export default function GlobalStyles() {
           padding: 0,
           width: '100%',
           height: '100%',
+          // backgroundColor: "#275E77",
+          backgroundImage:  `url(${Background})`,
+          backgroundAttachment: 'scroll',
+          backgroundPosition: 'center',
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat'
         },
         '#root': {
           width: '100%',

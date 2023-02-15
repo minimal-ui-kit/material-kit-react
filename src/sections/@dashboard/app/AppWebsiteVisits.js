@@ -14,7 +14,7 @@ AppWebsiteVisits.propTypes = {
   chartLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
-export default function AppWebsiteVisits({ title, subheader, chartLabels, chartData, ...other }) {
+export default function AppWebsiteVisits({ color, title, subheader, chartLabels, chartData, sx, ...other }) {
   const chartOptions = useChart({
     plotOptions: { bar: { columnWidth: '16%' } },
     fill: { type: chartData.map((i) => i.fill) },
@@ -35,7 +35,17 @@ export default function AppWebsiteVisits({ title, subheader, chartLabels, chartD
   });
 
   return (
-    <Card {...other}>
+    <Card sx={{
+      my: 10,
+      boxShadow: 10,
+      textAlign: 'center',
+      // color: (theme) => theme.palette[color].darker,
+      color: '#000000',
+      // bgcolor: (theme) => theme.palette[color].orange,
+      bgBlur: (theme) => theme.palette[color].orange,
+      ...sx,
+    }}
+    {...other}>
       <CardHeader title={title} subheader={subheader} />
 
       <Box sx={{ p: 3, pb: 1 }} dir="ltr">
