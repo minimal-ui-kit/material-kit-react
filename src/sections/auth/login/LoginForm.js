@@ -20,7 +20,7 @@ export default function LoginForm() {
   return (
     <>
       <Stack spacing={3}>
-        <TextField name="email" label="Email address" />
+        <TextField sx={{color:"white"}} name="email" label="Email address" />
 
         <TextField
           name="password"

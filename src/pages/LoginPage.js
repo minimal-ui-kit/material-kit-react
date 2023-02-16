@@ -9,10 +9,14 @@ import Logo from '../components/logo';
 import Iconify from '../components/iconify';
 // sections
 import { LoginForm } from '../sections/auth/login';
+// utils
+import { bgBlur } from '../utils/cssStyles';
 
 // ----------------------------------------------------------------------
 
 const StyledRoot = styled('div')(({ theme }) => ({
+  paddingTop: 100,
+  borderRadius: 10,
   [theme.breakpoints.up('md')]: {
     display: 'flex',
   },
@@ -29,14 +33,18 @@ const StyledSection = styled('div')(({ theme }) => ({
 }));
 
 const StyledContent = styled('div')(({ theme }) => ({
+  ...bgBlur ({color: '#280003'}),
   maxWidth: 580,
+  color: "#FFFFFF",
+  borderRadius: 10,
+  paddingTop: 100,
   margin: 'auto',
   minHeight: '50vh',
   display: 'flex',
   justifyContent: 'center',
   flexDirection: 'column',
-  padding: theme.spacing(12, 0),
-  backgroundColor: 'white',
+  padding: theme.spacing(12, 12),
+  // backgroundColor: 'black',
 }));
 
 // ----------------------------------------------------------------------
@@ -94,7 +102,7 @@ export default function LoginPage() {
             </Stack>
 
             <Divider sx={{ my: 3 }}>
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+              <Typography variant="body2" sx={{ color: '#FFFFFF' }}>
                 OR
               </Typography>
             </Divider>
