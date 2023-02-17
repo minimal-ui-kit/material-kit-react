@@ -1,3 +1,5 @@
+import React, { useState } from 'react';
+
 // import { DataGrid } from '@mui/x-data-grid';
 import { Helmet } from 'react-helmet-async';
 import { faker } from '@faker-js/faker';
@@ -13,13 +15,16 @@ import {
   AppWidgetSummary,
   HiscoreTable,
 } from '../sections/@dashboard/app';
+import LoginPage from './LoginPage';
 
 // ----------------------------------------------------------------------
+
 
 
 export default function DashboardAppPage() {
   
   const theme = useTheme();
+
 
   return (
     <>
@@ -27,16 +32,7 @@ export default function DashboardAppPage() {
         <title> Dashboard | Minimal UI </title>
       </Helmet>
 
-      <Container maxWidth="xxl">
-
-        <Grid container spacing={2}>
-          <Grid item xs={2} md={2} lg={2}><></></Grid>
-          <AppWidgetSummary height={3} width={5} color="redblack" title="Welcome back Hyper!" />
-          <Button variant="contained" size="large" align="center">Play</Button>
-        </Grid>
-      </Container>
-
-      <Container maxWidth="xl">
+      <Container sx={{marginTop: '5%'}} maxWidth="xl">
 
         <Grid container spacing={5}>
 

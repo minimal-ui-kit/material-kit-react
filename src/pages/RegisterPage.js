@@ -1,7 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 // @mui
-// import styled, { keyframes } from 'styled-components';
-import { styled, keyframes } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import { Link, Container, Typography, Divider, Stack, Button } from '@mui/material';
 // hooks
 import useResponsive from '../hooks/useResponsive';
@@ -17,9 +16,13 @@ import { bgBlur } from '../utils/cssStyles';
 
 const StyledRoot = styled('div')(({ theme }) => ({
     ...bgBlur ({color: '#000000', opacity: 0.6}),
+    // margin: -0,
     display: 'flex',
     alignItems: 'center',
+    // justifyContent: 'center',
     position: 'fixed',
+    // padding: 0,
+    // backgroundColor: 'white',
     width: '100vw',
     height: '100vh',
     [theme.breakpoints.up('md')]: {
@@ -28,16 +31,15 @@ const StyledRoot = styled('div')(({ theme }) => ({
     zIndex: 2,
 }));
 
-const flyIn = keyframes`
-  0% {
-    opacity: 0;
-    transform: translateY(100%);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
+const StyledSection = styled('div')(({ theme }) => ({
+//   width: '10%',
+  maxWidth: 480,
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  boxShadow: theme.customShadows.card,
+  backgroundColor: theme.palette.background.default,
+}));
 
 const StyledContent = styled('div')(({ theme }) => ({
     ...bgBlur ({color: '#280003'}),
@@ -50,36 +52,34 @@ const StyledContent = styled('div')(({ theme }) => ({
     justifyContent: 'center',
     flexDirection: 'column',
     padding: theme.spacing(12, 12),
-    margin: 'auto',
-  animation: `${flyIn} 0.5s cubic-bezier(0.65, 0, 0.35, 1) forwards`,
+    margin: 'auto', // center the div horizontally
 }));
 
 // ----------------------------------------------------------------------
 
-
-export default function LoginPage({show, onClose}) {
+export default function RegisterPage() {
   const mdUp = useResponsive('up', 'md');
 
   return (
     <>
       <Helmet>
-        <title> Login </title>
+        <title> Register </title>
       </Helmet>
 
       <StyledRoot>
+
         <Container maxWidth="sm">
-          {/* <div style={{ ...styles.floatingDiv, ...(isVisible && styles.visible) }}> */}
           <StyledContent>
             <Typography variant="h4" gutterBottom>
-              Sign in to Lingo
+              Register to Lingo
             </Typography>
 
-            <Typography variant="body2" sx={{ mb: 5 }}>
+            {/* <Typography variant="body2" sx={{ mb: 5 }}>
               Don’t have an account? {''}
               <Link variant="subtitle2">Get started</Link>
-            </Typography>
+            </Typography> */}
 
-            <Stack direction="row" spacing={2}>
+            {/* <Stack direction="row" spacing={2}>
               <Button fullWidth size="large" color="inherit" variant="outlined">
                 <Iconify icon="eva:google-fill" color="#DF3E30" width={22} height={22} />
               </Button>
@@ -91,17 +91,16 @@ export default function LoginPage({show, onClose}) {
               <Button fullWidth size="large" color="inherit" variant="outlined">
                 <Iconify icon="eva:twitter-fill" color="#1C9CEA" width={22} height={22} />
               </Button>
-            </Stack>
+            </Stack> */}
 
-            <Divider sx={{ my: 3 }}>
+            {/* <Divider sx={{ my: 3 }}>
               <Typography variant="body2" sx={{ color: '#FFFFFF' }}>
                 OR
               </Typography>
-            </Divider>
+            </Divider> */}
 
             <LoginForm />
           </StyledContent>
-          {/* </div> */}
         </Container>
       </StyledRoot>
     </>

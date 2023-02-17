@@ -11,13 +11,14 @@ import Iconify from '../../../components/iconify';
 
 const Greeting = styled('div')(({ theme }) => ({
   // marginLeft: 'auto',
-  paddingTop: '1%',
+  paddingTop: '3%',
   width: '100%',
   display: 'flex',
   borderRadius: '50%',
-  alignItems: 'center',
-  justifyContent: 'center',
-  color: "#FFFFFF"
+//   alignItems: 'center',
+//   justifyContent: 'center',
+  color: "#FFFFFF",
+  margin: 'auto',
 }));
 
 // ----------------------------------------------------------------------

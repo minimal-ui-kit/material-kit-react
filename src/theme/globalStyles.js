@@ -1,6 +1,6 @@
 // @mui
 import { GlobalStyles as MUIGlobalStyles } from '@mui/material';
-import Background from '../images/backgroundTestHarmony1.png';
+import Background from '../images/background.png';
 
 // ----------------------------------------------------------------------
 
@@ -26,7 +26,7 @@ export default function GlobalStyles() {
           height: '100%',
           // backgroundColor: "#275E77",
           backgroundImage:  `url(${Background})`,
-          backgroundAttachment: 'scroll',
+          backgroundAttachment: 'fixed',
           backgroundPosition: 'center',
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat'

@@ -1,7 +1,10 @@
+import React, { useState } from 'react';
+import Button from '@mui/material/Button';
+
 import PropTypes from 'prop-types';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Box, Stack, AppBar, Toolbar, IconButton } from '@mui/material';
+import { Box, Stack, AppBar, Toolbar, Container, IconButton } from '@mui/material';
 // utils
 import { bgBlur } from '../../../utils/cssStyles';
 // components
@@ -11,6 +14,9 @@ import Searchbar from './Searchbar';
 import AccountPopover from './AccountPopover';
 import LanguagePopover from './LanguagePopover';
 import NotificationsPopover from './NotificationsPopover';
+import {AppWidgetSummary,} from '../../../sections/@dashboard/app';
+import LoginPage from '../../../pages/LoginPage';
+import RegisterPage from '../../../pages/RegisterPage';
 
 // ----------------------------------------------------------------------
 
@@ -24,11 +30,13 @@ const StyledRoot = styled(AppBar)(({ theme }) => ({
   // ...bgBlur({ color: theme.palette.background.default }),
   ...bgBlur ({color: '#280003'}),
   boxShadow: 'none',
+  position: 'absolute',
   [theme.breakpoints.up('lg')]: {
     // width: `calc(100% - ${NAV_WIDTH + 1}px)`,
+    height: '10%',
     width: '100%',
   },
-  zIndex: -1,
+  zIndex: 1,
 }));
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
@@ -46,21 +54,28 @@ Header.propTypes = {
 };
 
 export default function Header({ onOpenNav }) {
-  return (
-    <StyledRoot>
-      <StyledToolbar>
-        {/* <IconButton
-          onClick={onOpenNav}
-          sx={{
-            mr: 1,
-            color: 'text.primary',
-            display: { lg: 'none' },
-          }}
-        >
-          <Iconify icon="eva:menu-2-fill" />
-        </IconButton> */}
 
-        {/* <Searchbar /> */}
+    const [showComponent, setShowComponent] = useState(false);
+
+    const handleClick = () => {
+      setShowComponent(!showComponent);
+    }
+
+  return (
+
+    <StyledRoot>
+
+    {/* {showComponent && <LoginPage />} */}
+      {/* {showComponent && <LoginPage />} */}
+      {showComponent && (<LoginPage show={showComponent} onClose={() => setShowComponent(false)} />)}
+
+      <StyledToolbar>
+
+        <Container maxWidth="xxl">
+            <AppWidgetSummary height={3} width={5} color="redblack" title="Lingo" />
+            <Button onClick={handleClick} variant="contained" size="large" align="center">Login</Button>
+        </Container>
+
         <Box sx={{ flexGrow: 1 }} />
 
         <Stack
@@ -71,9 +86,9 @@ export default function Header({ onOpenNav }) {
             sm: 1,
           }}
         >
-          <LanguagePopover />
+          {/* <LanguagePopover />
           <NotificationsPopover />
-          <AccountPopover />
+          <AccountPopover /> */}
         </Stack>
       </StyledToolbar>
     </StyledRoot>
