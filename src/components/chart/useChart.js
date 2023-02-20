@@ -89,6 +89,11 @@ export default function useChart(options) {
     grid: {
       strokeDashArray: 3,
       borderColor: theme.palette.divider,
+      xaxis: {
+        lines: {
+          show: false,
+        },
+      },
     },
 
     // Xaxis
@@ -132,6 +137,8 @@ export default function useChart(options) {
       bar: {
         borderRadius: 4,
         columnWidth: '28%',
+        borderRadiusApplication: 'end',
+        borderRadiusWhenStacked: 'last',
       },
 
       // Pie + Donut

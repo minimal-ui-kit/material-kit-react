@@ -1,3 +1,11 @@
+### v1.7.0
+
+###### Feb 21, 2023
+
+- Upgrade some dependencies to the latest versions
+
+---
+
 ### v1.6.0
 
 ###### Oct 17, 2022
