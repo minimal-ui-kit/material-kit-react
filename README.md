@@ -1,40 +1,14 @@
-## Minimal [(Free version)](https://minimal-kit-react.vercel.app/)
+# 💪🏽 About ProgressPro
 
-![license](https://img.shields.io/badge/license-MIT-blue.svg)
+📈 Fitness trainers can keep track of their clients' progress with ProgressPro. The app is designed specifically for fitness instructors and allows them to easily monitor and track their clients' performance over time.
 
-> Free React Admin Dashboard made with Material-UI components and React.
+🏋🏽 Instructors can input and track their clients' weight and sizes, as well as set fitness goals and monitor progress towards achieving them.
 
-![preview](public/assets/preview.jpg)
+⏰ This app is perfect for busy fitness instructors who want to stay organized and on top of their clients' progress without spending hours on paperwork and manual tracking.
 
-| [Minimal Free](https://minimal-kit-react.vercel.app/) | [Minimal](https://material-ui.com/store/items/minimal-dashboard/) |
-| ----------------------------------------------------- | :---------------------------------------------------------------- |
-| **6** Demo pages                                      | **50+** demo pages                                                |
-| -                                                     | ✓ Multi-language                                                  |
-| -                                                     | ✓ Dark/Light Mode 🌓                                              |
-| -                                                     | ✓ [More components](https://minimals.cc/components)               |
-| -                                                     | ✓ Next.js version                                                 |
-| -                                                     | ✓ TypeScript version                                              |
-| -                                                     | ✓ Design files (Figma & Sketch)                                   |
+### [🚀 ProgressPro API (Ktor)](https://github.com/hopingsteam/ProgressPro-API)
+### [📱 ProgressPro Mobile (Flutter)](https://github.com/hopingsteam/ProgressPro-Mobile)
 
-## Page demo
+-----
 
-- [Dashboard](https://minimal-kit-react.vercel.app/dashboard/app)
-- [Users](https://minimal-kit-react.vercel.app/dashboard/user)
-- [Product](https://minimal-kit-react.vercel.app/dashboard/products)
-- [Blog](https://minimal-kit-react.vercel.app/dashboard/blog)
-- [Login](https://minimal-kit-react.vercel.app/login)
-- [Not Found](https://minimal-kit-react.vercel.app/404)
-
-## Getting started
-
-- Recommended `node js 16.x` and `npm 6+`. (suggestion v16.15.0)
-- Install dependencies: `npm install` / `yarn install`
-- Start the project: `npm run start` / `yarn start`
-
-## License
-
-Distributed under the MIT License. See [LICENSE](https://github.com/minimal-ui-kit/minimal.free/blob/main/LICENSE.md) for more information.
-
-## Contact us
-
-Email Us: support@minimals.cc
+#### This project is forked from [Minimal React](https://github.com/minimal-ui-kit/material-kit-react)
