@@ -1,16 +1,14 @@
+import React from 'react';
 import { Navigate, useRoutes } from 'react-router-dom';
-// layouts
 import DashboardLayout from './layouts/dashboard';
 import SimpleLayout from './layouts/simple';
-//
 import BlogPage from './pages/BlogPage';
 import UserPage from './pages/UserPage';
 import LoginPage from './pages/LoginPage';
 import Page404 from './pages/Page404';
 import ProductsPage from './pages/ProductsPage';
+import Financias from './pages/Financias/Financias';
 import DashboardAppPage from './pages/DashboardAppPage';
-
-// ----------------------------------------------------------------------
 
 export default function Router() {
   const routes = useRoutes([
@@ -18,11 +16,12 @@ export default function Router() {
       path: '/dashboard',
       element: <DashboardLayout />,
       children: [
-        { element: <Navigate to="/dashboard/app" />, index: true },
         { path: 'app', element: <DashboardAppPage /> },
+        { path: 'financias', element: <Financias /> },
         { path: 'user', element: <UserPage /> },
         { path: 'products', element: <ProductsPage /> },
         { path: 'blog', element: <BlogPage /> },
+        { path: '', element: <Navigate to="/dashboard/app" replace /> },
       ],
     },
     {
@@ -30,11 +29,12 @@ export default function Router() {
       element: <LoginPage />,
     },
     {
+      path: '/',
       element: <SimpleLayout />,
       children: [
-        { element: <Navigate to="/dashboard/app" />, index: true },
         { path: '404', element: <Page404 /> },
-        { path: '*', element: <Navigate to="/404" /> },
+        { path: '', element: <Navigate to="/dashboard/app" replace /> },
+        { path: '*', element: <Navigate to="/404" replace /> },
       ],
     },
     {
