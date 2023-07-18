@@ -44,6 +44,8 @@
     "@iconify/react": "^4.1.0",
     "@mui/lab": "^5.0.0-alpha.103",
     "@mui/material": "^5.11.10",
+    "@types/jest": "^29.5.3",
+    "@types/node": "^20.4.2",
     "apexcharts": "^3.37.0",
     "change-case": "^4.1.2",
     "date-fns": "^2.29.3",
@@ -64,6 +66,8 @@
   "devDependencies": {
     "@babel/core": "^7.21.0",
     "@babel/eslint-parser": "^7.19.1",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
     "eslint": "^8.34.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.6.0",
@@ -74,7 +78,8 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "prettier": "^2.8.4"
+    "prettier": "^2.8.4",
+    "typescript": "^5.1.6"
   },
   "overrides": {
     "nth-check": "2.1.1"

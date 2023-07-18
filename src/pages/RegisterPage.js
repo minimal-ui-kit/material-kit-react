@@ -40,7 +40,7 @@ const StyledContent = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const mdUp = useResponsive('up', 'md');
 
   return (
@@ -74,8 +74,8 @@ export default function LoginPage() {
             </Typography>
 
             <Typography variant="body2" sx={{ mb: 5 }}>
-              Don’t have an account? {''}
-              <Link href='/register' variant="subtitle2">Get started</Link>
+             Already have an account? {''}
+              <Link href="/login" variant="subtitle2">Get started</Link>
             </Typography>
 
             <Stack direction="row" spacing={2}>
