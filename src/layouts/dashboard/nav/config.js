@@ -22,6 +22,11 @@ const navConfig = [
     icon: icon('ic_scan'),
   },
   {
+    title: 'receipts',
+    path: '/dashboard/receipts',
+    icon: icon('ic_scan'),
+  },
+  {
     title: 'product',
     path: '/dashboard/products',
     icon: icon('ic_cart'),
