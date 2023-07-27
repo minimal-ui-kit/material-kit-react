@@ -132,6 +132,84 @@ const RECEIPTS = [
             "10.04.2023",
             "20:23:56"
         ]
+    },
+    {
+        "name": "BELGRADE AIRPORT",
+        "taxName": "1243819-P3/2",
+        "receiptNumber": 110572920,
+        "address": "Београд 59",
+        "location": "Београд-Сурчин",
+        "items": [
+            {
+                "name": "Kratkoročni parking/Kom. (Ђ)",
+                "price": 100,
+                "amount": 1,
+                "total": 100
+            }
+        ],
+        "receiptAmount": 100,
+        "receiptTax": 16.67,
+        "timeDate": "10.07.2023. 14:54:36"
+    },
+    {
+        "name": "LIDL SRBIJA",
+        "taxName": "1056887-Prodavnica br. 0134",
+        "receiptNumber": 106884584,
+        "address": "ЦАРА ЛАЗАРА 14",
+        "location": "Београд-Обреновац",
+        "items": [
+            {
+                "name": "Sladoled kornet pist/KOM (Ђ)",
+                "price": 79.99,
+                "amount": 1,
+                "total": 79.99
+            },
+            {
+                "name": "Toster za sendviče/KOM (Ђ)",
+                "price": 1,
+                "amount": 1,
+                "total": 1
+            },
+            {
+                "name": "Kolačići sa bademom/KOM (Ђ)",
+                "price": 279.89,
+                "amount": 1,
+                "total": 279.89
+            }
+        ],
+        "receiptAmount": 1619.18,
+        "receiptTax": 269.86,
+        "timeDate": "16.05.2023. 17:49:00"
+    },
+    {
+        "name": "PAVLE COLOR",
+        "taxName": "1111919-PAVLE COLOR DOO",
+        "receiptNumber": 108003221,
+        "address": "ИБАРСКИ ПУТ 52Б",
+        "location": "Београд-Барајево",
+        "items": [
+            {
+                "name": "MAXIMA MAXIMAL MASINSKI MALTER 35kg- (Ђ)",
+                "price": 615,
+                "amount": 1,
+                "total": 615
+            },
+            {
+                "name": "MAS MREZICA A-160gr bela-1m (Ђ)",
+                "price": 92,
+                "amount": 2,
+                "total": 184
+            },
+            {
+                "name": "MAXIMA STIROMOL bazni 25 KG (Ђ)",
+                "price": 599,
+                "amount": 1,
+                "total": 599
+            }
+        ],
+        "receiptAmount": 1398,
+        "receiptTax": 233,
+        "timeDate": "12.07.2023. 18:58:40"
     }
     ];
 
