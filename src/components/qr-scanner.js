@@ -26,6 +26,7 @@ const ReadQr = ({sendQrData}) =>{
         <div style={{ margin: "auto"}}>
 
             <button type="button"
+            style={{margin: 'auto'}}
             onClick={handleClick}>
                 Scan QR Code
             </button>
@@ -38,7 +39,7 @@ const ReadQr = ({sendQrData}) =>{
                 style={{display: "none"}}
             />
 
-            {file && <img src={URL.createObjectURL(file)} alt="QR Code"/>}
+            {file && <img src={URL.createObjectURL(file)} alt="QR Code" style={{width: '120px'}}/>}
         </div>
 
     );

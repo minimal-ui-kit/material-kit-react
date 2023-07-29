@@ -42,15 +42,15 @@ const Receipt = ({amo}) =>{
                 marginTop: '20px'
             }}>
                 <span style={{marginLeft: '16px'}}>Amount:</span>
-                <span style={{marginRight: '16px'}}>{receipt.receiptAmount} RSD</span>
+                <span style={{marginRight: '16px', fontWeight: 'bold'}}>{receipt.receiptAmount} RSD</span>
             </div>
             <div style={{
                 display: 'flex', 
                 justifyContent: 'space-between',
                 paddingBottom: '20px'}}
                 >
-                    <span style={{marginLeft: '16px'}}>Tax:</span>
-                    <span style={{marginRight: '16px'}}>{receipt.receiptTax} RSD</span>
+                    <span style={{marginLeft: '16px', fontSize: '12px'}}>Tax:</span>
+                    <span style={{marginRight: '16px', fontSize: '12px'}}>{receipt.receiptTax} RSD</span>
             </div>
 
             <ReceiptRibbon amount={8}/>
