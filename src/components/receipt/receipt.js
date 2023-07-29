@@ -6,29 +6,31 @@ import DotDivider from '../dot-divider';
 import ReceiptRibbon from '../receipt-ribbon';
 
 
-const Receipt = () =>{
+const Receipt = ({amo}) =>{
 
     const receipt = RECEIPTS[0];
+
+    console.log(amo.data,'HOLA');
 
     return(
         <div style={{ 
             margin: "auto",
-            background: "rgb(221,221,221)",
-            width: "400px"
+            background: "rgb(240,240,240)",
+            width: "397px"
         }}>
             <div style={{margin: 'auto', display: 'flex', justifyContent: 'space-between',marginBottom: '-20px'}}> 
                 <h3 style={{marginLeft: '16px'}}>{receipt.name}</h3>
                 <div style = {{width: '20px',height: '20px',background:'green', marginRight: '16px'}}/>
             </div>
-            <div style={{marginLeft: '16px', marginBottom:'16px', fontSize: '12px'}}>{receipt.timeDate[0]}</div>
+            <div style={{marginLeft: '16px', marginBottom:'20px', fontSize: '12px'}}>{receipt.timeDate[0]}</div>
             <DotDivider amount={24}/>
-            <List>
+            <List style = {{marginTop: '6px'}}>
             {
                 receipt && receipt.items.map((e,i) =>(<>
-                        <ListItem key={i}>
-                            {e.name}
+                        <ListItem key={i} style={{display: 'flex',justifyContent: 'space-between', marginBottom: '6px'}}>
+                            <span>{e.name}</span> 
+                            <span>{e.total} RSD</span>
                         </ListItem>
-                        <Divider />
                         </>
                 ))
             }

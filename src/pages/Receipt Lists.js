@@ -41,8 +41,8 @@ export default function ReceiptsList() {
         </Stack>
 
       </Container>
-      
-      <Receipt/>
+
+      {/* <Receipt/> */}
 
     </>
   );
