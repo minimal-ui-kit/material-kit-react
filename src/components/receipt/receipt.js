@@ -16,7 +16,11 @@ const Receipt = () =>{
             background: "rgb(221,221,221)",
             width: "400px"
         }}>
-            <p> {receipt.name}</p>
+            <div style={{margin: 'auto', display: 'flex', justifyContent: 'space-between',marginBottom: '-20px'}}> 
+                <h3 style={{marginLeft: '16px'}}>{receipt.name}</h3>
+                <div style = {{width: '20px',height: '20px',background:'green', marginRight: '16px'}}/>
+            </div>
+            <div style={{marginLeft: '16px', marginBottom:'16px', fontSize: '12px'}}>{receipt.timeDate[0]}</div>
             <DotDivider amount={24}/>
             <List>
             {
