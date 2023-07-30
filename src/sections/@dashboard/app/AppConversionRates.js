@@ -36,15 +36,18 @@ export default function AppConversionRates({ title, subheader, chartData, ...oth
     xaxis: {
       categories: chartLabels,
     },
+    colors: ['rgb(0,175,120)'],
   });
 
   return (
-    <Card {...other}>
-      <CardHeader title={title} subheader={subheader} />
+    <>
+    {/* <Card {...other}> */}
+      {/* <CardHeader title={title} subheader={subheader} /> */}
 
-      <Box sx={{ mx: 3 }} dir="ltr">
-        <ReactApexChart type="bar" series={[{ data: chartSeries }]} options={chartOptions} height={364} />
-      </Box>
-    </Card>
+      {/* <Box sx={{ mx: 3 }} dir="ltr"> */}
+        <ReactApexChart type="bar" series={[{ data: chartSeries }]} options={chartOptions} height={300} />
+      {/* </Box> */}
+    {/* </Card> */}
+    </>
   );
 }

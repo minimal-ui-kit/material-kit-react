@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 // @mui
 import { Grid, Button, Container, Stack, Typography } from '@mui/material';
 // components
-import Receipt from '../components/receipt/receipt';
+import ReceiptGrid from '../components/receipt/receipt copy';
 import Iconify from '../components/iconify';
 import { BlogPostCard, BlogPostsSort, BlogPostsSearch } from '../sections/@dashboard/blog';
 // mock
@@ -42,7 +42,7 @@ export default function ReceiptsList() {
 
       </Container>
 
-      {/* <Receipt/> */}
+      <ReceiptGrid />
 
     </>
   );
