@@ -30,11 +30,13 @@ export default function RecitExtractor(){
     };
 
     return (
-        <>
-            <ReadQr sendQrData={getData}/>
+        <div style={{width:'100%',height:'100%'}}>
+            {
+                isFetching !== true ? <ReadQr sendQrData={getData}/> : ''
+            }
             {
                 isFetching === true ? <Receipt amo={message}/> : ''
             }
-        </>
+        </div>
     )
 }
