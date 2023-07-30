@@ -4,45 +4,39 @@ import { Button } from '@mui/material';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import ReadQr from '../qr-scanner';
+import Receipt from '../receipt/receipt';
 
 
 export default function RecitExtractor(){
 
     const [message, setMessage] = useState([]);
+    const [isFetching, setFetching] = useState([false]);
 
     const urlbase = 'http://localhost:4800/scan/=?';
 
-    const arrayDisplay = [];
+    // const arrayDisplay = [];
 
     const getData = (message) => {
         axios.get(urlbase + message).then(
             (e)=>{
                 console.log(e.data);
-                e.data.items.forEach(e => {
-                    arrayDisplay.push(e);
-                });
-                setMessage(arrayDisplay);
+                // e.data.items.forEach(e => {
+                //     arrayDisplay.push(e);
+                // });
+                setMessage(e);
+                setFetching(true);
             }
         );
     };
 
     return (
-        <>
-            <ReadQr sendQrData={getData}/>
-            <div style={{margin: "auto", width:"fit-content"}}>
+        <div style={{width:'100%',height:'100%'}}>
             {
-                message && message.map ( (e,i) =>{
-                    return(
-                        <div style={{display: "flex"}}>
-                        <span style={{margin: "6px"}} key={i}>{e.name}</span>
-                        <span style={{margin: "6px"}}key={i}>{e.amount}</span>
-                        <span style={{margin: "6px"}}key={i}>{e.price}</span>
-                        <span style={{margin: "6px"}}key={i}>{e.total}</span> 
-                        </div>
-                    )
-                })
+                isFetching !== true ? <ReadQr sendQrData={getData}/> : ''
             }
-            </div>
-        </>
+            {
+                isFetching === true ? <Receipt amo={message}/> : ''
+            }
+        </div>
     )
 }
