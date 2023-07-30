@@ -8,17 +8,18 @@ import ReceiptRibbon from '../receipt-ribbon';
 import ReceiptHeader from '../receipt-header/ReceiptHeader';
 
 
-const ReceiptGrid = () =>{
+const ReceiptBar = ({amo}) =>{
 
-    const receipt = RECEIPTS[0];
+    const receipt = amo;
 
     // console.log(amo.data,'HOLA');
 
     return(
         <div style={{ 
             margin: "auto",
+            marginLeft: '8px',
             background: "rgb(240,240,240)",
-            width: "397px"
+            width: "375px"
         }}>
             <ReceiptHeader receipt={receipt}/>
             <DotDivider amount={24}/>
@@ -53,4 +54,4 @@ const ReceiptGrid = () =>{
     )
 };
 
-export default ReceiptGrid;
+export default ReceiptBar;

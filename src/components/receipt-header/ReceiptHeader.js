@@ -12,7 +12,7 @@ return (
     <div style = {{width: '40px',height: '40px',background:'rgb(0,175,120)', margin: 'auto', marginTop:'0px', borderRadius:'6px'}}>
         <SvgColor src={'ic_store.svg'} sx={{ width: 1, height: 1 }}/>
     </div>
-    <h3 style={{margin: 'auto',display:'block',marginTop:'10px'}}>{receipt.name}</h3>
+    <h3 style={{margin: 'auto',display:'block',marginTop:'4px'}}>{receipt.name}</h3>
     <div style={{margin: 'auto', marginBottom:'10px', fontSize: '12px'}}>{receipt.timeDate[0]}</div>            
 </div>
 </>)
