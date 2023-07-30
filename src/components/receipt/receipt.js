@@ -4,6 +4,7 @@ import { Grid, Button, Divider, ListItem, List } from '@mui/material';
 import RECEIPTS from '../../_mock/receipts';
 import DotDivider from '../dot-divider';
 import ReceiptRibbon from '../receipt-ribbon';
+import ReceiptHeader from '../receipt-header/ReceiptHeader';
 
 
 const Receipt = ({amo}) =>{
@@ -18,11 +19,7 @@ const Receipt = ({amo}) =>{
             background: "rgb(240,240,240)",
             width: "397px"
         }}>
-            <div style={{margin: 'auto', display: 'flex', justifyContent: 'space-between',marginBottom: '-20px'}}> 
-                <h3 style={{marginLeft: '16px'}}>{receipt.name}</h3>
-                <div style = {{width: '20px',height: '20px',background:'green', marginRight: '16px'}}/>
-            </div>
-            <div style={{marginLeft: '16px', marginBottom:'20px', fontSize: '12px'}}>{receipt.timeDate[0]}</div>
+            <ReceiptHeader receipt={receipt}/>
             <DotDivider amount={24}/>
             <List style = {{marginTop: '6px'}}>
             {

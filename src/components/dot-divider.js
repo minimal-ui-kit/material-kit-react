@@ -7,7 +7,7 @@ export default function DotDivider({amount}){
           divs.push(<div style={{
             height: '4px',
             width: '4px',
-            background: 'green',
+            background: 'rgb(0,175,120)',
             borderRadius: '50%',
         }}
             key={i} />);
