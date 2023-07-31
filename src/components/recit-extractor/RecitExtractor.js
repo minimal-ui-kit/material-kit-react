@@ -37,6 +37,8 @@ export default function RecitExtractor(){
     const urlbase = 'http://localhost:4800/scan/=?';
     const mainUrlBase = 'http://localhost:4800/';
 
+    const DikaUserID = 1001;
+
     // const arrayDisplay = [];
 
     const getData = (message) => {
@@ -53,8 +55,9 @@ export default function RecitExtractor(){
     };
 
     const saveReceipt = (message) =>{
-        console.log(message);
-        axios.post('http://localhost:4800/scan/save',message.data).then(
+        const payload = {...message.data, userId: DikaUserID};
+        console.log(payload);
+        axios.post('http://localhost:4800/scan/save',payload).then(
             (e) => {
                 console.log('Saved successfully!');
                 setFetching(false);
