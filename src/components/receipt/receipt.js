@@ -9,7 +9,7 @@ import ReceiptHeader from '../receipt-header/ReceiptHeader';
 
 const Receipt = ({amo}) =>{
 
-    const receipt = RECEIPTS[0];
+    const receipt = amo.data;
 
     console.log(amo.data,'HOLA');
 
