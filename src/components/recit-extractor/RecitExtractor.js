@@ -37,7 +37,7 @@ export default function RecitExtractor(){
     const urlbase = 'http://localhost:4800/scan/=?';
     const mainUrlBase = 'http://localhost:4800/';
 
-    const DikaUserID = 1001;
+    const DikaUserID = 1;
 
     // const arrayDisplay = [];
 
@@ -45,6 +45,7 @@ export default function RecitExtractor(){
         axios.get(urlbase + message).then(
             (e)=>{
                 console.log(e.data);
+                console.log(urlbase + message,'poziv');
                 // e.data.items.forEach(e => {
                 //     arrayDisplay.push(e);
                 // });

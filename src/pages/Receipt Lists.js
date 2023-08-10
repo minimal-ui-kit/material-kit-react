@@ -26,9 +26,9 @@ export default function ReceiptsList() {
   const [totalAmount, setTotalAmount] = useState([]);
   const [receiptsList, setReceiptsList] = useState([]);
 
-  const url = 'http://localhost:4800/receipt/totalpurchases'
-  const allReceiptsUrl = 'http://localhost:4800/receipts/1001'
-  const userId = 1001;
+  const url = 'http://localhost:4800/receipt/totalpurchases/1'
+  const allReceiptsUrl = 'http://localhost:4800/receipts/1'
+  const userId = 1;
 
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export default function ReceiptsList() {
     const getTotalAmount = async () => {
       try {
         const response = await axios.get(url);
-        setTotalAmount(response.data.totalPurchases); // Update the state with the fetched data
+        setTotalAmount(response.data.totalAmount); // Update the state with the fetched data
       } catch (error) {
         console.error('Error fetching data:', error);
       }
