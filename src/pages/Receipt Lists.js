@@ -20,13 +20,14 @@ const SORT_OPTIONS = [
 
 // ----------------------------------------------------------------------
 
+const liveUrl = 'https://racunscraper.onrender.com';
 
 export default function ReceiptsList() {
 
   const [totalAmount, setTotalAmount] = useState([]);
   const [receiptsList, setReceiptsList] = useState([]);
 
-  const url = 'http://localhost:4800/receipt/totalpurchases/1'
+  const url = 'http://localhost:4800/receipts/totalpurchases/1'
   const allReceiptsUrl = 'http://localhost:4800/receipts/1'
   const userId = 1;
 
