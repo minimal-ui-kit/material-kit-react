@@ -1,10 +1,10 @@
 import { Helmet } from 'react-helmet-async';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 // @mui
 import { Grid, Button, Container, Stack, Typography } from '@mui/material';
 // components
 import axios from 'axios';
-
+import AuthContext, { AuthProvider } from '../context/AuthProvider';
 import ReceiptBar from '../components/receipt/receiptBar';
 import Iconify from '../components/iconify';
 import { BlogPostCard, BlogPostsSort, BlogPostsSearch } from '../sections/@dashboard/blog';
@@ -22,17 +22,21 @@ const SORT_OPTIONS = [
 
 const liveUrl = 'https://racunscraper.onrender.com';
 
+
 export default function ReceiptsList() {
+
+  const { auth } = useContext(AuthContext);
 
   const [totalAmount, setTotalAmount] = useState([]);
   const [receiptsList, setReceiptsList] = useState([]);
 
-  const url = 'http://localhost:4800/receipts/totalpurchases/1'
-  const allReceiptsUrl = 'http://localhost:4800/receipts/1'
-  const userId = 1;
+  const userId = auth.id;
+  const url = `${liveUrl}/receipts/totalpurchases/${userId}`;
+  const allReceiptsUrl = `${liveUrl}/receipts/${userId}`
 
 
   useEffect(() => {
+    console.log(auth);
     // Define the function to fetch data
     const getTotalAmount = async () => {
       try {
@@ -71,7 +75,6 @@ export default function ReceiptsList() {
       </Helmet>
 
 
-
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
@@ -83,10 +86,7 @@ export default function ReceiptsList() {
 
         </Stack>
         <Stack mb={5} spacing={{ xs: 1, sm: 2 }} direction="row" useFlexGap flexWrap="wrap">
-        { receiptsList.map( (e,i)  => {
-      return (<ReceiptBar amo={e} key={i}/>)
-        
-        })
+        { receiptsList.map( (e,i)  => (<ReceiptBar amo={e} key={i}/>))
         }
         </Stack>
 
