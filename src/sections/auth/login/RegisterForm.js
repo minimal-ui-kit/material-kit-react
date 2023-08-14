@@ -51,7 +51,7 @@ export default function RegisterForm() {
     e.preventDefault();
     console.log(user,pwd,firstName,lastName,dateOfBirth);
     try{
-      const response = await axios.post(LOGIN_URL, {
+      const response = await axios.post(liveUrl, {
         email: user, 
         password: pwd,
         first_name: firstName,
