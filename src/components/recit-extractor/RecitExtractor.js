@@ -1,13 +1,17 @@
+/* eslint-disable object-shorthand */
 /* eslint-disable no-const-assign */
 /* eslint-disable no-var */
 import { Button } from '@mui/material';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import AuthContext from '../../context/AuthProvider';
 import ReadQr from '../qr-scanner';
 import Receipt from '../receipt/receipt';
 
 
 export default function RecitExtractor(){
+
+    const [auth] = useContext(AuthContext);
 
     const [message, setMessage] = useState([]);
     const [isFetching, setFetching] = useState([false]);
@@ -34,10 +38,12 @@ export default function RecitExtractor(){
         fontSize: '14px'
     };
 
-    const urlbase = 'http://localhost:4800/scan/=?';
-    const mainUrlBase = 'http://localhost:4800/';
+    const liveUrl = 'https://racunscraper.onrender.com';
 
-    const DikaUserID = 1;
+    const urlbase = `${liveUrl}/scan/=?`;
+    const mainUrlBase = `${liveUrl}`;
+
+    const userId = auth.id;
 
     // const arrayDisplay = [];
 
@@ -56,9 +62,9 @@ export default function RecitExtractor(){
     };
 
     const saveReceipt = (message) =>{
-        const payload = {...message.data, userId: DikaUserID};
+        const payload = {...message.data, userId: userId};
         console.log(payload);
-        axios.post('http://localhost:4800/scan/save',payload).then(
+        axios.post(`${liveUrl}/scan/save`,payload).then(
             (e) => {
                 console.log('Saved successfully!');
                 setFetching(false);
