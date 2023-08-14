@@ -31,9 +31,8 @@ export default function ReceiptsList() {
   const [receiptsList, setReceiptsList] = useState([]);
 
   const userId = auth.id;
-  const url = `http://localhost:4800/receipts/totalpurchases/${userId}`;
-  const allReceiptsUrl = `http://localhost:4800/receipts/${userId}`
-
+  const url = `${liveUrl}/receipts/totalpurchases/${userId}`;
+  const allReceiptsUrl = `${liveUrl}/receipts/${userId}`
 
   useEffect(() => {
     console.log(auth);
