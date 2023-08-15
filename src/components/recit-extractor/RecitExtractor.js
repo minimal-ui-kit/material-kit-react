@@ -11,7 +11,7 @@ import Receipt from '../receipt/receipt';
 
 export default function RecitExtractor(){
 
-    const [auth] = useContext(AuthContext);
+    const {auth} = useContext(AuthContext);
 
     const [message, setMessage] = useState([]);
     const [isFetching, setFetching] = useState([false]);
@@ -38,10 +38,9 @@ export default function RecitExtractor(){
         fontSize: '14px'
     };
 
-    const liveUrl = 'https://racunscraper.onrender.com';
+    const liveUrl = process.env.REACT_APP_BACKEND_URL;
 
     const urlbase = `${liveUrl}/scan/=?`;
-    const mainUrlBase = `${liveUrl}`;
 
     const userId = auth.id;
 

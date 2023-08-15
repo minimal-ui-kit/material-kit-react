@@ -20,8 +20,7 @@ const SORT_OPTIONS = [
 
 // ----------------------------------------------------------------------
 
-const liveUrl = 'https://racunscraper.onrender.com';
-
+const liveUrl = process.env.REACT_APP_BACKEND_URL;
 
 export default function ReceiptsList() {
 

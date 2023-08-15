@@ -30,13 +30,15 @@ export default function LoginForm() {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const liveUrl = 'https://racunscraper.onrender.com/login';
-  const LOGIN_URL = 'http://localhost:4800/login';
+  const liveUrl = process.env.REACT_APP_BACKEND_URL;
+  
+  const loginUrl = `${liveUrl}/login`;
 
   const handleSubmit = async (e) => {
+    console.log(loginUrl);
     e.preventDefault();
     try{
-      const response = await axios.post(liveUrl, {
+      const response = await axios.post(loginUrl, {
         email: user, 
         password: pwd
       });
