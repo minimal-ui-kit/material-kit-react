@@ -20,7 +20,7 @@ const ReadQrMobileFullscreen = ({sendQrData}) => {
 
     const sendQrDataNew = (message)=>{
         handleClose();
-        sendQrData(message);
+        sendQrData(message.data);
     }
 
     return (
