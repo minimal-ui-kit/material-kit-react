@@ -24,14 +24,14 @@ const ReadQrMobileFullscreen = ({sendQrData}) => {
     }
 
     return (
-        <div style={{ margin: "auto", border: 'solid red 2px' }}>
+        <div style={{ margin: "auto"}}>
             <Dialog open={open} onClose={handleClose}>
                 <ReadQrMobile sendQrData={sendQrDataNew}/>
             </Dialog>
             <button type="button"
                 style={{ margin: 'auto', display: 'block', backgroundColor: 'rgb(0,140,120)', color: 'white', border: 'solid rgb(0,175,120) 5px', borderRadius: '50%', width: '150px', height: '150px' }}
                 onClick={handleOpen}>
-                Open Dialog
+                Scan QR Code With Mobile
             </button>
         </div>
 

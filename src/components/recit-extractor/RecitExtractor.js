@@ -98,22 +98,22 @@ export default function RecitExtractor(){
     }
 
     return (
-        <div style={{width:'100%',height:'100%'}}>
+        <div style={{width:'100%',height:'100%', display:'flex', alignItems:'center',justifyContent:'center'}}>
             {
-                isFetching !== true && !mobile? <ReadQr sendQrData={getData}/> : ''
+                isFetching !== true && mobile? <ReadQr sendQrData={getData}/> : ''
             }
             {
-                isFetching !== true && mobile? <ReadQrMobileFullscreen sendQrData={getData}/> : ''
+                isFetching !== true && !mobile? <ReadQrMobileFullscreen sendQrData={getData}/> : ''
             }
             {
                 isFetching === true ? 
-                <>
+                <div>
                     <Receipt amo={message}/>
                     <div style={{margin: 'auto', marginTop: '10px', width:'397px', display: 'flex', justifyContent: 'space-between'}}>
                         <button style={SaveButton} onClick={() => saveReceipt(message)}>SAVE</button>
                         <button style={CancelButton} onClick={ ()=>setFetching(false)}>CANCEL</button>
                     </div>
-                </> : ''
+                </div> : ''
             }
         </div>
     )

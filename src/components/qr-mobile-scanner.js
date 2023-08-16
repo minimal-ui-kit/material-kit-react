@@ -29,9 +29,9 @@ const ReadQrMobile = ({sendQrData}) => {
     });
 
     return (
-        <div style={{ margin: "auto", border: 'solid red 2px' }}>
+        <div style={{ margin: "auto"}}>
             <div style={{ width: '400px', height: '400px', overflow: 'hidden' }}>
-                <video id="video" ref={videoRef} playsInline style={{ width: '100%', height: '100%', objectFit: 'cover', border: 'solid black 2px' }} />
+                <video id="video" ref={videoRef} playsInline style={{ width: '100%', height: '100%', objectFit: 'cover'}} />
             </div>
         </div>
 

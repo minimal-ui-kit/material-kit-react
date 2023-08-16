@@ -23,10 +23,10 @@ const ReadQr = ({sendQrData}) =>{
     }
 
     return(
-        <div style={{ margin: "auto", width:'150px',height:'150px',marginTop:'250px'}}>
+        <div style={{ margin: "auto", width:'150px',height:'150px'}}>
 
             <button type="button"
-            style={{margin: 'auto', backgroundColor:'rgb(0,175,120)', color:'white', border:'solid rgb(0,175,120) 5px',borderRadius:'50%',width:'150px',height:'150px'}}
+            style={{margin: 'auto', display:'block', backgroundColor:'rgb(0,175,120)', color:'white', border:'solid rgb(0,175,120) 5px',borderRadius:'50%',width:'150px',height:'150px'}}
             onClick={handleClick}>
                 Scan QR Code
             </button>
