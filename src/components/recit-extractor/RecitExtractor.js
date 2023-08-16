@@ -100,10 +100,10 @@ export default function RecitExtractor(){
     return (
         <div style={{width:'100%',height:'100%', display:'flex', alignItems:'center',justifyContent:'center'}}>
             {
-                isFetching !== true && mobile? <ReadQr sendQrData={getData}/> : ''
+                isFetching !== true && !mobile? <ReadQr sendQrData={getData}/> : ''
             }
             {
-                isFetching !== true && !mobile? <ReadQrMobileFullscreen sendQrData={getData}/> : ''
+                isFetching !== true && mobile? <ReadQrMobileFullscreen sendQrData={getData}/> : ''
             }
             {
                 isFetching === true ? 
