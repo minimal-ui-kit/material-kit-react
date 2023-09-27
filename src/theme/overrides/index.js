@@ -16,7 +16,7 @@ export default function ComponentsOverrides(theme) {
     Card(theme),
     Table(theme),
     Input(theme),
-    Paper(theme),
+    Paper(),
     Button(theme),
     Tooltip(theme),
     Backdrop(theme),
