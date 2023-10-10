@@ -6,7 +6,7 @@
 
 ![preview](public/assets/preview.jpg)
 
-| Minimal Free     | Minimal [Pro](https://material-ui.com/store/items/minimal-dashboard/) |
+| Minimal Free     | [Minimal Pro](https://material-ui.com/store/items/minimal-dashboard/) |
 | ---------------- | :-------------------------------------------------------------------- |
 | **6** Demo pages | **50+** Demo pages                                                    |
 | -                | ✓ [More components](https://minimals.cc/components)                   |
@@ -16,12 +16,12 @@
 
 ## Pages
 
-- [Dashboard](https://minimal-kit-react.vercel.app/dashboard/app)
-- [Users](https://minimal-kit-react.vercel.app/dashboard/user)
-- [Product](https://minimal-kit-react.vercel.app/dashboard/products)
-- [Blog](https://minimal-kit-react.vercel.app/dashboard/blog)
-- [Login](https://minimal-kit-react.vercel.app/login)
-- [Not Found](https://minimal-kit-react.vercel.app/404)
+- Dashboard
+- Users
+- Product
+- Blog
+- Login
+- Not Found
 
 ## Quick start
 
