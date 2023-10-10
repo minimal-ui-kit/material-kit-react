@@ -16,12 +16,12 @@
 
 ## Pages
 
-- Dashboard
-- Users
-- Product
-- Blog
-- Login
-- Not Found
+- [Dashboard](https://minimal-kit-react.vercel.app/)
+- [Users](https://minimal-kit-react.vercel.app/user)
+- [Product](https://minimal-kit-react.vercel.app/products)
+- [Blog](https://minimal-kit-react.vercel.app/blog)
+- [Login](https://minimal-kit-react.vercel.app/login)
+- [Not Found](https://minimal-kit-react.vercel.app/404)
 
 ## Quick start
 
