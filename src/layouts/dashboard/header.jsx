@@ -13,10 +13,12 @@ import { bgBlur } from 'src/theme/css';
 
 import Iconify from 'src/components/iconify';
 
-import Searchbar from './common/searchbar';
+// NA
+// import Searchbar from './common/searchbar';
 import { NAV, HEADER } from './config-layout';
 import AccountPopover from './common/account-popover';
-import LanguagePopover from './common/language-popover';
+// NA
+// import LanguagePopover from './common/language-popover';
 import NotificationsPopover from './common/notifications-popover';
 
 // ----------------------------------------------------------------------
@@ -34,12 +36,14 @@ export default function Header({ onOpenNav }) {
         </IconButton>
       )}
 
-      <Searchbar />
+      {/* NA */}
+      {/* <Searchbar /> */}
 
       <Box sx={{ flexGrow: 1 }} />
 
       <Stack direction="row" alignItems="center" spacing={1}>
-        <LanguagePopover />
+        {/* NA */}
+        {/* <LanguagePopover /> */}
         <NotificationsPopover />
         <AccountPopover />
       </Stack>
@@ -68,6 +72,7 @@ export default function Header({ onOpenNav }) {
         sx={{
           height: 1,
           px: { lg: 5 },
+          bgcolor: "#eeeeee",
         }}
       >
         {renderContent}
