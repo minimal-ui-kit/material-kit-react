@@ -9,6 +9,8 @@ import LoginPage from './pages/LoginPage';
 import Page404 from './pages/Page404';
 import ProductsPage from './pages/ProductsPage';
 import DashboardAppPage from './pages/DashboardAppPage';
+import AddUser from './pages/AddUser';
+import SubscriberView from './pages/View_pages/SubscriberView';
 
 // ----------------------------------------------------------------------
 
@@ -21,6 +23,8 @@ export default function Router() {
         { element: <Navigate to="/dashboard/app" />, index: true },
         { path: 'app', element: <DashboardAppPage /> },
         { path: 'user', element: <UserPage /> },
+        { path: 'adduser', element: <AddUser /> },
+        { path: 'adduser/ViewSubscriber', element: <SubscriberView /> },
         { path: 'products', element: <ProductsPage /> },
         { path: 'blog', element: <BlogPage /> },
       ],

@@ -13,7 +13,9 @@
     "lint:fix": "eslint --fix --ext .js,.jsx ./src",
     "clear-all": "rm -rf build node_modules",
     "re-start": "rm -rf build node_modules && yarn install && yarn start",
-    "re-build": "rm -rf build node_modules && yarn install && yarn build"
+    "re-build": "rm -rf build node_modules && yarn install && yarn build",
+    "prettier-watch": "onchange \"**/*\" -- prettier --write --ignore-unknown {{changed}}",
+     "prettier": "prettier --write"
   },
   "eslintConfig": {
     "extends": [
@@ -38,18 +40,20 @@
     ]
   },
   "dependencies": {
-    "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.6",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@faker-js/faker": "^7.6.0",
     "@iconify/react": "^4.1.0",
+    "@mui/icons-material": "^5.11.16",
     "@mui/lab": "^5.0.0-alpha.103",
-    "@mui/material": "^5.11.10",
+    "@mui/material": "^5.13.6",
     "apexcharts": "^3.37.0",
     "change-case": "^4.1.2",
     "date-fns": "^2.29.3",
     "history": "^5.3.0",
     "lodash": "^4.17.21",
     "numeral": "^2.0.6",
+    "onchange": "^7.1.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.0",
@@ -74,7 +78,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "prettier": "^2.8.4"
+    "prettier": "^2.8.8"
   },
   "overrides": {
     "nth-check": "2.1.1"

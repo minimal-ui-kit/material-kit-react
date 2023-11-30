@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 // @mui
 import { styled, alpha } from '@mui/material/styles';
-import { Toolbar, Tooltip, IconButton, Typography, OutlinedInput, InputAdornment } from '@mui/material';
+import { Toolbar, Tooltip, IconButton, Typography, OutlinedInput, InputAdornment, Box } from '@mui/material';
 // component
 import Iconify from '../../../components/iconify';
 
@@ -53,16 +53,18 @@ export default function UserListToolbar({ numSelected, filterName, onFilterName 
           {numSelected} selected
         </Typography>
       ) : (
-        <StyledSearch
-          value={filterName}
-          onChange={onFilterName}
-          placeholder="Search user..."
-          startAdornment={
-            <InputAdornment position="start">
-              <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled', width: 20, height: 20 }} />
-            </InputAdornment>
-          }
-        />
+        <>
+          <StyledSearch
+            value={filterName}
+            onChange={onFilterName}
+            placeholder="Search user..."
+            startAdornment={
+              <InputAdornment position="start">
+                <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled', width: 20, height: 20 }} />
+              </InputAdornment>
+            }
+          />
+        </>
       )}
 
       {numSelected > 0 ? (
@@ -72,11 +74,33 @@ export default function UserListToolbar({ numSelected, filterName, onFilterName 
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <Iconify icon="ic:round-filter-list" />
-          </IconButton>
-        </Tooltip>
+        <Box>
+          <Tooltip title="Filter list">
+            <IconButton>
+              <Iconify icon="ic:round-filter-list" />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Auto Renew">
+            <IconButton>
+              <Iconify icon="carbon:renew" />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Add TopUp">
+            <IconButton>
+              <Iconify icon="majesticons:money-plus-line" />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Add More Connections">
+            <IconButton>
+              <Iconify icon="material-symbols:attach-file-add" />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="View Connection History">
+            <IconButton>
+              <Iconify icon="ri:file-history-line" />
+            </IconButton>
+          </Tooltip>
+        </Box>
       )}
     </StyledRoot>
   );

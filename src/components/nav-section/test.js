@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { NavLink as RouterLink } from 'react-router-dom';
 // @mui
 import { Box, List, ListItemText,ListItemButton, Collapse,ListItemIcon } from '@mui/material';
-import { ExpandMore,ExpandLess } from '@mui/icons-material';
+import { StarBorder,ExpandMore,ExpandLess } from '@mui/icons-material';
 import { StyledNavItem, StyledNavItemIcon } from './styles';
 
 
@@ -26,32 +26,34 @@ export default function NavSection({ data = [], ...other }) {
   );
 }
 
-// ----------------------------------------------------------------------
-
-NavItem.propTypes = {
-  item: PropTypes.object,
-};
 
 function NavItem({ item }) {
-  const { title, path, icon, child} = item;
+  const { title, path, icon,child} = item;
+
   const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
     setOpen(!open);
   };
   return (
-  <>
-<StyledNavItem>
-      <ListItemButton onClick={handleClick}>
+    <StyledNavItem
+    component={RouterLink}
+    to={path}
+    sx={{
+      '&.active': {
+        color: 'text.primary',
+        bgcolor: 'action.selected',
+        fontWeight: 'fontWeightBold',
+      }
+
+    }}>
       <StyledNavItemIcon>{icon && icon}</StyledNavItemIcon>
-        <ListItemText  disableTypography primary={title} 
-        component={RouterLink}
-      to={path} />
-        {open ? <ExpandLess /> : <ExpandMore />}
+      <ListItemButton onClick={handleClick}>
+      <ListItemText disableTypography primary={title} />
+      {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
-      </StyledNavItem>
-      {child ? 
-      <Collapse in={open} timeout="auto" unmountOnExit sx={{fontFamily:'Public Sans',fontSize:14,color:'#637381'}}>
+
+   {child ? <Collapse in={open} timeout="auto" unmountOnExit>
     <List component="div" disablePadding>
     {
     child.map((item) => (
@@ -66,15 +68,18 @@ function NavItem({ item }) {
             }
     
           }}>
-        <ListItemIcon >
-        <StyledNavItemIcon>{item.icon && item.icon}</StyledNavItemIcon>
+        <ListItemIcon>
+          <StarBorder />
         </ListItemIcon>
         <ListItemText disableTypography primary={item.title}/>
       </ListItemButton> 
         ))}
     </List>
-  </Collapse> : null}
-</>
+  </Collapse>
+  : null
+}
+    </StyledNavItem>
+
   );
 }
 

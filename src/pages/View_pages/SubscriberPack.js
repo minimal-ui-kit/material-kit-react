@@ -23,23 +23,33 @@ import {
   TableContainer,
   TablePagination,
 } from '@mui/material';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 // components
-import Label from '../components/label';
-import Iconify from '../components/iconify';
-import Scrollbar from '../components/scrollbar';
+import Label from '../../components/label';
+import Iconify from '../../components/iconify';
+import Scrollbar from '../../components/scrollbar';
 // sections
-import { UserListHead, UserListToolbar } from '../sections/@dashboard/user';
+import { UserListHead, UserListToolbar } from '../../sections/@dashboard/user';
 // mock
-import USERLIST from '../_mock/user';
+import USERLIST from '../../_mock/user';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Name', alignRight: false },
-  { id: 'company', label: 'Company', alignRight: false },
+  { id: 'STB_SMARTCARD', label: 'STB & SmartCard No', alignRight: false },
   { id: 'role', label: 'Role', alignRight: false },
-  { id: 'isVerified', label: 'Verified', alignRight: false },
+  { id: 'Connection', label: 'Type', alignRight: false },
   { id: 'status', label: 'Status', alignRight: false },
+  { id: 'Description', label: 'Description', alignRight: false },
+  { id: 'BoxType', label: 'Box Type', alignRight: false },
+  { id: 'BouquePrice', label: 'Bouque Price', alignRight: false },
   { id: '' },
 ];
 
@@ -74,9 +84,9 @@ function applySortFilter(array, comparator, query) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function UserPage() {
+export default function SubscriberPack() {
   const [open, setOpen] = useState(null);
-
+  const [open2, setOpen2] = useState(false);
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('asc');
@@ -147,27 +157,40 @@ export default function UserPage() {
 
   const isNotFound = !filteredUsers.length && !!filterName;
 
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+
+  const handleClickOpen = () => {
+    setOpen2(true);
+  };
+
+  const handleClose = () => {
+    setOpen2(false);
+  };
+
   return (
     <>
       <Helmet>
         <title> User | Minimal UI </title>
       </Helmet>
-
-      <Container>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <Typography variant="h4" gutterBottom>
-            User
-          </Typography>
-          <Button
-            variant="contained"
-            startIcon={<Iconify icon="eva:plus-fill" />}
-            component={RouterLink}
-            to={'/dashboard/adduser'}
-          >
-            New User
+      <Dialog fullScreen={fullScreen} open={open2} onClose={handleClose} aria-labelledby="responsive-dialog-title">
+        <DialogTitle id="responsive-dialog-title">{"Use Google's location service?"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Let Google help apps determine location. This means sending anonymous location data to Google, even when no
+            apps are running.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button autoFocus onClick={handleClose}>
+            Disagree
           </Button>
-        </Stack>
-
+          <Button onClick={handleClose} autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Container>
         <Card>
           <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
 
@@ -285,7 +308,7 @@ export default function UserPage() {
           },
         }}
       >
-        <MenuItem sx={{ color: 'success.main' }} component={RouterLink} to={'/dashboard/adduser/ViewSubscriber'}>
+        <MenuItem sx={{ color: 'success.main' }} onClick={handleClickOpen}>
           <Iconify icon={'carbon:view'} sx={{ mr: 2 }} />
           View
         </MenuItem>

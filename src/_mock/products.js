@@ -26,7 +26,8 @@ const PRODUCT_NAME = [
   'Nike Air Zoom Pegasus 37 Premium',
   'Nike Air Zoom SuperRep',
   'NikeCourt Royale',
-  'Nike React Art3mis',
+  'Nike React Art3mis2',
+  'Nike React Infinity Run Flyknit A.I.R. Chaz Bear2',
   'Nike React Infinity Run Flyknit A.I.R. Chaz Bear',
 ];
 const PRODUCT_COLOR = ['#00AB55', '#000000', '#FFFFFF', '#FFC0CB', '#FF4842', '#1890FF', '#94D82D', '#FFC107'];
