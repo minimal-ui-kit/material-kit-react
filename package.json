@@ -38,7 +38,9 @@
     "react-helmet-async": "^1.3.0",
     "react-hook-form": "^7.47.0",
     "react-router-dom": "^6.16.0",
-    "simplebar-react": "^3.2.4"
+    "simplebar-react": "^3.2.4",
+    "@react-buddy/ide-toolbox": "^2.4.0",
+    "@react-buddy/palette-mui": "^5.0.1"
   },
   "devDependencies": {
     "@vitejs/plugin-react-swc": "^3.4.0",
