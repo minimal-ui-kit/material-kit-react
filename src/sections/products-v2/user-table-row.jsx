@@ -18,12 +18,14 @@ import Iconify from 'src/components/iconify';
 
 export default function UserTableRow({
   selected,
-  name,
-  avatarUrl,
-  company,
-  role,
-  isVerified,
+  order,
+  customer,
+  date,
+  items,
+  subtotal,
+  netProfit,
   status,
+  avatarUrl,
   handleClick,
 }) {
   const [open, setOpen] = useState(null);
@@ -43,23 +45,25 @@ export default function UserTableRow({
           <Checkbox disableRipple checked={selected} onChange={handleClick} />
         </TableCell>
 
+        <TableCell>{order}</TableCell>
+
         <TableCell component="th" scope="row" padding="none">
           <Stack direction="row" alignItems="center" spacing={2}>
-            <Avatar alt={name} src={avatarUrl} />
+            <Avatar alt={customer} src={avatarUrl} />
             <Typography variant="subtitle2" noWrap>
-              {name}
+              {customer}
             </Typography>
           </Stack>
         </TableCell>
 
-        <TableCell>{company}</TableCell>
+        <TableCell>{date}</TableCell>
 
-        <TableCell>{role}</TableCell>
-
-        <TableCell align="center">{isVerified ? 'Yes' : 'No'}</TableCell>
+        <TableCell align="center">{items}</TableCell>
+        <TableCell>{subtotal}</TableCell>
+        <TableCell>{netProfit}</TableCell>
 
         <TableCell>
-          <Label color={(status === 'banned' && 'error') || 'success'}>{status}</Label>
+          <Label color={(status === 'cancelled' && 'error') || (status === 'pending' && 'warning') || 'success'}>{status}</Label>
         </TableCell>
 
         <TableCell align="right">
@@ -95,11 +99,13 @@ export default function UserTableRow({
 
 UserTableRow.propTypes = {
   avatarUrl: PropTypes.any,
-  company: PropTypes.any,
+  order: PropTypes.any,
   handleClick: PropTypes.func,
-  isVerified: PropTypes.any,
-  name: PropTypes.any,
-  role: PropTypes.any,
+  customer: PropTypes.any,
+  date: PropTypes.any,
+  items: PropTypes.any,
+  subtotal: PropTypes.any,
+  netProfit: PropTypes.any,
   selected: PropTypes.any,
   status: PropTypes.string,
 };
