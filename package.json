@@ -6,7 +6,7 @@
   "private": false,
   "scripts": {
     "dev": "vite",
-    "start": "vite preview",
+    "start": "vite",
     "build": "vite build",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint:fix": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\"",
@@ -28,6 +28,7 @@
     "@mui/material": "^5.14.12",
     "apexcharts": "^3.43.0",
     "date-fns": "^2.30.0",
+    "firebase": "^10.7.2",
     "history": "^5.3.0",
     "lodash": "^4.17.21",
     "numeral": "^2.0.6",
