@@ -36,7 +36,8 @@
         "extensions": [
           ".js",
           ".jsx",
-          ".json"
+          ".ts",
+          ".tsx"
         ]
       }
     }
@@ -61,6 +62,7 @@
     "react/jsx-filename-extension": 0,
     "react/jsx-props-no-spreading": 0,
     "import/prefer-default-export": 0,
+    "import/extensions": 0,
     "react/function-component-definition": 0,
     "jsx-a11y/control-has-associated-label": 0,
     "react/jsx-no-useless-fragment": [

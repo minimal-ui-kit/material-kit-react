@@ -1,5 +1,4 @@
-import { useState } from 'react';
-
+import {React, useState } from 'react';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
@@ -19,6 +18,8 @@ import { bgGradient } from 'src/theme/css';
 
 import Logo from 'src/components/logo';
 import Iconify from 'src/components/iconify';
+import { signInWithGoogle } from '../../services/firebaseAuth';
+
 
 // ----------------------------------------------------------------------
 
@@ -27,11 +28,21 @@ export default function LoginView() {
 
   const router = useRouter();
 
+  const handleLogin = () => {
+    signInWithGoogle()
+      .then((result) => {
+        // Kullanıcı giriş yaptı
+        const user = result.user;
+        console.log("user");
+      })
+      .catch((error) => {
+        // Hata oluştu
+        console.error(error);
+      });
+  };
+
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleClick = () => {
-    router.push('/dashboard');
-  };
 
   const renderForm = (
     <>
@@ -66,9 +77,9 @@ export default function LoginView() {
         type="submit"
         variant="contained"
         color="inherit"
-        onClick={handleClick}
+        onClick={handleLogin}
       >
-        Login
+       Google ile Giriş Yap
       </LoadingButton>
     </>
   );
