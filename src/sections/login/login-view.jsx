@@ -20,17 +20,26 @@ import { bgGradient } from 'src/theme/css';
 import Logo from 'src/components/logo';
 import Iconify from 'src/components/iconify';
 
+import { GoogleAuthProvider } from 'firebase/auth';
+
 // ----------------------------------------------------------------------
 
 export default function LoginView() {
+  // const [input, setInput] = useState({});
   const theme = useTheme();
 
-  const router = useRouter();
+  // const router = useRouter();
 
   const [showPassword, setShowPassword] = useState(false);
 
+  const provider = new GoogleAuthProvider();
+
+  const signInWithGoogle = async () => {
+    await signInWithPopUp;
+  };
+
   const handleClick = () => {
-    router.push('/dashboard');
+    // router.push('/dashboard');
   };
 
   const renderForm = (
@@ -99,7 +108,7 @@ export default function LoginView() {
             maxWidth: 420,
           }}
         >
-          <Typography variant="h4">Sign in to Minimal</Typography>
+          <Typography variant="h4">Sign in to Dashboard</Typography>
 
           <Typography variant="body2" sx={{ mt: 2, mb: 5 }}>
             Don’t have an account?
@@ -115,6 +124,7 @@ export default function LoginView() {
               color="inherit"
               variant="outlined"
               sx={{ borderColor: alpha(theme.palette.grey[500], 0.16) }}
+              onClick={signInWithGoogle}
             >
               <Iconify icon="eva:google-fill" color="#DF3E30" />
             </Button>
