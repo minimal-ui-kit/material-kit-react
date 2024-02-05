@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { Outlet, Navigate, useRoutes } from 'react-router-dom';
 
 import DashboardLayout from 'src/layouts/dashboard';
@@ -15,19 +15,24 @@ export const Page404 = lazy(() => import('src/pages/page-not-found'));
 // ----------------------------------------------------------------------
 
 export default function Router() {
-  const {user}=useStore()
+  const { user } = useStore();
+
+  useEffect(() => {
+    // console.log(user.uid);
+  }, [user]);
 
   const routes = useRoutes([
     {
-      element: user ? (
-        <DashboardLayout>
-          <Suspense>
-            <Outlet />
-          </Suspense>
-        </DashboardLayout>
-      ) : (
-        <Navigate to="/login" replace />
-      ),
+      element:
+        user && Object.keys(user)?.length ? (
+          <DashboardLayout>
+            <Suspense>
+              <Outlet />
+            </Suspense>
+          </DashboardLayout>
+        ) : (
+          <Navigate to="/login" replace />
+        ),
       children: [
         { element: <IndexPage />, index: true },
         { path: 'user', element: <UserPage /> },

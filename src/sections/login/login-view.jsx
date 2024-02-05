@@ -1,6 +1,9 @@
 import { useState } from 'react';
 
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import Box from '@mui/material/Box';
+import auth from 'src/config/firebase';
+
 import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
@@ -19,23 +22,35 @@ import { bgGradient } from 'src/theme/css';
 
 import Logo from 'src/components/logo';
 import Iconify from 'src/components/iconify';
-
-import { GoogleAuthProvider } from 'firebase/auth';
+import useStore from '../../store/store';
 
 // ----------------------------------------------------------------------
 
 export default function LoginView() {
   // const [input, setInput] = useState({});
+  const { setUser } = useStore();
   const theme = useTheme();
 
-  // const router = useRouter();
+  const router = useRouter();
 
   const [showPassword, setShowPassword] = useState(false);
 
   const provider = new GoogleAuthProvider();
 
   const signInWithGoogle = async () => {
-    await signInWithPopUp;
+    try {
+      await signInWithPopup(auth, provider)
+        .then((creds) => {
+          // console.log(creds);
+          setUser(creds.user);
+          // router.push('/dashboard');
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleClick = () => {
