@@ -10,7 +10,14 @@ import ThemeProvider from 'src/theme';
 
 export default function App() {
   useScrollToTop();
-
+  // const [token] = useState(localStorage.getItem('token'));
+  // const { fetchUser } = useContext(AppContext);
+  // useEffect(() => {
+  //   if (token) {
+  //     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+  //   }
+  //   fetchUser();
+  // }, [token, fetchUser]);
   return (
     <ThemeProvider>
       <Router />

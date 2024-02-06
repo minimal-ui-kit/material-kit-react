@@ -1,17 +1,17 @@
 import { Helmet } from 'react-helmet-async';
 
-import { LoginView } from 'src/sections/login';
+import { FilesView } from '../sections/files/view';
 
 // ----------------------------------------------------------------------
 
-export default function LoginPage() {
+export default function FilesPage() {
   return (
     <>
       <Helmet>
-        <title> Login with JIRA</title>
+        <title> User | Minimal UI </title>
       </Helmet>
 
-      <LoginView />
+      <FilesView />
     </>
   );
 }

@@ -1,10 +1,13 @@
 import SvgColor from 'src/components/svg-color';
 
+import Iconify from '../../components/iconify';
+
 // ----------------------------------------------------------------------
 
 const icon = (name) => (
   <SvgColor src={`/assets/icons/navbar/${name}.svg`} sx={{ width: 1, height: 1 }} />
 );
+const IconifyIcon = (name) => <Iconify icon="material-symbols:csv" width={25} />;
 
 const navConfig = [
   {
@@ -13,9 +16,9 @@ const navConfig = [
     icon: icon('ic_analytics'),
   },
   {
-    title: 'user',
-    path: '/user',
-    icon: icon('ic_user'),
+    title: 'CSV Files',
+    path: '/files',
+    icon: IconifyIcon('ic_sheet'),
   },
   {
     title: 'product',
@@ -26,16 +29,6 @@ const navConfig = [
     title: 'blog',
     path: '/blog',
     icon: icon('ic_blog'),
-  },
-  {
-    title: 'login',
-    path: '/login',
-    icon: icon('ic_lock'),
-  },
-  {
-    title: 'Not found',
-    path: '/404',
-    icon: icon('ic_disabled'),
   },
 ];
 
