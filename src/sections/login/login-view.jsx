@@ -19,6 +19,7 @@ import { bgGradient } from 'src/theme/css';
 
 import Logo from 'src/components/logo';
 import Iconify from 'src/components/iconify';
+import { EtsyClientV3 } from 'node-etsy-client';
 
 // ----------------------------------------------------------------------
 
@@ -30,7 +31,10 @@ export default function LoginView() {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClick = () => {
-    router.push('/dashboard');
+    // router.push('/dashboard');
+      const client = new EtsyClientV3();
+      const shops = client.findShops({ shop_name: 'mony', limit: 10 });
+      console.log(shops);
   };
 
   const renderForm = (
