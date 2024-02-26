@@ -32,7 +32,7 @@ export default function LoginView() {
 
   const handleClick = () => {
     // router.push('/dashboard');
-      const client = new EtsyClientV3({apiKey: '2ro3xr2hutclkmpoki1ygmdn'});
+      const client = new EtsyClientV3({apiKey: '2ro3xr2hutclkmpoki1ygmdn', apiUrl: ' https://cors-anywhere.herokuapp.com/https://openapi.etsy.com/v3'});
       const shops = client.findShops({ shop_name: 'mony', limit: 10 });
       console.log(shops);
   };
