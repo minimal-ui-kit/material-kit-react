@@ -2,6 +2,9 @@ import { lazy, Suspense } from 'react';
 import { Outlet, Navigate, useRoutes } from 'react-router-dom';
 
 import DashboardLayout from 'src/layouts/dashboard';
+import AthleticsAdd from 'src/sections/products/athletics-res';
+import CricketAdd from 'src/sections/products/cricket-res';
+import FootballAdd from 'src/sections/products/football-res';
 import Screen1 from 'src/sections/products/result-type';
 
 export const IndexPage = lazy(() => import('src/pages/app'));
@@ -40,9 +43,9 @@ export default function Router() {
                 children:[
                   {element: <Screen1/>, index: true},
                   {path:"2",element:<ProductsPage/>},
-                  {path:"football",element:<ProductsPage/>},
-                  {path:"athletics",element:<ProductsPage/>},
-                  {path:"cricket",element:<ProductsPage/>},
+                  {path:"football",element:<FootballAdd/>},
+                  {path:"athletics",element:<AthleticsAdd/>},
+                  {path:"cricket",element:<CricketAdd/>},
                 ]
               },
               { path: 'editresult/:id', element: <ProductsPage /> },
