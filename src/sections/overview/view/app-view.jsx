@@ -6,10 +6,13 @@ import React, { useRef, useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
+import Switch from '@mui/material/Switch';
 import MenuItem from '@mui/material/MenuItem';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import InputLabel from '@mui/material/InputLabel';
+import Label from 'src/components/label';
+
 // ----------------------------------------------------------------------
 
 export default function AppView() {
@@ -19,13 +22,19 @@ export default function AppView() {
       console.log(editorRef.current.getContent());
     }
   };
+  const [editId, setEditId] = useState(false);
+  const [editMode, setEditMode] = useState(false);
   const [sport, setSport] = useState('Football');
   const [day, setDay] = useState(0);
   const [fixtures, setFixtures] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [initialTableContent, setInitialTableContent] = useState(
+    '<table style="border-collapse: collapse; width: 100%;" border="1"><colgroup><col style="width: 33.3102%;"><col style="width: 33.3102%;"><col style="width: 33.3102%;"></colgroup><tbody><tr><td style="text-align: center; font-weight: 800;">Team 1</td><td style="text-align: center; font-weight: 800;">Team 2</td><td style="text-align: center; font-weight: 800;">Time</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>'
+  );
   useEffect(() => {
     setLoading(true);
-    fetch(`https://app-admin-api.asmitaiiita.org/api/fixtures/`)
+    // fetch(`https://app-admin-api.asmitaiiita.org/api/fixtures/`)
+    fetch(`http://localhost:8000/api/fixtures`)
       .then((res) => {
         console.log('res: ', res);
         return res.json();
@@ -41,19 +50,72 @@ export default function AppView() {
       });
   }, []);
   const handleAddFixture = async () => {
-    const data = {
-      sport,
-      day,
-      date: new Date(),
-      htmlData: editorRef.current.getContent(),
-    };
-    const res = await axios.post('https://app-admin-api.asmitaiiita.org/api/fixtures/create', data);
-    alert('Successfully added fixture');
-    console.log(res);
+    if (editMode) {
+      alert('Toggle edit mode off first.');
+    } else {
+      try {
+        const data = {
+          Sport: sport,
+          Day: day,
+          Date: new Date(),
+          HTMLString: editorRef.current.getContent(),
+        };
+        console.log(data);
+        if (data.HTMLString.length !== 0) {
+          const res = await axios.post(`http://localhost:8000/api/fixtures/create`, data);
+          alert('Successfully added fixture. Refresh page');
+          console.log(res);
+        } else {
+          alert('No data added.');
+        }
+      } catch (err) {
+        console.log('Error occurred while making request to add fixture: ', err);
+      }
+    }
   };
-  const [initialTableContent, setInitialTableContent] = useState(
-    '<table style="border-collapse: collapse; width: 100%;" border="1"><colgroup><col style="width: 33.3102%;"><col style="width: 33.3102%;"><col style="width: 33.3102%;"></colgroup><tbody><tr><td style="text-align: center; font-weight: 800;">College 1</td><td style="text-align: center; font-weight: 800;">College 2</td><td style="text-align: center; font-weight: 800;">Time</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></tbody></table><p>&nbsp;</p>'
-  );
+  const handleDeleteFixture = async (id) => {
+    try {
+      console.log('id for deletion: ', id);
+      const deletedFixture = await axios.delete(`http://localhost:8000/api/fixtures/${id}`);
+
+      console.log('Deleted fixture: ', deletedFixture);
+      const newFixtures = fixtures.filter((fixture) => fixture._id !== id);
+      console.log('New fixtures: ', newFixtures);
+
+      setFixtures(newFixtures);
+      alert('Successfully deleted fixture');
+    } catch (err) {
+      console.log('Error while delete request: ', err);
+    }
+  };
+  const handleEditFixture = async (id) => {
+    if (!editMode) {
+      alert('Toggle edit mode on.');
+    } else {
+      try {
+        const newBody = {
+          Sport: sport,
+          Day: day,
+          Date: new Date(),
+          HTMLString: editorRef.current.getContent(),
+        };
+        const updatedFixure = await axios.patch(
+          `http://localhost:8000/api/fixtures/${id}`,
+          newBody
+        );
+        console.log('Updated fixture: ', updatedFixure.data.data);
+        const newFixtures = fixtures.map((fixture) => {
+          if (fixture._id === id) return updatedFixure.data.data;
+          return fixture;
+        });
+        console.log(newFixtures);
+        setFixtures(newFixtures);
+        alert('Successfully updated fixture!');
+      } catch (err) {
+        console.log('Error while making request to edit fixture: ', err);
+      }
+    }
+  };
   if (loading) return 'Loading';
   return (
     <Container maxWidth="xl">
@@ -90,12 +152,18 @@ export default function AppView() {
               setSport(currSport);
               if (currSport === 'Football' || currSport === 'Cricket') {
                 setInitialTableContent(
-                  '<table style="border-collapse: collapse; width: 100%;" border="1"><colgroup><col style="width: 33.3102%;"><col style="width: 33.3102%;"><col style="width: 33.3102%;"></colgroup><tbody><tr><td style="text-align: center; font-weight: 800;">Team 1</td><td style="text-align: center; font-weight: 800;">Team 2</td><td style="text-align: center; font-weight: 800;">Time</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></tbody></table><p>&nbsp;</p>'
+                  '<table style="border-collapse: collapse; width: 100%;" border="1"><colgroup><col style="width: 33.3102%;"><col style="width: 33.3102%;"><col style="width: 33.3102%;"></colgroup><tbody><tr><td style="text-align: center; font-weight: 800;">Team 1</td><td style="text-align: center; font-weight: 800;">Team 2</td><td style="text-align: center; font-weight: 800;">Time</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>'
                 );
+                // Editor.setContent(
+                //   '<table style="border-collapse: collapse; width: 100%;" border="1"><colgroup><col style="width: 33.3102%;"><col style="width: 33.3102%;"><col style="width: 33.3102%;"></colgroup><tbody><tr><td style="text-align: center; font-weight: 800;">Team 1</td><td style="text-align: center; font-weight: 800;">Team 2</td><td style="text-align: center; font-weight: 800;">Time</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>'
+                // );
               } else {
                 setInitialTableContent(
-                  '<table style="border-collapse: collapse; width: 100%;" border="1"><colgroup><col style="width: 50%;"><col style="width: 50%;"></colgroup><tbody><tr><td style="text-align: center; font-weight: 800;">Event</td><td style="text-align: center; font-weight: 800;">Time</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr></tbody></table><p>&nbsp;</p>'
+                  '<table style="border-collapse: collapse; width: 100%;" border="1"><colgroup><col style="width: 50%;"><col style="width: 50%;"></colgroup><tbody><tr><td style="text-align: center; font-weight: 800;">Event</td><td style="text-align: center; font-weight: 800;">Time</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr>'
                 );
+                // Editor.setContent(
+                //   '<table style="border-collapse: collapse; width: 100%;" border="1"><colgroup><col style="width: 50%;"><col style="width: 50%;"></colgroup><tbody><tr><td style="text-align: center; font-weight: 800;">Event</td><td style="text-align: center; font-weight: 800;">Time</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr>'
+                // );
               }
             }}
             value={sport}
@@ -188,9 +256,57 @@ export default function AppView() {
           }}
         />
       </Box>
-      <Button sx={{ marginBottom: '100px' }} variant="contained" onClick={handleAddFixture}>
-        Submit
-      </Button>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '20px',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Box sx={{ display: 'flex', gap: '20px', justifyContent: 'center', alignItems: 'center' }}>
+          {(!editMode && (
+            <Button
+              variant="contained"
+              onClick={() => {
+                handleAddFixture();
+              }}
+            >
+              Submit
+            </Button>
+          )) || (
+            <Button variant="contained" disabled>
+              Submit
+            </Button>
+          )}
+
+          {(editMode && (
+            <Button
+              variant="contained"
+              onClick={() => {
+                handleEditFixture(editId);
+              }}
+            >
+              Edit
+            </Button>
+          )) || (
+            <Button variant="contained" disabled>
+              Edit
+            </Button>
+          )}
+        </Box>
+        <p>
+          Set edit mode:{' '}
+          <Switch
+            id="toggleEditMode"
+            onChange={() => {
+              setEditMode(!editMode);
+            }}
+          />
+        </p>
+      </Box>
+
       <h3>View and edit fixtures</h3>
       <Box
         sx={{
@@ -198,19 +314,52 @@ export default function AppView() {
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          gap: '50px',
           textAlign: 'center',
-          marginTop: '20px',
+          marginTop: '100px',
         }}
       >
-        {fixtures.map((fixture, key) => (
-          <>
-            <h3>
-              Day {fixture.Day}, {fixture.Sport}
-            </h3>
-            {parse(fixture.HTMLString)}
-          </>
-        ))}
+        {fixtures?.map((fixture, key) => {
+          console.log('fixture: ', fixture._id);
+          return (
+            <div style={{ width: '50%' }}>
+              <h3>
+                Day {fixture.Day}, {fixture.Sport}
+              </h3>
+              {fixture.HTMLString && parse(fixture.HTMLString)}
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: '10px',
+                  textAlign: 'center',
+                  marginTop: '30px',
+                }}
+              >
+                <Button
+                  sx={{ marginBottom: '100px', backgroundColor: '#f24e4e' }}
+                  variant="contained"
+                  onClick={() => handleDeleteFixture(fixture._id)}
+                >
+                  Delete
+                </Button>
+                <Button
+                  sx={{ marginBottom: '100px' }}
+                  variant="contained"
+                  onClick={() => {
+                    window.scrollTo(0, 0);
+                    setDay(fixture.Day);
+                    setSport(fixture.Sport);
+                    setInitialTableContent(fixture.HTMLString);
+                    setEditId(fixture._id);
+                  }}
+                >
+                  Edit
+                </Button>
+              </Box>
+            </div>
+          );
+        })}
       </Box>
     </Container>
   );
