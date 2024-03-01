@@ -49,17 +49,10 @@ export default function Nav({ openNav, onCloseNav }) {
         alignItems: 'center',
         bgcolor: (theme) => alpha(theme.palette.grey[500], 0.12),
       }}
-    >
-      <Avatar src={account.photoURL} alt="photoURL" />
+    />
+     
 
-      <Box sx={{ ml: 2 }}>
-        <Typography variant="subtitle2">{account.displayName}</Typography>
-
-        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          {account.role}
-        </Typography>
-      </Box>
-    </Box>
+    
   );
 
   const renderMenu = (
@@ -75,26 +68,13 @@ export default function Nav({ openNav, onCloseNav }) {
       <Stack alignItems="center" spacing={3} sx={{ pt: 5, borderRadius: 2, position: 'relative' }}>
         <Box
           component="img"
-          src="/assets/illustrations/illustration_avatar.png"
-          sx={{ width: 100, position: 'absolute', top: -50 }}
+          src="/assets/images/logoblack.png"
+          sx={{ width: 500, position: 'absolute', top: -50 }}
         />
 
-        <Box sx={{ textAlign: 'center' }}>
-          <Typography variant="h6">Get more?</Typography>
+        
 
-          <Typography variant="body2" sx={{ color: 'text.secondary', mt: 1 }}>
-            From only $69
-          </Typography>
-        </Box>
-
-        <Button
-          href="https://material-ui.com/store/items/minimal-dashboard/"
-          target="_blank"
-          variant="contained"
-          color="inherit"
-        >
-          Upgrade to Pro
-        </Button>
+        
       </Stack>
     </Box>
   );
@@ -110,9 +90,10 @@ export default function Nav({ openNav, onCloseNav }) {
         },
       }}
     >
-      <Logo sx={{ mt: 3, ml: 4 }} />
+      
+      <img alt="logo" width="300px" src="/assets/images/interblack.png" />
 
-      {renderAccount}
+      
 
       {renderMenu}
 
