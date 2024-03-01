@@ -157,13 +157,13 @@ export default function UserPage() {
       freeSolo
       sx={{width: "250px", paddingX: "35px"}}
       options={usersriyal.map((option) => option.Name)}
-      renderInput={(params) => <TextField {...params} label="freeSolo" />}
+      renderInput={(params) => <TextField {...params} label="College" />}
       onChange={(event,value)=>{
         setNameUpdate(value);
         console.log(nameUpdate)
       }}
     />
-   <TextField sx={{width: "200px", marginX: "35px"}} id="outlined-basic" label="Outlined" variant="outlined"
+   <TextField sx={{width: "200px", marginX: "35px"}} id="outlined-basic" label="Points" variant="outlined"
    onChange={(event)=>{
     console.log(event.target.value)
     setNewPoints(event.target.value)
@@ -178,14 +178,16 @@ export default function UserPage() {
         //console.log(user.Name === setNameUpdate)
         if(user.Name===nameUpdate) str=user._id
       })
-      alert(str)
+    
       axios.patch("https://app-admin-api.asmitaiiita.org/api/leaderboard/"+str,{
         Points: newPoints
       }).then(()=>{
         alert("Updated")
+        window.location.reload();
+
   
       }).catch((error)=>{
-        console.log(error)
+        alert("Error")
       })
     }
 
