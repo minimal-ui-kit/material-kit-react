@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
@@ -11,40 +11,38 @@ import Router from 'src/routes/sections';
 import { Link, useNavigate } from 'react-router-dom';
 import { useRouter } from 'src/routes/hooks';
 
-
-
 // ----------------------------------------------------------------------
 
 export default function ProductsView() {
+  // const [dataLoaded,setDataLoaded]=useState(false);
+  const router = useRouter();
+  const [resultData, setResData] = useState([]);
 
-// const [dataLoaded,setDataLoaded]=useState(false);
-  const router=useRouter();
-  const [resultData,setResData] = useState([]);
-
-  function handleNewRes(){
-    router.push("addresult");
+  function handleNewRes() {
+    router.push('addresult');
   }
-  
+
   useEffect(() => {
     // setDataLoaded(false);
-    console.log("loading")
-    axios.get("https://app-admin-api.asmitaiiita.org/api/results/getResults").then((response) => {
-    console.log(response.data.data);
-    setResData(response.data.data);
-    // setDataLoaded(true); 
-  })
-  },[])
+    console.log('loading');
+    axios.get('https://app-admin-api.asmitaiiita.org/api/results/getResults').then((response) => {
+      console.log(response.data.data);
+      setResData(response.data.data);
+      // setDataLoaded(true);
+    });
+  }, []);
 
   return (
     <Container>
-
-
-
-
-<Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+      <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <Typography variant="h4">Results</Typography>
 
-        <Button onClick={handleNewRes} variant="contained" color="inherit" startIcon={<Iconify icon="eva:plus-fill" />}>
+        <Button
+          onClick={handleNewRes}
+          variant="contained"
+          color="inherit"
+          startIcon={<Iconify icon="eva:plus-fill" />}
+        >
           New Result
         </Button>
       </Stack>
@@ -55,8 +53,6 @@ export default function ProductsView() {
           </Grid>
         ))}
       </Grid>
-
-      
     </Container>
   );
 }
