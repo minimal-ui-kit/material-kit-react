@@ -1,6 +1,7 @@
 import axios from 'axios';
-import React, { useRef, useState } from 'react';
+import parse from 'html-react-parser';
 import { Editor } from '@tinymce/tinymce-react';
+import React, { useRef, useState, useEffect } from 'react';
 
 import Box from '@mui/material/Box';
 import Select from '@mui/material/Select';
@@ -9,7 +10,6 @@ import MenuItem from '@mui/material/MenuItem';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import InputLabel from '@mui/material/InputLabel';
-
 // ----------------------------------------------------------------------
 
 export default function AppView() {
@@ -21,6 +21,25 @@ export default function AppView() {
   };
   const [sport, setSport] = useState('Football');
   const [day, setDay] = useState(0);
+  const [fixtures, setFixtures] = useState([]);
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    setLoading(true);
+    fetch(`https://app-admin-api.asmitaiiita.org/api/fixtures/`)
+      .then((res) => {
+        console.log('res: ', res);
+        return res.json();
+      })
+      .then((allFixtures) => {
+        console.log('all fixtures: ', allFixtures);
+        setFixtures(allFixtures.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log('Error: ', err);
+        setLoading(false);
+      });
+  }, []);
   const handleAddFixture = async () => {
     const data = {
       sport,
@@ -29,16 +48,19 @@ export default function AppView() {
       htmlData: editorRef.current.getContent(),
     };
     const res = await axios.post('https://app-admin-api.asmitaiiita.org/api/fixtures/create', data);
+    alert('Successfully added fixture');
     console.log(res);
   };
   const [initialTableContent, setInitialTableContent] = useState(
     '<table style="border-collapse: collapse; width: 100%;" border="1"><colgroup><col style="width: 33.3102%;"><col style="width: 33.3102%;"><col style="width: 33.3102%;"></colgroup><tbody><tr><td style="text-align: center; font-weight: 800;">College 1</td><td style="text-align: center; font-weight: 800;">College 2</td><td style="text-align: center; font-weight: 800;">Time</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></tbody></table><p>&nbsp;</p>'
   );
+  if (loading) return 'Loading';
   return (
     <Container maxWidth="xl">
       <Typography variant="h4" sx={{ mb: 5 }}>
         Fixtures
       </Typography>
+      <h3>Create daywise fixtures:</h3>
       <Box
         sx={{
           display: 'flex',
@@ -166,9 +188,30 @@ export default function AppView() {
           }}
         />
       </Box>
-      <Button variant="contained" onClick={handleAddFixture}>
+      <Button sx={{ marginBottom: '100px' }} variant="contained" onClick={handleAddFixture}>
         Submit
       </Button>
+      <h3>View and edit fixtures</h3>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '50px',
+          textAlign: 'center',
+          marginTop: '20px',
+        }}
+      >
+        {fixtures.map((fixture, key) => (
+          <>
+            <h3>
+              Day {fixture.Day}, {fixture.Sport}
+            </h3>
+            {parse(fixture.HTMLString)}
+          </>
+        ))}
+      </Box>
     </Container>
   );
 }
