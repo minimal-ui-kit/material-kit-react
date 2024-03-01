@@ -31,6 +31,9 @@ export default function AppView() {
     const res = await axios.post('https://app-admin-api.asmitaiiita.org/api/fixtures/create', data);
     console.log(res);
   };
+  const [initialTableContent, setInitialTableContent] = useState(
+    '<table style="border-collapse: collapse; width: 100%;" border="1"><colgroup><col style="width: 33.3102%;"><col style="width: 33.3102%;"><col style="width: 33.3102%;"></colgroup><tbody><tr><td style="text-align: center; font-weight: 800;">College 1</td><td style="text-align: center; font-weight: 800;">College 2</td><td style="text-align: center; font-weight: 800;">Time</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></tbody></table><p>&nbsp;</p>'
+  );
   return (
     <Container maxWidth="xl">
       <Typography variant="h4" sx={{ mb: 5 }}>
@@ -61,7 +64,17 @@ export default function AppView() {
             id="demo-simple-select"
             label="Sport"
             onChange={(e) => {
-              setSport(e.target.value);
+              const currSport = e.target.value;
+              setSport(currSport);
+              if (currSport === 'Football' || currSport === 'Cricket') {
+                setInitialTableContent(
+                  '<table style="border-collapse: collapse; width: 100%;" border="1"><colgroup><col style="width: 33.3102%;"><col style="width: 33.3102%;"><col style="width: 33.3102%;"></colgroup><tbody><tr><td style="text-align: center; font-weight: 800;">Team 1</td><td style="text-align: center; font-weight: 800;">Team 2</td><td style="text-align: center; font-weight: 800;">Time</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></tbody></table><p>&nbsp;</p>'
+                );
+              } else {
+                setInitialTableContent(
+                  '<table style="border-collapse: collapse; width: 100%;" border="1"><colgroup><col style="width: 50%;"><col style="width: 50%;"></colgroup><tbody><tr><td style="text-align: center; font-weight: 800;">Event</td><td style="text-align: center; font-weight: 800;">Time</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr></tbody></table><p>&nbsp;</p>'
+                );
+              }
             }}
             value={sport}
           >
@@ -113,26 +126,7 @@ export default function AppView() {
           onInit={(evt, editor) => {
             editorRef.current = editor;
           }}
-          initialValue='<table style="border-collapse: collapse; width: 100%;" border="1"><colgroup><col style="width: 33.3102%;"><col style="width: 33.3102%;"><col style="width: 33.3102%;"></colgroup>
-<tbody>
-<tr>
-<td style="text-align: center; font-weight: 800;">College 1</td>
-<td style="text-align: center; font-weight: 800;">College 2</td>
-<td style="text-align: center; font-weight: 800;">Time</td>
-</tr>
-<tr>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-</tr>
-<tr>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-</tr>
-</tbody>
-</table>
-<p>&nbsp;</p>'
+          initialValue={initialTableContent}
           init={{
             height: '50vmin',
             toolbar_sticky: true,
