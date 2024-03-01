@@ -118,10 +118,12 @@ export default function UserPage() {
     
   })
   },[])
+
+  if(dataLoaded){
   
   return ( 
 
-   {dataLoaded} && <Container>
+     <Container>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <Typography variant="h4">Users</Typography>
 
@@ -189,5 +191,10 @@ export default function UserPage() {
         />
       </Card>
     </Container>
-  );
+  );}
+
+  return(
+    <h1>Loading</h1>
+  )
+
 }
