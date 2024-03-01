@@ -48,7 +48,7 @@ export default function UserPage() {
 
   const [page, setPage] = useState(0);
 
-  const [order, setOrder] = useState('asc');
+  const [order, setOrder] = useState('desc');
 
   const [selected, setSelected] = useState([]);
 
@@ -142,7 +142,7 @@ export default function UserPage() {
 
      <Container>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-        <Typography variant="h4">Users</Typography>
+        <Typography variant="h4">Leaderboard - INTER IIIT 2024  </Typography>
 
         <Button variant="contained" color="inherit" startIcon={<Iconify icon="eva:plus-fill" />}>
           New User
@@ -173,13 +173,15 @@ export default function UserPage() {
     />
     <Button sx={{mr: "150px"}} onClick={()=>{
       let str=""
-      usersriyal.map((user)=>{
-        
-        //console.log(user.Name === setNameUpdate)
-        if(user.Name===nameUpdate) str=user._id
-      })
+      
+      for(let i=0;i<usersriyal.length;i+=1){
+        if(usersriyal[i].Name===nameUpdate){
+          str=usersriyal[i]._id
+        }
+      }
+      
     
-      axios.patch("https://app-admin-api.asmitaiiita.org/api/leaderboard/"+str,{
+      axios.patch(`https://app-admin-api.asmitaiiita.org/api/leaderboard/${str}`,{
         Points: newPoints
       }).then(()=>{
         alert("Updated")
