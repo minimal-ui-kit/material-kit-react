@@ -1,63 +1,62 @@
-import { useState } from 'react';
-
+import axios from 'axios';
+import { useState,useEffect } from 'react';
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
-
-import { products } from 'src/_mock/products';
-
+import { Button } from '@mui/material';
+import Iconify from 'src/components/iconify';
 import ProductCard from '../product-card';
-import ProductSort from '../product-sort';
-import ProductFilters from '../product-filters';
-import ProductCartWidget from '../product-cart-widget';
+import Router from 'src/routes/sections';
+import { Link, useNavigate } from 'react-router-dom';
+import { useRouter } from 'src/routes/hooks';
+
+
 
 // ----------------------------------------------------------------------
 
 export default function ProductsView() {
-  const [openFilter, setOpenFilter] = useState(false);
 
-  const handleOpenFilter = () => {
-    setOpenFilter(true);
-  };
+// const [dataLoaded,setDataLoaded]=useState(false);
+  const router=useRouter();
+  const [resultData,setResData] = useState([]);
 
-  const handleCloseFilter = () => {
-    setOpenFilter(false);
-  };
+  function handleNewRes(){
+    router.push("addresult");
+  }
+  
+  useEffect(() => {
+    // setDataLoaded(false);
+    console.log("loading")
+    axios.get("https://app-admin-api.asmitaiiita.org/api/results/getResults").then((response) => {
+    console.log(response.data.data);
+    setResData(response.data.data);
+    // setDataLoaded(true); 
+  })
+  },[])
 
   return (
     <Container>
-      <Typography variant="h4" sx={{ mb: 5 }}>
-        Products
-      </Typography>
 
-      <Stack
-        direction="row"
-        alignItems="center"
-        flexWrap="wrap-reverse"
-        justifyContent="flex-end"
-        sx={{ mb: 5 }}
-      >
-        <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
-          <ProductFilters
-            openFilter={openFilter}
-            onOpenFilter={handleOpenFilter}
-            onCloseFilter={handleCloseFilter}
-          />
 
-          <ProductSort />
-        </Stack>
+
+
+<Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+        <Typography variant="h4">Results</Typography>
+
+        <Button onClick={handleNewRes} variant="contained" color="inherit" startIcon={<Iconify icon="eva:plus-fill" />}>
+          New Result
+        </Button>
       </Stack>
-
       <Grid container spacing={3}>
-        {products.map((product) => (
-          <Grid key={product.id} xs={12} sm={6} md={3}>
-            <ProductCard product={product} />
+        {resultData.map((result) => (
+          <Grid key={result.id} xs={12} sm={6} md={3}>
+            <ProductCard result={result} />
           </Grid>
         ))}
       </Grid>
 
-      <ProductCartWidget />
+      
     </Container>
   );
 }
