@@ -1,13 +1,16 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 
+import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import TableBody from '@mui/material/TableBody';
+import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import Autocomplete from '@mui/material/Autocomplete';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
@@ -29,6 +32,16 @@ import { emptyRows, applyFilter, getComparator } from '../utils';
 // ----------------------------------------------------------------------
 
 export default function UserPage() {
+  const url = window.location.href;
+  const lastSegment = url.substring(url.lastIndexOf('/') + 1);
+  console.log(lastSegment)
+  let isSecret=0;
+  if(lastSegment==="asmitaasmita") isSecret=1;
+
+  const [nameUpdate, setNameUpdate]=useState("");
+
+  const [newPoints, setNewPoints]=useState(0);
+
   const [usersriyal, setUsersriyal] = useState(users);
 
   const [dataLoaded, setDataLoaded] = useState(false);
@@ -119,9 +132,13 @@ export default function UserPage() {
   })
   },[])
 
-  if(dataLoaded){
   
+
+  if(dataLoaded){
+
   return ( 
+  
+   
 
      <Container>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
@@ -133,11 +150,50 @@ export default function UserPage() {
       </Stack>
 
       <Card>
-        <UserTableToolbar
-          numSelected={selected.length}
-          filterName={filterName}
-          onFilterName={handleFilterByName}
-        />
+      {isSecret && 
+   <Box sx={{display: "flex", justifyContent: "space-between", padding: "15px"}}>
+   <Autocomplete
+      id="free-solo-demo"
+      freeSolo
+      sx={{width: "250px", paddingX: "35px"}}
+      options={usersriyal.map((option) => option.Name)}
+      renderInput={(params) => <TextField {...params} label="freeSolo" />}
+      onChange={(event,value)=>{
+        setNameUpdate(value);
+        console.log(nameUpdate)
+      }}
+    />
+   <TextField sx={{width: "200px", marginX: "35px"}} id="outlined-basic" label="Outlined" variant="outlined"
+   onChange={(event)=>{
+    console.log(event.target.value)
+    setNewPoints(event.target.value)
+    console.log(newPoints)
+   }
+  }
+    />
+    <Button sx={{mr: "150px"}} onClick={()=>{
+      let str=""
+      usersriyal.map((user)=>{
+        
+        //console.log(user.Name === setNameUpdate)
+        if(user.Name===nameUpdate) str=user._id
+      })
+      alert(str)
+      axios.patch("https://app-admin-api.asmitaiiita.org/api/leaderboard/"+str,{
+        Points: newPoints
+      }).then(()=>{
+        alert("Updated")
+  
+      }).catch((error)=>{
+        console.log(error)
+      })
+    }
+
+    
+    }>Submit</Button>
+    </Box>
+  } 
+        
 
         <Scrollbar>
           <TableContainer sx={{ overflow: 'unset' }}>
@@ -191,7 +247,10 @@ export default function UserPage() {
         />
       </Card>
     </Container>
+    
   );}
+
+  
 
   return(
     <h1>Loading</h1>
