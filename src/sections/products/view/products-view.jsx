@@ -10,6 +10,7 @@ import ProductCard from '../product-card';
 import Router from 'src/routes/sections';
 import { Link, useNavigate } from 'react-router-dom';
 import { useRouter } from 'src/routes/hooks';
+import Results from 'src/components/result/results';
 
 // ----------------------------------------------------------------------
 
@@ -48,8 +49,8 @@ export default function ProductsView() {
       </Stack>
       <Grid container spacing={3}>
         {resultData.map((result) => (
-          <Grid key={result.id} xs={12} sm={6} md={3}>
-            <ProductCard result={result} />
+          <Grid key={result.id} xs={12} sm={6} md={6}>
+            <Results props={result}></Results>
           </Grid>
         ))}
       </Grid>
