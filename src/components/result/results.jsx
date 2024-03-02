@@ -27,7 +27,7 @@ const Results = (props) => {
                 <Box>
                 <img width="100px" alt="logo" src={props.props.ClgImg2}>
                 </img>
-                <Typography textAlign={"center"}>{props.ClgName2}</Typography>
+                <Typography textAlign={"center"}>{props.props.ClgName2}</Typography>
                 </Box>
             </Box>
         </Box>
