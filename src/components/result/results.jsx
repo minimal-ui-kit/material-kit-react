@@ -6,6 +6,7 @@ const Results = (props) => {
     console.log(props)
   return (
     <Box sx={{display:"flex", flexDirection: "column", width: "auto"}}>
+        <a>
         <Box sx={{backgroundColor: "#59D5E0", display: "flex", justifyContent: "space-between", paddingX: "5px"}}>
             <h2 style={{textAlign: "center",}}>{props.props.Type}</h2>
             <h2 style={{textAlign: "center"}}>{props.props.MatchName}</h2>
@@ -31,6 +32,7 @@ const Results = (props) => {
                 </Box>
             </Box>
         </Box>
+        </a>
     </Box>
   )
 }
