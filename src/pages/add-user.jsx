@@ -1,11 +1,11 @@
 import { Helmet } from 'react-helmet-async';
 
-import { UserView } from 'src/sections/user/view';
+import { HeadView } from 'src/sections/head';
 
 import Results from 'src/components/result/results';
 // ----------------------------------------------------------------------
 
-export default function UserPage() {
+export default function AddUser() {
   return (
     <>
       <Helmet>
@@ -14,7 +14,6 @@ export default function UserPage() {
 
      
 
-      <UserView />
-    </>
+        <HeadView /></>
   );
 }

@@ -155,7 +155,7 @@ export default function UserPage() {
    <Autocomplete
       id="free-solo-demo"
       freeSolo
-      sx={{width: "250px", paddingX: "35px"}}
+      sx={{width: "250px", }}
       options={usersriyal.map((option) => option.Name)}
       renderInput={(params) => <TextField {...params} label="College" />}
       onChange={(event,value)=>{
@@ -171,7 +171,7 @@ export default function UserPage() {
    }
   }
     />
-    <Button sx={{mr: "150px"}} onClick={()=>{
+    <Button sx={{mr: "1"}} onClick={()=>{
       let str=""
       
       for(let i=0;i<usersriyal.length;i+=1){
