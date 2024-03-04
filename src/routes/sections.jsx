@@ -71,12 +71,13 @@ export default function Router() {
           path: 'adduser',
           element: <AddUserPage />,
         },
+        {
+          path: 'login',
+          element: <LoginPage />,
+        },
       ],
     },
-    {
-      path: 'login',
-      element: <LoginPage />,
-    },
+    
     
     {
       path: '404',

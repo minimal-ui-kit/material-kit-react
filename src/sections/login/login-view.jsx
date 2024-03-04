@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
@@ -19,6 +19,7 @@ import { bgGradient } from 'src/theme/css';
 
 import Logo from 'src/components/logo';
 import Iconify from 'src/components/iconify';
+import { useAuth } from 'src/context/loginContext';
 
 // ----------------------------------------------------------------------
 
@@ -28,20 +29,45 @@ export default function LoginView() {
   const router = useRouter();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [enrol, setEnrol]=useState("");
+  const [password, setPassword]=useState("");
+
+  const handleChange1 = (event) => {
+    setEnrol(event.target.value);
+  }
+
+  const handleChange2 = (event) => {
+    setPassword(event.target.value);
+  }
+
+
+  const {login,name,role, check} = useAuth()
+
+  useEffect(() => { 
+   if(check===true) alert("Successfully Logged In")
+  }, [check])
 
   const handleClick = () => {
-    router.push('/dashboard');
+    const data={
+      enrollment: enrol,
+      password: password
+    }
+    login(data);
+    
+    
   };
 
   const renderForm = (
     <>
       <Stack spacing={3}>
-        <TextField name="email" label="Email address" />
+        <TextField name="email" label="Email address" value={enrol} onChange={handleChange1} />
 
         <TextField
           name="password"
           label="Password"
           type={showPassword ? 'text' : 'password'}
+          value={password}
+          onChange={handleChange2}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">

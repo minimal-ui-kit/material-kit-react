@@ -16,6 +16,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import Autocomplete from '@mui/material/Autocomplete';
 
 import { useRouter } from 'src/routes/hooks';
+import { useAuth } from 'src/context/loginContext';
 
 import { bgGradient } from 'src/theme/css';
 
@@ -48,9 +49,12 @@ export default function HeadView() {
     const handleClick = () => {
         router.push('/dashboard');
     };
+    const {login,name,role, check} = useAuth()
 
     const renderForm = (
+       
         <>
+       
             <Stack spacing={3} mb={3}>
                 <TextField name="username" label="Username" />
 
@@ -91,8 +95,9 @@ export default function HeadView() {
             </LoadingButton>
         </>
     );
-
+    if(role==="head"){
     return (
+        
         <Box
             sx={{
                 ...bgGradient({
@@ -114,5 +119,8 @@ export default function HeadView() {
                 </Card>
             </Stack>
         </Box>
-    );
+    );}
+    return (
+        <h1>You are not a head</h1>
+    )
 }
