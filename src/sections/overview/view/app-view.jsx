@@ -34,7 +34,7 @@ export default function AppView() {
   useEffect(() => {
     setLoading(true);
     // fetch(`https://app-admin-api.asmitaiiita.org/api/fixtures/`)
-    fetch(`http://localhost:8000/api/fixtures`)
+    fetch(`https://app-admin-api.asmitaiiita.org/api/fixtures`)
       .then((res) => {
         console.log('res: ', res);
         return res.json();
@@ -62,7 +62,10 @@ export default function AppView() {
         };
         console.log(data);
         if (data.HTMLString.length !== 0) {
-          const res = await axios.post(`http://localhost:8000/api/fixtures/create`, data);
+          const res = await axios.post(
+            `https://app-admin-api.asmitaiiita.org/api/fixtures/create`,
+            data
+          );
           alert('Successfully added fixture. Refresh page');
           console.log(res);
         } else {
@@ -76,7 +79,9 @@ export default function AppView() {
   const handleDeleteFixture = async (id) => {
     try {
       console.log('id for deletion: ', id);
-      const deletedFixture = await axios.delete(`http://localhost:8000/api/fixtures/${id}`);
+      const deletedFixture = await axios.delete(
+        `https://app-admin-api.asmitaiiita.org/api/fixtures/${id}`
+      );
 
       console.log('Deleted fixture: ', deletedFixture);
       const newFixtures = fixtures.filter((fixture) => fixture._id !== id);
@@ -100,7 +105,7 @@ export default function AppView() {
           HTMLString: editorRef.current.getContent(),
         };
         const updatedFixure = await axios.patch(
-          `http://localhost:8000/api/fixtures/${id}`,
+          `https://app-admin-api.asmitaiiita.org/api/fixtures/${id}`,
           newBody
         );
         console.log('Updated fixture: ', updatedFixure.data.data);
@@ -352,6 +357,7 @@ export default function AppView() {
                     setSport(fixture.Sport);
                     setInitialTableContent(fixture.HTMLString);
                     setEditId(fixture._id);
+                    setEditMode(true);
                   }}
                 >
                   Edit
