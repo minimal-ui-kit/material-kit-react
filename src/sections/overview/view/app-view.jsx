@@ -212,7 +212,7 @@ export default function AppView() {
       >
         <Editor
           onChange={log}
-          apiKey="ah9w9dtmhnrt5yhzobg11p0jj9sdldd1x64lj89aipllnqn6"
+          apiKey="h0ztosvu8eepv4ng56gjqnjy0jrzm0t0scpkc8mtfupz8g08"
           onInit={(evt, editor) => {
             editorRef.current = editor;
           }}
