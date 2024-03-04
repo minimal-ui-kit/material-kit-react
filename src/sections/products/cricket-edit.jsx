@@ -1,17 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
-import PropTypes from 'prop-types';
-import colleges from "../../../public/assets/college_logos.json";
+import colleges from "../../assets/college_logos.json";
 import Typography from '@mui/material/Typography';
 import { Container, Select,FormControl,InputLabel,Button,MenuItem,Stack, TextField, Box } from '@mui/material';
 import { ChangeEvent } from 'react';
 import { useRouter } from 'src/routes/hooks';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
 // ----------------------------------------------------------------------
 
-export default function CricketEdit({result}) {
+
+export default function CricketEdit() {
+    
+    const rid =useParams().id;
     const router =useRouter();
     const navigate=useNavigate();
     const [data,setData]=useState({
@@ -27,14 +29,13 @@ export default function CricketEdit({result}) {
         Score1:"",
         Score2:"",
     });
-    setData({result});
-    
     
     function changeData(field,data1){
         setData((prev) => {
             if(field=="ClgName1" || field=="ClgName2"){
                 prev[field]=data1;
                 if(field=="ClgName1"){
+                    console.log(data1);
                     prev["ClgImg1"]=colleges[data1].logo_link;
                 }
                 if(field=="ClgName2"){
@@ -46,11 +47,24 @@ export default function CricketEdit({result}) {
             return { ...prev };
           });
     }
+    useEffect(() => {
+        
+        console.log('loading');
+        axios.get('https://app-admin-api.asmitaiiita.org/api/results/getResults/cricket/'+rid).then((response) => {
+          console.log(response.data.data);
+          var newdata=response.data.data;
+          newdata.ClgImg1="";
+          newdata.ClgImg2="";
+          setData(newdata);
+          changeData("ClgName1",response.data.data.ClgName1);
+          changeData("ClgName2",response.data.data.ClgName2);
+        });
+      }, []);
    
       const handleSubmit = (event) => {
         try{
             
-            axios.patch("https://app-admin-api.asmitaiiita.org/api/results/cricket/",
+            axios.patch("https://app-admin-api.asmitaiiita.org/api/results/cricket/"+rid,
                 data
             ).then((response)=>{
            console.log(response)
@@ -62,6 +76,20 @@ export default function CricketEdit({result}) {
         }
         
         
+      };
+      const handleDelete = (event) => {
+        try{
+            
+            axios.delete("https://app-admin-api.asmitaiiita.org/api/results/cricket/"+rid
+            ).then((response)=>{
+            console.log(response);
+        })
+        }
+        catch(error){
+            console.log(error)
+        }
+        
+        navigate("../../../",{ relative: "path" });
       };
     
   return (
@@ -109,37 +137,37 @@ export default function CricketEdit({result}) {
             </Box>
             </Stack>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-            <TextField margin='10%' fullWidth label="Date" defaultValue={result.Date} id='Date' onChange={(event) => {
+            <TextField margin='10%' fullWidth label="Date" autoFocus={true} value={data.Date} id='Date' onChange={(event) => {
                 changeData("Date",event.target.value);
             }} />
             </Stack>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-            <TextField fullWidth label="GroupStage" defaultValue={result.Date} id='GroupStage' onChange={(event) => {
+            <TextField fullWidth label="GroupStage" autoFocus={true} value={data.Date} id='GroupStage' onChange={(event) => {
                 changeData("GroupStage",event.target.value);
             }} />
             </Stack>
             <Stack direction="row" alignItems="center"  justifyContent="space-between" mb={5}>
-            <TextField fullWidth label="MatchName" defaultValue={result.MatchName} id='MatchName' onChange={(event) => {
+            <TextField fullWidth label="MatchName" autoFocus={true} value={data.MatchName} id='MatchName' onChange={(event) => {
                 changeData("MatchName",event.target.value);
             }} />
             </Stack>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-            <TextField fullWidth label="Over1" id='Over1' defaultValue={result.Over1} onChange={(event) => {
+            <TextField fullWidth label="Over1" id='Over1' autoFocus={true} value={data.Over1} onChange={(event) => {
                 changeData("Over1",event.target.value);
             }} />
             </Stack>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-            <TextField fullWidth label="Over2" defaultValue={result.Over2} id='Over2' onChange={(event) => {
+            <TextField fullWidth label="Over2" autoFocus={true} value={data.Over2} id='Over2' onChange={(event) => {
                 changeData("Over2",event.target.value);
             }} />
             </Stack>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-            <TextField fullWidth label="Score1" id='Score1' defaultValue={result.Score1} onChange={(event) => {
+            <TextField fullWidth label="Score1" id='Score1' autoFocus={true} value={data.Score1} onChange={(event) => {
                 changeData("Score1",event.target.value);
             }} />
             </Stack>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-            <TextField fullWidth label="Score2" id='Score2' defaultValue={result.Score2} onChange={(event) => {
+            <TextField fullWidth label="Score2" id='Score2' autoFocus={true} value={data.Score2} onChange={(event) => {
                 changeData("Score2",event.target.value);
             }} />
             </Stack>
@@ -149,6 +177,10 @@ export default function CricketEdit({result}) {
         <Button onClick={handleSubmit} variant="contained" color="inherit" >
           Edit Result
         </Button>
+        <Button onClick={handleDelete} variant="contained" color="inherit" >
+          Delete Result
+        </Button>
+       
        
     </Container>
   );

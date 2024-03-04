@@ -1,17 +1,21 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-
+import { useParams } from "react-router-dom";
 import Typography from '@mui/material/Typography';
 import { Container, Select,FormControl,InputLabel,Button,MenuItem,Stack, TextField } from '@mui/material';
 import { ChangeEvent } from 'react';
 import { useRouter } from 'src/routes/hooks';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 
 // ----------------------------------------------------------------------
 
-export default function AthleticsEdit({result}) {
+export default function AthleticsEdit() {
+  
+ 
+  const rid =useParams().id;
+    console.log(rid);
     const router =useRouter();
     const navigate=useNavigate();
     const [data,setData]=useState({
@@ -23,15 +27,15 @@ export default function AthleticsEdit({result}) {
         Player3:""
     });
     useEffect(() => {
-        // setDataLoaded(false);
+        
         console.log('loading');
-        axios.get('https://app-admin-api.asmitaiiita.org/api/results/getResults/').then((response) => {
+        axios.get('https://app-admin-api.asmitaiiita.org/api/results/getResults/athletics/'+rid).then((response) => {
           console.log(response.data.data);
-          setResData(response.data.data);
-          // setDataLoaded(true);
+          setData(response.data.data);
+         
         });
       }, []);
-    setData({result});
+    
     function changeData(field,data1){
         setData((prev) => {
             prev[field] = data1;
@@ -42,8 +46,22 @@ export default function AthleticsEdit({result}) {
       const handleSubmit = (event) => {
         try{
             
-            axios.patch("https://app-admin-api.asmitaiiita.org/api/results/athletics/"+result._id,
+            axios.patch("https://app-admin-api.asmitaiiita.org/api/results/athletics/"+rid,
                 data
+            ).then((response)=>{
+            console.log(response);
+        })
+        }
+        catch(error){
+            console.log(error)
+        }
+        
+        navigate("../../../",{ relative: "path" });
+      };
+      const handleDelete = (event) => {
+        try{
+            
+            axios.delete("https://app-admin-api.asmitaiiita.org/api/results/athletics/"+rid
             ).then((response)=>{
             console.log(response);
         })
@@ -63,28 +81,31 @@ export default function AthleticsEdit({result}) {
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <FormControl fullWidth >
             
-            <TextField margin='10%' fullWidth label="Date" id='Date' defaultValue={data.Date} onChange={(event) => {
+            <TextField margin='10%' fullWidth label="Date" id='Date' autoFocus={true} value={data.Date} onChange={(event) => {
                 changeData("Date",event.target.value);
             }} />
-            <TextField fullWidth label="GroupStage" id='GroupStage' defaultValue={data.GroupStage} onChange={(event) => {
+            <TextField fullWidth label="GroupStage" id='GroupStage' autoFocus={true} value={data.GroupStage} onChange={(event) => {
                 changeData("GroupStage",event.target.value);
             }} />
-            <TextField fullWidth label="MatchName" id='MatchName' defaultValue={data.MatchName} onChange={(event) => {
+            <TextField fullWidth label="MatchName" id='MatchName' autoFocus={true} value={data.MatchName} onChange={(event) => {
                 changeData("MatchName",event.target.value);
             }} />
-            <TextField fullWidth label="Player1" id='Player1' defaultValue={data.Player1} onChange={(event) => {
+            <TextField fullWidth label="Player1" id='Player1' autoFocus={true} value={data.Player1} onChange={(event) => {
                 changeData("Player1",event.target.value);
             }} />
-            <TextField fullWidth label="Player2" id='Player2' defaultValue={data.Player2} onChange={(event) => {
+            <TextField fullWidth label="Player2" id='Player2' autoFocus={true} value={data.Player2} onChange={(event) => {
                 changeData("Player2",event.target.value);
             }} />
-            <TextField fullWidth label="Player3" id='Player3' defaultValue={data.Player3} onChange={(event) => {
+            <TextField fullWidth label="Player3" id='Player3' autoFocus={true} value={data.Player3} onChange={(event) => {
                 changeData("Player3",event.target.value);
             }} />
         </FormControl>
         </Stack>
         <Button onClick={handleSubmit} variant="contained" color="inherit" >
           Edit Result
+        </Button>
+        <Button onClick={handleDelete} variant="contained" color="inherit" >
+          Delete Result
         </Button>
        
     </Container>

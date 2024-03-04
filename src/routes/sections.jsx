@@ -2,8 +2,11 @@ import { lazy, Suspense } from 'react';
 import { Outlet, Navigate, useRoutes } from 'react-router-dom';
 
 import DashboardLayout from 'src/layouts/dashboard';
+import AthleticsEdit from 'src/sections/products/athletics-edit';
 import AthleticsAdd from 'src/sections/products/athletics-res';
+import CricketEdit from 'src/sections/products/cricket-edit';
 import CricketAdd from 'src/sections/products/cricket-res';
+import FootballEdit from 'src/sections/products/football-edit';
 import FootballAdd from 'src/sections/products/football-res';
 import Screen1 from 'src/sections/products/result-type';
 
@@ -48,7 +51,16 @@ export default function Router() {
                   {path:"cricket",element:<CricketAdd/>},
                 ]
               },
-              { path: 'editresult/:id', element: <ProductsPage /> },
+              { path: 'editresults', 
+              element: (
+                <Outlet />
+              ),
+              children:[         
+                {path:"football/:id",element:<FootballEdit />},
+                {path:"athlete/:id",element:<AthleticsEdit/>},
+                {path:"cricket/:id",element:<CricketEdit/>},
+              ]
+            },
             ],
           
         },

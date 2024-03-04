@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import colleges from "../../../public/assets/college_logos.json";
+import colleges from "../../assets/college_logos.json";
 import Typography from '@mui/material/Typography';
 import { Container, Select,FormControl,InputLabel,Button,MenuItem,Stack, TextField, Box } from '@mui/material';
 import { ChangeEvent } from 'react';

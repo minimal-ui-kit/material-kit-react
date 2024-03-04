@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import colleges from "../../../public/assets/college_logos.json";
+import { useNavigate, useParams } from 'react-router-dom';
+import colleges from "../../assets/college_logos.json";
 import Typography from '@mui/material/Typography';
 import { Container, Select,FormControl,InputLabel,Button,MenuItem,Stack, TextField, Box } from '@mui/material';
 
@@ -10,8 +10,8 @@ import { useRouter } from 'src/routes/hooks';
 
 // ----------------------------------------------------------------------
 
-export default function FootballAdd({result}) {
-    // const rid=props.match.params.id;
+export default function FootballEdit() {
+    const rid =useParams().id;
     
     const navigate=useNavigate();
     const [data,setData]=useState({
@@ -24,7 +24,21 @@ export default function FootballAdd({result}) {
         MatchName:"",
         Score:""
     });
-    setData({result});
+
+    useEffect(() => {
+        
+        console.log('loading');
+        axios.get('https://app-admin-api.asmitaiiita.org/api/results/getResults/football/'+rid).then((response) => {
+          console.log(response.data.data);
+          var newdata=response.data.data;
+          newdata.ClgImg1="";
+          newdata.ClgImg2="";
+          setData(newdata);
+          changeData("ClgName1",response.data.data.ClgName1);
+          changeData("ClgName2",response.data.data.ClgName2);
+        });
+      }, []);
+   
     function changeData(field,data1){
         setData((prev) => {
             if(field=="ClgName1" || field=="ClgName2"){
@@ -45,8 +59,22 @@ export default function FootballAdd({result}) {
       const handleSubmit = (event) => {
         try{
             
-            axios.patch("https://app-admin-api.asmitaiiita.org/api/results/football/",
+            axios.patch("https://app-admin-api.asmitaiiita.org/api/results/football/"+rid,
                 data
+            ).then((response)=>{
+            console.log(response);
+        })
+        }
+        catch(error){
+            console.log(error)
+        }
+        
+        navigate("../../../",{ relative: "path" });
+      };
+      const handleDelete = (event) => {
+        try{
+            
+            axios.delete("https://app-admin-api.asmitaiiita.org/api/results/football/"+rid
             ).then((response)=>{
             console.log(response);
         })
@@ -102,28 +130,34 @@ export default function FootballAdd({result}) {
             </Box>
             </Stack>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-            <TextField margin='10%' fullWidth label="Date" defaultValue={result.Date} id='Date' onChange={(event) => {
+            <TextField margin='10%' fullWidth label="Date" autoFocus={true} value={data.Date} id='Date' onChange={(event) => {
                 changeData("Date",event.target.value);
             }} />
             </Stack>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-            <TextField fullWidth label="GroupStage" defaultValue={result.GroupStage} id='GroupStage' onChange={(event) => {
+            <TextField fullWidth label="GroupStage" autoFocus={true} value={data.GroupStage} id='GroupStage' onChange={(event) => {
                 changeData("GroupStage",event.target.value);
             }} />
             </Stack>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-            <TextField fullWidth label="MatchName" defaultValue={result.MatchName} id='MatchName' onChange={(event) => {
+            <TextField fullWidth label="MatchName" autoFocus={true} value={data.MatchName} id='MatchName' onChange={(event) => {
                 changeData("MatchName",event.target.value);
             }} />
             </Stack>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-            <TextField fullWidth label="Score" id='Score' defaultValue={result.Score} onChange={(event) => {
+            <TextField fullWidth label="Score" id='Score' autoFocus={true} value={data.Score} onChange={(event) => {
                 changeData("Score",event.target.value);
             }} />
             </Stack>
+           
         <Button onClick={handleSubmit} variant="contained" color="inherit" >
           Edit Result
         </Button>
+        <Button onClick={handleDelete} variant="contained" color="inherit" >
+          Delete Result
+        </Button>
+        
+        
        
     </Container>
   );

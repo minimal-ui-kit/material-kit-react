@@ -4,9 +4,10 @@ import { Typography } from '@mui/material'
 
 const Results = (props) => {
     console.log(props)
-  return (
+    const pointTo='./products/editresults/'+props.props.Type+'/'+props.props._id;
+;  return (
     <Box sx={{display:"flex", flexDirection: "column", width: "auto"}}>
-        <a>
+        <a href={pointTo}>
         <Box sx={{backgroundColor: "#59D5E0", display: "flex", justifyContent: "space-between", paddingX: "5px"}}>
             <h2 style={{textAlign: "center",}}>{props.props.Type}</h2>
             <h2 style={{textAlign: "center"}}>{props.props.MatchName}</h2>
@@ -32,7 +33,7 @@ const Results = (props) => {
                         <Typography textAlign={"center"} fontSize={"25px"} mr={4}>{props.props.Over1}</Typography>
                         </Box>
                         <Box>
-                        <Typography fontSize={"40px"}>{props.props.Score2}</Typography> <Typography textAlign={"center"} fontSize={"25px"} mr={4}>{props.props.Over1}</Typography></Box>
+                        <Typography fontSize={"40px"}>{props.props.Score2}</Typography> <Typography textAlign={"center"} fontSize={"25px"} mr={4}>{props.props.Over2}</Typography></Box>
                     </Box>
               
                 
