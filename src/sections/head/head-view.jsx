@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from 'react';
 
 import Box from '@mui/material/Box';
@@ -23,88 +24,95 @@ import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
-export default function LoginView() {
-  const theme = useTheme();
+const top100Films = [
+    { title: 'Volunteer'},
+    { title: 'Executive' },
+    { title: 'Heads' },
+];
 
-  const router = useRouter();
+export default function HeadView() {
+    const defaultProps = {
+        options: top100Films,
+        getOptionLabel: (option) => option.title,
+    };
+    const flatProps = {
+        options: top100Films.map((option) => option.title),
+    };
+    const [value, setValue] = React.useState(null);
+    const theme = useTheme();
 
-  const [showPassword, setShowPassword] = useState(false);
+    const router = useRouter();
 
-  const handleClick = () => {
-    router.push('/dashboard');
-  };
+    const [showPassword, setShowPassword] = useState(false);
 
-  const renderForm = (
-    <>
-      <Stack spacing={3} mb={3}>
-        <TextField name="username" label="Username" />
+    const handleClick = () => {
+        router.push('/dashboard');
+    };
 
-        <TextField 
-          name="password"
-          label="Password"
-          type={showPassword ? 'text' : 'password'}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
-        <select name="role" id="role">
-            <option value="Volunteer">Volunteer</option>
-            <option value="Executive">Executive</option>
-            <option value="Head">Head</option>
-        </select>
+    const renderForm = (
+        <>
+            <Stack spacing={3} mb={3}>
+                <TextField name="username" label="Username" />
 
-      </Stack>
+                <TextField
+                    name="password"
+                    label="Password"
+                    type={showPassword ? 'text' : 'password'}
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                                    <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                                </IconButton>
+                            </InputAdornment>
+                        ),
+                    }}
+                />
 
-      
+                <Autocomplete
+                    {...defaultProps}
+                    id="role"
+                    disableCloseOnSelect
+                    renderInput={(params) => (
+                        <TextField {...params} label="Role" variant="standard" />
+                    )}
+                />
+            </Stack>
 
-      <LoadingButton
-        fullWidth
-        size="large"
-        type="submit"
-        variant="contained"
-        color="inherit"
-        onClick={handleClick}
-      >
-        Add
-      </LoadingButton>
-    </>
-  );
+            <LoadingButton
+                fullWidth
+                size="large"
+                type="submit"
+                variant="contained"
+                color="inherit"
+                onClick={handleClick}
+            >
+                Add
+            </LoadingButton>
+        </>
+    );
 
-  return (
-    <Box
-      sx={{
-        ...bgGradient({
-          color: alpha(theme.palette.background.default, 0.9),
-          imgUrl: '/assets/background/overlay_4.jpg',
-        }),
-        height: 1,
-      }}
-    >
-     
-
-      <Stack alignItems="center" justifyContent="center" sx={{ height: 1 }}>
-        <Card
-          sx={{
-            p: 5,
-            width: 1,
-            maxWidth: 420,
-          }}
+    return (
+        <Box
+            sx={{
+                ...bgGradient({
+                    color: alpha(theme.palette.background.default, 0.9),
+                    imgUrl: '/assets/background/overlay_4.jpg',
+                }),
+                height: 1,
+            }}
         >
-            
-
-          
-
-         
-
-          {renderForm}
-        </Card>
-      </Stack>
-    </Box>
-  );
+            <Stack alignItems="center" justifyContent="center" sx={{ height: 1 }}>
+                <Card
+                    sx={{
+                        p: 5,
+                        width: 1,
+                        maxWidth: 420,
+                    }}
+                >
+                    {renderForm}
+                </Card>
+            </Stack>
+        </Box>
+    );
 }

@@ -53,7 +53,7 @@ export default function Router() {
             ],
           
         },
-        { path: 'blog', element: <BlogPage /> },
+        // { path: 'blog', element: <BlogPage /> },
         { path: 'asmitaasmita', element: <SecretPage /> },
         {
           path: 'adduser',
