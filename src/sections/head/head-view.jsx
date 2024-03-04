@@ -71,7 +71,7 @@ export default function LoginView() {
         color="inherit"
         onClick={handleClick}
       >
-        Login
+        Add
       </LoadingButton>
     </>
   );
