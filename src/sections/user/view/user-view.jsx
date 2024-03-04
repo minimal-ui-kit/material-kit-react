@@ -25,13 +25,14 @@ import UserTableHead from '../user-table-head';
 import TableEmptyRows from '../table-empty-rows';
 import UserTableToolbar from '../user-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
-
+import { useAuth } from 'src/context/loginContext';
 
 
 
 // ----------------------------------------------------------------------
 
 export default function UserPage() {
+  const {name,role,check,login}=useAuth();
   const url = window.location.href;
   const lastSegment = url.substring(url.lastIndexOf('/') + 1);
   console.log(lastSegment)
@@ -58,7 +59,7 @@ export default function UserPage() {
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  
+  console.log(role)
 
   const handleSort = (event, id) => {
     const isAsc = orderBy === id && order === 'asc';
@@ -150,7 +151,54 @@ export default function UserPage() {
       </Stack>
 
       <Card>
-      {isSecret && 
+      {role==="head"  && 
+   <Box sx={{display: "flex", justifyContent: "space-between", padding: "15px"}}>
+   <Autocomplete
+      id="free-solo-demo"
+      freeSolo
+      sx={{width: "250px", }}
+      options={usersriyal.map((option) => option.Name)}
+      renderInput={(params) => <TextField {...params} label="College" />}
+      onChange={(event,value)=>{
+        setNameUpdate(value);
+        console.log(nameUpdate)
+      }}
+    />
+   <TextField sx={{width: "200px", marginX: "35px"}} id="outlined-basic" label="Points" variant="outlined"
+   onChange={(event)=>{
+    console.log(event.target.value)
+    setNewPoints(event.target.value)
+    console.log(newPoints)
+   }
+  }
+    />
+    <Button sx={{mr: "1"}} onClick={()=>{
+      let str=""
+      
+      for(let i=0;i<usersriyal.length;i+=1){
+        if(usersriyal[i].Name===nameUpdate){
+          str=usersriyal[i]._id
+        }
+      }
+      
+    
+      axios.patch(`https://app-admin-api.asmitaiiita.org/api/leaderboard/${str}`,{
+        Points: newPoints
+      }).then(()=>{
+        alert("Updated")
+        window.location.reload();
+
+  
+      }).catch((error)=>{
+        alert("Error")
+      })
+    }
+
+    
+    }>Submit</Button>
+    </Box>
+  } 
+   {role==="executive"  && 
    <Box sx={{display: "flex", justifyContent: "space-between", padding: "15px"}}>
    <Autocomplete
       id="free-solo-demo"

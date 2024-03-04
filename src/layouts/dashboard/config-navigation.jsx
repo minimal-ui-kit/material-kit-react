@@ -36,7 +36,8 @@ const navConfig = [
     title: 'adduser',
     path: '/adduser',
     icon: icon('ic_lock'),
-  }
+  },
+  
   
 ];
 
