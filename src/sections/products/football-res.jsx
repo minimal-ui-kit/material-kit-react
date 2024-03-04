@@ -21,7 +21,8 @@ export default function FootballAdd() {
         Date:"",
         GroupStage:"",
         MatchName:"",
-        Score:""
+        Score:"",
+        SportName:"",
     });
     
     function changeData(field,data1){
@@ -108,6 +109,11 @@ export default function FootballAdd() {
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
             <TextField fullWidth label="GroupStage" id='GroupStage' onChange={(event) => {
                 changeData("GroupStage",event.target.value);
+            }} />
+            </Stack>
+            <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+            <TextField fullWidth label="SportName" id='SportName' onChange={(event) => {
+                changeData("SportName",event.target.value);
             }} />
             </Stack>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>

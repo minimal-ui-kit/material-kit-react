@@ -24,7 +24,8 @@ export default function AthleticsEdit() {
         MatchName:"",
         Player1:"",
         Player2:"",
-        Player3:""
+        Player3:"",
+        SportName:"",
     });
     useEffect(() => {
         
@@ -89,6 +90,9 @@ export default function AthleticsEdit() {
             }} />
             <TextField fullWidth label="MatchName" id='MatchName' autoFocus={true} value={data.MatchName} onChange={(event) => {
                 changeData("MatchName",event.target.value);
+            }} />
+            <TextField fullWidth label="SportName" id='SportName' autoFocus={true} value={data.SportName} onChange={(event) => {
+                changeData("SportName",event.target.value);
             }} />
             <TextField fullWidth label="Player1" id='Player1' autoFocus={true} value={data.Player1} onChange={(event) => {
                 changeData("Player1",event.target.value);

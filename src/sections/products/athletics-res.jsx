@@ -18,6 +18,7 @@ export default function AthleticsAdd() {
         Date:"",
         GroupStage:"",
         MatchName:"",
+        SportName:"",
         Player1:"",
         Player2:"",
         Player3:""
@@ -61,6 +62,9 @@ export default function AthleticsAdd() {
             }} />
             <TextField fullWidth label="MatchName" id='MatchName' onChange={(event) => {
                 changeData("MatchName",event.target.value);
+            }} />
+            <TextField fullWidth label="SportName" id='SportName' onChange={(event) => {
+                changeData("SportName",event.target.value);
             }} />
             <TextField fullWidth label="Player1" id='Player1' onChange={(event) => {
                 changeData("Player1",event.target.value);

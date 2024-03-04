@@ -26,6 +26,7 @@ export default function CricketAdd() {
         Over2:"",
         Score1:"",
         Score2:"",
+        SportName:"",
     });
     
     function changeData(field,data1){
@@ -119,6 +120,11 @@ export default function CricketAdd() {
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
             <TextField fullWidth label="MatchName" id='MatchName' onChange={(event) => {
                 changeData("MatchName",event.target.value);
+            }} />
+            </Stack>
+            <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+            <TextField fullWidth label="SportName" id='SportName' onChange={(event) => {
+                changeData("SportName",event.target.value);
             }} />
             </Stack>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>

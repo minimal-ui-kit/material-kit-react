@@ -22,7 +22,8 @@ export default function FootballEdit() {
         Date:"",
         GroupStage:"",
         MatchName:"",
-        Score:""
+        SportName:"",
+        Score:"",
     });
 
     useEffect(() => {
@@ -142,6 +143,11 @@ export default function FootballEdit() {
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
             <TextField fullWidth label="MatchName" autoFocus={true} value={data.MatchName} id='MatchName' onChange={(event) => {
                 changeData("MatchName",event.target.value);
+            }} />
+            </Stack>
+            <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+            <TextField fullWidth label="SportName" autoFocus={true} value={data.SportName} id='SportName' onChange={(event) => {
+                changeData("SportName",event.target.value);
             }} />
             </Stack>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
