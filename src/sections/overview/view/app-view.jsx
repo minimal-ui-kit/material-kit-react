@@ -305,7 +305,8 @@ export default function AppView() {
           Set edit mode:{' '}
           <Switch
             id="toggleEditMode"
-            onChange={() => {
+            checked={editMode}
+            onClick={() => {
               setEditMode(!editMode);
             }}
           />
