@@ -49,7 +49,7 @@ export default function LoginView() {
 
   const handleClick = () => {
     const data={
-      enrollment: enrol,
+      enrollment: enrol.toLowerCase(),
       password: password
     }
     login(data);
