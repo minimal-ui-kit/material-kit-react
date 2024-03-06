@@ -22,7 +22,7 @@ import { bgGradient } from 'src/theme/css';
 
 import Logo from 'src/components/logo';
 import Iconify from 'src/components/iconify';
-
+import axios from 'axios';
 // ----------------------------------------------------------------------
 
 const top100Films = [
@@ -36,6 +36,10 @@ export default function HeadView() {
         options: top100Films,
         getOptionLabel: (option) => option.title,
     };
+    const [namee, setName]=useState("");
+    const [rolee, setRole]=useState("");
+    const [enrollment, setEnrollment] = useState("");
+    const [password, setPassword] = useState("");
     const flatProps = {
         options: top100Films.map((option) => option.title),
     };
@@ -46,8 +50,22 @@ export default function HeadView() {
 
     const [showPassword, setShowPassword] = useState(false);
 
-    const handleClick = () => {
-        router.push('/dashboard');
+    const handleClick = async () => {
+        console.log(namee, rolee, password,enrollment)
+        let role2="";
+        if(rolee==="Volunteer") role2="volunteer";
+        else if(rolee==="Executive") role2="executive";
+        else if(rolee==="Head") role2="head"; 
+        const data = {
+            name: namee,
+            password: password,
+            role: role2,
+            enrollment: enrollment
+        }
+        await axios.post("https://app-admin-api.asmitaiiita.org/api/auth/register/", data).then(
+            ()=>{alert("Added user")},
+        )
+        .catch((err)=>{console.log(err); alert("Error")})
     };
     const {login,name,role, check} = useAuth()
 
@@ -56,12 +74,30 @@ export default function HeadView() {
         <>
        
             <Stack spacing={3} mb={3}>
-                <TextField name="username" label="Username" />
+                <TextField name="username" label="Name" value={namee} onChange={
+                    (e)=>{
+                        setName(e.target.value);
+                       // console.log(namee)
+                    }
+                } />
+                 <TextField name="username" label="Enrollmemt" value={enrollment} onChange={
+                    (e)=>{
+                        setEnrollment(e.target.value);
+                       // console.log(namee)
+                    }
+                } />
 
                 <TextField
                     name="password"
                     label="Password"
                     type={showPassword ? 'text' : 'password'}
+                    value={password}
+                    onChange={
+                        (e)=>{
+                            setPassword(e.target.value);
+                            //console.log(password)
+                        }
+                    }
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position="end">
@@ -80,6 +116,12 @@ export default function HeadView() {
                     renderInput={(params) => (
                         <TextField {...params} label="Role" variant="standard" />
                     )}
+                    onChange={
+                        (event, newValue) => {
+                            console.log(newValue)
+                            setRole(newValue.title)
+                        }
+                    }
                 />
             </Stack>
 
