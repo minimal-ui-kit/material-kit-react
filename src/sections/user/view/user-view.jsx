@@ -181,16 +181,24 @@ export default function UserPage() {
         }
       }
       
+      const header={
+         "authorization": "Bearer "+localStorage.getItem("token")
+
+      }
     
       axios.patch(`https://app-admin-api.asmitaiiita.org/api/leaderboard/${str}`,{
         Points: newPoints
+      }, {
+        headers: header
       }).then(()=>{
         alert("Updated")
+        setDataLoaded(false);
         window.location.reload();
 
   
       }).catch((error)=>{
         alert("Error")
+        console.log(error)
       })
     }
 

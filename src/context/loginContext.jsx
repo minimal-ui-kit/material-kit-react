@@ -19,6 +19,7 @@ export const AuthProvider = ({children})=>{
             console.log(res.data.data.user.Name)
             setName(res.data.data.user.Name)
             setRole(res.data.data.user.Role)
+            localStorage.setItem("token",  res.data.data.user.token)
             setCheck(true)
         })
         

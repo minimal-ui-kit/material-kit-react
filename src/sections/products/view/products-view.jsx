@@ -33,7 +33,8 @@ export default function ProductsView() {
       // setDataLoaded(true);
     });
   }, []);
-  if(role==="head" || role==="executive"){
+  console.log(check)
+  if(check===true){
   return (
     <Container>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
