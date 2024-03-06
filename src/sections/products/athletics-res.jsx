@@ -7,7 +7,7 @@ import { Container, Select,FormControl,InputLabel,Button,MenuItem,Stack, TextFie
 import { ChangeEvent } from 'react';
 import { useRouter } from 'src/routes/hooks';
 import { useNavigate } from 'react-router-dom';
-
+import {sports} from "../../assets/sports.js";
 
 // ----------------------------------------------------------------------
 
@@ -23,6 +23,7 @@ export default function AthleticsAdd() {
         "14 March 2024",
         "15 March 2024",
     ];
+
     const [data,setData]=useState({
         Date:"",
         GroupStage:"",
@@ -60,9 +61,8 @@ export default function AthleticsAdd() {
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <Typography variant="h4">Set Athletics Result Data: </Typography>
         </Stack>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-        <FormControl fullWidth >
-            
+       
+       
             {/* <TextField margin='10%' fullWidth label="Date" id='Date' onChange={(event) => {
                 changeData("Date",event.target.value);
             }} /> */}
@@ -85,6 +85,23 @@ export default function AthleticsAdd() {
                     })}
                 </Select>
             
+                <InputLabel id="sport-label">SportName</InputLabel>
+            <Select
+            
+                labelId="sport-label"
+                id="sport"
+                value={data.SportName}
+                label="SportName"
+                onChange={(event) => {
+                    changeData("SportName",event.target.value);
+                }}
+                fullWidth
+            >
+                {sports.map((val)=>{
+                    return (<MenuItem value={val}>{val}</MenuItem>);
+                })}
+            </Select>
+           
 
 
 
@@ -94,9 +111,10 @@ export default function AthleticsAdd() {
             <TextField fullWidth label="MatchName" id='MatchName' onChange={(event) => {
                 changeData("MatchName",event.target.value);
             }} />
-            <TextField fullWidth label="SportName" id='SportName' onChange={(event) => {
-                changeData("SportName",event.target.value);
-            }} />
+            
+            
+        
+
             <TextField fullWidth label="Player1" id='Player1' onChange={(event) => {
                 changeData("Player1",event.target.value);
             }} />
@@ -106,8 +124,8 @@ export default function AthleticsAdd() {
             <TextField fullWidth label="Player3" id='Player3' onChange={(event) => {
                 changeData("Player3",event.target.value);
             }} />
-        </FormControl>
-        </Stack>
+        
+        
         <Button onClick={handleSubmit} variant="contained" color="inherit" >
           Add Result
         </Button>

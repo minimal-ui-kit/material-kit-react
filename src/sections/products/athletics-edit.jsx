@@ -7,7 +7,7 @@ import { Container, Select,FormControl,InputLabel,Button,MenuItem,Stack, TextFie
 import { ChangeEvent } from 'react';
 import { useRouter } from 'src/routes/hooks';
 import { useLocation, useNavigate } from 'react-router-dom';
-
+import { sports } from 'src/assets/sports.js';
 
 // ----------------------------------------------------------------------
 
@@ -87,8 +87,7 @@ export default function AthleticsEdit() {
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <Typography variant="h4">Edit Athletics Result Data: </Typography>
         </Stack>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-        <FormControl fullWidth >
+        
             
         <InputLabel id="date-label">Date</InputLabel>
             
@@ -106,15 +105,30 @@ export default function AthleticsEdit() {
                     return (<MenuItem value={val}>{val}</MenuItem>);
                 })}
             </Select>
+            <InputLabel id="sport-label">SportName</InputLabel>
+            <Select
+            
+                labelId="sport-label"
+                id="sport"
+                value={data.SportName}
+                label="SportName"
+                onChange={(event) => {
+                    changeData("SportName",event.target.value);
+                }}
+                fullWidth
+            >
+                {sports.map((val)=>{
+                    return (<MenuItem value={val}>{val}</MenuItem>);
+                })}
+            </Select>
+           
             <TextField fullWidth label="GroupStage" id='GroupStage' autoFocus={true} value={data.GroupStage} onChange={(event) => {
                 changeData("GroupStage",event.target.value);
             }} />
             <TextField fullWidth label="MatchName" id='MatchName' autoFocus={true} value={data.MatchName} onChange={(event) => {
                 changeData("MatchName",event.target.value);
             }} />
-            <TextField fullWidth label="SportName" id='SportName' autoFocus={true} value={data.SportName} onChange={(event) => {
-                changeData("SportName",event.target.value);
-            }} />
+            
             <TextField fullWidth label="Player1" id='Player1' autoFocus={true} value={data.Player1} onChange={(event) => {
                 changeData("Player1",event.target.value);
             }} />
@@ -124,8 +138,7 @@ export default function AthleticsEdit() {
             <TextField fullWidth label="Player3" id='Player3' autoFocus={true} value={data.Player3} onChange={(event) => {
                 changeData("Player3",event.target.value);
             }} />
-        </FormControl>
-        </Stack>
+       
         <Button onClick={handleSubmit} variant="contained" color="inherit" >
           Edit Result
         </Button>
