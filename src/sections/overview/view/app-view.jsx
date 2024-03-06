@@ -11,6 +11,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import InputLabel from '@mui/material/InputLabel';
+import { sports } from 'src/assets/sports';
 import Label from 'src/components/label';
 import { jwtDecode } from 'jwt-decode';
 
@@ -28,13 +29,13 @@ export default function AppView() {
   };
   const [editId, setEditId] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  const [sport, setSport] = useState('Football');
+  const [sport, setSport] = useState('Athletics (M)');
   const [day, setDay] = useState(0);
   const [fixtures, setFixtures] = useState([]);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(null);
   const [initialTableContent, setInitialTableContent] = useState(
-    '<table style="border-collapse: collapse; width: 100%;" border="1"><colgroup><col style="width: 33.3102%;"><col style="width: 33.3102%;"><col style="width: 33.3102%;"></colgroup><tbody><tr><td style="text-align: center; font-weight: 800;">Team 1</td><td style="text-align: center; font-weight: 800;">Team 2</td><td style="text-align: center; font-weight: 800;">Time</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>'
+    '<table style="border-collapse: collapse; width: 100%; border-width: 3px;" border="1"><colgroup><col style="width: 50%;"><col style="width: 50%;"></colgroup><tbody><tr><td style="text-align: center; font-weight: 800; border-width: 3px;">Event</td><td style="text-align: center; font-weight: 800; border-width: 3px;">Time</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr>'
   );
   if (alsorole === 'head' || alsorole === 'volunteer' || alsorole === 'executive') {
     useEffect(() => {
@@ -128,7 +129,7 @@ export default function AppView() {
           });
           console.log(newFixtures);
           setFixtures(newFixtures);
-          setStatus(`Successfully edited fixture for ${newBody.Day}, ${newBody.Sport}`);
+          setStatus(`Successfully edited fixture for Day ${newBody.Day}, ${newBody.Sport}`);
         } catch (err) {
           setStatus('failure');
           console.log('Error while making request to edit fixture: ', err);
@@ -170,16 +171,20 @@ export default function AppView() {
               onChange={(e) => {
                 const currSport = e.target.value;
                 setSport(currSport);
-                if (currSport === 'Football' || currSport === 'Cricket') {
+                if (
+                  currSport.includes('Athletics') ||
+                  currSport.includes('Aquatics') ||
+                  currSport.includes('Powerlifting')
+                ) {
                   setInitialTableContent(
-                    '<table style="border-collapse: collapse; width: 100%;" border="1"><colgroup><col style="width: 33.3102%;"><col style="width: 33.3102%;"><col style="width: 33.3102%;"></colgroup><tbody><tr><td style="text-align: center; font-weight: 800;">Team 1</td><td style="text-align: center; font-weight: 800;">Team 2</td><td style="text-align: center; font-weight: 800;">Time</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>'
+                    '<table style="border-collapse: collapse; width: 100%; border-width: 3px;" border="1"><colgroup><col style="width: 50%;"><col style="width: 50%;"></colgroup><tbody><tr><td style="text-align: center; font-weight: 800; border-width: 3px;">Event</td><td style="text-align: center; font-weight: 800; border-width: 3px;">Time</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr>'
                   );
                   // Editor.setContent(
                   //   '<table style="border-collapse: collapse; width: 100%;" border="1"><colgroup><col style="width: 33.3102%;"><col style="width: 33.3102%;"><col style="width: 33.3102%;"></colgroup><tbody><tr><td style="text-align: center; font-weight: 800;">Team 1</td><td style="text-align: center; font-weight: 800;">Team 2</td><td style="text-align: center; font-weight: 800;">Time</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>'
                   // );
                 } else {
                   setInitialTableContent(
-                    '<table style="border-collapse: collapse; width: 100%;" border="1"><colgroup><col style="width: 50%;"><col style="width: 50%;"></colgroup><tbody><tr><td style="text-align: center; font-weight: 800;">Event</td><td style="text-align: center; font-weight: 800;">Time</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr>'
+                    '<table style="border-collapse: collapse; width: 100%; border-width: 3px;" border="1"><colgroup><col style="width: 33.3102%;"><col style="width: 33.3102%;"><col style="width: 33.3102%;"></colgroup><tbody><tr><td style="text-align: center; font-weight: 800; border-width: 3px;">Team 1</td><td style="text-align: center; font-weight: 800; border-width: 3px;">Team 2</td><td style="text-align: center; font-weight: 800; border-width: 3px;">Time</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>'
                   );
                   // Editor.setContent(
                   //   '<table style="border-collapse: collapse; width: 100%;" border="1"><colgroup><col style="width: 50%;"><col style="width: 50%;"></colgroup><tbody><tr><td style="text-align: center; font-weight: 800;">Event</td><td style="text-align: center; font-weight: 800;">Time</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr>'
@@ -188,9 +193,9 @@ export default function AppView() {
               }}
               value={sport}
             >
-              <MenuItem value="Football">Football</MenuItem>
-              <MenuItem value="Cricket">Cricket</MenuItem>
-              <MenuItem value="Athletics">Athletics</MenuItem>
+              {sports.map((val) => {
+                return <MenuItem value={val}>{val}</MenuItem>;
+              })}
             </Select>
           </Box>
           <Box

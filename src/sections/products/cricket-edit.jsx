@@ -184,7 +184,7 @@ export default function CricketEdit() {
            
             </Stack>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-            <TextField fullWidth label="GroupStage" autoFocus={true} value={data.Date} id='GroupStage' onChange={(event) => {
+            <TextField fullWidth label="GroupStage" autoFocus={true} value={data.GroupStage} id='GroupStage' onChange={(event) => {
                 changeData("GroupStage",event.target.value);
             }} />
             </Stack>
