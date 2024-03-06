@@ -14,6 +14,7 @@ import InputLabel from '@mui/material/InputLabel';
 import { sports } from 'src/assets/sports';
 import Label from 'src/components/label';
 import { jwtDecode } from 'jwt-decode';
+import { TextField } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -30,7 +31,7 @@ export default function AppView() {
   const [editId, setEditId] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [sport, setSport] = useState('Athletics (M)');
-  const [day, setDay] = useState(0);
+  const [day, setDay] = useState("");
   const [fixtures, setFixtures] = useState([]);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(null);
@@ -61,7 +62,11 @@ export default function AppView() {
       setStatus(null);
       if (editMode) {
         alert('Toggle edit mode off first.');
-      } else {
+      }
+      else if(day===""){
+        alert("Day cannot be empty")
+      }
+       else {
         try {
           const data = {
             Sport: sport,
@@ -208,24 +213,9 @@ export default function AppView() {
             }}
           >
             <InputLabel id="demo-simple-select-label">Day: </InputLabel>
-            <Select
-              sx={{ width: '75%' }}
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              label="Day"
-              onChange={(e) => {
-                setDay(e.target.value);
-              }}
-              value={day}
-            >
-              <MenuItem value={0}>0</MenuItem>
-              <MenuItem value={1}>1</MenuItem>
-              <MenuItem value={2}>2</MenuItem>
-              <MenuItem value={3}>3</MenuItem>
-              <MenuItem value={4}>4</MenuItem>
-              <MenuItem value={5}>5</MenuItem>
-              <MenuItem value={6}>6</MenuItem>
-            </Select>
+            <TextField id="outlined-basic" label="Day" value={day} variant="outlined" onChange={(e)=>{
+              setDay(e.target.value);
+            }} required="true" />
           </Box>
         </Box>
 
