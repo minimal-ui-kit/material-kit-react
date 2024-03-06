@@ -6,7 +6,7 @@ const Results = (props) => {
     console.log(props)
     const pointTo='./products/editresults/'+props.props.Type+'/'+props.props._id;
     
-    console.log(role)
+   // console.log(role)
 
   return (
     
