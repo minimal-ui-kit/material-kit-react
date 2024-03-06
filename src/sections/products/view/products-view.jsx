@@ -11,13 +11,14 @@ import Router from 'src/routes/sections';
 import { Link, useNavigate } from 'react-router-dom';
 import { useRouter } from 'src/routes/hooks';
 import Results from 'src/components/result/results';
-
+import { useAuth } from 'src/context/loginContext';
 // ----------------------------------------------------------------------
 
 export default function ProductsView() {
   // const [dataLoaded,setDataLoaded]=useState(false);
   const router = useRouter();
   const [resultData, setResData] = useState([]);
+  const {name,role,check,login}=useAuth();
 
   function handleNewRes() {
     router.push('addresult');
@@ -32,7 +33,7 @@ export default function ProductsView() {
       // setDataLoaded(true);
     });
   }, []);
-
+  if(role==="head" || role==="executive"){
   return (
     <Container>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
@@ -57,3 +58,8 @@ export default function ProductsView() {
     </Container>
   );
 }
+else{
+  return(
+    <h1>NOT AUTHORISED</h1>
+  )
+}}

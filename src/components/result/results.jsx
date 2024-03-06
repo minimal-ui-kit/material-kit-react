@@ -5,7 +5,11 @@ import { Typography } from '@mui/material'
 const Results = (props) => {
     console.log(props)
     const pointTo='./products/editresults/'+props.props.Type+'/'+props.props._id;
-;  return (
+    
+    console.log(role)
+if(role==="head" || role==="executive"){
+  return (
+    
     <Box sx={{display:"flex", flexDirection: "column", width: "auto"}}>
         <a href={pointTo}>
         <Box sx={{backgroundColor: "#59D5E0", display: "flex", justifyContent: "space-between", paddingX: "5px"}}>
@@ -55,7 +59,13 @@ const Results = (props) => {
         </Box>
         </a>
     </Box>
-  )
+  )}
+  else{
+    return(
+        <h1>NOT AUTHORISED</h1>
+    )
+  }
+  
 }
 
 export default Results
