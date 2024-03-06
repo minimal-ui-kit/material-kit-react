@@ -12,10 +12,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useRouter } from 'src/routes/hooks';
 import Results from 'src/components/result/results';
 import { useAuth } from 'src/context/loginContext';
+import { jwtDecode } from 'jwt-decode';
 // ----------------------------------------------------------------------
 
 export default function ProductsView() {
   // const [dataLoaded,setDataLoaded]=useState(false);
+  let alsorole="";
+  if(localStorage.getItem("token")!==null)alsorole=(jwtDecode(localStorage.getItem("token")).role)
   const router = useRouter();
   const [resultData, setResData] = useState([]);
   const {name,role,check,login}=useAuth();
@@ -33,7 +36,8 @@ export default function ProductsView() {
       // setDataLoaded(true);
     });
   }, []);
-  if(role==="head" || role==="executive"){
+  //console.log(check)
+  if(alsorole==="head"||alsorole==="volunteer"||alsorole==="executive"){
   return (
     <Container>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>

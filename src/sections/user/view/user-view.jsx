@@ -26,12 +26,14 @@ import TableEmptyRows from '../table-empty-rows';
 import UserTableToolbar from '../user-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
 import { useAuth } from 'src/context/loginContext';
-
+import { jwtDecode } from 'jwt-decode';
 
 
 // ----------------------------------------------------------------------
 
 export default function UserPage() {
+  let alsorole="";
+  if(localStorage.getItem("token")!==null)alsorole=(jwtDecode(localStorage.getItem("token")).role)
   const {name,role,check,login}=useAuth();
   const url = window.location.href;
   const lastSegment = url.substring(url.lastIndexOf('/') + 1);
@@ -58,6 +60,8 @@ export default function UserPage() {
   const [filterName, setFilterName] = useState('');
 
   const [rowsPerPage, setRowsPerPage] = useState(25);
+
+  
 
   console.log(role)
 
@@ -151,7 +155,7 @@ export default function UserPage() {
       </Stack>
 
       <Card>
-      {role==="head"  && 
+      {alsorole==="head"  && 
    <Box sx={{display: "flex", justifyContent: "space-between", padding: "15px"}}>
    <Autocomplete
       id="free-solo-demo"
@@ -181,16 +185,24 @@ export default function UserPage() {
         }
       }
       
+      const header={
+         "authorization": "Bearer "+localStorage.getItem("token")
+
+      }
     
       axios.patch(`https://app-admin-api.asmitaiiita.org/api/leaderboard/${str}`,{
         Points: newPoints
+      }, {
+        headers: header
       }).then(()=>{
         alert("Updated")
+        setDataLoaded(false);
         window.location.reload();
 
   
       }).catch((error)=>{
         alert("Error")
+        console.log(error)
       })
     }
 
@@ -198,7 +210,7 @@ export default function UserPage() {
     }>Submit</Button>
     </Box>
   } 
-   {role==="executive"  && 
+   {alsorole==="executive"  && 
    <Box sx={{display: "flex", justifyContent: "space-between", padding: "15px"}}>
    <Autocomplete
       id="free-solo-demo"
