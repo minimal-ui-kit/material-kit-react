@@ -7,7 +7,7 @@ const Results = (props) => {
     const pointTo='./products/editresults/'+props.props.Type+'/'+props.props._id;
     
     console.log(role)
-if(role==="head" || role==="executive"){
+
   return (
     
     <Box sx={{display:"flex", flexDirection: "column", width: "auto"}}>
@@ -59,12 +59,7 @@ if(role==="head" || role==="executive"){
         </Box>
         </a>
     </Box>
-  )}
-  else{
-    return(
-        <h1>NOT AUTHORISED</h1>
-    )
-  }
+  )
   
 }
 
