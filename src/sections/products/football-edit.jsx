@@ -12,7 +12,15 @@ import { useRouter } from 'src/routes/hooks';
 
 export default function FootballEdit() {
     const rid =useParams().id;
-    
+    const dates=[
+        "9 March 2024",
+        "10 March 2024",
+        "11 March 2024",
+        "12 March 2024",
+        "13 March 2024",
+        "14 March 2024",
+        "15 March 2024",
+    ];
     const navigate=useNavigate();
     const [data,setData]=useState({
         ClgImg1:"",
@@ -130,17 +138,31 @@ export default function FootballEdit() {
             </Select>
             </Box>
             </Stack>
+            <InputLabel id="date-label">Date</InputLabel>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-            <TextField margin='10%' fullWidth label="Date" autoFocus={true} value={data.Date} id='Date' onChange={(event) => {
-                changeData("Date",event.target.value);
-            }} />
+            
+            
+                <Select
+                    labelId="date-label"
+                    id="date"
+                    value={data.Date}
+                    label="Date"
+                    onChange={(event) => {
+                        changeData("Date",event.target.value);
+                    }}
+                    fullWidth
+                >
+                    {dates.map((val)=>{
+                        return (<MenuItem value={val}>{val}</MenuItem>);
+                    })}
+                </Select>
             </Stack>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
             <TextField fullWidth label="GroupStage" autoFocus={true} value={data.GroupStage} id='GroupStage' onChange={(event) => {
                 changeData("GroupStage",event.target.value);
             }} />
             </Stack>
-            <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+            <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5} mu={5}>
             <TextField fullWidth label="MatchName" autoFocus={true} value={data.MatchName} id='MatchName' onChange={(event) => {
                 changeData("MatchName",event.target.value);
             }} />

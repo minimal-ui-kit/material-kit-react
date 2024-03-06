@@ -14,6 +14,15 @@ import { useNavigate } from 'react-router-dom';
 export default function AthleticsAdd() {
     const router =useRouter();
     const navigate=useNavigate();
+    const dates=[
+        "9 March 2024",
+        "10 March 2024",
+        "11 March 2024",
+        "12 March 2024",
+        "13 March 2024",
+        "14 March 2024",
+        "15 March 2024",
+    ];
     const [data,setData]=useState({
         Date:"",
         GroupStage:"",
@@ -54,9 +63,31 @@ export default function AthleticsAdd() {
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <FormControl fullWidth >
             
-            <TextField margin='10%' fullWidth label="Date" id='Date' onChange={(event) => {
+            {/* <TextField margin='10%' fullWidth label="Date" id='Date' onChange={(event) => {
                 changeData("Date",event.target.value);
-            }} />
+            }} /> */}
+
+        
+            <InputLabel id="date-label">Date</InputLabel>
+            
+                <Select
+                    labelId="date-label"
+                    id="date"
+                    value={data.Date}
+                    label="Date"
+                    onChange={(event) => {
+                        changeData("Date",event.target.value);
+                    }}
+                    fullWidth
+                >
+                    {dates.map((val)=>{
+                        return (<MenuItem value={val}>{val}</MenuItem>);
+                    })}
+                </Select>
+            
+
+
+
             <TextField fullWidth label="GroupStage" id='GroupStage' onChange={(event) => {
                 changeData("GroupStage",event.target.value);
             }} />
