@@ -7,7 +7,7 @@ import { Container, Select,FormControl,InputLabel,Button,MenuItem,Stack, TextFie
 import { ChangeEvent } from 'react';
 import { useRouter } from 'src/routes/hooks';
 import { useNavigate } from 'react-router-dom';
-
+import { sports } from 'src/assets/sports';
 
 // ----------------------------------------------------------------------
 
@@ -135,6 +135,25 @@ export default function CricketAdd() {
                     })}
                 </Select>
             </Stack>
+            <Stack>
+            <InputLabel id="sport-label">SportName</InputLabel>
+            <Select
+            
+                labelId="sport-label"
+                id="sport"
+                value={data.SportName}
+                label="SportName"
+                onChange={(event) => {
+                    changeData("SportName",event.target.value);
+                }}
+                fullWidth
+            >
+                {sports.map((val)=>{
+                    return (<MenuItem value={val}>{val}</MenuItem>);
+                })}
+            </Select>
+           
+            </Stack>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
             <TextField fullWidth label="GroupStage" id='GroupStage' onChange={(event) => {
                 changeData("GroupStage",event.target.value);
@@ -145,11 +164,7 @@ export default function CricketAdd() {
                 changeData("MatchName",event.target.value);
             }} />
             </Stack>
-            <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-            <TextField fullWidth label="SportName" id='SportName' onChange={(event) => {
-                changeData("SportName",event.target.value);
-            }} />
-            </Stack>
+            
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
             <TextField fullWidth label="Over1" id='Over1' onChange={(event) => {
                 changeData("Over1",event.target.value);

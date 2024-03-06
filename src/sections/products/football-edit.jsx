@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import colleges from "../../assets/college_logos.json";
 import Typography from '@mui/material/Typography';
 import { Container, Select,FormControl,InputLabel,Button,MenuItem,Stack, TextField, Box } from '@mui/material';
-
+import { sports } from 'src/assets/sports';
 import { useRouter } from 'src/routes/hooks';
 
 
@@ -157,6 +157,25 @@ export default function FootballEdit() {
                     })}
                 </Select>
             </Stack>
+            <Stack>
+            <InputLabel id="sport-label">SportName</InputLabel>
+            <Select
+            
+                labelId="sport-label"
+                id="sport"
+                value={data.SportName}
+                label="SportName"
+                onChange={(event) => {
+                    changeData("SportName",event.target.value);
+                }}
+                fullWidth
+            >
+                {sports.map((val)=>{
+                    return (<MenuItem value={val}>{val}</MenuItem>);
+                })}
+            </Select>
+           
+            </Stack>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
             <TextField fullWidth label="GroupStage" autoFocus={true} value={data.GroupStage} id='GroupStage' onChange={(event) => {
                 changeData("GroupStage",event.target.value);
@@ -167,11 +186,7 @@ export default function FootballEdit() {
                 changeData("MatchName",event.target.value);
             }} />
             </Stack>
-            <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-            <TextField fullWidth label="SportName" autoFocus={true} value={data.SportName} id='SportName' onChange={(event) => {
-                changeData("SportName",event.target.value);
-            }} />
-            </Stack>
+            
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
             <TextField fullWidth label="Score" id='Score' autoFocus={true} value={data.Score} onChange={(event) => {
                 changeData("Score",event.target.value);

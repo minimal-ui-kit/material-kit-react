@@ -15,7 +15,6 @@ export let sports=[
     "Table Tennis (M)",
     "Tug of War (M)",  
     "Athletics (F)",
-    "Football (F)",
     "Cricket (F)",
     "Aquatics (F)",
     "Lawn Tennis (F)",
