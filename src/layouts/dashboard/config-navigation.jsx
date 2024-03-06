@@ -18,6 +18,11 @@ const navConfig = [
     icon: icon('ic_user'),
   },
   {
+    title: 'Employee Leaderboard',
+    path: '/emp',
+    icon: icon('ic_user'),
+  },
+  {
     title: 'results',
     path: '/products',
     icon: icon('ic_cart'),
