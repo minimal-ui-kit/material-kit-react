@@ -31,6 +31,7 @@ export default function AppView() {
   const [day, setDay] = useState(0);
   const [fixtures, setFixtures] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState(null);
   const [initialTableContent, setInitialTableContent] = useState(
     '<table style="border-collapse: collapse; width: 100%;" border="1"><colgroup><col style="width: 33.3102%;"><col style="width: 33.3102%;"><col style="width: 33.3102%;"></colgroup><tbody><tr><td style="text-align: center; font-weight: 800;">Team 1</td><td style="text-align: center; font-weight: 800;">Team 2</td><td style="text-align: center; font-weight: 800;">Time</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>'
   );
@@ -56,6 +57,7 @@ export default function AppView() {
       });
   }, []);
   const handleAddFixture = async () => {
+    setStatus(null);
     if (editMode) {
       alert('Toggle edit mode off first.');
     } else {
@@ -63,7 +65,6 @@ export default function AppView() {
         const data = {
           Sport: sport,
           Day: day,
-          Date: new Date(),
           HTMLString: editorRef.current.getContent(),
         };
         console.log(data);
@@ -72,17 +73,19 @@ export default function AppView() {
             `https://app-admin-api.asmitaiiita.org/api/fixtures/create`,
             data
           );
-          alert('Successfully added fixture. Refresh page');
+          setStatus('success');
           console.log(res);
         } else {
-          alert('No data added.');
+          setStatus('failure');
         }
       } catch (err) {
+        setStatus('failure');
         console.log('Error occurred while making request to add fixture: ', err);
       }
     }
   };
   const handleDeleteFixture = async (id) => {
+    setStatus(null);
     try {
       console.log('id for deletion: ', id);
       const deletedFixture = await axios.delete(
@@ -94,12 +97,14 @@ export default function AppView() {
       console.log('New fixtures: ', newFixtures);
 
       setFixtures(newFixtures);
-      alert('Successfully deleted fixture');
+      setStatus('success');
     } catch (err) {
+      setStatus('failure');
       console.log('Error while delete request: ', err);
     }
   };
   const handleEditFixture = async (id) => {
+    setStatus(null);
     if (!editMode) {
       alert('Toggle edit mode on.');
     } else {
@@ -121,8 +126,9 @@ export default function AppView() {
         });
         console.log(newFixtures);
         setFixtures(newFixtures);
-        alert('Successfully updated fixture!');
+        setStatus('success');
       } catch (err) {
+        setStatus('failure');
         console.log('Error while making request to edit fixture: ', err);
       }
     }
@@ -308,6 +314,11 @@ export default function AppView() {
             </Button>
           )}
         </Box>
+        {status === 'success' ? (
+          <p style={{ color: 'green' }}>Success!</p>
+        ) : status === 'failure' ? (
+          <p style={{ color: 'red' }}>Error</p>
+        ) : null}
         <p>
           Set edit mode:{' '}
           <Switch
