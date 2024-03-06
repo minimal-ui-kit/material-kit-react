@@ -29,38 +29,35 @@ export default function LoginView() {
   const router = useRouter();
 
   const [showPassword, setShowPassword] = useState(false);
-  const [enrol, setEnrol]=useState("");
-  const [password, setPassword]=useState("");
+  const [enrol, setEnrol] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleChange1 = (event) => {
     setEnrol(event.target.value);
-  }
+  };
 
   const handleChange2 = (event) => {
     setPassword(event.target.value);
-  }
+  };
 
+  const { login, name, role, check } = useAuth();
 
-  const {login,name,role, check} = useAuth()
-
-  useEffect(() => { 
-   if(check===true) alert("Successfully Logged In")
-  }, [check])
+  useEffect(() => {
+    if (check === true) alert('Successfully Logged In');
+  }, [check]);
 
   const handleClick = () => {
-    const data={
+    const data = {
       enrollment: enrol.toLowerCase(),
-      password: password
-    }
+      password: password,
+    };
     login(data);
-    
-    
   };
 
   const renderForm = (
     <>
       <Stack spacing={3}>
-        <TextField name="email" label="Email address" value={enrol} onChange={handleChange1} />
+        <TextField name="email" label="Enrollment" value={enrol} onChange={handleChange1} />
 
         <TextField
           name="password"
@@ -79,8 +76,6 @@ export default function LoginView() {
           }}
         />
       </Stack>
-
-     
 
       <LoadingButton
         fullWidth
@@ -105,8 +100,6 @@ export default function LoginView() {
         height: 1,
       }}
     >
-     
-
       <Stack alignItems="center" justifyContent="center" sx={{ height: 1 }}>
         <Card
           sx={{
@@ -115,10 +108,6 @@ export default function LoginView() {
             maxWidth: 420,
           }}
         >
-        
-          
-
-         
           {renderForm}
         </Card>
       </Stack>
