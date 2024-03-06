@@ -19,6 +19,7 @@ export const ProductsPage = lazy(() => import('src/pages/products'));
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
 export const SecretPage = lazy(()=> import('src/pages/asmitaasmita'));
 export const AddUserPage = lazy(()=> import('src/pages/add-user'));
+export const SendNoti = lazy(()=> import('src/pages/noti_send'));
 
 // ----------------------------------------------------------------------
 
@@ -36,6 +37,7 @@ export default function Router() {
         { element: <IndexPage />, index: true },
         { path: 'user', element: <UserPage /> },
         { path: 'emp', element: <EmpLeaderboardPage /> },
+        { path: 'sendnoti', element: <SendNoti /> },
         { path: 'products', 
             element: ( 
                   <Outlet />
