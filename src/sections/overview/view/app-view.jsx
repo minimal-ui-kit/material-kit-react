@@ -12,10 +12,13 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import InputLabel from '@mui/material/InputLabel';
 import Label from 'src/components/label';
+import { jwtDecode } from 'jwt-decode';
 
 // ----------------------------------------------------------------------
 
 export default function AppView() {
+  let alsorole="";
+  if(localStorage.getItem("token")!==null)alsorole=(jwtDecode(localStorage.getItem("token")).role)
   const editorRef = useRef(null);
   const log = () => {
     if (editorRef.current) {
@@ -31,9 +34,12 @@ export default function AppView() {
   const [initialTableContent, setInitialTableContent] = useState(
     '<table style="border-collapse: collapse; width: 100%;" border="1"><colgroup><col style="width: 33.3102%;"><col style="width: 33.3102%;"><col style="width: 33.3102%;"></colgroup><tbody><tr><td style="text-align: center; font-weight: 800;">Team 1</td><td style="text-align: center; font-weight: 800;">Team 2</td><td style="text-align: center; font-weight: 800;">Time</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>'
   );
+  if(alsorole==="head"||alsorole==="volunteer"||alsorole==="executive"){
+
   useEffect(() => {
     setLoading(true);
     // fetch(`https://app-admin-api.asmitaiiita.org/api/fixtures/`)
+
     fetch(`https://app-admin-api.asmitaiiita.org/api/fixtures`)
       .then((res) => {
         console.log('res: ', res);
@@ -122,6 +128,7 @@ export default function AppView() {
     }
   };
   if (loading) return 'Loading';
+  
   return (
     <Container maxWidth="xl">
       <Typography variant="h4" sx={{ mb: 5 }}>
@@ -369,5 +376,9 @@ export default function AppView() {
         })}
       </Box>
     </Container>
-  );
-}
+  );}
+else{
+  return(
+    <h1>NOT AUTHORISED</h1>
+  )
+}}
