@@ -58,7 +58,7 @@ export default function HeadView() {
         let role2="";
         if(rolee==="Volunteer") role2="volunteer";
         else if(rolee==="Executive") role2="executive";
-        else if(rolee==="Head") role2="head"; 
+        else if(rolee==="Heads") role2="head"; 
         const data = {
             name: namee,
             password: password,
