@@ -13,7 +13,8 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (data) => {
     await axios
-      .post('https://app-admin-api.asmitaiiita.org/api/auth/login/', data)
+      .post('http://localhost:8000/api/auth/login/', data)
+      //   .post('https://app-admin-api.asmitaiiita.org/api/auth/login/', data)
       .then((res) => {
         console.log(res);
         //console.log(check)
@@ -22,6 +23,7 @@ export const AuthProvider = ({ children }) => {
         setRole(res.data.data.user.Role);
         localStorage.setItem('token', res.data.data.user.token);
         setCheck(true);
+        location.reload();
       })
 
       .catch((err) => {
