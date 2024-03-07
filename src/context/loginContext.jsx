@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (data) => {
     await axios
-      .post('http://localhost:8000/api/auth/login/', data)
+      .post('https://app-admin-api.asmitaiiita.org/api/auth/login/', data)
       //   .post('https://app-admin-api.asmitaiiita.org/api/auth/login/', data)
       .then((res) => {
         console.log(res);
