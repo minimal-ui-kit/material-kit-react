@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext } from 'react';
+
 import axios from 'axios';
 const AuthContext = createContext();
 
@@ -12,7 +13,8 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (data) => {
     await axios
-      .post('https://app-admin-api.asmitaiiita.org/api/auth/login/', data)
+      .post('http://localhost:8000/api/auth/login/', data)
+      //   .post('https://app-admin-api.asmitaiiita.org/api/auth/login/', data)
       .then((res) => {
         console.log(res);
         //console.log(check)
@@ -21,14 +23,23 @@ export const AuthProvider = ({ children }) => {
         setRole(res.data.data.user.Role);
         localStorage.setItem('token', res.data.data.user.token);
         setCheck(true);
+        location.reload();
       })
 
       .catch((err) => {
         console.log(err);
       });
   };
+
+  const logout = async () => {
+    localStorage.removeItem('token');
+    location.reload();
+  };
+
   return (
-    <AuthContext.Provider value={{ login, name, role, check }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ login, logout, name, role, check }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 export default AuthContext;
