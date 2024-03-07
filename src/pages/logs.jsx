@@ -49,8 +49,10 @@ export default function BasicTable() {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Logs</TableCell>
-            
+            <TableCell>User ID</TableCell>
+            <TableCell>Type Changed ID</TableCell>
+            <TableCell>Created at</TableCell>
+            <TableCell>Updated at</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -60,7 +62,16 @@ export default function BasicTable() {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row}
+                {row.User}
+              </TableCell>
+              <TableCell component="th" scope="row">
+                {row.typeChanged}
+              </TableCell>
+              <TableCell component="th" scope="row">
+                {row.createdAt}
+              </TableCell>
+              <TableCell component="th" scope="row">
+                {row.updatedAt}
               </TableCell>
              
             </TableRow>

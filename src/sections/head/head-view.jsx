@@ -162,7 +162,8 @@ export default function HeadView() {
             </Stack>
         </Box>
     );}
+    else{
     return (
         <h1>You are not a head</h1>
-    )
+    )}
 }
