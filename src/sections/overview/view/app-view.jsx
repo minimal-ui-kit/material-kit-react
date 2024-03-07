@@ -35,9 +35,7 @@ export default function AppView() {
   const [fixtures, setFixtures] = useState([]);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(null);
-  const [initialTableContent, setInitialTableContent] = useState(
-    '<table style="border-collapse: collapse; width: 100%; border-width: 3px;" border="1"><colgroup><col style="width: 50%;"><col style="width: 50%;"></colgroup><tbody><tr><td style="text-align: center; font-weight: 800; border-width: 3px;">Event</td><td style="text-align: center; font-weight: 800; border-width: 3px;">Time</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr>'
-  );
+  const [initialTableContent, setInitialTableContent] = useState(null);
   if (alsorole === 'head' || alsorole === 'volunteer' || alsorole === 'executive') {
     useEffect(() => {
       setLoading(true);
@@ -176,25 +174,25 @@ export default function AppView() {
               onChange={(e) => {
                 const currSport = e.target.value;
                 setSport(currSport);
-                if (
-                  currSport.includes('Athletics') ||
-                  currSport.includes('Aquatics') ||
-                  currSport.includes('Powerlifting')
-                ) {
-                  setInitialTableContent(
-                    '<table style="border-collapse: collapse; width: 100%; border-width: 3px;" border="1"><colgroup><col style="width: 50%;"><col style="width: 50%;"></colgroup><tbody><tr><td style="text-align: center; font-weight: 800; border-width: 3px;">Event</td><td style="text-align: center; font-weight: 800; border-width: 3px;">Time</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr>'
-                  );
-                  // Editor.setContent(
-                  //   '<table style="border-collapse: collapse; width: 100%;" border="1"><colgroup><col style="width: 33.3102%;"><col style="width: 33.3102%;"><col style="width: 33.3102%;"></colgroup><tbody><tr><td style="text-align: center; font-weight: 800;">Team 1</td><td style="text-align: center; font-weight: 800;">Team 2</td><td style="text-align: center; font-weight: 800;">Time</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>'
-                  // );
-                } else {
-                  setInitialTableContent(
-                    '<table style="border-collapse: collapse; width: 100%; border-width: 3px;" border="1"><colgroup><col style="width: 33.3102%;"><col style="width: 33.3102%;"><col style="width: 33.3102%;"></colgroup><tbody><tr><td style="text-align: center; font-weight: 800; border-width: 3px;">Team 1</td><td style="text-align: center; font-weight: 800; border-width: 3px;">Team 2</td><td style="text-align: center; font-weight: 800; border-width: 3px;">Time</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>'
-                  );
-                  // Editor.setContent(
-                  //   '<table style="border-collapse: collapse; width: 100%;" border="1"><colgroup><col style="width: 50%;"><col style="width: 50%;"></colgroup><tbody><tr><td style="text-align: center; font-weight: 800;">Event</td><td style="text-align: center; font-weight: 800;">Time</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr>'
-                  // );
-                }
+                // if (
+                //   currSport.includes('Athletics') ||
+                //   currSport.includes('Aquatics') ||
+                //   currSport.includes('Powerlifting')
+                // ) {
+                //   setInitialTableContent(
+                //     '<table style="border-collapse: collapse; width: 100%; border-width: 3px;" border="1"><colgroup><col style="width: 50%;"><col style="width: 50%;"></colgroup><tbody><tr><td style="text-align: center; font-weight: 800; border-width: 3px;">Event</td><td style="text-align: center; font-weight: 800; border-width: 3px;">Time</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr>'
+                //   );
+                //   // Editor.setContent(
+                //   //   '<table style="border-collapse: collapse; width: 100%;" border="1"><colgroup><col style="width: 33.3102%;"><col style="width: 33.3102%;"><col style="width: 33.3102%;"></colgroup><tbody><tr><td style="text-align: center; font-weight: 800;">Team 1</td><td style="text-align: center; font-weight: 800;">Team 2</td><td style="text-align: center; font-weight: 800;">Time</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>'
+                //   // );
+                // } else {
+                //   setInitialTableContent(
+                //     '<table style="border-collapse: collapse; width: 100%; border-width: 3px;" border="1"><colgroup><col style="width: 33.3102%;"><col style="width: 33.3102%;"><col style="width: 33.3102%;"></colgroup><tbody><tr><td style="text-align: center; font-weight: 800; border-width: 3px;">Team 1</td><td style="text-align: center; font-weight: 800; border-width: 3px;">Team 2</td><td style="text-align: center; font-weight: 800; border-width: 3px;">Time</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>'
+                //   );
+                //   // Editor.setContent(
+                //   //   '<table style="border-collapse: collapse; width: 100%;" border="1"><colgroup><col style="width: 50%;"><col style="width: 50%;"></colgroup><tbody><tr><td style="text-align: center; font-weight: 800;">Event</td><td style="text-align: center; font-weight: 800;">Time</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr>'
+                //   // );
+                // }
               }}
               value={sport}
             >
