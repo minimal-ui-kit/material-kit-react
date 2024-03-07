@@ -32,7 +32,7 @@ export default function BasicTable() {
             }
           }
         console.log("loading")
-        axios.get("http://localhost:8000/api/logs",config
+        axios.get("https://app-admin-api.asmitaiiita.org/api/logs",config
             
         ).then((response) => {
         console.log(response.data.data);
