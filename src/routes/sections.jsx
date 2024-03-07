@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import { Outlet, Navigate, useRoutes } from 'react-router-dom';
 
 import DashboardLayout from 'src/layouts/dashboard';
+import BasicTable from 'src/pages/logs';
 import AthleticsEdit from 'src/sections/products/athletics-edit';
 import AthleticsAdd from 'src/sections/products/athletics-res';
 import CricketEdit from 'src/sections/products/cricket-edit';
@@ -38,6 +39,7 @@ export default function Router() {
         { path: 'user', element: <UserPage /> },
         { path: 'emp', element: <EmpLeaderboardPage /> },
         { path: 'sendnoti', element: <SendNoti /> },
+        {path:"logs", element:<BasicTable />},
         { path: 'products', 
             element: ( 
                   <Outlet />
@@ -54,6 +56,7 @@ export default function Router() {
                   {path:"football",element:<FootballAdd/>},
                   {path:"athletics",element:<AthleticsAdd/>},
                   {path:"cricket",element:<CricketAdd/>},
+                 
                 ]
               },
               { path: 'editresults', 
