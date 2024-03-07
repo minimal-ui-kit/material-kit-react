@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext } from 'react';
+
 import axios from 'axios';
 const AuthContext = createContext();
 
@@ -27,8 +28,16 @@ export const AuthProvider = ({ children }) => {
         console.log(err);
       });
   };
+
+  const logout = async () => {
+    localStorage.removeItem('token');
+    location.reload();
+  };
+
   return (
-    <AuthContext.Provider value={{ login, name, role, check }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ login, logout, name, role, check }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 export default AuthContext;

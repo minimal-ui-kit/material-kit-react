@@ -50,9 +50,6 @@ export default function Nav({ openNav, onCloseNav }) {
         bgcolor: (theme) => alpha(theme.palette.grey[500], 0.12),
       }}
     />
-     
-
-    
   );
 
   const renderMenu = (
@@ -71,10 +68,6 @@ export default function Nav({ openNav, onCloseNav }) {
           src="/assets/images/logoblack.png"
           sx={{ width: 500, position: 'absolute', top: -50 }}
         />
-
-        
-
-        
       </Stack>
     </Box>
   );
@@ -90,10 +83,7 @@ export default function Nav({ openNav, onCloseNav }) {
         },
       }}
     >
-      
       <img alt="logo" width="300px" src="/assets/images/interblack.png" />
-
-      
 
       {renderMenu}
 
