@@ -91,7 +91,11 @@ if(alsorole==="executive"){
       path: '/sendnoti',
       icon: icon('ic_lock'),
     },
-    
+    {
+      title: 'Logs',
+      path: '/logs',
+      icon: icon('ic_user'),
+    },
     
   ];
 }
@@ -122,6 +126,11 @@ else if(alsorole==="volunteer"){
       title: 'login',
       path: '/login',
       icon: icon('ic_lock'),
+    },
+    {
+      title: 'Logs',
+      path: '/logs',
+      icon: icon('ic_user'),
     },
     
     
