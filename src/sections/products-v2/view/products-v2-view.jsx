@@ -21,10 +21,13 @@ import UserTableHead from '../user-table-head';
 import TableEmptyRows from '../table-empty-rows';
 import UserTableToolbar from '../user-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
+import {useApiShopReceipts} from "../etsy/useApi";
 
 // ----------------------------------------------------------------------
 
 export default function ProductsV2View() {
+  const { data} = useApiShopReceipts('https://api.example.com/data');
+  console.log(data);
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('asc');

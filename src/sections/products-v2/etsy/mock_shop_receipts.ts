@@ -1,4 +1,6 @@
-const MOCK_SHOP_LISTINGS = {
+import {EtsyApiResponse, ShopReceipt} from "./etsy-api.types";
+
+export const MOCK_SHOP_RECEIPTS: EtsyApiResponse<ShopReceipt> = {
     "count": 10,
     "results": [
         {
