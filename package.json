@@ -28,6 +28,10 @@
     "@mui/material": "^5.14.12",
     "@react-buddy/ide-toolbox": "^2.4.0",
     "@react-buddy/palette-mui": "^5.0.1",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.11.27",
+    "@types/react": "^18.2.65",
+    "@types/react-dom": "^18.2.22",
     "apexcharts": "^3.43.0",
     "auth0-js": "^9.24.1",
     "axios": "^1.6.7",
@@ -44,7 +48,8 @@
     "react-helmet-async": "^1.3.0",
     "react-hook-form": "^7.47.0",
     "react-router-dom": "^6.16.0",
-    "simplebar-react": "^3.2.4"
+    "simplebar-react": "^3.2.4",
+    "typescript": "^5.4.2"
   },
   "devDependencies": {
     "@vitejs/plugin-react-swc": "^3.4.0",
