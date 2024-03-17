@@ -9,8 +9,10 @@ import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import Iconify from 'src/components/iconify';
-import Label from 'src/components/label';
+import CurrencyFormat from 'react-currency-format';
+
+import Iconify from '../../components/iconify';
+import Label from '../../components/label';
 
 // ----------------------------------------------------------------------
 
@@ -57,8 +59,24 @@ export default function UserTableRow({
         <TableCell>{date}</TableCell>
 
         {/*<TableCell align="center">{items}</TableCell>*/}
-        <TableCell>{subtotal}</TableCell>
-        <TableCell>{netProfit.toFixed(2)}</TableCell>
+        <TableCell>
+          <CurrencyFormat
+            value={subtotal}
+            displayType={'text'}
+            isNumericString={true}
+            thousandSeparator={true}
+            suffix={' $'}
+          />
+        </TableCell>
+        <TableCell>
+          <CurrencyFormat
+            value={netProfit.toFixed(2)}
+            displayType={'text'}
+            isNumericString={true}
+            thousandSeparator={true}
+            suffix={' $'}
+          />
+        </TableCell>
 
         <TableCell>
           <Label
