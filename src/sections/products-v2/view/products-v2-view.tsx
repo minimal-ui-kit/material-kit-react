@@ -12,7 +12,7 @@ import { useState } from 'react';
 import Iconify from '../../../components/iconify';
 import Scrollbar from '../../../components/scrollbar';
 import { FinanceSheet } from '../etsy/etsy-utils.ts';
-import { useApiShopReceipts } from '../etsy/useApi.tsx';
+import { useApiShopReceipts } from '../etsy/useApi.ts';
 import TableEmptyRows from '../table-empty-rows';
 import TableNoData from '../table-no-data';
 import UserTableHead from '../user-table-head';
