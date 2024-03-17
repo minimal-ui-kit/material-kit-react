@@ -9,9 +9,9 @@ import TablePagination from '@mui/material/TablePagination';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 
-import { products } from '../../../_mock/user.ts';
 import Iconify from '../../../components/iconify';
 import Scrollbar from '../../../components/scrollbar';
+import { FinanceSheet } from '../etsy/etsy-utils.ts';
 import { useApiShopReceipts } from '../etsy/useApi.tsx';
 import TableEmptyRows from '../table-empty-rows';
 import TableNoData from '../table-no-data';
@@ -30,7 +30,7 @@ export default function ProductsV2View() {
 
   const [order, setOrder] = useState('asc');
 
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState<FinanceSheet>([]);
 
   const [orderBy, setOrderBy] = useState('name');
 
@@ -39,13 +39,13 @@ export default function ProductsV2View() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const headLabel = [
-    { id: 'order', label: 'Order' },
-    { id: 'customer', label: 'Customer' },
-    { id: 'date', label: 'Date' },
-    { id: 'items', label: 'Items', align: 'center' },
-    { id: 'subtotal', label: 'Subtotal' },
+    { id: 'shopReceipt.receipt_id', label: 'Order' },
+    { id: 'shopReceipt.name', label: 'Customer' },
+    { id: 'shopReceipt.created_timestamp', label: 'Date' },
+    // { id: 'items', label: 'Items', align: 'center' },
+    { id: 'subTotal', label: 'Subtotal' },
     { id: 'netProfit', label: 'Net profit' },
-    { id: 'status', label: 'Status' },
+    { id: 'shopReceipt.status', label: 'Status' },
     { id: '' },
   ];
 
@@ -59,8 +59,8 @@ export default function ProductsV2View() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = products.map((n) => n.name);
-      setSelected(newSelecteds);
+      const newSelectedIds = data.map((n) => n.shopReceipt?.receipt_id);
+      setSelected(newSelectedIds);
       return;
     }
     setSelected([]);
@@ -99,7 +99,7 @@ export default function ProductsV2View() {
   };
 
   const dataFiltered = applyFilter({
-    inputData: products,
+    inputData: data,
     comparator: getComparator(order, orderBy),
     filterName,
   });
@@ -133,7 +133,7 @@ export default function ProductsV2View() {
               <UserTableHead
                 order={order}
                 orderBy={orderBy}
-                rowCount={products.length}
+                rowCount={dataFiltered.length}
                 numSelected={selected.length}
                 onRequestSort={handleSort}
                 onSelectAllClick={handleSelectAllClick}
@@ -142,25 +142,27 @@ export default function ProductsV2View() {
               <TableBody>
                 {dataFiltered
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => (
-                    <UserTableRow
-                      key={row.order}
-                      order={row.order}
-                      customer={row.customer}
-                      date={row.date}
-                      items={row.items}
-                      subtotal={row.subtotal}
-                      netProfit={row.netProfit}
-                      status={row.status}
-                      avatarUrl={row.avatarUrl}
-                      selected={selected.indexOf(row.name) !== -1}
-                      handleClick={(event) => handleClick(event, row.name)}
-                    />
-                  ))}
+                  .map((row) => {
+                    console.log('row', row);
+                    return (
+                      <UserTableRow
+                        key={row.shopReceipt.receipt_id}
+                        order={row.shopReceipt.receipt_id}
+                        customer={row.shopReceipt.name}
+                        date={row.orderDate}
+                        subtotal={row.subTotal}
+                        netProfit={row.netProfit}
+                        status={row.shopReceipt.status}
+                        avatarUrl={row.avatarUrl}
+                        selected={selected.indexOf(row.shopReceipt.receipt_id) !== -1}
+                        handleClick={(event) => handleClick(event, row.name)}
+                      />
+                    );
+                  })}
 
                 <TableEmptyRows
                   height={77}
-                  emptyRows={emptyRows(page, rowsPerPage, products.length)}
+                  emptyRows={emptyRows(page, rowsPerPage, dataFiltered.length)}
                 />
 
                 {notFound && <TableNoData query={filterName} />}
@@ -172,7 +174,7 @@ export default function ProductsV2View() {
         <TablePagination
           page={page}
           component="div"
-          count={products.length}
+          count={dataFiltered.length}
           rowsPerPage={rowsPerPage}
           onPageChange={handleChangePage}
           rowsPerPageOptions={[5, 10, 25]}

@@ -35,7 +35,7 @@ import { createFinanceSheet, FinanceSheet } from './etsy-utils.ts';
 // }
 
 export function useApiShopReceipts() {
-  const [data, setData] = useState<FinanceSheet | null>(null);
+  const [data, setData] = useState<FinanceSheet>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {

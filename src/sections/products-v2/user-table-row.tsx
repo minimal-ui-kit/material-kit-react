@@ -19,7 +19,7 @@ export default function UserTableRow({
   order,
   customer,
   date,
-  items,
+  // items,
   subtotal,
   netProfit,
   status,
@@ -56,9 +56,9 @@ export default function UserTableRow({
 
         <TableCell>{date}</TableCell>
 
-        <TableCell align="center">{items}</TableCell>
+        {/*<TableCell align="center">{items}</TableCell>*/}
         <TableCell>{subtotal}</TableCell>
-        <TableCell>{netProfit}</TableCell>
+        <TableCell>{netProfit.toFixed(2)}</TableCell>
 
         <TableCell>
           <Label
@@ -109,7 +109,7 @@ UserTableRow.propTypes = {
   handleClick: PropTypes.func,
   customer: PropTypes.any,
   date: PropTypes.any,
-  items: PropTypes.any,
+  // items: PropTypes.any,
   subtotal: PropTypes.any,
   netProfit: PropTypes.any,
   selected: PropTypes.any,

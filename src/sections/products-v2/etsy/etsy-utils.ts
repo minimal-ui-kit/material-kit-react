@@ -1,7 +1,7 @@
 import { ShopReceipt } from './etsy-api.types.ts';
 
 export const createFinanceSheet = (data: ShopReceipt[]): FinanceSheet => {
-  return data.map((item) => {
+  return data.map((item, index) => {
     const nameSplit = item.name ? item.name.split(' ') : null;
     const productQuantity =
       item?.transactions.length > 0
@@ -11,12 +11,13 @@ export const createFinanceSheet = (data: ShopReceipt[]): FinanceSheet => {
           )
         : null;
 
-    const formatDate = (timestamp: number) => {
-      const date = new Date(timestamp);
-      return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+    const formatDate = (timestampInSeconds: number) => {
+      const timestampInMilliseconds = timestampInSeconds * 1000;
+      const date = new Date(timestampInMilliseconds);
+      return date.toLocaleDateString();
     };
 
-    return {
+    const financeSheet = {
       firstName: nameSplit ? nameSplit[0] : '',
       middleName: nameSplit ? (nameSplit.length > 2 ? nameSplit[1] : '') : '',
       lastName: nameSplit ? (nameSplit.length > 2 ? nameSplit[2] : nameSplit[1]) : '',
@@ -44,7 +45,26 @@ export const createFinanceSheet = (data: ShopReceipt[]): FinanceSheet => {
         ? item.total_shipping_cost.amount * 0.00065 * 0.2
         : null,
       shopReceipt: item,
+      //TODO: find other solution
+      avatarUrl: `/assets/images/avatars/avatar_${index + 1}.jpg`,
     };
+
+    const netProfit =
+      (financeSheet.subTotal ?? 0) +
+      (financeSheet.totalShippingCost ?? 0) -
+      (financeSheet.transactionFees ?? 0) -
+      (financeSheet.tfVAT ?? 0) -
+      (financeSheet.processingFees ?? 0) -
+      (financeSheet.pfVAT ?? 0) -
+      (financeSheet.listingFee ?? 0) -
+      (financeSheet.lfVAT ?? 0) -
+      (financeSheet.shippingFee ?? 0) -
+      (financeSheet.sfVAT ?? 0);
+
+    if (netProfit !== null) {
+      financeSheet.netProfit = netProfit;
+    }
+    return financeSheet;
   });
 };
 
@@ -68,4 +88,6 @@ export type FinanceSheet = Partial<{
   shippingFee: number | null;
   sfVAT: number | null;
   shopReceipt: ShopReceipt;
+  avatarUrl: string;
+  netProfit: number;
 }>[];

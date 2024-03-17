@@ -1,3 +1,7 @@
+import _ from 'lodash';
+
+import { FinanceSheet } from './etsy/etsy-utils.ts';
+
 export const visuallyHidden = {
   border: 0,
   margin: -1,
@@ -15,16 +19,16 @@ export function emptyRows(page, rowsPerPage, arrayLength) {
 }
 
 function descendingComparator(a, b, orderBy) {
-  if (a[orderBy] === null) {
+  if (_.get(a, orderBy) === null) {
     return 1;
   }
-  if (b[orderBy] === null) {
+  if (_.get(b, orderBy) === null) {
     return -1;
   }
-  if (b[orderBy] < a[orderBy]) {
+  if (_.get(b, orderBy) < _.get(a, orderBy)) {
     return -1;
   }
-  if (b[orderBy] > a[orderBy]) {
+  if (_.get(b, orderBy) > _.get(a, orderBy)) {
     return 1;
   }
   return 0;
@@ -48,7 +52,9 @@ export function applyFilter({ inputData, comparator, filterName }) {
 
   if (filterName) {
     inputData = inputData.filter(
-      (user) => user.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1,
+      (user: FinanceSheet) =>
+        user.shopReceipt?.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
+        user.shopReceipt?.receipt_id.toString().indexOf(filterName.toLowerCase()) !== -1,
     );
   }
 
