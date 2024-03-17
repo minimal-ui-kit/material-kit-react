@@ -37,7 +37,6 @@ import { EtsyApiResponse, ShopReceipt } from './etsy-api.types';
 export function useApiShopReceipts() {
   const [data, setData] = useState<EtsyApiResponse<ShopReceipt> | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     async function fetchDataMock() {
@@ -46,7 +45,6 @@ export function useApiShopReceipts() {
         setData(response);
         setLoading(false);
       } catch (error) {
-        setError(error);
         setLoading(false);
       }
     }
@@ -58,5 +56,5 @@ export function useApiShopReceipts() {
     };
   }, []);
 
-  return { data, loading, error };
+  return { data, loading };
 }
