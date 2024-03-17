@@ -44,7 +44,6 @@
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.1",
-    "react-currency-format": "^1.1.0",
     "react-dom": "^18.2.0",
     "react-helmet-async": "^1.3.0",
     "react-hook-form": "^7.47.0",
@@ -53,7 +52,6 @@
     "typescript": "^5.4.2"
   },
   "devDependencies": {
-    "@types/react-currency-format": "^1.0.4",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@vitejs/plugin-react-swc": "^3.4.0",
     "eslint": "^8.51.0",
