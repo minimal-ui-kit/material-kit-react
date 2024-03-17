@@ -25,6 +25,7 @@ import { applyFilter, emptyRows, getComparator } from '../utils';
 export default function ProductsV2View() {
   const { data } = useApiShopReceipts();
   console.log(data);
+
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('asc');

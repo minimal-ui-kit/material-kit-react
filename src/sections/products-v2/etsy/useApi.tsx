@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { fetchShopListingMock } from './etsy-api';
-import { EtsyApiResponse, ShopReceipt } from './etsy-api.types';
+import { createFinanceSheet, FinanceSheet } from './etsy-utils.ts';
 
 // function useApi(url: string) {
 //   const [data, setData] = useState<EtsyApiResponse | null>(null);
@@ -35,14 +35,16 @@ import { EtsyApiResponse, ShopReceipt } from './etsy-api.types';
 // }
 
 export function useApiShopReceipts() {
-  const [data, setData] = useState<EtsyApiResponse<ShopReceipt> | null>(null);
+  const [data, setData] = useState<FinanceSheet | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     async function fetchDataMock() {
       try {
         const response = await fetchShopListingMock();
-        setData(response);
+        const results = response?.results ? response?.results : [];
+        const financeSheet = createFinanceSheet(results);
+        setData(financeSheet);
         setLoading(false);
       } catch (error) {
         setLoading(false);
