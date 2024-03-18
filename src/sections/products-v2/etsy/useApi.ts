@@ -5,7 +5,7 @@ import { EtsyApiResponse, ShopReceipt } from './etsy-api.types';
 import { createFinanceSheet, FinanceSheet } from './etsy-utils.ts';
 
 export function useApiShopReceipts(
-  apiUrl = 'http://localhost:3003', // Default URL if environment variable is not set
+  apiUrl = process.env.API_URL || 'http://localhost:3003', // Default URL if environment variable is not set
 ) {
   const [data, setData] = useState<FinanceSheet>([]);
   const [loading, setLoading] = useState<boolean>(true);
