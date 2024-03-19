@@ -6,6 +6,7 @@ import DashboardLayout from 'src/layouts/dashboard';
 export const IndexPage = lazy(() => import('src/pages/app'));
 export const BlogPage = lazy(() => import('src/pages/blog'));
 export const UserPage = lazy(() => import('src/pages/user'));
+export const EmployeePage = lazy(() => import('src/pages/employee'));
 export const LoginPage = lazy(() => import('src/pages/login'));
 export const ProductsPage = lazy(() => import('src/pages/products'));
 export const AdminPage = lazy(()=> import('src/pages/admin'));
@@ -26,6 +27,7 @@ export default function Router() {
       children: [
         { element: <IndexPage />, index: true },
         { path: 'user', element: <UserPage /> },
+        { path: 'employee', element: <EmployeePage /> },
         { path: 'products', element: <ProductsPage /> },
         { path: 'blog', element: <BlogPage /> },
         { path: 'admin', element: <AdminPage />}
