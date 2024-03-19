@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { Container } from '@mui/material';
 
 export default function AdminPage() {
     return (
