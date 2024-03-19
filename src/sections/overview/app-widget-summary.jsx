@@ -9,7 +9,7 @@ import { fShortenNumber } from 'src/utils/format-number';
 
 // ----------------------------------------------------------------------
 
-export default function AppWidgetSummary({ title, total, icon, color = 'primary', sx, ...other }) {
+export default function AppWidgetSummary({ title, total, icon, /* color = 'primary', */ sx, ...other }) {
   return (
     <Card
       component={Stack}
