@@ -33,7 +33,7 @@ const MENU_OPTIONS = [
 
 // ----------------------------------------------------------------------
 
-export default function AccountPopover() {
+export default function ShopPopover() {
   const [open, setOpen] = useState(null);
   const { link } = getShopLoginLink();
   const { shop } = useApiShop();
@@ -46,9 +46,10 @@ export default function AccountPopover() {
     setOpen(null);
   };
 
-  return (
-    <>
+  if (shop) {
+    return [
       <IconButton
+        key={'1'}
         onClick={handleOpen}
         sx={{
           width: 40,
@@ -61,19 +62,6 @@ export default function AccountPopover() {
         }}
       >
         <Avatar
-          src={account.photoURL}
-          alt={account.displayName}
-          sx={{
-            width: 36,
-            height: 36,
-            border: (theme) => `solid 2px ${theme.palette.background.default}`,
-          }}
-        >
-          {account.displayName.charAt(0).toUpperCase()}
-        </Avatar>
-      </IconButton>
-      {shop ? (
-        <Avatar
           src={shop.icon ?? ''}
           alt={account.displayName}
           sx={{
@@ -84,23 +72,9 @@ export default function AccountPopover() {
         >
           {shop.name.charAt(0).toUpperCase()}
         </Avatar>
-      ) : (
-        <a href={link}>
-          <Avatar
-            src={'/assets/plus.png'}
-            alt={account.displayName}
-            sx={{
-              width: 36,
-              height: 36,
-              border: (theme) => `solid 2px ${theme.palette.background.default}`,
-            }}
-          >
-            {account.displayName.charAt(0).toUpperCase()}
-          </Avatar>
-        </a>
-      )}
-
+      </IconButton>,
       <Popover
+        key={'2'}
         open={!!open}
         anchorEl={open}
         onClose={handleClose}
@@ -142,7 +116,23 @@ export default function AccountPopover() {
         >
           Logout
         </MenuItem>
-      </Popover>
-    </>
-  );
+      </Popover>,
+    ];
+  } else {
+    return (
+      <a href={link}>
+        <Avatar
+          src={'/assets/plus.png'}
+          alt={account.displayName}
+          sx={{
+            width: 36,
+            height: 36,
+            border: (theme) => `solid 2px ${theme.palette.background.default}`,
+          }}
+        >
+          {account.displayName.charAt(0).toUpperCase()}
+        </Avatar>
+      </a>
+    );
+  }
 }

@@ -9,10 +9,8 @@ import Iconify from 'src/components/iconify';
 import { useResponsive } from 'src/hooks/use-responsive';
 import { bgBlur } from 'src/theme/css';
 
-import AccountPopover from './common/account-popover';
-import LanguagePopover from './common/language-popover';
-import NotificationsPopover from './common/notifications-popover';
 import Searchbar from './common/searchbar';
+import ShopPopover from './common/shop-popover.tsx';
 import { HEADER, NAV } from './config-layout';
 
 // ----------------------------------------------------------------------
@@ -35,9 +33,9 @@ export default function Header({ onOpenNav }) {
       <Box sx={{ flexGrow: 1 }} />
 
       <Stack direction="row" alignItems="center" spacing={1}>
-        <LanguagePopover />
-        <NotificationsPopover />
-        <AccountPopover />
+        {/*<LanguagePopover />*/}
+        {/*<NotificationsPopover />*/}
+        <ShopPopover />
       </Stack>
     </>
   );
