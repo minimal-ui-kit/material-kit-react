@@ -9,6 +9,11 @@ import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 import { account } from 'src/_mock/account';
 
+import {
+  getShopLoginLink,
+  useApiShop,
+} from '../../../sections/products-v2/etsy/useApi.ts';
+
 // ----------------------------------------------------------------------
 
 const MENU_OPTIONS = [
@@ -30,6 +35,8 @@ const MENU_OPTIONS = [
 
 export default function AccountPopover() {
   const [open, setOpen] = useState(null);
+  const { link } = getShopLoginLink();
+  const { shop } = useApiShop();
 
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
@@ -65,6 +72,33 @@ export default function AccountPopover() {
           {account.displayName.charAt(0).toUpperCase()}
         </Avatar>
       </IconButton>
+      {shop ? (
+        <Avatar
+          src={shop.icon ?? ''}
+          alt={account.displayName}
+          sx={{
+            width: 36,
+            height: 36,
+            border: (theme) => `solid 2px ${theme.palette.background.default}`,
+          }}
+        >
+          {shop.name.charAt(0).toUpperCase()}
+        </Avatar>
+      ) : (
+        <a href={link}>
+          <Avatar
+            src={'/assets/plus.png'}
+            alt={account.displayName}
+            sx={{
+              width: 36,
+              height: 36,
+              border: (theme) => `solid 2px ${theme.palette.background.default}`,
+            }}
+          >
+            {account.displayName.charAt(0).toUpperCase()}
+          </Avatar>
+        </a>
+      )}
 
       <Popover
         open={!!open}

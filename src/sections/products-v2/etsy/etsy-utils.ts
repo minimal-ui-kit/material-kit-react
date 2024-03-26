@@ -92,3 +92,10 @@ export type FinanceSheet = Partial<{
   avatarUrl: string;
   netProfit: number;
 }>[];
+
+export type Shop = {
+  icon: string;
+  name: string;
+  url: string;
+  shop_id: number;
+};
