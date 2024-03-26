@@ -22,45 +22,46 @@ export const createFinanceSheet = (data: ShopReceipt[]): FinanceSheet => {
       middleName: nameSplit ? (nameSplit.length > 2 ? nameSplit[1] : '') : '',
       lastName: nameSplit ? (nameSplit.length > 2 ? nameSplit[2] : nameSplit[1]) : '',
       orderDate: formatDate(item.created_timestamp),
-      itemPrice: item?.total_price?.amount ? item.total_price.amount / 100 : null,
-      discount: item?.discount_amt?.amount ? item.discount_amt.amount / 100 : null,
-      subTotal: item?.subtotal?.amount ? item.subtotal.amount / 100 : null,
+      itemPrice: item?.total_price?.amount ? item.total_price.amount / 100 : 0,
+      discount: item?.discount_amt?.amount ? item.discount_amt.amount / 100 : 0,
+      subTotal: item?.subtotal?.amount ? item.subtotal.amount / 100 : 0,
       totalShippingCost: item?.total_shipping_cost?.amount
         ? item.total_shipping_cost.amount / 100
-        : null,
-      tax: item?.total_tax_cost?.amount ? item.total_tax_cost.amount / 100 : null,
-      total: item?.grandtotal?.amount ? item.grandtotal.amount / 100 : null,
-      transactionFees: item?.subtotal?.amount ? item.subtotal.amount * 0.00065 : null,
-      tfVAT: item?.subtotal?.amount ? item.subtotal.amount * 0.00065 * 0.2 : null,
+        : 0,
+      tax: item?.total_tax_cost?.amount ? item.total_tax_cost.amount / 100 : 0,
+      total: item?.grandtotal?.amount ? item.grandtotal.amount / 100 : 0,
+      transactionFees: item?.subtotal?.amount ? item.subtotal.amount * 0.00065 : 0,
+      tfVAT: item?.subtotal?.amount ? item.subtotal.amount * 0.00065 * 0.2 : 0,
       processingFees: item?.grandtotal?.amount
         ? item.grandtotal.amount * 0.0004 + 0.3
-        : null,
-      pfVAT: item?.grandtotal?.amount ? item.grandtotal.amount * 0.00008 + 0.06 : null,
-      listingFee: productQuantity ? productQuantity * 0.18 : null,
-      lfVAT: productQuantity ? productQuantity * 0.04 : null,
+        : 0,
+      pfVAT: item?.grandtotal?.amount ? item.grandtotal.amount * 0.00008 + 0.06 : 0,
+      listingFee: productQuantity ? productQuantity * 0.18 : 0,
+      lfVAT: productQuantity ? productQuantity * 0.04 : 0,
       shippingFee: item?.total_shipping_cost?.amount
-        ? item.total_shipping_cost.amount + 0.00065
-        : null,
+        ? item.total_shipping_cost.amount * 0.00065
+        : 0,
       sfVAT: item?.total_shipping_cost?.amount
         ? item.total_shipping_cost.amount * 0.00065 * 0.2
-        : null,
+        : 0,
       shopReceipt: item,
       //TODO: find other solution
       avatarUrl: `/assets/images/avatars/avatar_${index + 1}.jpg`,
     };
 
     const netProfit =
-      (financeSheet.subTotal ?? 0) +
-      (financeSheet.totalShippingCost ?? 0) -
-      (financeSheet.transactionFees ?? 0) -
-      (financeSheet.tfVAT ?? 0) -
-      (financeSheet.processingFees ?? 0) -
-      (financeSheet.pfVAT ?? 0) -
-      (financeSheet.listingFee ?? 0) -
-      (financeSheet.lfVAT ?? 0) -
-      (financeSheet.shippingFee ?? 0) -
-      (financeSheet.sfVAT ?? 0);
+      financeSheet.subTotal +
+      financeSheet.totalShippingCost -
+      financeSheet.transactionFees -
+      financeSheet.tfVAT -
+      financeSheet.processingFees -
+      financeSheet.pfVAT -
+      financeSheet.listingFee -
+      financeSheet.lfVAT -
+      financeSheet.shippingFee -
+      financeSheet.sfVAT;
 
+    //TODO(Question): is it possible that the value is invalid or other than number?
     if (netProfit !== null) {
       financeSheet.netProfit = netProfit;
     }
