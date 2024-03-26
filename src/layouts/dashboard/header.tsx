@@ -9,6 +9,7 @@ import Iconify from 'src/components/iconify';
 import { useResponsive } from 'src/hooks/use-responsive';
 import { bgBlur } from 'src/theme/css';
 
+import BrightnessButton from './common/brightness-button.tsx';
 import Searchbar from './common/searchbar';
 import ShopPopover from './common/shop-popover.tsx';
 import { HEADER, NAV } from './config-layout';
@@ -36,6 +37,7 @@ export default function Header({ onOpenNav }) {
         {/*<LanguagePopover />*/}
         {/*<NotificationsPopover />*/}
         <ShopPopover />
+        <BrightnessButton />
       </Stack>
     </>
   );

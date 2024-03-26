@@ -1,4 +1,9 @@
+import { PaletteMode } from '@mui/material';
 import { alpha } from '@mui/material/styles';
+
+import { customShadows } from './custom-shadows.ts';
+import { shadows } from './shadows.ts';
+import { typography } from './typography.ts';
 
 // ----------------------------------------------------------------------
 
@@ -121,3 +126,27 @@ export function palette() {
     },
   };
 }
+
+export const getDesignTokens = (mode: PaletteMode) =>
+  mode === 'dark'
+    ? {
+        palette: {
+          mode,
+          // palette values for dark mode
+          text: {
+            primary: '#fff',
+            secondary: grey[500],
+          },
+        },
+        typography,
+        shadows: shadows(),
+        customShadows: customShadows(),
+        shape: { borderRadius: 8 },
+      }
+    : {
+        palette: palette(),
+        typography,
+        shadows: shadows(),
+        customShadows: customShadows(),
+        shape: { borderRadius: 8 },
+      };
