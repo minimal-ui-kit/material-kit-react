@@ -14,11 +14,20 @@ export function useApiShopReceipts(
   useEffect(() => {
     async function fetchData() {
       try {
-        const getMe: { shop_id: number; user_id: number } = await fetch(
-          `${apiUrl}/users/me`,
+        const users: { shop_id: number; user_id: number }[] = await fetch(
+          `${apiUrl}/users`,
         ).then((res) => res.json());
 
-        const response = await fetch(`${apiUrl}/shops/${getMe.shop_id}/receipts`);
+        if (!users || users.length === 0) {
+          throw new Error('No users found');
+        }
+
+        const firstUser = users[0]; // Use the first user
+
+        const response = await fetch(
+          `${apiUrl}/users/${firstUser.user_id}/shops/${firstUser.shop_id}/receipts`,
+        );
+
         if (!response.ok) {
           throw new Error('Failed to fetch data');
         }
@@ -54,12 +63,19 @@ export function useApiShop(
   useEffect(() => {
     async function fetchData() {
       try {
-        const getMe: { shop_id: number; user_id: number } = await fetch(
-          `${apiUrl}/users/me`,
+        const users: { shop_id: number; user_id: number }[] = await fetch(
+          `${apiUrl}/users`,
         ).then((res) => res.json());
-        const shopId = getMe.shop_id;
 
-        const response = await fetch(`${apiUrl}/shop/${shopId}`);
+        if (!users || users.length === 0) {
+          throw new Error('No users found');
+        }
+
+        const firstUser = users[0]; // Use the first user
+
+        const shopId = firstUser.shop_id;
+
+        const response = await fetch(`${apiUrl}/shops/${shopId}`);
         if (!response.ok) {
           throw new Error('Failed to fetch data');
         }
