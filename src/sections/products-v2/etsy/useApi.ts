@@ -101,36 +101,24 @@ export function useApiShop(
 export function getShopLoginLink(
   apiUrl = process.env.API_URL || 'http://localhost:3003', // Default URL if environment variable not set
 ) {
-  const [link, setLink] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<unknown | null>(null);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch(`${apiUrl}/genLink`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
-        }
-
-        const result: string = await response.text();
-        console.log(result);
-        setLink(result);
-        setLoading(false);
-      } catch (error) {
-        setError(error);
-        setLoading(false);
+  const fetchShopLink = async function () {
+    try {
+      const response = await fetch(`${apiUrl}/genLink`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch data');
       }
+
+      const result: string = await response.text();
+      console.log(result);
+      return result;
+    } catch (error) {
+      setError(error);
     }
+  };
 
-    fetchData();
-
-    return () => {
-      // Cleanup function if needed
-    };
-  }, [apiUrl]);
-
-  return { link, loading, error };
+  return { fetchShopLink, error };
 }
 
 export function useApiShopReceiptsMock() {

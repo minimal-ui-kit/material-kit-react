@@ -35,7 +35,7 @@ const MENU_OPTIONS = [
 
 export default function ShopPopover() {
   const [open, setOpen] = useState(null);
-  const { link } = getShopLoginLink();
+  const { fetchShopLink } = getShopLoginLink();
   const { shop } = useApiShop();
 
   const handleOpen = (event) => {
@@ -45,6 +45,11 @@ export default function ShopPopover() {
   const handleClose = () => {
     setOpen(null);
   };
+
+  async function handleShopLogin() {
+    const link = await fetchShopLink();
+    link ? window.location.replace(link) : null;
+  }
 
   if (shop) {
     return [
@@ -120,7 +125,19 @@ export default function ShopPopover() {
     ];
   } else {
     return (
-      <a href={link}>
+      <IconButton
+        key={'1'}
+        onClick={handleShopLogin}
+        sx={{
+          width: 40,
+          height: 40,
+          background: (theme) => alpha(theme.palette.grey[500], 0.08),
+          ...(open && {
+            background: (theme) =>
+              `linear-gradient(135deg, ${theme.palette.primary.light} 0%, ${theme.palette.primary.main} 100%)`,
+          }),
+        }}
+      >
         <Avatar
           src={'/assets/plus.png'}
           alt={account.displayName}
@@ -132,7 +149,7 @@ export default function ShopPopover() {
         >
           {account.displayName.charAt(0).toUpperCase()}
         </Avatar>
-      </a>
+      </IconButton>
     );
   }
 }
