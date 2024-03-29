@@ -98,7 +98,7 @@ export default function ProductsV2View() {
   };
 
   const dataFiltered = applyFilter({
-    inputData: data,
+    inputData: data.flatMap((item) => item.data.map((d) => ({ ...d, user: item.user }))),
     comparator: getComparator(order, orderBy),
     filterName,
   });

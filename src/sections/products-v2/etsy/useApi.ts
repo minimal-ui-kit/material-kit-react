@@ -9,7 +9,9 @@ export type ShopWithUserId = Shop & { user_id?: number };
 export function useApiShopReceipts(
   apiUrl = process.env.API_URL || 'http://localhost:3003', // Default URL if environment variable not set
 ) {
-  const [data, setData] = useState<FinanceSheet>([]);
+  const [data, setData] = useState<
+    { user: { shop_id: number; user_id: number }; data: FinanceSheet }[]
+  >([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<unknown | null>(null);
 
@@ -24,21 +26,27 @@ export function useApiShopReceipts(
           throw new Error('No users found');
         }
 
-        const firstUser = users[1]; // Use the first user
+        const allData: {
+          user: { shop_id: number; user_id: number };
+          data: FinanceSheet;
+        }[] = [];
 
-        const response = await fetch(
-          `${apiUrl}/users/${firstUser.user_id}/shops/${firstUser.shop_id}/receipts`,
-        );
+        for (const user of users) {
+          const response = await fetch(
+            `${apiUrl}/users/${user.user_id}/shops/${user.shop_id}/receipts`,
+          );
 
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
+          if (!response.ok) {
+            throw new Error('Failed to fetch data');
+          }
+          const json: EtsyApiResponse<ShopReceipt> = await response.json();
+          // console.log('fetching data', json);
+          const results: ShopReceipt[] = json?.results ? json?.results : [];
+          const financeSheet = createFinanceSheet(results);
+          allData.push({ user, data: financeSheet });
         }
-        const json: EtsyApiResponse<ShopReceipt> = await response.json();
-        console.log('fetching data', json);
-        const results: ShopReceipt[] = json?.results ? json?.results : [];
-        const financeSheet = createFinanceSheet(results);
-        console.log('fetching data', financeSheet);
-        setData(financeSheet);
+
+        setData(allData);
         setLoading(false);
       } catch (error) {
         setError(error);

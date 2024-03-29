@@ -21,7 +21,6 @@ export default function AppView() {
   const { data } = useApiShopReceipts();
   const { shops } = useApiShop();
 
-  console.log('dataaaa', data);
   let totalRevenue = 0;
   let orderedCount = 0;
   let refundedCount = 0;
@@ -29,14 +28,19 @@ export default function AppView() {
 
   if (data) {
     for (const item of data) {
-      if (item.total) {
-        totalRevenue += item.total;
-      }
-      if (item.shopReceipt && item.shopReceipt.is_paid) {
-        orderedCount++;
-      }
-      if (item.shopReceipt && item.shopReceipt.status === 'Fully Refunded') {
-        refundedCount++;
+      const financeSheet = item.data;
+      if (financeSheet) {
+        for (const receipt of financeSheet) {
+          if (receipt.total) {
+            totalRevenue += receipt.total;
+          }
+          if (receipt.shopReceipt && receipt.shopReceipt.is_paid) {
+            orderedCount++;
+          }
+          if (receipt.shopReceipt && receipt.shopReceipt.status === 'Fully Refunded') {
+            refundedCount++;
+          }
+        }
       }
     }
   }
