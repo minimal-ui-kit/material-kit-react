@@ -4,6 +4,8 @@ import { fetchShopListingMock } from './etsy-api';
 import { EtsyApiResponse, ShopReceipt } from './etsy-api.types';
 import { createFinanceSheet, FinanceSheet, Shop } from './etsy-utils.ts';
 
+export type ShopWithUserId = Shop & { user_id?: number };
+
 export function useApiShopReceipts(
   apiUrl = process.env.API_URL || 'http://localhost:3003', // Default URL if environment variable not set
 ) {
@@ -22,7 +24,7 @@ export function useApiShopReceipts(
           throw new Error('No users found');
         }
 
-        const firstUser = users[0]; // Use the first user
+        const firstUser = users[1]; // Use the first user
 
         const response = await fetch(
           `${apiUrl}/users/${firstUser.user_id}/shops/${firstUser.shop_id}/receipts`,
@@ -32,9 +34,10 @@ export function useApiShopReceipts(
           throw new Error('Failed to fetch data');
         }
         const json: EtsyApiResponse<ShopReceipt> = await response.json();
-        console.log(json);
+        console.log('fetching data', json);
         const results: ShopReceipt[] = json?.results ? json?.results : [];
         const financeSheet = createFinanceSheet(results);
+        console.log('fetching data', financeSheet);
         setData(financeSheet);
         setLoading(false);
       } catch (error) {
@@ -56,7 +59,7 @@ export function useApiShopReceipts(
 export function useApiShop(
   apiUrl = process.env.API_URL || 'http://localhost:3003', // Default URL if environment variable not set
 ) {
-  const [shop, setShop] = useState<Shop>();
+  const [shops, setShops] = useState<ShopWithUserId[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<unknown | null>(null);
 
@@ -71,16 +74,17 @@ export function useApiShop(
           throw new Error('No users found');
         }
 
-        const firstUser = users[0]; // Use the first user
-
-        const shopId = firstUser.shop_id;
-
-        const response = await fetch(`${apiUrl}/shops/${shopId}`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
+        const fetchedShops: ShopWithUserId[] = [];
+        for (const user of users) {
+          const response = await fetch(`${apiUrl}/shops/${user.shop_id}`);
+          if (!response.ok) {
+            throw new Error('Failed to fetch data');
+          }
+          const shop: ShopWithUserId = await response.json();
+          shop.user_id = Number(user.user_id);
+          fetchedShops.push(shop);
         }
-        const shopp: Shop = await response.json();
-        setShop(shopp);
+        setShops(fetchedShops);
         setLoading(false);
       } catch (error) {
         setError(error);
@@ -95,7 +99,14 @@ export function useApiShop(
     };
   }, [apiUrl]);
 
-  return { shop, loading, error };
+  const deleteShop = (userId: number) => {
+    const newShops = shops.filter((shop) => {
+      return shop.user_id !== userId;
+    });
+    setShops(newShops);
+  };
+
+  return { shops, loading, error, deleteShop };
 }
 
 export function getShopLoginLink(
@@ -146,4 +157,32 @@ export function useApiShopReceiptsMock() {
   }, []);
 
   return { data, loading };
+}
+
+export function useDeleteUserById(
+  apiUrl = process.env.API_URL || 'http://localhost:3003',
+) {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<unknown | null>(null);
+
+  const deleteUser = async (userId: number) => {
+    setLoading(true);
+    try {
+      console.log('Deleting user', userId);
+      const response = await fetch(`${apiUrl}/users/${userId}/delete`, {
+        method: 'GET',
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete user');
+      }
+
+      setLoading(false);
+    } catch (error) {
+      setError(error);
+      setLoading(false);
+    }
+  };
+
+  return { deleteUser, loading, error };
 }

@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Unstable_Grid2';
 import Iconify from 'src/components/iconify';
 
+import { useApiShop, useApiShopReceipts } from '../../products-v2/etsy/useApi.ts';
 import AppConversionRates from '../app-conversion-rates';
 import AppCurrentSubject from '../app-current-subject';
 import AppCurrentVisits from '../app-current-visits';
@@ -17,6 +18,29 @@ import AppWidgetSummary from '../app-widget-summary';
 // ----------------------------------------------------------------------
 
 export default function AppView() {
+  const { data } = useApiShopReceipts();
+  const { shops } = useApiShop();
+
+  console.log('dataaaa', data);
+  let totalRevenue = 0;
+  let orderedCount = 0;
+  let refundedCount = 0;
+  const numberOfShops = shops.length;
+
+  if (data) {
+    for (const item of data) {
+      if (item.total) {
+        totalRevenue += item.total;
+      }
+      if (item.shopReceipt && item.shopReceipt.is_paid) {
+        orderedCount++;
+      }
+      if (item.shopReceipt && item.shopReceipt.status === 'Fully Refunded') {
+        refundedCount++;
+      }
+    }
+  }
+
   return (
     <Container maxWidth="xl">
       <Typography variant="h4" sx={{ mb: 5 }}>
@@ -26,8 +50,8 @@ export default function AppView() {
       <Grid container spacing={3}>
         <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
-            title="Weekly Sales"
-            total={714000}
+            title="Number of Connected Stores"
+            total={numberOfShops}
             color="success"
             icon={<img alt="icon" src="/assets/icons/glass/ic_glass_bag.png" />}
           />
@@ -35,8 +59,8 @@ export default function AppView() {
 
         <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
-            title="New Users"
-            total={1352831}
+            title="Number of Orders"
+            total={orderedCount}
             color="info"
             icon={<img alt="icon" src="/assets/icons/glass/ic_glass_users.png" />}
           />
@@ -44,8 +68,8 @@ export default function AppView() {
 
         <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
-            title="Item Orders"
-            total={1723315}
+            title="Total Revenue"
+            total={totalRevenue}
             color="warning"
             icon={<img alt="icon" src="/assets/icons/glass/ic_glass_buy.png" />}
           />
@@ -53,8 +77,8 @@ export default function AppView() {
 
         <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
-            title="Bug Reports"
-            total={234}
+            title="Number of Items Refunded"
+            total={refundedCount}
             color="error"
             icon={<img alt="icon" src="/assets/icons/glass/ic_glass_message.png" />}
           />
