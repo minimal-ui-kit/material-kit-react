@@ -1,4 +1,7 @@
-import { useState, useContext } from 'react';
+// import { AppContext } from '../../../context/app-context';
+import { useState } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { useSelector } from 'react-redux';
 
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
@@ -9,8 +12,6 @@ import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 
-import { AppContext } from '../../../context/app-context';
-
 // ----------------------------------------------------------------------
 
 const MENU_OPTIONS = [];
@@ -19,7 +20,8 @@ const MENU_OPTIONS = [];
 
 export default function AccountPopover() {
   const [open, setOpen] = useState(null);
-  const { user, setIsAuthenticated } = useContext(AppContext);
+  // const { user, setIsAuthenticated } = useContext(AppContext);
+  const user = useSelector((state) => state.user);
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
   };
@@ -30,8 +32,8 @@ export default function AccountPopover() {
   const handleLogout = () => {
     localStorage.removeItem('code');
     localStorage.removeItem('token');
-    setIsAuthenticated(false);
-    window.open('/');
+    localStorage.removeItem('isAuthenticated');
+    window.open('/', '_self');
   };
 
   return (

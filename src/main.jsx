@@ -1,10 +1,12 @@
 import { Suspense } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 
 import App from './app';
-import { AppProvider } from './context/app-context';
+import store from './redux/store';
 
 // ----------------------------------------------------------------------
 
@@ -14,9 +16,9 @@ root.render(
   <HelmetProvider>
     <BrowserRouter>
       <Suspense>
-        <AppProvider>
+        <Provider store={store}>
           <App />
-        </AppProvider>
+        </Provider>
       </Suspense>
     </BrowserRouter>
   </HelmetProvider>

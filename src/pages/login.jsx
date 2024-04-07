@@ -8,7 +8,7 @@ export default function LoginPage() {
   return (
     <>
       <Helmet>
-        <title> Login with JIRA</title>
+        <title>Login with JIRA</title>
       </Helmet>
 
       <LoginView />

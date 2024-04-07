@@ -1,22 +1,33 @@
-import React, { lazy, Suspense, useContext } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { useSelector } from 'react-redux';
+import React, { lazy, Suspense } from 'react';
 import { Outlet, Navigate, useRoutes } from 'react-router-dom';
 
 import DashboardLayout from 'src/layouts/dashboard';
 
+import WBSPage from '../pages/wbs-list';
 import FilesPage from '../pages/files-list';
-import { AppContext } from '../context/app-context';
+import { useApi } from '../redux/api-calls';
+import ProjectFieldsListPage from '../pages/project-fields-list';
 
 // Lazy-loaded components
 const IndexPage = lazy(() => import('src/pages/app'));
 const BlogPage = lazy(() => import('src/pages/blog'));
 const UserPage = lazy(() => import('src/pages/user'));
 const LoginPage = lazy(() => import('src/pages/login'));
-const ProductsPage = lazy(() => import('src/pages/products'));
+const JiraProjectsPage = lazy(() => import('src/pages/jira-projects-list'));
 const Page404 = lazy(() => import('src/pages/page-not-found'));
-
 export default function Router() {
-  const { isAuthenticated } = useContext(AppContext);
-
+  // const { fetchUser, isAuthenticated } = useContext(AppContext);
+  const isAuthenticated = useSelector((state) => state.isAuthenticated);
+  const api = useApi();
+  // useEffect(() => {
+  //   const funct = async () => {
+  //     await api.fetchUser();
+  //   };
+  //   funct();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
   //
   // useEffect(() => {
   //   const checkAuthentication = async () => {
@@ -36,7 +47,7 @@ export default function Router() {
   // eslint-disable-next-line react/prop-types
   const ProtectedRoute = ({ children }) => {
     // const isAuthenticated = checkAuthentication();
-
+    api.fetchUser();
     // const authStatus = await checkAuthentication();
     // setIsAuthenticated(authStatus);
 
@@ -51,7 +62,7 @@ export default function Router() {
   // eslint-disable-next-line react/prop-types
   const PublicRoute = ({ children }) => {
     // const isAuthenticated = checkAuthentication();
-
+    // api.fetchUser();
     if (isAuthenticated) {
       return <Navigate to="/" replace />;
     }
@@ -78,7 +89,7 @@ export default function Router() {
           index: true,
         },
         {
-          path: 'user',
+          path: 'resources',
           element: (
             <ProtectedRoute>
               <UserPage />
@@ -94,10 +105,26 @@ export default function Router() {
           ),
         },
         {
-          path: 'products',
+          path: 'files/:fileId',
           element: (
             <ProtectedRoute>
-              <ProductsPage />
+              <WBSPage />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: 'jira-projects',
+          element: (
+            <ProtectedRoute>
+              <JiraProjectsPage />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: 'jira-projects/:id',
+          element: (
+            <ProtectedRoute>
+              <ProjectFieldsListPage />
             </ProtectedRoute>
           ),
         },

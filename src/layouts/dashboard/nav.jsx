@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useEffect, useContext } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { useSelector } from 'react-redux';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -18,14 +20,13 @@ import Scrollbar from 'src/components/scrollbar';
 
 import { NAV } from './config-layout';
 import navConfig from './config-navigation';
-import { AppContext } from '../../context/app-context';
 
 // ----------------------------------------------------------------------
 
 export default function Nav({ openNav, onCloseNav }) {
   const pathname = usePathname();
-  const { user, fetchUser } = useContext(AppContext);
-
+  // const { user } = useContext(AppContext);
+  const user = useSelector((state) => state.user);
   const upLg = useResponsive('up', 'lg');
 
   useEffect(() => {
@@ -46,9 +47,6 @@ export default function Nav({ openNav, onCloseNav }) {
         borderRadius: 1.5,
         alignItems: 'center',
         bgcolor: (theme) => alpha(theme.palette.grey[500], 0.12),
-      }}
-      onClick={() => {
-        fetchUser();
       }}
     >
       <Avatar src={user.picture} alt="photoURL" sx={{ width: 50, height: 'auto' }} />

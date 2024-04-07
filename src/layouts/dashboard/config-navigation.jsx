@@ -7,7 +7,7 @@ import Iconify from '../../components/iconify';
 const icon = (name) => (
   <SvgColor src={`/assets/icons/navbar/${name}.svg`} sx={{ width: 1, height: 1 }} />
 );
-const IconifyIcon = (name) => <Iconify icon="material-symbols:csv" width={25} />;
+const IconifyIcon = (name) => <Iconify icon={name} width={25} />;
 
 const navConfig = [
   {
@@ -16,19 +16,19 @@ const navConfig = [
     icon: icon('ic_analytics'),
   },
   {
-    title: 'CSV Files',
+    title: 'Projects',
     path: '/files',
-    icon: IconifyIcon('ic_sheet'),
+    icon: IconifyIcon('file-icons:microsoft-project'),
   },
   {
-    title: 'product',
-    path: '/products',
-    icon: icon('ic_cart'),
+    title: 'Jira Projects',
+    path: '/jira-projects',
+    icon: IconifyIcon('mdi:jira'),
   },
   {
-    title: 'blog',
-    path: '/blog',
-    icon: icon('ic_blog'),
+    title: 'Resources',
+    path: '/resources',
+    icon: IconifyIcon('la:users'),
   },
 ];
 
