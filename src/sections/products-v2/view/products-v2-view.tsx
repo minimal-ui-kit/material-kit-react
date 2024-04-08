@@ -11,7 +11,6 @@ import { useState } from 'react';
 
 import Iconify from '../../../components/iconify';
 import Scrollbar from '../../../components/scrollbar';
-import { FinanceSheet } from '../etsy/etsy-utils.ts';
 import { useApiShopReceipts } from '../etsy/useApi.ts';
 import TableEmptyRows from '../table-empty-rows';
 import TableNoData from '../table-no-data';
@@ -23,13 +22,13 @@ import { applyFilter, emptyRows, getComparator } from '../utils';
 // ----------------------------------------------------------------------
 
 export default function ProductsV2View() {
-  const { data } = useApiShopReceipts();
+  const { userData } = useApiShopReceipts();
 
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('asc');
 
-  const [selected, setSelected] = useState<FinanceSheet>([]);
+  const [selected, setSelected] = useState<number[]>([]);
 
   const [orderBy, setOrderBy] = useState('name');
 
@@ -41,11 +40,11 @@ export default function ProductsV2View() {
     { id: 'shopReceipt.receipt_id', label: 'Order' },
     { id: 'shopReceipt.name', label: 'Customer' },
     { id: 'shopReceipt.created_timestamp', label: 'Date' },
-    // { id: 'items', label: 'Items', align: 'center' },
     { id: 'subTotal', label: 'Subtotal' },
     { id: 'netProfit', label: 'Net profit' },
     { id: 'shopReceipt.status', label: 'Status' },
     { id: '' },
+    { id: 'n' },
   ];
 
   const handleSort = (event, id) => {
@@ -56,20 +55,22 @@ export default function ProductsV2View() {
     }
   };
 
-  const handleSelectAllClick = (event) => {
+  const handleSelectAllClick = (event: never) => {
     if (event.target.checked) {
-      const newSelectedIds = data.map((n) => n.shopReceipt?.receipt_id);
+      const newSelectedIds = userData.flatMap(({ data }) =>
+        data.map((data2) => data2?.shopReceipt.receipt_id),
+      );
       setSelected(newSelectedIds);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
+  const handleClick = (event, receipt_id) => {
+    const selectedIndex = selected.indexOf(receipt_id);
     let newSelected = [];
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
+      newSelected = newSelected.concat(selected, receipt_id);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -98,7 +99,9 @@ export default function ProductsV2View() {
   };
 
   const dataFiltered = applyFilter({
-    inputData: data.flatMap((item) => item.data.map((d) => ({ ...d, user: item.user }))),
+    inputData: userData.flatMap((item) =>
+      item.data.map((d) => ({ ...d, user: item.user })),
+    ),
     comparator: getComparator(order, orderBy),
     filterName,
   });
@@ -153,8 +156,11 @@ export default function ProductsV2View() {
                         netProfit={row.netProfit}
                         status={row.shopReceipt.status}
                         avatarUrl={row.avatarUrl}
+                        items={row.shopReceipt.transactions}
                         selected={selected.indexOf(row.shopReceipt.receipt_id) !== -1}
-                        handleClick={(event) => handleClick(event, row.name)}
+                        handleClick={(event) =>
+                          handleClick(event, row.shopReceipt.receipt_id)
+                        }
                       />
                     );
                   })}
