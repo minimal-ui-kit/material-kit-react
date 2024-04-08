@@ -56,7 +56,7 @@ export default function ProductsV2View() {
     }
   };
 
-  const handleSelectAllClick = (event: any) => {
+  const handleSelectAllClick = (event) => {
     if (event.target.checked) {
       const newSelectedIds = userData.flatMap(({ data }) =>
         data.map((data2) => data2?.shopReceipt.receipt_id),
