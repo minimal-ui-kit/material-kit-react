@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { fetchShopListingMock } from './etsy-api';
-import { EtsyApiResponse, ShopReceipt } from './etsy-api.types';
+import { EtsyApiResponse, ShopReceipt, Transaction } from './etsy-api.types';
 import { createFinanceSheet, FinanceSheet, Shop } from './etsy-utils.ts';
 
 export type ShopWithUserId = Shop & { user_id?: number };
@@ -199,4 +199,37 @@ export function useDeleteUserById(
   };
 
   return { deleteUser, loading, error };
+}
+
+export function useApiFetchProductImageUrls(
+  items: Transaction[],
+  apiUrl = process.env.API_URL || 'http://localhost:3003',
+) {
+  const [productImageUrls, setProductImageUrls] = useState<{ [key: number]: string }>([]);
+
+  useEffect(() => {
+    // Function to fetch avatar URL for each item
+    const fetchProductImageUrls = async () => {
+      try {
+        const productImageUrlsCopy = { ...productImageUrls };
+
+        for (const item of items) {
+          const response = await fetch(
+            `${apiUrl}/users/${item.seller_user_id}/listings/${item.listing_id}/images/${item.listing_image_id}`,
+          );
+          const data = await response.json();
+
+          productImageUrlsCopy[item.transaction_id] = data['url_75x75' || 'url_170x135'];
+        }
+
+        setProductImageUrls(productImageUrlsCopy);
+      } catch (error) {
+        console.error('Error fetching avatar URLs:', error);
+      }
+    };
+
+    fetchProductImageUrls();
+  }, [items]);
+
+  return { productImageUrls };
 }

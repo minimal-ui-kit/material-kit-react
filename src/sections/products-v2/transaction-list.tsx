@@ -4,7 +4,9 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
-import { useEffect, useState } from 'react';
+
+import { Transaction } from './etsy/etsy-api.types.ts';
+import { useApiFetchProductImageUrls } from './etsy/useApi.ts';
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -13,33 +15,13 @@ const Item = styled(Paper)(({ theme }) => ({
   flexGrow: 1,
 }));
 
-const TransactionList = ({ items }) => {
+interface TransactionListProps {
+  items: Transaction[];
+}
+
+const TransactionList = ({ items }: TransactionListProps) => {
   // State to hold avatar URLs for each item
-  const [avatarUrls, setAvatarUrls] = useState<string[]>([]);
-
-  useEffect(() => {
-    // Function to fetch avatar URL for each item
-    const fetchAvatarUrls = async () => {
-      try {
-        const avatarUrlsCopy = [...avatarUrls];
-
-        for (const item of items) {
-          const response = await fetch(
-            `http://localhost:3003/users/${item.seller_user_id}/listings/${item.listing_id}/images/${item.listing_image_id}`,
-          );
-          const data = await response.json();
-
-          avatarUrlsCopy[item.id] = data['url_75x75' || 'url_170x135'];
-        }
-
-        setAvatarUrls(avatarUrlsCopy);
-      } catch (error) {
-        console.error('Error fetching avatar URLs:', error);
-      }
-    };
-
-    fetchAvatarUrls();
-  }, [items]);
+  const { productImageUrls } = useApiFetchProductImageUrls(items);
   return (
     <Stack spacing={1} sx={{ p: 1 }} marginRight="auto">
       {items &&
@@ -53,7 +35,11 @@ const TransactionList = ({ items }) => {
               flexWrap="wrap"
               justifyContent="space-between"
             >
-              <Avatar alt={item.title} src={avatarUrls[item.id] || ''} />
+              <Avatar
+                alt={item.title || ''}
+                src={productImageUrls[item.transaction_id] || ''}
+                variant="rounded"
+              />
               <ListItemText align="left">
                 <Stack>
                   <Typography variant="body1" noWrap sx={{ maxWidth: '700px' }}>
