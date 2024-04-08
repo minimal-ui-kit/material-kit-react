@@ -5,11 +5,13 @@ import { EtsyApiResponse, ShopReceipt } from './etsy-api.types';
 import { createFinanceSheet, FinanceSheet, Shop } from './etsy-utils.ts';
 
 export type ShopWithUserId = Shop & { user_id?: number };
-
+//TODO(Adam): Throwing errors like this is in general not a good practice,
+// we could create some Provider who will handle these errors and show a toast
+// or something similar to the user
 export function useApiShopReceipts(
   apiUrl = process.env.API_URL || 'http://localhost:3003', // Default URL if environment variable not set
 ) {
-  const [data, setData] = useState<
+  const [userData, setUserData] = useState<
     { user: { shop_id: number; user_id: number }; data: FinanceSheet }[]
   >([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -46,7 +48,7 @@ export function useApiShopReceipts(
           allData.push({ user, data: financeSheet });
         }
 
-        setData(allData);
+        setUserData(allData);
         setLoading(false);
       } catch (error) {
         setError(error);
@@ -61,7 +63,7 @@ export function useApiShopReceipts(
     };
   }, [apiUrl]);
 
-  return { data, loading, error };
+  return { userData, loading, error };
 }
 
 export function useApiShop(
@@ -180,7 +182,11 @@ export function useDeleteUserById(
       const response = await fetch(`${apiUrl}/users/${userId}/delete`, {
         method: 'GET',
       });
-
+      //TODO: I dont think this is needed as we dont do any special error handling
+      // on BE, for this to run we would need to use special 2xx status codes (and we dont)
+      // If you get something else than 2xx status in response it will automatically
+      // redirect to catch block. I would delete this block if it is not needed.
+      // What do you think?
       if (!response.ok) {
         throw new Error('Failed to delete user');
       }

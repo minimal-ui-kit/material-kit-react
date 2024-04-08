@@ -18,7 +18,7 @@ import AppWidgetSummary from '../app-widget-summary';
 // ----------------------------------------------------------------------
 
 export default function AppView() {
-  const { data } = useApiShopReceipts();
+  const { userData } = useApiShopReceipts();
   const { shops } = useApiShop();
 
   let totalRevenue = 0;
@@ -26,8 +26,8 @@ export default function AppView() {
   let refundedCount = 0;
   const numberOfShops = shops.length;
 
-  if (data) {
-    for (const item of data) {
+  if (userData) {
+    for (const item of userData) {
       const financeSheet = item.data;
       if (financeSheet) {
         for (const receipt of financeSheet) {
