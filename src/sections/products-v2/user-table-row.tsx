@@ -120,11 +120,7 @@ export default function UserTableRow({
             aria-expanded={expanded}
             aria-label="show more"
           >
-            {expanded ? (
-              <Iconify icon={'eva:arrow-ios-upward-outline'} />
-            ) : (
-              <Iconify icon={'eva:arrow-ios-downward-outline'} />
-            )}
+            <Iconify icon={'eva:arrow-ios-downward-outline'} />
           </ExpandMore>
         </TableCell>
 
