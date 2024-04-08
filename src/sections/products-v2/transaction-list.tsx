@@ -5,6 +5,7 @@ import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
+import CurrencyFormatter from '../../components/currency-formatter/currency-formatter.tsx';
 import { Transaction } from './etsy/etsy-api.types.ts';
 import { useApiFetchProductImageUrls } from './etsy/useApi.ts';
 
@@ -45,11 +46,16 @@ const TransactionList = ({ items }: TransactionListProps) => {
                   <Typography variant="body1" noWrap sx={{ maxWidth: '700px' }}>
                     {item.title}
                   </Typography>
-                  <Typography variant="body2">16H9UR0</Typography>
+                  <Typography variant="body2">{item.product_id}</Typography>
                 </Stack>
               </ListItemText>
               <Typography>x{item.quantity}</Typography>
-              <Typography>${item.price.amount / item.price.divisor}</Typography>
+              <Typography>
+                <CurrencyFormatter
+                  value={item.price.amount / item.price.divisor}
+                  currency={items[0].price.currency_code}
+                />
+              </Typography>
             </Stack>
           </Item>
         ))}

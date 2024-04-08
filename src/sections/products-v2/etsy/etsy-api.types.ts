@@ -22,16 +22,20 @@ type CapitalizeWords<S extends string> = S extends `${infer Word} ${infer Rest}`
 
 type CapitalizedStatus = CapitalizeWords<Status>;
 
-export type PriceDetails = Partial<{
+export type PriceDetailsGeneral = Partial<PriceDetails> &
+  Partial<{
+    currency_formatted_short: string;
+    currency_formatted_long: string;
+    is_discounted: boolean;
+    discount_formatted_short: string;
+    discount_formatted_long: string;
+  }>;
+
+export type PriceDetails = {
   amount: number;
   divisor: number;
   currency_code: string;
-  currency_formatted_short: string;
-  currency_formatted_long: string;
-  is_discounted: boolean;
-  discount_formatted_short: string;
-  discount_formatted_long: string;
-}>;
+};
 
 export type ShopReceipt = {
   receipt_id: number;
@@ -79,14 +83,14 @@ export type ShopReceipt = {
   is_gift: boolean;
   gift_message: string;
   gift_sender: string;
-  grandtotal: PriceDetails;
-  subtotal: PriceDetails;
-  total_price: PriceDetails;
-  total_shipping_cost: PriceDetails;
-  total_tax_cost: PriceDetails;
-  total_vat_cost: PriceDetails;
-  discount_amt: PriceDetails;
-  gift_wrap_price: PriceDetails;
+  grandtotal: PriceDetailsGeneral;
+  subtotal: PriceDetailsGeneral;
+  total_price: PriceDetailsGeneral;
+  total_shipping_cost: PriceDetailsGeneral;
+  total_tax_cost: PriceDetailsGeneral;
+  total_vat_cost: PriceDetailsGeneral;
+  discount_amt: PriceDetailsGeneral;
+  gift_wrap_price: PriceDetailsGeneral;
   shipments: Array<object>;
   transactions: Array<object>;
   refunds: Array<Transaction>;
@@ -111,18 +115,10 @@ export type Transaction = {
   transaction_type: string; // The type string for the transaction, usually "listing".
   product_id?: number | null; // The numeric ID for a specific product purchased from a listing.
   sku?: string | null; // The SKU string for the product
-  price: {
-    // A money object representing the price recorded the transaction.
-    amount: number;
-    currency: string;
-  };
-  shipping_cost: {
-    // A money object representing the shipping cost for this transaction.
-    amount: number;
-    currency: string;
-  };
-  variations: object[]; // Array of variations and personalizations the buyer chose.
-  product_data: object[]; // A list of property value entries for this product. Note: parenthesis characters (( and )) are not allowed.
+  price: PriceDetails;
+  shipping_cost: PriceDetails;
+  variations: Variation[]; // Array of variations and personalizations the buyer chose.
+  product_data: ProductData[]; // A list of property value entries for this product. Note: parenthesis characters (( and )) are not allowed.
   shipping_profile_id?: number | null; // The ID of the shipping profile selected for this listing.
   min_processing_days?: number | null; // The minimum number of days for processing the listing.
   max_processing_days?: number | null; // The maximum number of days for processing the listing.
@@ -131,4 +127,20 @@ export type Transaction = {
   expected_ship_date?: number | null; // The date & time of the expected ship date, in epoch seconds.
   buyer_coupon: number; // The amount of the buyer coupon that was discounted in the shop's currency. Default: 0
   shop_coupon: number; // The amount of the shop coupon that was discounted in the shop's currency. Default: 0
+};
+
+export type Variation = {
+  property_id: number;
+  value_id?: number | null;
+  formatted_name: string;
+  formatted_value: string;
+};
+
+export type ProductData = {
+  property_id: number;
+  property_name: string;
+  scale_id?: number | null;
+  scale_name?: string | null;
+  value_ids: number[];
+  values: string[];
 };

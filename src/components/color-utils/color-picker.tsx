@@ -83,7 +83,7 @@ const ColorPicker = forwardRef(
                 }}
               >
                 <Iconify
-                  width={hasSelected ? 12 : 0}
+                  dimension={hasSelected ? 12 : 0}
                   icon="eva:checkmark-fill"
                   sx={{
                     color: (theme) => theme.palette.getContrastText(color),

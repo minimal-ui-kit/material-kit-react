@@ -9,8 +9,9 @@ import { styled } from '@mui/material/styles';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
+import CurrencyFormatter from '../../components/currency-formatter/currency-formatter.tsx';
 import Iconify from '../../components/iconify';
 import Label from '../../components/label';
 import { Transaction } from './etsy/etsy-api.types.ts';
@@ -35,7 +36,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 interface UserTableRowProps {
   selected: boolean;
-  order: string;
+  orderId: number;
   customer: string;
   date: string;
   items: Transaction[];
@@ -43,11 +44,11 @@ interface UserTableRowProps {
   netProfit: number;
   status: string;
   avatarUrl: string;
-  handleClick: (event: never) => void;
+  handleClick: (event: ChangeEvent<HTMLInputElement>, checked: boolean) => void;
 }
 export default function UserTableRow({
   selected,
-  order,
+  orderId,
   customer,
   date,
   items,
@@ -57,15 +58,15 @@ export default function UserTableRow({
   avatarUrl,
   handleClick,
 }: UserTableRowProps) {
-  const [open, setOpen] = useState(null);
+  const [open, setOpen] = useState<null | Element>(null);
   const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  const handleOpenMenu = (event) => {
-    setOpen(event.currentTarget);
+  const handleOpenMenu = (event: Event) => {
+    setOpen(event?.currentTarget as Element);
   };
 
   const handleCloseMenu = () => {
@@ -79,7 +80,7 @@ export default function UserTableRow({
           <Checkbox disableRipple checked={selected} onChange={handleClick} />
         </TableCell>
 
-        <TableCell>{order}</TableCell>
+        <TableCell>{orderId.toString()}</TableCell>
 
         <TableCell component="th" scope="row" padding="none">
           <Stack direction="row" alignItems="center" spacing={2}>
@@ -91,10 +92,15 @@ export default function UserTableRow({
         </TableCell>
 
         <TableCell>{date}</TableCell>
-
-        {/*<TableCell align="center">{items}</TableCell>*/}
-        <TableCell>{`${subtotal} $`}</TableCell>
-        <TableCell>{`${netProfit.toFixed(2)} $`}</TableCell>
+        <TableCell>
+          <CurrencyFormatter value={subtotal} currency={items[0].price.currency_code} />
+        </TableCell>
+        <TableCell>
+          <CurrencyFormatter
+            value={Number(netProfit.toFixed(2))}
+            currency={items[0].price.currency_code}
+          />
+        </TableCell>
 
         <TableCell>
           <Label
@@ -135,8 +141,10 @@ export default function UserTableRow({
         onClose={handleCloseMenu}
         anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        PaperProps={{
-          sx: { width: 140 },
+        slotProps={{
+          paper: {
+            sx: { width: 140 },
+          },
         }}
       >
         <MenuItem onClick={handleCloseMenu}>

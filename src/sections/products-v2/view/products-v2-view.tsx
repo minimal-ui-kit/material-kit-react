@@ -11,6 +11,7 @@ import { useState } from 'react';
 
 import Iconify from '../../../components/iconify';
 import Scrollbar from '../../../components/scrollbar';
+import { Transaction } from '../etsy/etsy-api.types.ts';
 import { useApiShopReceipts } from '../etsy/useApi.ts';
 import TableEmptyRows from '../table-empty-rows';
 import TableNoData from '../table-no-data';
@@ -55,7 +56,7 @@ export default function ProductsV2View() {
     }
   };
 
-  const handleSelectAllClick = (event: never) => {
+  const handleSelectAllClick = (event: any) => {
     if (event.target.checked) {
       const newSelectedIds = userData.flatMap(({ data }) =>
         data.map((data2) => data2?.shopReceipt.receipt_id),
@@ -144,26 +145,39 @@ export default function ProductsV2View() {
               <TableBody>
                 {dataFiltered
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => {
-                    console.log('row', row);
-                    return (
-                      <UserTableRow
-                        key={row.shopReceipt.receipt_id}
-                        order={row.shopReceipt.receipt_id}
-                        customer={row.shopReceipt.name}
-                        date={row.orderDate}
-                        subtotal={row.subTotal}
-                        netProfit={row.netProfit}
-                        status={row.shopReceipt.status}
-                        avatarUrl={row.avatarUrl}
-                        items={row.shopReceipt.transactions}
-                        selected={selected.indexOf(row.shopReceipt.receipt_id) !== -1}
-                        handleClick={(event) =>
-                          handleClick(event, row.shopReceipt.receipt_id)
-                        }
-                      />
-                    );
-                  })}
+                  .map(
+                    (row: {
+                      shopReceipt: {
+                        receipt_id: number;
+                        name: string;
+                        status: string;
+                        transactions: Transaction[];
+                      };
+                      orderDate: string;
+                      subTotal: number;
+                      netProfit: number;
+                      avatarUrl: string;
+                    }) => {
+                      console.log('row', row);
+                      return (
+                        <UserTableRow
+                          key={row.shopReceipt.receipt_id}
+                          orderId={row.shopReceipt.receipt_id}
+                          customer={row.shopReceipt.name}
+                          date={row.orderDate}
+                          subtotal={row.subTotal}
+                          netProfit={row.netProfit}
+                          status={row.shopReceipt.status}
+                          avatarUrl={row.avatarUrl}
+                          items={row.shopReceipt.transactions}
+                          selected={selected.indexOf(row.shopReceipt.receipt_id) !== -1}
+                          handleClick={(event) =>
+                            handleClick(event, row.shopReceipt.receipt_id)
+                          }
+                        />
+                      );
+                    },
+                  )}
 
                 <TableEmptyRows
                   height={77}
