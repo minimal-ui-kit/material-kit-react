@@ -3,14 +3,17 @@ export type EtsyApiResponse<T = string> = {
   results: Array<T>;
 };
 
-type Status =
-  | 'paid'
-  | 'completed'
-  | 'open'
-  | 'payment processing'
-  | 'canceled'
-  | 'fully refunded'
-  | 'partially refunded';
+export const statusValues = [
+  'paid',
+  'completed',
+  'open',
+  'payment processing',
+  'canceled',
+  'fully refunded',
+  'partially refunded',
+] as const;
+
+export type Status = (typeof statusValues)[number];
 
 type CapitalizeFirstLetter<S extends string> = S extends `${infer First}${infer Rest}`
   ? `${Uppercase<First>}${Lowercase<Rest>}`

@@ -39,7 +39,7 @@ export function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-export function applyFilter({ inputData, comparator, filterName }) {
+export function applyFilter({ inputData, comparator, filterName, statuses }) {
   const stabilizedThis = inputData.map((el, index) => [el, index]);
 
   stabilizedThis.sort((a, b) => {
@@ -56,6 +56,14 @@ export function applyFilter({ inputData, comparator, filterName }) {
         user.shopReceipt?.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 ||
         user.shopReceipt?.receipt_id.toString().indexOf(filterName.toLowerCase()) !== -1,
     );
+  }
+
+  // filter by status
+  if (statuses.length) {
+    inputData = inputData.filter((user: FinanceSheet) => {
+      console.log(user);
+      return statuses.includes(user.shopReceipt?.status?.toLowerCase());
+    });
   }
 
   return inputData;

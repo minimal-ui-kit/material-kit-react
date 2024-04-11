@@ -37,6 +37,13 @@ export default function ProductsV2View() {
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
+  const [statuses, setStatuses] = useState([]);
+
+  const handleStatusesChange = (event, newStatuses) => {
+    setPage(0);
+    setStatuses(newStatuses);
+  };
+
   const headLabel = [
     { id: 'shopReceipt.receipt_id', label: 'Order' },
     { id: 'shopReceipt.name', label: 'Customer' },
@@ -105,6 +112,7 @@ export default function ProductsV2View() {
     ),
     comparator: getComparator(order, orderBy),
     filterName,
+    statuses,
   });
 
   const notFound = !dataFiltered.length && !!filterName;
@@ -128,6 +136,8 @@ export default function ProductsV2View() {
           numSelected={selected.length}
           filterName={filterName}
           onFilterName={handleFilterByName}
+          statuses={statuses}
+          onStatusesChange={handleStatusesChange}
         />
 
         <Scrollbar>
