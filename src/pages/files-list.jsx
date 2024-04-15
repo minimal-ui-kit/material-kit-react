@@ -9,7 +9,7 @@ export default function FilesPage() {
   return (
     <>
       <Helmet>
-        <title> Files </title>
+        <title> MS Projects </title>
       </Helmet>
 
       <FilesView />

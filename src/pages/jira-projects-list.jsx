@@ -9,7 +9,7 @@ export default function FilesPage() {
   return (
     <>
       <Helmet>
-        <title> Files </title>
+        <title> JIRA Projects </title>
       </Helmet>
 
       <JiraProjectsPage />

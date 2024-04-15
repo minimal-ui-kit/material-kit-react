@@ -1,6 +1,7 @@
 import { isArray } from 'lodash';
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import 'react-loading-skeleton/dist/skeleton.css';
@@ -204,128 +205,133 @@ export default function ProjectFieldsView() {
     }
   };
   return (
-    <Container>
-      <ToastContainer />
-      <SkeletonTheme duration={1}>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <Box display="flex" alignItems="center" flexDirection="row">
-            <Tooltip title="Go back to JIRA Projects">
-              <IconButton onClick={() => router.push('/jira-projects')}>
-                <Iconify icon="ic:baseline-arrow-back-ios-new" />
-              </IconButton>
-            </Tooltip>
-            {!loading ? (
-              <Avatar
-                sx={{ marginRight: 1 }}
-                alt={orderedList.projectDetails.key}
-                src={orderedList.projectDetails.avatarUrls['48x48']}
-              />
-            ) : (
-              <Skeleton borderRadius={25} height={50} width={50} style={{ marginRight: '5px' }} />
-            )}
-            {/* <Iconify icon="mdi:jira" sx={{ color: 'primary.main', marginRight: 1 }} width={40} /> */}
-            <Typography variant="h4">
+    <>
+      <Helmet>
+        <title>{orderedList ? orderedList.projectDetails.name : 'Project Fields List'}</title>
+      </Helmet>
+      <Container>
+        <ToastContainer />
+        <SkeletonTheme duration={1}>
+          <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+            <Box display="flex" alignItems="center" flexDirection="row">
+              <Tooltip title="Go back to JIRA Projects">
+                <IconButton onClick={() => router.push('/jira-projects')}>
+                  <Iconify icon="ic:baseline-arrow-back-ios-new" />
+                </IconButton>
+              </Tooltip>
               {!loading ? (
-                `${orderedList.projectDetails.key}-${orderedList.projectDetails.name} (Required Fields Only)`
+                <Avatar
+                  sx={{ marginRight: 1 }}
+                  alt={orderedList.projectDetails.key}
+                  src={orderedList.projectDetails.avatarUrls['48x48']}
+                />
               ) : (
-                <Skeleton height={40} width={200} />
+                <Skeleton borderRadius={25} height={50} width={50} style={{ marginRight: '5px' }} />
               )}
-            </Typography>
-          </Box>
-        </Stack>
-        {orderedList !== null &&
-          orderedList.distinctIssueFields.map((field, index) => (
-            // console.log(index, field);
-            <Card sx={{ marginBottom: 2 }} key={field.key}>
-              <Box sx={{ flexGrow: 1, padding: 2 }}>
-                <Grid direction="row" container spacing={2}>
-                  <Grid item xs={12}>
-                    <Stack
-                      direction="row"
-                      alignItems="flex-start"
-                      justifyContent="space-between"
-                      mb={5}
-                    >
-                      <Box display="flex" flexDirection="column">
-                        <Typography variant="h6">{`${field.name}`}</Typography>
-                        <Typography variant="subtitle1">{`${field.key}`}</Typography>
-                        {field.hasDefaultValue && field.defaultValue && (
-                          <Typography variant="subtitle2">{`Default Value: ${
-                            isArray(field.defaultValue)
-                              ? field.defaultValue[0].value
-                              : field.defaultValue.value
-                          }`}</Typography>
-                        )}
-                      </Box>
-                      {field.required && (
-                        <Box
-                          display="flex"
-                          flexDirection="column"
-                          sx={{ width: '40%', alignItems: 'flex-end' }}
-                        >
+              {/* <Iconify icon="mdi:jira" sx={{ color: 'primary.main', marginRight: 1 }} width={40} /> */}
+              <Typography variant="h4">
+                {!loading ? (
+                  `${orderedList.projectDetails.key}-${orderedList.projectDetails.name} (Required Fields Only)`
+                ) : (
+                  <Skeleton height={40} width={200} />
+                )}
+              </Typography>
+            </Box>
+          </Stack>
+          {orderedList !== null &&
+            orderedList.distinctIssueFields.map((field, index) => (
+              // console.log(index, field);
+              <Card sx={{ marginBottom: 2 }} key={field.key}>
+                <Box sx={{ flexGrow: 1, padding: 2 }}>
+                  <Grid direction="row" container spacing={2}>
+                    <Grid item xs={12}>
+                      <Stack
+                        direction="row"
+                        alignItems="flex-start"
+                        justifyContent="space-between"
+                        mb={5}
+                      >
+                        <Box display="flex" flexDirection="column">
+                          <Typography variant="h6">{`${field.name}`}</Typography>
+                          <Typography variant="subtitle1">{`${field.key}`}</Typography>
+                          {field.hasDefaultValue && field.defaultValue && (
+                            <Typography variant="subtitle2">{`Default Value: ${
+                              isArray(field.defaultValue)
+                                ? field.defaultValue[0].value
+                                : field.defaultValue.value
+                            }`}</Typography>
+                          )}
+                        </Box>
+                        {field.required && (
                           <Box
                             display="flex"
-                            flexDirection="row"
-                            sx={{ width: '100%', justifyContent: 'flex-end' }}
+                            flexDirection="column"
+                            sx={{ width: '40%', alignItems: 'flex-end' }}
                           >
-                            {fieldLoading.loading && fieldLoading.index === index ? (
-                              <CircularProgress
-                                size={20}
-                                sx={{ marginBottom: 2 }}
-                                color="primary"
-                                // determinate={false}
-                                variant="indeterminate"
-                              />
-                            ) : (
-                              <Label color="error" mb={2} sx={{ width: '75px' }}>
-                                Required
-                              </Label>
-                            )}
+                            <Box
+                              display="flex"
+                              flexDirection="row"
+                              sx={{ width: '100%', justifyContent: 'flex-end' }}
+                            >
+                              {fieldLoading.loading && fieldLoading.index === index ? (
+                                <CircularProgress
+                                  size={20}
+                                  sx={{ marginBottom: 2 }}
+                                  color="primary"
+                                  // determinate={false}
+                                  variant="indeterminate"
+                                />
+                              ) : (
+                                <Label color="error" mb={2} sx={{ width: '75px' }}>
+                                  Required
+                                </Label>
+                              )}
+                            </Box>
+                            {field.allowedValues &&
+                              (field.schema.type === 'option' || field.schema.type === 'array') && (
+                                <FormControl fullWidth>
+                                  <InputLabel id={`${field.name}-form-label`}>
+                                    {field.name}
+                                  </InputLabel>
+                                  <Select
+                                    labelId={`${field.name}-form-label`}
+                                    id={`${field.name}-form-input`}
+                                    label={field.name}
+                                    value={
+                                      field.allowedValues.find((selected) => selected.selected)
+                                        ?.id || ''
+                                    }
+                                    onChange={async (e) => handleSelectedValue(e, index)}
+                                  >
+                                    {field.allowedValues.map((value) => (
+                                      <MenuItem key={value.id} value={value.id}>
+                                        {value.value}
+                                      </MenuItem>
+                                    ))}
+                                  </Select>
+                                </FormControl>
+                              )}
                           </Box>
-                          {field.allowedValues &&
-                            (field.schema.type === 'option' || field.schema.type === 'array') && (
-                              <FormControl fullWidth>
-                                <InputLabel id={`${field.name}-form-label`}>
-                                  {field.name}
-                                </InputLabel>
-                                <Select
-                                  labelId={`${field.name}-form-label`}
-                                  id={`${field.name}-form-input`}
-                                  label={field.name}
-                                  value={
-                                    field.allowedValues.find((selected) => selected.selected)?.id ||
-                                    ''
-                                  }
-                                  onChange={async (e) => handleSelectedValue(e, index)}
-                                >
-                                  {field.allowedValues.map((value) => (
-                                    <MenuItem key={value.id} value={value.id}>
-                                      {value.value}
-                                    </MenuItem>
-                                  ))}
-                                </Select>
-                              </FormControl>
-                            )}
-                        </Box>
-                      )}
-                    </Stack>
+                        )}
+                      </Stack>
+                    </Grid>
                   </Grid>
-                </Grid>
-              </Box>
-            </Card>
-          ))}
-        {/* <Box ref={boxRef} sx={{ width: '100%', height: '56vh', bgColor: 'background.paper' }}> */}
-        {/*  <VariableSizeList */}
-        {/*    height={boxRef.current ? boxRef.current.clientHeight : 400} */}
-        {/*    width="100%" */}
-        {/*    itemSize={getItemSize} */}
-        {/*    itemCount={orderedList == null ? 10 : orderedList.distinctIssueFields.length} */}
-        {/*    overscanCount={5} */}
-        {/*  > */}
-        {/*    {loading ? renderRowSkeleton : renderRow} */}
-        {/*  </VariableSizeList> */}
-        {/* </Box> */}
-      </SkeletonTheme>
-    </Container>
+                </Box>
+              </Card>
+            ))}
+          {/* <Box ref={boxRef} sx={{ width: '100%', height: '56vh', bgColor: 'background.paper' }}> */}
+          {/*  <VariableSizeList */}
+          {/*    height={boxRef.current ? boxRef.current.clientHeight : 400} */}
+          {/*    width="100%" */}
+          {/*    itemSize={getItemSize} */}
+          {/*    itemCount={orderedList == null ? 10 : orderedList.distinctIssueFields.length} */}
+          {/*    overscanCount={5} */}
+          {/*  > */}
+          {/*    {loading ? renderRowSkeleton : renderRow} */}
+          {/*  </VariableSizeList> */}
+          {/* </Box> */}
+        </SkeletonTheme>
+      </Container>
+    </>
   );
 }
