@@ -1,24 +1,26 @@
 import PropTypes from 'prop-types';
-
+// import { useState, useEffect } from 'react';
+// import axios from 'axios';
+import { Typography } from '@mui/material';
+/* eslint-disable */
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import { useTheme } from '@mui/material/styles';
-import IconButton from '@mui/material/IconButton';
+// import IconButton from '@mui/material/IconButton';
 
 import { useResponsive } from 'src/hooks/use-responsive';
 
 import { bgBlur } from 'src/theme/css';
 
-import Iconify from 'src/components/iconify';
+// import Iconify from 'src/components/iconify';
 
-import Searchbar from './common/searchbar';
+// import Searchbar from './common/searchbar';
 import { NAV, HEADER } from './config-layout';
 import AccountPopover from './common/account-popover';
 import LanguagePopover from './common/language-popover';
 import NotificationsPopover from './common/notifications-popover';
-
 // ----------------------------------------------------------------------
 
 export default function Header({ onOpenNav }) {
@@ -26,15 +28,36 @@ export default function Header({ onOpenNav }) {
 
   const lgUp = useResponsive('up', 'lg');
 
+  // useEffect(() => {
+  //   async function getUser() {
+  //     try {
+  //       const response = await axios.get('https://api.2pay.uz/api/users/request-user/', {
+  //         // headers: {
+  //         //   Authorization: 'Token ' + localStorage.getItem('token'),
+  //         // },
+  //       });
+  //       console.log(response.data);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   }
+
+  //   getUser();
+  // }, []);
+
   const renderContent = (
     <>
-      {!lgUp && (
+      {/* {!lgUp && (
         <IconButton onClick={onOpenNav} sx={{ mr: 1 }}>
           <Iconify icon="eva:menu-2-fill" />
         </IconButton>
-      )}
+      )} */}
 
-      <Searchbar />
+      {/* <Searchbar /> */}
+
+      <Typography variant="h3" sx={{ flexGrow: 1, color: 'black' }}>
+        Carwon
+      </Typography>
 
       <Box sx={{ flexGrow: 1 }} />
 
@@ -49,6 +72,7 @@ export default function Header({ onOpenNav }) {
   return (
     <AppBar
       sx={{
+        borderBottom: '4px solid blue',
         boxShadow: 'none',
         height: HEADER.H_MOBILE,
         zIndex: theme.zIndex.appBar + 1,

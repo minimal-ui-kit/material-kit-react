@@ -1,6 +1,10 @@
+import DevicesIcon from '@mui/icons-material/Devices';
+import DonutSmallIcon from '@mui/icons-material/DonutSmall';
+import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
+/* eslint-disable */
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+/* eslint-disable */
 import SvgColor from 'src/components/svg-color';
-
-// ----------------------------------------------------------------------
 
 const icon = (name) => (
   <SvgColor src={`/assets/icons/navbar/${name}.svg`} sx={{ width: 1, height: 1 }} />
@@ -8,32 +12,32 @@ const icon = (name) => (
 
 const navConfig = [
   {
-    title: 'dashboard',
+    title: 'Boshqaruv paneli',
     path: '/',
-    icon: icon('ic_analytics'),
+    icon: <DonutSmallIcon />,
   },
   {
-    title: 'user',
+    title: 'Hisobot',
     path: '/user',
-    icon: icon('ic_user'),
+    icon: <DashboardCustomizeIcon />,
   },
   {
-    title: 'product',
+    title: 'Qurilma faoliyati',
     path: '/products',
-    icon: icon('ic_cart'),
+    icon: <DevicesIcon />,
   },
   {
-    title: 'blog',
+    title: 'Moliya',
     path: '/blog',
-    icon: icon('ic_blog'),
+    icon: <AttachMoneyIcon />,
   },
+  // {
+  //   title: 'login',
+  //   path: '/login',
+  //   icon: icon('ic_lock'),
+  // },
   {
-    title: 'login',
-    path: '/login',
-    icon: icon('ic_lock'),
-  },
-  {
-    title: 'Not found',
+    title: "Bo'sh",
     path: '/404',
     icon: icon('ic_disabled'),
   },
