@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Divider from '@mui/material/Divider';
@@ -13,24 +13,14 @@ import { account } from 'src/_mock/account';
 
 // ----------------------------------------------------------------------
 
-const MENU_OPTIONS = [
-  {
-    label: 'Home',
-    icon: 'eva:home-fill',
-  },
-  {
-    label: 'Profile',
-    icon: 'eva:person-fill',
-  },
-  {
-    label: 'Settings',
-    icon: 'eva:settings-2-fill',
-  },
-];
+
 
 // ----------------------------------------------------------------------
 
-export default function AccountPopover() {
+export default function AccountPopover({data}) {
+
+const navigate = useNavigate();
+  // const [data, setData] = useState({});
   const [open, setOpen] = useState(null);
 
   const handleOpen = (event) => {
@@ -40,7 +30,9 @@ export default function AccountPopover() {
   const handleClose = () => {
     setOpen(null);
   };
+  
 
+console.log(data)
   return (
     <>
       <IconButton
@@ -64,7 +56,8 @@ export default function AccountPopover() {
             border: (theme) => `solid 2px ${theme.palette.background.default}`,
           }}
         >
-          {account.displayName.charAt(0).toUpperCase()}
+          {/* {account.displayName.charAt(0).toUpperCase()} */}
+          {data.first_name}
         </Avatar>
       </IconButton>
 
@@ -83,29 +76,43 @@ export default function AccountPopover() {
           },
         }}
       >
-        <Box sx={{ my: 1.5, px: 2 }}>
+        <Box sx={{ my: 3, px: 2, display: 'flex', flexDirection: 'column', gap: 1.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {account.displayName}
+            {data?.current_company?.name}
+            {`(${data?.role?.name})`}
           </Typography>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {account.email}
+
+          <Divider sx={{ borderStyle: 'dashed' }} />
+
+          <Box  sx={{ color: 'text.secondary' }} >
+            <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+              {data.first_name}
+            </Typography>
+            <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+              {data.last_name}
+            </Typography>
+          </Box>
+
+          <Divider sx={{ borderStyle: 'dashed' }} />
+          <Typography  variant="body2" sx={{ color: 'text.secondary', cursor: 'pointer'  }} noWrap>
+            Rolni o'zgartirish
           </Typography>
         </Box>
 
-        <Divider sx={{ borderStyle: 'dashed' }} />
-
-        {MENU_OPTIONS.map((option) => (
+        {/* {MENU_OPTIONS.map((option) => (
           <MenuItem key={option.label} onClick={handleClose}>
             {option.label}
           </MenuItem>
-        ))}
+        ))} */}
 
         <Divider sx={{ borderStyle: 'dashed', m: 0 }} />
 
         <MenuItem
           disableRipple
           disableTouchRipple
-          onClick={handleClose}
+          onClick={() => {
+            navigate('/login', { replace: true });
+          }}
           sx={{ typography: 'body2', color: 'error.main', py: 1.5 }}
         >
           Logout

@@ -4,6 +4,7 @@
   "licence": "MIT",
   "version": "1.8.0",
   "private": false,
+  "proxy": "http://localhost:3030",
   "scripts": {
     "dev": "vite",
     "start": "vite preview",
@@ -31,6 +32,7 @@
     "axios": "^1.7.2",
     "date-fns": "^2.30.0",
     "history": "^5.3.0",
+    "http-proxy-middleware": "^3.0.0",
     "lodash": "^4.17.21",
     "numeral": "^2.0.6",
     "prop-types": "^15.8.1",
@@ -44,17 +46,6 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react-swc": "^3.4.0",
-    "eslint": "^8.51.0",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-import-resolver-alias": "^1.1.2",
-    "eslint-plugin-import": "^2.28.1",
-    "eslint-plugin-jsx-a11y": "^6.7.1",
-    "eslint-plugin-perfectionist": "^2.1.0",
-    "eslint-plugin-prettier": "^5.0.0",
-    "eslint-plugin-react": "^7.33.2",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-unused-imports": "^3.0.0",
     "prettier": "^3.0.3",
     "vite": "^4.4.11",
     "vite-plugin-checker": "^0.6.2"

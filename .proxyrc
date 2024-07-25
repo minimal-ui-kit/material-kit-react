@@ -1,0 +1,9 @@
+{
+  "/api": {
+    "target": "https://api.2pay.uz",
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api": ""
+    }
+  }
+}

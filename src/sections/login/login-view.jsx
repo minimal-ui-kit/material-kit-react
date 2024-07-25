@@ -19,54 +19,55 @@ import { bgGradient } from 'src/theme/css';
 
 import Logo from 'src/components/logo';
 import Iconify from 'src/components/iconify';
-// import axios from 'axios';
-// import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
 export default function LoginView() {
-  // const [phone, setPhone] = useState('');
-  // const [password, setPassword] = useState('');
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
   const theme = useTheme();
 
   // const router = use Router();
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClick = async (e) => {
     e.preventDefault();
-    // try {
-    //   const response = await axios.post(
-    //     'https://api.2pay.uz/api/users/login/',
-    //     {
-    //       phone: phone,
-    //       password: password,
-    //     },
-    //     {
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //         'Accsess-Control-Allow-Origin': '*',
-    //       },
-    //     }
-    //   );
+    try {
+      const response = await axios.post(
+        'https://api.2pay.uz/api/users/login/',
+        {
+          phone_number: phone,
+          password: password,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            // 'Accsess-Control-Allow-Origin':  '*',
+          },
+        }
+      );
 
-    //   localStorage.setItem('token', response.data.token);
-    //   navigate('/', { replace: true });
-    //   console.log(response.data);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+      localStorage.setItem('token', response.data.token);
+      navigate('/', { replace: true });
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const renderForm = (
     <>
       <Stack spacing={3}>
-        <TextField name="email" label="Telefon raqami"  />
+        <TextField name="phone" label="Telefon raqami"  value={phone} onChange={(e) => setPhone(e.target.value)}/>
 
         <TextField
-         
+        onChange={(e) => setPassword(e.target.value)}
+          value={password}
           name="password"
           label="Parol"
           type={showPassword ? 'text' : 'password'}
