@@ -43,8 +43,8 @@ export default function AppTransactionsTable({ data, title }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data?.map((row) => (
-            <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+          {data?.map((row, index) => (
+            <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell sx={{ fontWeight: 'bold' }}>{row.filial_name}</TableCell>
               <TableCell sx={{ fontWeight: 'bold' }} align="center">
                 {row.device_name}

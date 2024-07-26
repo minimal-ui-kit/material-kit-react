@@ -20,7 +20,7 @@ import { bgBlur } from 'src/theme/css';
 import { NAV, HEADER } from './config-layout';
 import AccountPopover from './common/account-popover';
 import LanguagePopover from './common/language-popover';
-import NotificationsPopover from './common/notifications-popover';
+
 // ----------------------------------------------------------------------
 
 export default function Header({ onOpenNav }) {
