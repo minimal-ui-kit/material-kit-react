@@ -1,63 +1,66 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Unstable_Grid2';
+
 import Typography from '@mui/material/Typography';
-
-import { products } from 'src/_mock/products';
-
-import ProductCard from '../product-card';
-import ProductSort from '../product-sort';
-import ProductFilters from '../product-filters';
-import ProductCartWidget from '../product-cart-widget';
-
-// ----------------------------------------------------------------------
+import DeviceTable from '../device-table';
+import axios from 'axios';
+import { Box, Grid } from '@mui/material';
 
 export default function ProductsView() {
-  const [openFilter, setOpenFilter] = useState(false);
-
-  const handleOpenFilter = () => {
-    setOpenFilter(true);
+  const [devices, setDevices] = useState([]);
+  const [deviceStatus, setDeviceStatus] = useState([]);
+  const getDevices = async () => {
+    try {
+      const response = await axios.get(
+        'https://api.2pay.uz/api/merchant/devices/broker-status-count/',
+        {
+          headers: {
+            Authorization: 'Token ' + localStorage.getItem('token'),
+          },
+        }
+      );
+      // console.log(response.data);
+      setDevices(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
-
-  const handleCloseFilter = () => {
-    setOpenFilter(false);
+  const getDeviceStatus = async () => {
+    try {
+      const response = await axios.get('https://api.2pay.uz/api/merchant/devices-status/', {
+        headers: {
+          Authorization: 'Token ' + localStorage.getItem('token'),
+        },
+      });
+      console.log(response.data);
+      setDeviceStatus(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
+  useEffect(() => {
+    getDevices();
+    getDeviceStatus();
+  }, []);
+  const filterDevices = Object.groupBy(deviceStatus, ({ company }) => company?.id);
 
   return (
     <Container>
-      <Typography variant="h4" sx={{ mb: 5 }}>
-        Products
+      <Typography variant="h4" sx={{ mb: 5, mt: 2 }}>
+        Qurilmalar foaliyati{' '}
+        <Typography variant="body" sx={{ color: 'text.secondary' }}>
+          {` (${devices?.active_devices_count}-faol ${devices?.inactive_devices_count}-faol emas)`}
+        </Typography>
       </Typography>
-
-      <Stack
-        direction="row"
-        alignItems="center"
-        flexWrap="wrap-reverse"
-        justifyContent="flex-end"
-        sx={{ mb: 5 }}
-      >
-        <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
-          <ProductFilters
-            openFilter={openFilter}
-            onOpenFilter={handleOpenFilter}
-            onCloseFilter={handleCloseFilter}
-          />
-
-          <ProductSort />
-        </Stack>
-      </Stack>
-
-      <Grid container spacing={3}>
-        {products.map((product) => (
-          <Grid key={product.id} xs={12} sm={6} md={3}>
-            <ProductCard product={product} />
-          </Grid>
+      <Box  sx={{ mt: 5 }}>
+        {Object.keys(filterDevices).map((key) => (
+          
+            <DeviceTable key={key} data={filterDevices[key]} />
+          
         ))}
-      </Grid>
-
-      <ProductCartWidget />
+      </Box>
     </Container>
   );
 }

@@ -174,32 +174,32 @@ export default function Report() {
           boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.06), 0px 4px 6px rgba(0, 0, 0, 0.1)',
         }}
       >
-        <TableContainer>
-          <Table stickyHeader aria-label="sticky table">
-            <TableHead>
-              <TableRow>
-                <TableCell>SANA VA VAQT</TableCell>
-                <TableCell>FILIAL NOMI</TableCell>
-                <TableCell>QURILMA NOMI</TableCell>
-                <TableCell>NAQD TO'LOV</TableCell>
-                <TableCell>ONLINE TO'LOV</TableCell>
-                <TableCell>MANUAL</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data?.results?.map((row) => (
-                <TableRow key={row?.id}>
-                  <TableCell>{formatDate(row?.created)}</TableCell>
-                  <TableCell>{row?.device?.company?.name}</TableCell>
-                  <TableCell>{row?.device?.name}</TableCell>
-                  <TableCell>{row?.diff?.cash}</TableCell>
-                  <TableCell>{row?.diff?.click}</TableCell>
-                  <TableCell>{row?.diff?.manual}</TableCell>
+          <TableContainer>
+            <Table stickyHeader aria-label="sticky table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>SANA VA VAQT</TableCell>
+                  <TableCell>FILIAL NOMI</TableCell>
+                  <TableCell>QURILMA NOMI</TableCell>
+                  <TableCell>NAQD TO'LOV</TableCell>
+                  <TableCell>ONLINE TO'LOV</TableCell>
+                  <TableCell>MANUAL</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {data?.results?.map((row) => (
+                  <TableRow key={row?.id}>
+                    <TableCell>{formatDate(row?.created)}</TableCell>
+                    <TableCell>{row?.device?.company?.name}</TableCell>
+                    <TableCell>{row?.device?.name}</TableCell>
+                    <TableCell>{row?.diff?.cash}</TableCell>
+                    <TableCell>{row?.diff?.click}</TableCell>
+                    <TableCell>{row?.diff?.manual}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
