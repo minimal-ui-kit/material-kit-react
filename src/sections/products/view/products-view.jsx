@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import DeviceTable from '../device-table';
 import axios from 'axios';
 import { Box, Grid } from '@mui/material';
+import AnimatedComponent from 'src/components/animate/animatedComponent';
 
 export default function ProductsView() {
   const [devices, setDevices] = useState([]);
@@ -55,10 +56,10 @@ export default function ProductsView() {
         </Typography>
       </Typography>
       <Box  sx={{ mt: 5 }}>
-        {Object.keys(filterDevices).map((key) => (
-          
-            <DeviceTable key={key} data={filterDevices[key]} />
-          
+        {Object.keys(filterDevices).map((key, index) => (
+          <AnimatedComponent key={index} >
+            <DeviceTable  data={filterDevices[key]} />
+          </AnimatedComponent>
         ))}
       </Box>
     </Container>

@@ -1,8 +1,29 @@
 import React from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
-import WifiTetheringIcon from '@mui/icons-material/WifiTethering';
+//icons
+import SignalCellular0BarIcon from '@mui/icons-material/SignalCellular0Bar';
+import SignalCellular1BarIcon from '@mui/icons-material/SignalCellular1Bar';
+import SignalCellular2BarIcon from '@mui/icons-material/SignalCellular2Bar';
+import SignalCellular3BarIcon from '@mui/icons-material/SignalCellular3Bar';
+import SignalCellular4BarIcon from '@mui/icons-material/SignalCellular4Bar';
+
 const DeviceTable = ({data}) => {
- 
+   const lastNetwork = (network) => {
+     switch (true) {
+       case network === 0:
+         return <SignalCellular0BarIcon />;
+       case network >= 1 && network <= 10:
+         return <SignalCellular1BarIcon />;
+       case network > 10 && network <= 20:
+         return <SignalCellular2BarIcon />;
+       case network > 20 && network <= 28:
+         return <SignalCellular3BarIcon />;
+       case network > 28:
+         return <SignalCellular4BarIcon />;
+       default:
+         return null;
+     }
+   };
   return (
     <div>
       <TableContainer
@@ -24,7 +45,7 @@ const DeviceTable = ({data}) => {
               <TableRow key={row.name}>
                 <TableCell>{row.name}</TableCell>
                 <TableCell sx={{color: row?.connected ? 'green' : 'red'}}>{row?.connected ? 'Faollashtirilgan' : row?.last_activity.days !==0 ? `${row?.last_activity.days}kun avval`:row?.last_activity.hours!==0 ? `${row?.last_activity.hours} soat avval`: `${row?.last_activity.minutes}-minut avval`}</TableCell>
-                <TableCell>{row.last_network} <WifiTetheringIcon sx={{color: 'green',   pt: 1.5, fontSize: '25px'}}/></TableCell>
+                <TableCell>{row.last_network} {lastNetwork(row.last_network)}</TableCell>
               </TableRow>
             ))}
           </TableBody>
