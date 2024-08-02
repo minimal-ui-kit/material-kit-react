@@ -23,7 +23,7 @@ import axios from 'axios';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 
-export default function BlogView() {
+export default function FinancingView() {
   const [isdatePicker, setIsDatePicker] = useState(false);
   const [range, setRange] = useState({
     after: formatDatePicker(new Date()),

@@ -18,17 +18,17 @@ const navConfig = [
   },
   {
     title: 'Hisobot',
-    path: '/user',
+    path: '/report',
     icon: <DashboardCustomizeIcon />,
   },
   {
     title: 'Qurilma faoliyati',
-    path: '/products',
+    path: '/devices-activity',
     icon: <DevicesIcon />,
   },
   {
     title: 'Moliya',
-    path: '/blog',
+    path: '/financing',
     icon: <AttachMoneyIcon />,
   },
   // {

@@ -9,7 +9,7 @@ import axios from 'axios';
 import { Box, Grid } from '@mui/material';
 import AnimatedComponent from 'src/components/animate/animatedComponent';
 
-export default function ProductsView() {
+export default function DevicesActivityView() {
   const [devices, setDevices] = useState([]);
   const [deviceStatus, setDeviceStatus] = useState([]);
   const getDevices = async () => {
