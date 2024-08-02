@@ -15,21 +15,32 @@ const DateRangePickerComponent = ({ setIsDatePicker, setRange }) => {
       key: 'selection',
     },
   ]);
+
   const getDatePicker = () => {
-    const startDate = formatDatePicker(state[0].startDate);
-    const endDate = formatDatePicker(state[0].endDate);
-    setRange({ startDate, endDate });
+    const after = formatDatePicker(state[0].startDate);
+    const before = formatDatePicker(state[0].endDate);
+    setRange({ after, before });
     setIsDatePicker(false);
-    console.log(startDate, endDate);
-    return { startDate, endDate };
+    console.log(after, before);
+    return { after, before };
   };
+
   const handleDateChange = (item) => {
     setState([item.selection]);
   };
-  // Sanalarni formatlash funksiyasi (o'zbek tilida)
 
   return (
-    <Box component={'div'} sx={{ mx:"auto", color: 'text.secondary', backgroundColor: '#fff', p: 2, boxShadow: 1, borderRadius: 1 }}>
+    <Box
+      component={'div'}
+      sx={{
+        mx: 'auto',
+        color: 'text.secondary',
+        backgroundColor: '#fff',
+        p: 2,
+        boxShadow: 1,
+        borderRadius: 1,
+      }}
+    >
       <DateRangePicker
         showDateDisplay={false}
         showSelectionPreview={false}
@@ -37,16 +48,16 @@ const DateRangePickerComponent = ({ setIsDatePicker, setRange }) => {
         onChange={handleDateChange}
       />
 
-      <Typography variant="body2" color="text.secondary"  sx={{ mb: 2 }}>
+      <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
         Tanlangan sanalar:{' '}
         {`${formatDatePicker(state[0]?.startDate)} ~ ${formatDatePicker(state[0]?.endDate)}`}
       </Typography>
 
-      <Stack direction="row" alignItems="center"  spacing={2}>
+      <Stack direction="row" alignItems="center" spacing={2}>
         <Button onClick={getDatePicker} variant="contained" color="secondary">
           Tanlash
         </Button>
-        <Button onClick={() => setIsDatePicker(false)}  variant="contained" color='error'>
+        <Button onClick={() => setIsDatePicker(false)} variant="contained" color="error">
           Bekor qilish
         </Button>
       </Stack>

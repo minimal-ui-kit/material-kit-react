@@ -6,40 +6,46 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-const bull = (
-  <Box component="span" sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}>
-    •
-  </Box>
-);
-
-const card = (
-  <React.Fragment>
-    <CardContent>
-      <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-        Word of the Day
-      </Typography>
-      <Typography variant="h5" component="div">
-        be{bull}nev{bull}o{bull}lent
-      </Typography>
-      <Typography sx={{ mb: 1.5 }} color="text.secondary">
-        adjective
-      </Typography>
-      <Typography variant="body2">
-        well meaning and kindly.
-        <br />
-        {'"a benevolent smile"'}
-      </Typography>
-    </CardContent>
-    <CardActions>
-      <Button size="small">Learn More</Button>
-    </CardActions>
-  </React.Fragment>
-);
-
-export default function FinancingCard() {
+export default function FinancingCard({ name, cash, click, devices_count, manual }) {
+  
   return (
     <Box sx={{ minWidth: 275 }}>
-      <Card variant="outlined">{card}</Card>
+      <Card variant="outlined" sx={{maxHeight: '265px'}}>
+        <CardContent sx={{ lineHeight: '20px' }}>
+          <Typography
+            variant="h5"
+            sx={{ fontSize: 14, textAlign: 'center' }}
+            color="text.secondary"
+            gutterBottom
+          >
+            {name} <Box component={'span'} sx={{ fontWeight: '500', color: 'text.secondary' }}>({devices_count} ta qurilma)</Box>
+          </Typography>
+          <Typography color={'text.primary'} variant="subtitle1" component="div">
+            Naqd pul tolovlari:{' '}
+            <Box component={'span'} sx={{ fontWeight: 'fontWeightBold', color: 'text.secondary' }}>
+              {' '}
+              {cash.amount} so'm <br /> ({cash.count} ta transaksiya)
+            </Box>
+          </Typography>
+          <Typography color="text.primary" variant="subtitle1" component="div">
+            Onlayn tolovlar:{' '}
+            <Box component={'span'} sx={{ fontWeight: 'fontWeightBold', color: 'text.secondary' }}>
+              {click.amount} so'm <br />({click.count} ta transaksiya)
+            </Box>
+          </Typography>
+          <Typography variant="subtitle1">
+            Admin to'lovlari:{' '}
+            <Box component={'span'} sx={{ fontWeight: 'fontWeightBold', color: 'text.secondary' }}>
+              {manual.amount === null ? 0 : manual.amount} so'm <br />({manual.count} ta transaksiya)
+            </Box>
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button color="primary" sx={{ mx: 'auto' }} type="submit">
+            Kirish
+          </Button>
+        </CardActions>
+      </Card>
     </Box>
   );
 }
