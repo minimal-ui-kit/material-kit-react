@@ -142,7 +142,6 @@ export default function Header({ onOpenNav }) {
             </Box>
           </Stack>
         </Box>
-        
 
         <Stack direction="row" alignItems="center" spacing={1}>
           <LanguagePopover />

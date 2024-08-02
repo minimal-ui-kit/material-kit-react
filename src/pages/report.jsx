@@ -8,7 +8,7 @@ export default function UserPage() {
   return (
     <>
       <Helmet>
-        <title> Report | Minimal UI </title>
+        <title> Hisobot | Minimal UI </title>
       </Helmet>
 
       <ReportView />

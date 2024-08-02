@@ -8,7 +8,7 @@ export default function FinancingPage() {
   return (
     <>
       <Helmet>
-        <title> Blog | Minimal UI </title>
+        <title> Moliya | Minimal UI </title>
       </Helmet>
 
       <FinancingView />

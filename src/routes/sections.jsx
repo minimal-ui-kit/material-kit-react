@@ -2,7 +2,8 @@ import { lazy, Suspense } from 'react';
 import { Outlet, Navigate, useRoutes } from 'react-router-dom';
 
 import DashboardLayout from 'src/layouts/dashboard';
-
+import ProtectedRoute from './context/protected-route';
+import { AuthProvider } from './context/auth-context';
 export const IndexPage = lazy(() => import('src/pages/app'));
 export const FinancingPage = lazy(() => import('src/pages/financing'));
 export const ReportPage = lazy(() => import('src/pages/report'));
@@ -16,11 +17,13 @@ export default function Router() {
   const routes = useRoutes([
     {
       element: (
-        <DashboardLayout>
-          <Suspense>
-            <Outlet />
-          </Suspense>
-        </DashboardLayout>
+        <ProtectedRoute>
+          <DashboardLayout>
+            <Suspense>
+              <Outlet />
+            </Suspense>
+          </DashboardLayout>
+        </ProtectedRoute>
       ),
       children: [
         { element: <IndexPage />, index: true },
@@ -43,5 +46,9 @@ export default function Router() {
     },
   ]);
 
-  return routes;
+  return (
+    <AuthProvider>
+      <Suspense fallback={<div>Loading...</div>}>{routes}</Suspense>
+    </AuthProvider>
+  );
 }
