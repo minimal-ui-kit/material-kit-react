@@ -2,7 +2,7 @@
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
-import { Box, Stack } from '@mui/material';
+import {  Stack } from '@mui/material';
 import AppWidgetSummary from '../app-widget-summary';
 import AppTransactionsTable from '../app-transactions-table';
 import { useEffect, useState } from 'react';
@@ -14,7 +14,7 @@ import PaymentsIcon from '@mui/icons-material/Payments';
 
 export default function AppView() {
   const [data, setData] = useState([]);
-  const [transactions, setTransactions] = useState([]);
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -47,48 +47,57 @@ export default function AppView() {
  
   return (
     <Container maxWidth="xl" sx={{ mt: 5 }}>
-      <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-        <AppWidgetSummary
-          title="Bugungi to'lovlar"
-          cash_summa={data?.summary_statistics?.cash?.today_summa}
-          click_summa={data?.summary_statistics?.click?.today_summa}
-          cash_count={data?.summary_statistics?.cash?.today_count}
-          click_count={data?.summary_statistics?.click?.today_count}
-          protsent={protsent(
-            data?.summary_statistics?.cash?.today_summa,
-            data?.summary_statistics?.click?.today_summa
-          )}
-          icon={<PaymentIcon fontSize="large" />}
-          color="rgb(79, 70, 229)"
-        />
-        <AppWidgetSummary
-          title="Bu hafta to'lovlari"
-          cash_summa={data?.summary_statistics?.cash?.this_week_summa}
-          click_summa={data?.summary_statistics?.click?.this_week_summa}
-          cash_count={data?.summary_statistics?.cash?.this_week_count}
-          click_count={data?.summary_statistics?.click?.this_week_count}
-          protsent={protsent(
-            data?.summary_statistics?.cash?.this_week_summa,
-            data?.summary_statistics?.click?.this_week_summa
-          )}
-          icon={<PaymentsIcon fontSize="large" />}
-          color="rgb(37, 99, 235)"
-        />
-        <AppWidgetSummary
-          title="Bu oy to'lovlari"
-          cash_summa={data?.summary_statistics?.cash?.this_month_summa}
-          click_summa={data?.summary_statistics?.click?.this_month_summa}
-          cash_count={data?.summary_statistics?.cash?.this_month_count}
-          click_count={data?.summary_statistics?.click?.this_month_count}
-          protsent={protsent(
-            data?.summary_statistics?.cash?.this_month_summa,
-            data?.summary_statistics?.click?.this_month_summa
-          )}
-          icon={<CreditScoreIcon fontSize="large" />}
-          color="rgb(219, 39, 119)"
-        />
+      
+      <Stack mb={5}>
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={6} md={4}>
+            <AppWidgetSummary
+              title="Bugungi to'lovlar"
+              cash_summa={data?.summary_statistics?.cash?.today_summa}
+              click_summa={data?.summary_statistics?.click?.today_summa}
+              cash_count={data?.summary_statistics?.cash?.today_count}
+              click_count={data?.summary_statistics?.click?.today_count}
+              protsent={protsent(
+                data?.summary_statistics?.cash?.today_summa,
+                data?.summary_statistics?.click?.today_summa
+              )}
+              icon={<PaymentIcon fontSize="large" />}
+              color="rgb(79, 70, 229)"
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <AppWidgetSummary
+              title="Bu hafta to'lovlari"
+              cash_summa={data?.summary_statistics?.cash?.this_week_summa}
+              click_summa={data?.summary_statistics?.click?.this_week_summa}
+              cash_count={data?.summary_statistics?.cash?.this_week_count}
+              click_count={data?.summary_statistics?.click?.this_week_count}
+              protsent={protsent(
+                data?.summary_statistics?.cash?.this_week_summa,
+                data?.summary_statistics?.click?.this_week_summa
+              )}
+              icon={<PaymentsIcon fontSize="large" />}
+              color="rgb(37, 99, 235)"
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <AppWidgetSummary
+              title="Bu oy to'lovlari"
+              cash_summa={data?.summary_statistics?.cash?.this_month_summa}
+              click_summa={data?.summary_statistics?.click?.this_month_summa}
+              cash_count={data?.summary_statistics?.cash?.this_month_count}
+              click_count={data?.summary_statistics?.click?.this_month_count}
+              protsent={protsent(
+                data?.summary_statistics?.cash?.this_month_summa,
+                data?.summary_statistics?.click?.this_month_summa
+              )}
+              icon={<CreditScoreIcon fontSize="large" />}
+              color="rgb(219, 39, 119)"
+            />
+          </Grid>
+        </Grid>
       </Stack>
-      <Stack direction="row" alignItems="start" justifyContent="space-between" spacing={3} >
+      <Stack direction="row" alignItems="start" justifyContent="space-between" spacing={3}>
         <AppTransactionsTable
           data={data?.last_transactions?.click}
           title="Oxirgi online to'lov operatsiyalari"

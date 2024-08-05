@@ -8,20 +8,10 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/material';
+import formatDate from 'src/utils/format-date';
 
 export default function AppTransactionsTable({ data, title }) {
-  const formatDate = (dateString) => {
-    const options = {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-      hour12: true,
-    };
-    return new Intl.DateTimeFormat('en-US', options).format(new Date(dateString));
-  };
+ 
 
   return (
     <TableContainer

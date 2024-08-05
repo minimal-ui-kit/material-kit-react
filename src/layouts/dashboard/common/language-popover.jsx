@@ -13,7 +13,7 @@ export default function LanguagePopover() {
   };
 
   return (
-    <Box sx={{ minWidth: 100 }}>
+    <Box sx={{ minWidth: { xs: 70, sm: 100 } }}>
       <FormControl>
         
         <Select

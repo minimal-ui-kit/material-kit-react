@@ -1,31 +1,22 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Typography } from '@mui/material';
-/* eslint-disable */
+import { Grid, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
+import FormatAlignLeftIcon from '@mui/icons-material/FormatAlignLeft';
 import { useTheme } from '@mui/material/styles';
-// import IconButton from '@mui/material/IconButton';
-
+import IconButton from '@mui/material/IconButton';
 import { useResponsive } from 'src/hooks/use-responsive';
-
 import { bgBlur } from 'src/theme/css';
-
-// import Iconify from 'src/components/iconify';
-
-// import Searchbar from './common/searchbar';
 import { NAV, HEADER } from './config-layout';
 import AccountPopover from './common/account-popover';
 import LanguagePopover from './common/language-popover';
 
-// ----------------------------------------------------------------------
-
 export default function Header({ onOpenNav }) {
   const theme = useTheme();
-
   const [data, setData] = useState([]);
   const [devices, setDevices] = useState([]);
   const lgUp = useResponsive('up', 'lg');
@@ -38,16 +29,15 @@ export default function Header({ onOpenNav }) {
             Authorization: 'Token ' + localStorage.getItem('token'),
           },
         });
-
         setData(response.data);
         console.log(response.data);
       } catch (error) {
         console.error(error);
       }
     }
-
     getUser();
   }, []);
+
   useEffect(() => {
     const getDevices = async () => {
       try {
@@ -60,19 +50,18 @@ export default function Header({ onOpenNav }) {
           }
         );
         console.log(response.data);
-
         setDevices(response.data);
       } catch (error) {
         console.error(error);
       }
     };
-
     getDevices();
   }, []);
 
   return (
     <AppBar
       sx={{
+        px: { lg: 5 },
         borderBottom: '4px solid blue',
         boxShadow: 'none',
         height: HEADER.H_MOBILE,
@@ -89,109 +78,124 @@ export default function Header({ onOpenNav }) {
         }),
       }}
     >
-      <Toolbar
-        sx={{
-          height: 1,
-          px: { lg: 5 },
-        }}
-      >
-        <Typography variant="h3" sx={{ flexGrow: 1, color: 'black' }}>
-          {data?.current_company?.name}
-        </Typography>
+      <Toolbar sx={{ height: 1, px: { lg: 5 } }}>
+        {!lgUp && (
+          <IconButton onClick={onOpenNav} sx={{ mr: 1 }}>
+            <FormatAlignLeftIcon />
+          </IconButton>
+        )}
         <Box
-          sx={{ flexGrow: 1, color: 'black' }}
-          display="flex"
-          justifyContent="flex-between"
-          alignItems={'center'}
+          component={'div'}
+          sx={{
+            display: 'flex',
+            marginRight: { xs: 0, md: 2 },
+            flexGrow: 1,
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexDirection: { xs: 'column', md: 'row' },
+            width: { xs: '100%', md: 'auto' },
+            mb: { xs: 2, md: 0 },
+            mt: { xs: 2, md: 0 },
+          }}
         >
-          <Typography variant="h" sx={{ color: 'green', marginRight: '20px' }}>
-            Filiallar: {data?.current_company?.filials_count}
-          </Typography>
-          <Typography variant="h" sx={{ color: 'red' }}>
-            Qurilmalar: {data?.current_company?.devices_count}
-          </Typography>
-          <Stack
-            direction="row"
-            alignItems="center"
-            spacing={5}
-            sx={{ color: 'black', marginLeft: '40px' }}
+          <Typography
+            variant="h3"
+            sx={{
+              sm: 1,
+              ml: 1,
+              mt: 1,
+              flexGrow: 1,
+              color: 'black',
+              fontSize: { xs: '1rem', md: '2.125rem' },
+              whiteSpace: 'nowrap',
+              marginRight: '15px',
+            }}
           >
-            <Box
-              sx={{
-                width: '120px',
-                color: 'black',
-                padding: '10px',
-                backgroundColor: 'rgb(143, 242, 171)',
-                borderRadius: '10px',
-                textAlign: 'center',
-              }}
+            {data?.current_company?.name}
+          </Typography>
+          <Box
+            sx={{ flexGrow: 1, color: 'black' }}
+            display="flex"
+            justifyContent="flex-between"
+            alignItems={'center'}
+          >
+            <Grid
+             sx={{ marginRight: { xs: 1} }}
+              container
+              spacing={0}
             >
-              {devices.active_devices_count}-faol
-            </Box>
-            <Box
-              sx={{
-                width: '120px',
-                color: 'black',
-                padding: '10px',
-                backgroundColor: 'rgb(214, 148, 166)',
-                borderRadius: '10px',
-                textAlign: 'center',
-              }}
-            >
-              {devices.inactive_devices_count}-faol emas
-            </Box>
-          </Stack>
+              <Grid item>
+                <Typography
+                  variant="h"
+                  sx={{
+                    color: 'green',
+                    marginRight: '10px',
+                    fontSize: { xs: '0.5rem', md: '1rem', sm: '0.75rem' },
+                  }}
+                >
+                  Filiallar: {data?.current_company?.filials_count}
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Typography
+                  variant="h"
+                  sx={{ color: 'red', fontSize: { xs: '0.5rem', md: '1rem', sm: '0.75rem' } }}
+                >
+                  Qurilmalar: {data?.current_company?.devices_count}
+                </Typography>
+              </Grid>
+            </Grid>
+            <Stack direction="row" alignItems="center" spacing={2} sx={{ color: 'black' }}>
+              <Box
+                sx={{
+                  width: { xs: '25px', sm: '40px', md: '120px' },
+                  height: { xs: '25px', sm: '40px', md: 'auto' },
+                  color: 'black',
+                  padding: { xs: '1px', md: '8px' },
+                  backgroundColor: 'rgb(143, 242, 171)',
+                  borderRadius: { xs: '50%', md: '10px' },
+                  textAlign: 'center',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  fontSize: { xs: '0.75rem', md: '1rem' },
+                  flexDirection: { xs: 'column', md: 'row' },
+                }}
+              >
+                <Box sx={{ display: { xs: 'none', md: 'block' }, mr: { md: 1 } }}>faol</Box>
+                {devices.active_devices_count}
+              </Box>
+              <Box
+                sx={{
+                  width: { xs: '25px', sm: '40px', md: '120px' },
+                  height: { xs: '25px', sm: '40px', md: 'auto' },
+                  color: 'black',
+                  padding: { xs: '3px', md: '10px' },
+                  backgroundColor: 'rgb(214, 148, 166)',
+                  borderRadius: { xs: '50%', md: '10px' },
+                  textAlign: 'center',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  fontSize: { xs: '0.5rem', md: '1rem' },
+                  flexDirection: { xs: 'column', md: 'row' },
+                }}
+              >
+                <Box sx={{ display: { xs: 'none', md: 'block' }, mr: { md: 1 } }}>faol emas</Box>
+                {devices.inactive_devices_count}
+              </Box>
+            </Stack>
+          </Box>
         </Box>
-
-        <Stack direction="row" alignItems="center" spacing={1}>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <LanguagePopover />
-          {/* <NotificationsPopover /> */}
-          <AccountPopover data={data} />{' '}
-        </Stack>
+          <AccountPopover data={data} />
+        </Box>
       </Toolbar>
     </AppBar>
   );
 }
-//   <AppBar
-//     sx={{
-//       borderBottom: '4px solid blue',
-//       boxShadow: 'none',
-//       height: HEADER.H_MOBILE,
-//       zIndex: theme.zIndex.appBar + 1,
-//       ...bgBlur({
-//         color: theme.palette.background.default,
-//       }),
-//       transition: theme.transitions.create(['height'], {
-//         duration: theme.transitions.duration.shorter,
-//       }),
-//       ...(lgUp && {
-//         width: `calc(100% - ${NAV.WIDTH + 1}px)`,
-//         height: HEADER.H_DESKTOP,
-//       }),
-//     }}
-//   >
-//     <Toolbar
-//       sx={{
-//         height: 1,
-//         px: { lg: 5 },
-//       }}
-//     >
 
-//       <Typography variant="h3" sx={{ flexGrow: 1, color: 'black' }}>
-//         Car
-//       </Typography>
-
-//       <Box sx={{ flexGrow: 1 }} />
-
-//       <Stack direction="row" alignItems="center" spacing={1}>
-//         <LanguagePopover />
-//         <NotificationsPopover />
-//         <AccountPopover />
-//       </Stack>
-//     </Toolbar>
-//   </AppBar>
-// );
-
-// Header.propTypes = {
-//   onOpenNav: PropTypes.func,
-// };
+Header.propTypes = {
+  onOpenNav: PropTypes.func,
+};
