@@ -119,8 +119,8 @@ export default function Report() {
 
   return (
     <Container>
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 3, ml: 2, my: 3 }}>
-        <Typography variant="h4">Hisobot</Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center', flexDirection:{ xs: 'column', sm: 'row'}, ml: 2, my: { xs: 2, sm: 2} }}>
+        <Typography variant="h6"  sx={{ mr: 2 }} >Hisobot</Typography>
         <FormControl sx={{ m: 1, minWidth: 200 }}>
           <InputLabel id="filial-select-label">Filialni tanlang</InputLabel>
           <Select

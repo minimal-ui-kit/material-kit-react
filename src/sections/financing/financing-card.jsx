@@ -10,7 +10,7 @@ export default function FinancingCard({ name, cash, click, devices_count, manual
   
   return (
     <Box sx={{ minWidth: 275 }}>
-      <Card variant="outlined" sx={{maxHeight: '265px'}}>
+      <Card variant="outlined" sx={{maxHeight: '265px', minWidth: '275px'}}>
         <CardContent sx={{ lineHeight: '20px' }}>
           <Typography
             variant="h5"

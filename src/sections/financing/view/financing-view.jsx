@@ -14,7 +14,7 @@ import FinancingCard from '../financing-card';
 import DateRangePickerComponent from '../date-range-picker';
 import formatDatePicker from '../../../utils/format-date-picker';
 // ----------------------------------------------------------------------
-import { Box } from '@mui/material';
+import { Box, useMediaQuery, useTheme } from '@mui/material';
 import AnimatedComponent from 'src/components/animate/animatedComponent';
 import CompanyTable from '../company-card';
 
@@ -91,11 +91,13 @@ export default function FinancingView() {
     const data = new Blob([excelBuffer], { type: 'application/octet-stream' });
     saveAs(data, 'FilialDetails.xlsx');
   };
+  const theme = useTheme();
+  const isXs = useMediaQuery(theme.breakpoints.down('xs'));
   return (
     <Container>
       <Box sx={{ mb: 5, display: 'flex', alignItems: 'start', justifyContent: 'space-between' }}>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <Typography variant="h4">Moliya</Typography>
+          <Typography variant="h4"  sx={{  fontSize:{ xs: '20px', sm: '24px'}, mr: 1 }}>Moliya</Typography>
         </Stack>
 
         <Stack
@@ -109,6 +111,7 @@ export default function FinancingView() {
             <Button
               onClick={() => setIsDatePicker(true)}
               variant="contained"
+              sx={{  fontSize:{ xs: '8px', sm: '14px'} }}
               startIcon={<CalendarMonthIcon />}
             >
               Sana oralig'i
@@ -118,10 +121,10 @@ export default function FinancingView() {
             <Button
               variant="contained"
               startIcon={<InsertDriveFileIcon />}
-              sx={{ mr: 1, backgroundColor: '#388e3c' }}
+              sx={{ mr: 1, backgroundColor: '#388e3c', fontSize:{ xs: '8px', sm: '14px'} }}
               onClick={handleDownloadExcel}
             >
-              Excel faylini yuklash
+               Excel faylini yuklash
             </Button>
           </Stack>
         </Stack>
@@ -146,7 +149,7 @@ export default function FinancingView() {
         </Grid>
 
         {filialDetails.map((filialDetail) => (
-          <Grid key={filialDetail.id} itemxs={12} sm={6} md={4}>
+          <Grid sx={{ width: '100%' }} key={filialDetail.id} itemxs={12} sm={6} md={4}>
             <AnimatedComponent>
               <FinancingCard
                 name={filialDetail.name}

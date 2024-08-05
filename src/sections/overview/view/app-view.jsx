@@ -97,7 +97,7 @@ export default function AppView() {
           </Grid>
         </Grid>
       </Stack>
-      <Stack direction="row" alignItems="start" justifyContent="space-between" spacing={3}>
+      <Stack direction={{ xs: 'column', sm: 'row'}} alignItems="start" justifyContent="space-between" spacing={3}>
         <AppTransactionsTable
           data={data?.last_transactions?.click}
           title="Oxirgi online to'lov operatsiyalari"

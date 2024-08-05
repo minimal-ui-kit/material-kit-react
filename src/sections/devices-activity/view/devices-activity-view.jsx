@@ -49,7 +49,7 @@ export default function DevicesActivityView() {
 
   return (
     <Container>
-      <Typography variant="h4" sx={{ mb: 5, mt: 2 }}>
+      <Typography variant="h4" sx={{ mb: 5, mt: 2, fontSize: { xs: '18px', md: '24px' } }}>
         Qurilmalar foaliyati{' '}
         <Typography variant="body" sx={{ color: 'text.secondary' }}>
           {` (${devices?.active_devices_count}-faol ${devices?.inactive_devices_count}-faol emas)`}
