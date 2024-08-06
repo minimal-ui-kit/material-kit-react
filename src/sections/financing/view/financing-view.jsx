@@ -11,7 +11,7 @@ import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import { posts } from 'src/_mock/blog';
 
 import FinancingCard from '../financing-card';
-import DateRangePickerComponent from '../date-range-picker';
+import DateRangePickerComponent from '../../../utils/date-range-picker';
 import formatDatePicker from '../../../utils/format-date-picker';
 // ----------------------------------------------------------------------
 import { Box, useMediaQuery, useTheme } from '@mui/material';
@@ -20,8 +20,7 @@ import CompanyTable from '../company-card';
 
 import axios from 'axios';
 
-import * as XLSX from 'xlsx';
-import { saveAs } from 'file-saver';
+import ExcelDownload from 'src/utils/excel-download';
 
 export default function FinancingView() {
   const [isdatePicker, setIsDatePicker] = useState(false);
@@ -60,7 +59,7 @@ export default function FinancingView() {
               },
             }
           );
-          // console.log(response.data);
+          console.log(response.data);
           setFilialDetails((prev) => [...prev, response.data]);
         } catch (error) {
           console.error(error);
@@ -69,35 +68,28 @@ export default function FinancingView() {
       getFilialDetails();
     });
   }, [range, filials]);
-  const handleDownloadExcel = () => {
-    const formattedData = filialDetails.map((detail) => ({
-      ID: detail.id,
-      Nomi: detail.name,
-      'Click service ID': detail.service_id,
-      'Telefon raqami': detail.phone_number,
-      'Qurilmalar soni': detail.devices_count,
-      "Naqd to'lovlar": detail.cash.amount,
-      "Naqd to'lovlar soni": detail.cash.count,
-      'Onlayn tolovlar': detail.click.amount,
-      'Onlayn tolovlar soni': detail.click.count,
-      'Admin tolovlar': detail.manual.amount ? detail.manual.amount : 0,
-      'Admin tolovlar soni': detail.manual.count ? detail.manual.count : 0,
-    }));
-    const ws = XLSX.utils.json_to_sheet(formattedData);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'FilialDetails');
 
-    const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-    const data = new Blob([excelBuffer], { type: 'application/octet-stream' });
-    saveAs(data, 'FilialDetails.xlsx');
-  };
-  const theme = useTheme();
-  const isXs = useMediaQuery(theme.breakpoints.down('xs'));
+  const formattedData = filialDetails.map((detail) => ({
+    ID: detail.id,
+    Nomi: detail.name,
+    'Click service ID': detail.service_id,
+    'Telefon raqami': detail.phone_number,
+    'Qurilmalar soni': detail.devices_count,
+    "Naqd to'lovlar": detail.cash.amount,
+    "Naqd to'lovlar soni": detail.cash.count,
+    'Onlayn tolovlar': detail.click.amount,
+    'Onlayn tolovlar soni': detail.click.count,
+    'Admin tolovlar': detail.manual.amount ? detail.manual.amount : 0,
+    'Admin tolovlar soni': detail.manual.count ? detail.manual.count : 0,
+  }));
+
   return (
     <Container>
       <Box sx={{ mb: 5, display: 'flex', alignItems: 'start', justifyContent: 'space-between' }}>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <Typography variant="h4"  sx={{  fontSize:{ xs: '20px', sm: '24px'}, mr: 1 }}>Moliya</Typography>
+          <Typography variant="h4" sx={{ fontSize: { xs: '20px', sm: '24px' }, mr: 1 }}>
+            Moliya
+          </Typography>
         </Stack>
 
         <Stack
@@ -111,21 +103,14 @@ export default function FinancingView() {
             <Button
               onClick={() => setIsDatePicker(true)}
               variant="contained"
-              sx={{  fontSize:{ xs: '8px', sm: '14px'} }}
+              sx={{ fontSize: { xs: '8px', sm: '14px' } }}
               startIcon={<CalendarMonthIcon />}
             >
               Sana oralig'i
             </Button>
           </Stack>
           <Stack direction="row" alignItems="center" justifyContent="space-between">
-            <Button
-              variant="contained"
-              startIcon={<InsertDriveFileIcon />}
-              sx={{ mr: 1, backgroundColor: '#388e3c', fontSize:{ xs: '8px', sm: '14px'} }}
-              onClick={handleDownloadExcel}
-            >
-               Excel faylini yuklash
-            </Button>
+            <ExcelDownload title="FilialDetails" formattedData={formattedData} />
           </Stack>
         </Stack>
       </Box>
@@ -149,9 +134,10 @@ export default function FinancingView() {
         </Grid>
 
         {filialDetails.map((filialDetail) => (
-          <Grid sx={{ width: '100%' }} key={filialDetail.id} itemxs={12} sm={6} md={4}>
+          <Grid sx={{ width: '100%' }} key={filialDetail.id} item xs={12} sm={6} md={4}>
             <AnimatedComponent>
               <FinancingCard
+              id={filialDetail.id}
                 name={filialDetail.name}
                 cash={filialDetail.cash}
                 click={filialDetail.click}

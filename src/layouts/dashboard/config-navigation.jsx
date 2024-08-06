@@ -3,12 +3,13 @@ import DonutSmallIcon from '@mui/icons-material/DonutSmall';
 import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
 /* eslint-disable */
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 /* eslint-disable */
-import SvgColor from 'src/components/svg-color';
+// import SvgColor from 'src/components/svg-color';
 
-const icon = (name) => (
-  <SvgColor src={`/assets/icons/navbar/${name}.svg`} sx={{ width: 1, height: 1 }} />
-);
+// const icon = (name) => (
+//   <SvgColor src={`/assets/icons/navbar/${name}.svg`} sx={{ width: 1, height: 1 }} />
+// );
 
 const navConfig = [
   {
@@ -39,7 +40,7 @@ const navConfig = [
   {
     title: "Bo'sh",
     path: '/404',
-    icon: icon('ic_disabled'),
+    icon: <CheckBoxOutlineBlankIcon />,
   },
 ];
 

@@ -5,7 +5,7 @@ import { Box, Typography, Button, Stack } from '@mui/material';
 import React, { useState } from 'react';
 import { DateRangePicker } from 'react-date-range';
 
-import formatDatePicker from '../../utils/format-date-picker';
+import formatDatePicker from './format-date-picker';
 
 const DateRangePickerComponent = ({ setIsDatePicker, setRange }) => {
   const [state, setState] = useState([

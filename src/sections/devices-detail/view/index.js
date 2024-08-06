@@ -1,0 +1,1 @@
+export {default as DevicesDetailView} from './devices-detail-view'; ;
