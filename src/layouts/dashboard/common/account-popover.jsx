@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Divider from '@mui/material/Divider';
@@ -9,17 +9,14 @@ import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 
-import { account } from 'src/_mock/account';
+// import { account } from 'src/_mock/account';
 
 // ----------------------------------------------------------------------
 
-
-
 // ----------------------------------------------------------------------
 
-export default function AccountPopover({data}) {
-
-const navigate = useNavigate();
+export default function AccountPopover({ data }) {
+  const navigate = useNavigate();
   // const [data, setData] = useState({});
   const [open, setOpen] = useState(null);
 
@@ -30,9 +27,8 @@ const navigate = useNavigate();
   const handleClose = () => {
     setOpen(null);
   };
-  
 
-console.log(data)
+  console.log(data);
   return (
     <>
       <IconButton
@@ -48,8 +44,7 @@ console.log(data)
         }}
       >
         <Avatar
-          src={account.photoURL}
-          alt={account.displayName}
+          src="/assets/images/avatars/avatar_1.jpg"
           sx={{
             width: 36,
             height: 36,
@@ -84,7 +79,7 @@ console.log(data)
 
           <Divider sx={{ borderStyle: 'dashed' }} />
 
-          <Box  sx={{ color: 'text.secondary' }} >
+          <Box sx={{ color: 'text.secondary' }}>
             <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
               {data.first_name}
             </Typography>
@@ -94,8 +89,8 @@ console.log(data)
           </Box>
 
           <Divider sx={{ borderStyle: 'dashed' }} />
-          <Typography  variant="body2" sx={{ color: 'text.secondary', cursor: 'pointer'  }} noWrap>
-            Rolni o'zgartirish
+          <Typography variant="body2" sx={{ color: 'text.secondary', cursor: 'pointer' }} noWrap>
+            <Link to="/select-company-role">Rolni o'zgartirish</Link>
           </Typography>
         </Box>
 

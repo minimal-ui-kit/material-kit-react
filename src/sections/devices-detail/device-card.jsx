@@ -6,7 +6,11 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import QrCode2Icon from '@mui/icons-material/QrCode2';
-export default function DeviceCard({ name, cash, click, devices_count, manual, code }) {
+export default function DeviceCard({ id, name, cash, click, devices_count, manual, code }) {
+   const handleQrCodeClick = () => {
+     const url = `https://api.2pay.uz/devices/make-qr-code/${id}/?next=${window.location.href}`;
+     window.open(url, '_blank'); 
+   };
   return (
     <Box sx={{ minWidth: 275 }}>
       <Card variant="outlined" sx={{ minHeight: '265px', minWidth: '275px' }}>
@@ -45,7 +49,7 @@ export default function DeviceCard({ name, cash, click, devices_count, manual, c
 
         </CardContent>
         <CardActions sx={{ justifyContent: 'center' }}>
-          <Button startIcon={ <QrCode2Icon />} size="small">QR-Code ({code}) </Button>    
+          <Button startIcon={ <QrCode2Icon />} size="small" onClick={handleQrCodeClick}>QR-Code ({code}) </Button>    
         </CardActions>
       </Card>
     </Box>

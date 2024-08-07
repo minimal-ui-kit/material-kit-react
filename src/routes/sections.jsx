@@ -12,7 +12,7 @@ export const LoginPage = lazy(() => import('src/pages/login'));
 export const DevicesActivityPage = lazy(() => import('src/pages/devices-activity'));
 export const DevicesDetailPage = lazy(() => import('src/pages/devices-detail'));
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
-
+export const SelectCompanyPage = lazy(() => import('src/pages/select-company'));
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -38,6 +38,10 @@ export default function Router() {
     {
       path: 'login',
       element: <LoginPage />,
+    },
+    {
+      path: 'select-company-role',
+      element: <SelectCompanyPage />,
     },
     {
       path: '404',

@@ -97,7 +97,7 @@ const DevicesDetailView = () => {
 
   return (
     <Container>
-      <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between" spacing={2}>
+      <Stack mb={5} direction="row" alignItems="center" justifyContent="end" spacing={2}>
         <Stack direction="row" alignItems="center" justifyContent="space-between">
           <Button
             onClick={() => setIsDatePicker(true)}
@@ -134,6 +134,7 @@ const DevicesDetailView = () => {
           <Grid item sx={{ width: '100%', maxHeight:"265px", mb: 5 }} key={item.id} xs={12} sm={6} md={4}>
             <AnimatedComponent>
               <DeviceCard
+              id={item.id}
                 name={item.name}
                 cash={item.cash}
                 click={item.click}

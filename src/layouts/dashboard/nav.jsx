@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-
+import axios from 'axios';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Drawer from '@mui/material/Drawer';
@@ -14,17 +14,19 @@ import { RouterLink } from 'src/routes/components';
 
 import { useResponsive } from 'src/hooks/use-responsive';
 
-import { account } from 'src/_mock/account';
 
 import Logo from 'src/components/logo';
 import Scrollbar from 'src/components/scrollbar';
 
 import { NAV } from './config-layout';
 import navConfig from './config-navigation';
+import PersonIcon from '@mui/icons-material/Person';
 
 // ----------------------------------------------------------------------
 
 export default function Nav({ openNav, onCloseNav }) {
+
+  const [data, setData] = useState([]);
   const pathname = usePathname();
 
   const upLg = useResponsive('up', 'lg');
@@ -33,9 +35,24 @@ export default function Nav({ openNav, onCloseNav }) {
     if (openNav) {
       onCloseNav();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, [pathname]);
-
+useEffect(() => {
+  async function getUser() {
+    try {
+      const response = await axios.get('https://api.2pay.uz/api/users/request-user/', {
+        headers: {
+          Authorization: 'Token ' + localStorage.getItem('token'),
+        },
+      });
+      setData(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  getUser();
+}, []);
   const renderAccount = (
     <Box
       sx={{
@@ -49,13 +66,12 @@ export default function Nav({ openNav, onCloseNav }) {
         bgcolor: (theme) => alpha(theme.palette.grey[500], 0.12),
       }}
     >
-      <Avatar src={account.photoURL} alt="photoURL" />
-
+      <Avatar src="/assets/images/avatars/avatar_1.jpg" alt="photoURL" />
       <Box sx={{ ml: 2 }}>
-        <Typography variant="subtitle2">Ulugbek Mahammadjonov</Typography>
+        <Typography variant="subtitle2">{data.first_name} {data.last_name}</Typography>
 
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          Admin
+          {data.role?.name}
         </Typography>
       </Box>
     </Box>
@@ -69,34 +85,7 @@ export default function Nav({ openNav, onCloseNav }) {
     </Stack>
   );
 
-  // const renderUpgrade = (
-  //   <Box sx={{ px: 2.5, pb: 3, mt: 10 }}>
-  //     <Stack alignItems="center" spacing={3} sx={{ pt: 5, borderRadius: 2, position: 'relative' }}>
-  //       <Box
-  //         component="img"
-  //         src="/assets/illustrations/illustration_avatar.png"
-  //         sx={{ width: 100, position: 'absolute', top: -50 }}
-  //       />
-
-  //       <Box sx={{ textAlign: 'center' }}>
-  //         <Typography variant="h6">Get more?</Typography>
-
-  //         <Typography variant="body2" sx={{ color: 'text.secondary', mt: 1 }}>
-  //           From only $69
-  //         </Typography>
-  //       </Box>
-
-  //       <Button
-  //         href="https://material-ui.com/store/items/minimal-dashboard/"
-  //         target="_blank"
-  //         variant="contained"
-  //         color="inherit"
-  //       >
-  //         Upgrade to Pro
-  //       </Button>
-  //     </Stack>
-  //   </Box>
-  // );
+  
 
   const renderContent = (
     <Scrollbar

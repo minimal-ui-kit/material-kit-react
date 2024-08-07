@@ -119,11 +119,7 @@ export default function Header({ onOpenNav }) {
             justifyContent="flex-between"
             alignItems={'center'}
           >
-            <Grid
-             sx={{ marginRight: { xs: 1} }}
-              container
-              spacing={0}
-            >
+            <Grid sx={{ marginRight: { xs: 1 } }} container spacing={0}>
               <Grid item>
                 <Typography
                   variant="h"
