@@ -20,11 +20,11 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 import { useAuth } from 'src/routes/context/auth-context';
-// ----------------------------------------------------------------------
 
 export default function LoginView() {
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(''); // Xato holatini qo'shamiz
   const theme = useTheme();
 
   const navigate = useNavigate();
@@ -33,6 +33,7 @@ export default function LoginView() {
 
   const handleClick = async (e) => {
     e.preventDefault();
+    setError(''); 
     try {
       const response = await axios.post(
         'https://api.2pay.uz/api/users/login/',
@@ -43,16 +44,16 @@ export default function LoginView() {
         {
           headers: {
             'Content-Type': 'application/json',
-            // 'Accsess-Control-Allow-Origin':  '*',
           },
         }
       );
 
       login(response.data.token);
       navigate('/', { replace: true });
-      console.log(response.data);
+     ;
     } catch (error) {
       console.log(error);
+      setError("Telefon raqami yoki parol noto'g'ri. Iltimos, qayta urinib ko'ring."); // Xato holatini yangilaymiz
     }
   };
 
@@ -64,14 +65,15 @@ export default function LoginView() {
           label="Telefon raqami"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
+          error={!!error} // Xato holati bo'lsa qizil qilib ko'rsatish
         />
-
         <TextField
           onChange={(e) => setPassword(e.target.value)}
           value={password}
           name="password"
           label="Parol"
           type={showPassword ? 'text' : 'password'}
+          error={!!error} 
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -82,6 +84,7 @@ export default function LoginView() {
             ),
           }}
         />
+        {error && <Typography color="error">{error}</Typography>} {/* Xato xabarini ko'rsatish */}
       </Stack>
 
       <LoadingButton

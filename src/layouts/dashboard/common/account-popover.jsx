@@ -90,7 +90,7 @@ export default function AccountPopover({ data }) {
 
           <Divider sx={{ borderStyle: 'dashed' }} />
           <Typography variant="body2" sx={{ color: 'text.secondary', cursor: 'pointer' }} noWrap>
-            <Link to="/select-company-role">Rolni o'zgartirish</Link>
+            <Link style={{ textDecoration: 'none', color: 'inherit' }} to="/select-company-role">Rolni o'zgartirish</Link>
           </Typography>
         </Box>
 
@@ -110,7 +110,7 @@ export default function AccountPopover({ data }) {
           }}
           sx={{ typography: 'body2', color: 'error.main', py: 1.5 }}
         >
-          Logout
+          Chiqish
         </MenuItem>
       </Popover>
     </>
