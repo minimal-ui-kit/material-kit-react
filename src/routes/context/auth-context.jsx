@@ -9,14 +9,16 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem('token', token);
     setIsAuthenticated(true);
   };
-
+  const user = (user) => {
+    localStorage.setItem('user', JSON.stringify(user));
+  }
   const logout = () => {
     localStorage.removeItem('token');
     setIsAuthenticated(false);
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout, user }}>
       {children}
     </AuthContext.Provider>
   );

@@ -30,6 +30,7 @@
     "@mui/material": "^5.16.6",
     "@mui/x-date-pickers": "^7.11.1",
     "@mui/x-date-pickers-pro": "^7.11.1",
+    "@tanstack/react-query": "^5.51.21",
     "apexcharts": "^3.43.0",
     "axios": "^1.7.2",
     "date-fns": "^3.6.0",

@@ -28,7 +28,14 @@ export default function AccountPopover({ data }) {
     setOpen(null);
   };
 
-  console.log(data);
+  const storedUser = localStorage.getItem('user');
+  let user = {};
+  try {
+    user = JSON.parse(storedUser) || {};
+  } catch (error) {
+    console.error('Error parsing JSON:', error);
+  }
+
   return (
     <>
       <IconButton
@@ -52,7 +59,7 @@ export default function AccountPopover({ data }) {
           }}
         >
           {/* {account.displayName.charAt(0).toUpperCase()} */}
-          {data.first_name}
+          {user?.first_name}
         </Avatar>
       </IconButton>
 
@@ -73,24 +80,26 @@ export default function AccountPopover({ data }) {
       >
         <Box sx={{ my: 3, px: 2, display: 'flex', flexDirection: 'column', gap: 1.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {data?.current_company?.name}
-            {`(${data?.role?.name})`}
+            {user?.current_company?.name}
+            {`(${user?.role?.name})`}
           </Typography>
 
           <Divider sx={{ borderStyle: 'dashed' }} />
 
           <Box sx={{ color: 'text.secondary' }}>
             <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-              {data.first_name}
+              {user?.first_name}
             </Typography>
             <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-              {data.last_name}
+              {user?.last_name}
             </Typography>
           </Box>
 
           <Divider sx={{ borderStyle: 'dashed' }} />
           <Typography variant="body2" sx={{ color: 'text.secondary', cursor: 'pointer' }} noWrap>
-            <Link style={{ textDecoration: 'none', color: 'inherit' }} to="/select-company-role">Rolni o'zgartirish</Link>
+            <Link style={{ textDecoration: 'none', color: 'inherit' }} to="/select-company-role">
+              Rolni o'zgartirish
+            </Link>
           </Typography>
         </Box>
 

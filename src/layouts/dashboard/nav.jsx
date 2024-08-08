@@ -14,7 +14,6 @@ import { RouterLink } from 'src/routes/components';
 
 import { useResponsive } from 'src/hooks/use-responsive';
 
-
 import Logo from 'src/components/logo';
 import Scrollbar from 'src/components/scrollbar';
 
@@ -22,37 +21,25 @@ import { NAV } from './config-layout';
 import navConfig from './config-navigation';
 import PersonIcon from '@mui/icons-material/Person';
 
-// ----------------------------------------------------------------------
-
 export default function Nav({ openNav, onCloseNav }) {
-
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
   const pathname = usePathname();
-
   const upLg = useResponsive('up', 'lg');
 
   useEffect(() => {
     if (openNav) {
       onCloseNav();
     }
-    
   }, [pathname]);
-useEffect(() => {
-  async function getUser() {
-    try {
-      const response = await axios.get('https://api.2pay.uz/api/users/request-user/', {
-        headers: {
-          Authorization: 'Token ' + localStorage.getItem('token'),
-        },
-      });
-      setData(response.data);
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
-    }
+
+  const storedUser = localStorage.getItem('user');
+  let user = {};
+  try {
+    user = JSON.parse(storedUser);
+  } catch (error) {
+    console.error('Error parsing JSON:', error);
   }
-  getUser();
-}, []);
+
   const renderAccount = (
     <Box
       sx={{
@@ -68,10 +55,11 @@ useEffect(() => {
     >
       <Avatar src="/assets/images/avatars/avatar_1.jpg" alt="photoURL" />
       <Box sx={{ ml: 2 }}>
-        <Typography variant="subtitle2">{data.first_name} {data.last_name}</Typography>
-
+        <Typography variant="subtitle2">
+          {user?.first_name} {user?.last_name}
+        </Typography>
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          {data.role?.name}
+          {user?.role?.name}
         </Typography>
       </Box>
     </Box>
@@ -85,8 +73,6 @@ useEffect(() => {
     </Stack>
   );
 
-  
-
   const renderContent = (
     <Scrollbar
       sx={{
@@ -99,14 +85,9 @@ useEffect(() => {
       }}
     >
       <Logo sx={{ mt: 3, ml: 4 }} />
-
       {renderAccount}
-
       {renderMenu}
-
       <Box sx={{ flexGrow: 1 }} />
-
-      {/* {renderUpgrade} */}
     </Scrollbar>
   );
 
@@ -150,11 +131,9 @@ Nav.propTypes = {
   onCloseNav: PropTypes.func,
 };
 
-// ----------------------------------------------------------------------
-
+// NavItem component
 function NavItem({ item }) {
   const pathname = usePathname();
-
   const active = item.path === pathname;
 
   return (
@@ -181,7 +160,6 @@ function NavItem({ item }) {
       <Box component="span" sx={{ width: 24, height: 24, mr: 2 }}>
         {item.icon}
       </Box>
-
       <Box component="span">{item.title} </Box>
     </ListItemButton>
   );

@@ -47,7 +47,8 @@ export default function LoginView() {
           },
         }
       );
-
+      localStorage.setItem('id', response.data.id);
+      console.log(response.data.id);
       login(response.data.token);
       navigate('/', { replace: true });
      ;
