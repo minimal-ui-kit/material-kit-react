@@ -1,48 +1,32 @@
 // import { faker } from '@faker-js/faker';
+import { useQuery } from '@tanstack/react-query';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 import {  Stack } from '@mui/material';
 import AppWidgetSummary from '../app-widget-summary';
 import AppTransactionsTable from '../app-transactions-table';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+
 import PaymentIcon from '@mui/icons-material/Payment';
 import CreditScoreIcon from '@mui/icons-material/CreditScore';
 import PaymentsIcon from '@mui/icons-material/Payments';
+import axiosInstance from 'src/routes/axios-config';
+import LoadingSpinner from 'src/components/loading';
+import { protsent } from 'src/utils/protsent';
 // ----------------------------------------------------------------------
 
 export default function AppView() {
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await axios.get('https://api.2pay.uz/api/merchant/dashboard/', {
-          headers: {
-            Authorization: 'Token ' + localStorage.getItem('token'),
-          },
-        });
-        console.log(response.data);
-        setData(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getData();
-  }, []);
-  const protsent = (cash_summa, click_summa) => {
-    const total = cash_summa + click_summa;
-    let cash_protsent ,
-      click_protsent ;
-    if (total !== 0) {
-      cash_protsent = ((cash_summa / total) * 100).toFixed(2);
-      click_protsent =((click_summa / total) * 100).toFixed(2);
-      return { cash_protsent, click_protsent };
-    }else{
-      return { cash_protsent: 0, click_protsent: 0 };
+  const {data, error, isLoading} = useQuery({
+    queryKey: ["dashboard"],
+    queryFn: () => axiosInstance.get('/merchant/dashboard/').then((res) => res.data),
+    onError: (error) => {
+      console.log(error);
     }
-  };
+  })
+  if(isLoading)return <LoadingSpinner/>
+  
 
  
   return (

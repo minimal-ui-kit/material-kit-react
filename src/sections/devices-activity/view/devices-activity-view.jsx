@@ -1,50 +1,44 @@
 import { useState, useEffect } from 'react';
-
+import { useQuery } from '@tanstack/react-query';
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
 
 import Typography from '@mui/material/Typography';
 import DeviceTable from '../device-table';
-import axios from 'axios';
+import axiosInstance from 'src/routes/axios-config';
 import { Box, Grid } from '@mui/material';
 import AnimatedComponent from 'src/components/animate/animatedComponent';
+import LoadingSpinner from 'src/components/loading/loading';
 
 export default function DevicesActivityView() {
-  const [devices, setDevices] = useState([]);
-  const [deviceStatus, setDeviceStatus] = useState([]);
-  const getDevices = async () => {
-    try {
-      const response = await axios.get(
-        'https://api.2pay.uz/api/merchant/devices/broker-status-count/',
-        {
-          headers: {
-            Authorization: 'Token ' + localStorage.getItem('token'),
-          },
-        }
-      );
-      // console.log(response.data);
-      setDevices(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  const getDeviceStatus = async () => {
-    try {
-      const response = await axios.get('https://api.2pay.uz/api/merchant/devices-status/', {
-        headers: {
-          Authorization: 'Token ' + localStorage.getItem('token'),
-        },
-      });
-      console.log(response.data);
-      setDeviceStatus(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  useEffect(() => {
-    getDevices();
-    getDeviceStatus();
-  }, []);
+  const {
+    data: devicesActivity,
+    error: devicesActivityError,
+    isLoading: devicesActivityLoading,
+  } = useQuery({
+    queryKey: ['devicesActivity'],
+    queryFn: () =>
+      axiosInstance.get('/merchant/devices/broker-status-count/').then((res) => res.data),
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const {
+    data: deviceStatus,
+    error: deviceStatusError,
+    isLoading: deviceStatusLoading,
+  } = useQuery({
+    queryKey: ['deviceStatus'],
+    queryFn: () => axiosInstance.get('/merchant/devices-status/').then((res) => res.data),
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  if (devicesActivityError || deviceStatusError) return 'An error has occurred: ' + error;
+  if (devicesActivityLoading || deviceStatusLoading) return <LoadingSpinner />;
+
   const filterDevices = Object.groupBy(deviceStatus, ({ company }) => company?.id);
 
   return (
@@ -52,13 +46,13 @@ export default function DevicesActivityView() {
       <Typography variant="h4" sx={{ mb: 5, mt: 2, fontSize: { xs: '18px', md: '24px' } }}>
         Qurilmalar foaliyati{' '}
         <Typography variant="body" sx={{ color: 'text.secondary' }}>
-          {` (${devices?.active_devices_count}-faol ${devices?.inactive_devices_count}-faol emas)`}
+          {` (${devicesActivity?.active_devices_count}-faol ${devicesActivity?.inactive_devices_count}-faol emas)`}
         </Typography>
       </Typography>
-      <Box  sx={{ mt: 5 }}>
+      <Box sx={{ mt: 5 }}>
         {Object.keys(filterDevices).map((key, index) => (
-          <AnimatedComponent key={index} >
-            <DeviceTable  data={filterDevices[key]} />
+          <AnimatedComponent key={index}>
+            <DeviceTable data={filterDevices[key]} />
           </AnimatedComponent>
         ))}
       </Box>

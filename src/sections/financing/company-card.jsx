@@ -6,49 +6,75 @@ import {
   
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 
+import { useQuery } from '@tanstack/react-query';
+import axiosInstance from 'src/routes/axios-config';
+import LoadingSpinner from 'src/components/loading/loading';
 const CompanyCard = ({range}) => {
    const {after, before} = range
-   console.log(after, before)
-  const [data, setData] = useState([]);
-  const [companyDetail, setCompanyDetail] = useState();
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await axios.get('https://api.2pay.uz/api/users/request-user/', {
-          headers: {
-            Authorization: 'Token ' + localStorage.getItem('token'),
-          },
-        });
-        console.log(response.data);
-        setData(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getData();
-  }, []);
+   
+  // const [data, setData] = useState([]);
+  // const [companyDetail, setCompanyDetail] = useState();
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     try {
+  //       const response = await axios.get('https://api.2pay.uz/api/users/request-user/', {
+  //         headers: {
+  //           Authorization: 'Token ' + localStorage.getItem('token'),
+  //         },
+  //       });
+  //       console.log(response.data);
+  //       setData(response.data);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+  //   getData();
+  // }, []);
+  const {data, error, isLoading } = useQuery({
+    queryKey: ['company'],
+    queryFn: () => axiosInstance.get('/merchant/financing/company-detail/').then((res) => res.data),
+    onError: (error) => {
+      console.log(error);
+    }})
 
-  useEffect(() => {
-    const getCompanyDetail = async () => {
-      try {
-        const res = await axios.get(
-          `https://api.2pay.uz/api/merchant/financing/company-detail/?after=${after}&before=${before}`,
-          {
-            headers: {
-              Authorization: 'Token ' + localStorage.getItem('token'),
-            },
-          }
-        );
-        console.log(res.data);
-        setCompanyDetail(res.data);
-      } catch (error) {
-        console.error(error);
-      }  
-    };
-    getCompanyDetail();
-  }, [after, before]);
+  // useEffect(() => {
+  //   const getCompanyDetail = async () => {
+  //     try {
+  //       const res = await axios.get(
+  //         `https://api.2pay.uz/api/merchant/financing/company-detail/?after=${after}&before=${before}`,
+  //         {
+  //           headers: {
+  //             Authorization: 'Token ' + localStorage.getItem('token'),
+  //           },
+  //         }
+  //       );
+  //       console.log(res.data);
+  //       setCompanyDetail(res.data);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }  
+  //   };
+  //   getCompanyDetail();
+  // }, [after, before]);
+  const {
+    data: companyDetail,
+    error: companyDetailError,
+    isLoading: companyDetailLoading,
+  } = useQuery({
+    queryKey: ['companyDetail'],
+    queryFn: () =>
+      axiosInstance
+        .get(
+          `/merchant/financing/company-detail/?after=${after}&before=${before}`
+        )
+        .then((res) => res.data),
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+  if (error || companyDetailError) return 'An error has occurred: ' + error;
+  if (isLoading || companyDetailLoading) return <LoadingSpinner />;
   return (
     <Box sx={{ minWidth: 275 }}>
       <Card sx={{ minWidth: 275, backgroundColor: '#b9f6ca', maxHeight: 265 }} variant="outlined">

@@ -279,8 +279,8 @@ export default function Header({ onOpenNav }) {
               mt: { xs: 2, md: 0 },
             }}
           >
-            {/* <Typography
-            
+            <Typography
+
               variant="h3"
               sx={{
                 sm: 1,
@@ -291,20 +291,21 @@ export default function Header({ onOpenNav }) {
                 fontSize: { xs: '1rem', md: '2.125rem' },
                 whiteSpace: 'nowrap',
                 marginRight: '15px',
+                textAlign: 'center'
               }}
             >
               Loading...
-            </Typography> */}
-            <Box
+            </Typography>
+            {/* <Box
               sx={{ flexGrow: 1, color: 'black' }}
               display="flex"
               justifyContent="flex-between"
               alignItems={'center'}
             >
               <Stack direction="row" alignItems="center" spacing={2} sx={{ color: 'black' }}>
-                <LoadingSpinner /> {/* Use your Loading component here */}
+                <LoadingSpinner /> 
               </Stack>
-            </Box>
+            </Box> */}
           </Box>
         </Toolbar>
       </AppBar>

@@ -19,8 +19,10 @@ import AnimatedComponent from 'src/components/animate/animatedComponent';
 import CompanyTable from '../company-card';
 
 import axios from 'axios';
-
+import axiosInstance from 'src/routes/axios-config';
 import ExcelDownload from 'src/utils/excel-download';
+import { useQueries, useQuery } from '@tanstack/react-query';
+import LoadingSpinner from 'src/components/loading/loading';
 
 export default function FinancingView() {
   const [isdatePicker, setIsDatePicker] = useState(false);
@@ -29,47 +31,72 @@ export default function FinancingView() {
     before: formatDatePicker(new Date()),
   });
 
-  const [filials, setFilials] = useState([]);
-  const [filialDetails, setFilialDetails] = useState([]);
-  useEffect(() => {
-    const getFilials = async () => {
-      try {
-        const response = await axios.get(`https://api.2pay.uz/api/merchant/filials/`, {
-          headers: {
-            Authorization: 'Token ' + localStorage.getItem('token'),
-          },
-        });
-        console.log(response.data);
-        setFilials(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getFilials();
-  }, []);
-  useEffect(() => {
-    filials.map((filial) => {
-      const getFilialDetails = async () => {
-        try {
-          const response = await axios.get(
-            `https://api.2pay.uz/api/merchant/financing/filial=${filial.id}/?after=${range?.after}&before=${range.before}`,
-            {
-              headers: {
-                Authorization: 'Token ' + localStorage.getItem('token'),
-              },
-            }
-          );
-          console.log(response.data);
-          setFilialDetails((prev) => [...prev, response.data]);
-        } catch (error) {
-          console.error(error);
-        }
-      };
-      getFilialDetails();
-    });
-  }, [range, filials]);
+  // const [filials, setFilials] = useState([]);
+  // const [filialDetails, setFilialDetails] = useState([]);
+  // useEffect(() => {
+  //   const getFilials = async () => {
+  //     try {
+  //       const response = await axios.get(`https://api.2pay.uz/api/merchant/filials/`, {
+  //         headers: {
+  //           Authorization: 'Token ' + localStorage.getItem('token'),
+  //         },
+  //       });
+  //       console.log(response.data);
+  //       setFilials(response.data);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+  //   getFilials();
+  // }, []);
+  const {
+    data: filials,
+    isLoading: isLoadingFilials,
+    error,
+  } = useQuery({
+    queryKey: ['filials'],
+    queryFn: () => axiosInstance.get('/merchant/filials/').then((res) => res.data),
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+  // useEffect(() => {
+  //   filials.map((filial) => {
+  //     const getFilialDetails = async () => {
+  //       try {
+  //         const response = await axios.get(
+  //           `https://api.2pay.uz/api/merchant/financing/filial=${filial.id}/?after=${range?.after}&before=${range.before}`,
+  //           {
+  //             headers: {
+  //               Authorization: 'Token ' + localStorage.getItem('token'),
+  //             },
+  //           }
+  //         );
+  //         console.log(response.data);
+  //         setFilialDetails((prev) => [...prev, response.data]);
+  //       } catch (error) {
+  //         console.error(error);
+  //       }
+  //     };
+  //     getFilialDetails();
+  //   });
+  // }, [range, filials]);
+  const queries = useQueries({
+    queries: filials?.map((filial) => ({
+      queryKey: ['filialDetails', filial.id, range],
+      queryFn: () =>
+        axiosInstance
+          .get(
+            `/merchant/financing/filial=${filial.id}/?after=${range?.after}&before=${range.before}`
+          )
+          .then((res) => res.data),
+    })) || [],
+  });
 
-  const formattedData = filialDetails.map((detail) => ({
+  const isFetching = queries?.some((query) => query.isLoading);
+  const filialDetails =  queries?.flatMap((query) => (query.data ? [query.data] : []));
+
+  const formattedData = filialDetails?.map((detail) => ({
     ID: detail.id,
     Nomi: detail.name,
     'Click service ID': detail.service_id,
@@ -82,7 +109,7 @@ export default function FinancingView() {
     'Admin tolovlar': detail.manual.amount ? detail.manual.amount : 0,
     'Admin tolovlar soni': detail.manual.count ? detail.manual.count : 0,
   }));
-
+  if (isFetching || isLoadingFilials) return <LoadingSpinner />;
   return (
     <Container>
       <Box sx={{ mb: 5, display: 'flex', alignItems: 'start', justifyContent: 'space-between' }}>
@@ -119,7 +146,6 @@ export default function FinancingView() {
           <DateRangePickerComponent
             setIsDatePicker={setIsDatePicker}
             setRange={(a) => {
-              setFilialDetails([]);
               setRange(a);
             }}
           />
@@ -133,11 +159,11 @@ export default function FinancingView() {
           </AnimatedComponent>
         </Grid>
 
-        {filialDetails.map((filialDetail) => (
+        {filialDetails?.map((filialDetail) => (
           <Grid sx={{ width: '100%' }} key={filialDetail.id} item xs={12} sm={6} md={4}>
             <AnimatedComponent>
               <FinancingCard
-              id={filialDetail.id}
+                id={filialDetail.id}
                 name={filialDetail.name}
                 cash={filialDetail.cash}
                 click={filialDetail.click}
