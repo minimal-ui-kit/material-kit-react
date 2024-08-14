@@ -15,6 +15,7 @@ import AccountPopover from './common/account-popover';
 import LanguagePopover from './common/language-popover';
 import { useAuth } from 'src/routes/context/auth-context';
 import axiosInstance from 'src/routes/axios-config';
+import { useEffect } from 'react';
 
 export default function Header({ onOpenNav }) {
   const theme = useTheme();
@@ -26,18 +27,18 @@ export default function Header({ onOpenNav }) {
     data: userData,
     error: userError,
     isLoading: isUserLoading,
+    isSuccess,
   } = useQuery({
     queryKey: ['user'],
     queryFn: () => axiosInstance.get('/users/request-user/').then((res) => res.data),
-    onSuccess: (data) => {
-      alert(1);
-      user(data);
-    },
-    onError: (error) => {
-      console.error(error);
-    },
+   
+    
   });
-
+  useEffect(() => {
+    if (isSuccess) {
+      user(userData);
+    }
+  }, [isSuccess]);
   // Fetch device data
   const {
     data: deviceData,
