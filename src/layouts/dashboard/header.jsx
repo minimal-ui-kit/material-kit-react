@@ -36,6 +36,8 @@ export default function Header({ onOpenNav }) {
   });
   useEffect(() => {
     if (isSuccess) {
+      console.log(isSuccess);
+      console.log(userData);
       user(userData);
     }
   }, [isSuccess]);

@@ -13,50 +13,13 @@ import LoadingSpinner from 'src/components/loading/loading';
 const CompanyCard = ({range}) => {
    const {after, before} = range
    
-  // const [data, setData] = useState([]);
-  // const [companyDetail, setCompanyDetail] = useState();
-  // useEffect(() => {
-  //   const getData = async () => {
-  //     try {
-  //       const response = await axios.get('https://api.2pay.uz/api/users/request-user/', {
-  //         headers: {
-  //           Authorization: 'Token ' + localStorage.getItem('token'),
-  //         },
-  //       });
-  //       console.log(response.data);
-  //       setData(response.data);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-  //   getData();
-  // }, []);
+
   const {data, error, isLoading } = useQuery({
     queryKey: ['company'],
-    queryFn: () => axiosInstance.get('/merchant/financing/company-detail/').then((res) => res.data),
-    onError: (error) => {
-      console.log(error);
-    }})
+    queryFn: () => axiosInstance.get('/users/request-user/').then((res) => res.data),
+    })
 
-  // useEffect(() => {
-  //   const getCompanyDetail = async () => {
-  //     try {
-  //       const res = await axios.get(
-  //         `https://api.2pay.uz/api/merchant/financing/company-detail/?after=${after}&before=${before}`,
-  //         {
-  //           headers: {
-  //             Authorization: 'Token ' + localStorage.getItem('token'),
-  //           },
-  //         }
-  //       );
-  //       console.log(res.data);
-  //       setCompanyDetail(res.data);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }  
-  //   };
-  //   getCompanyDetail();
-  // }, [after, before]);
+
   const {
     data: companyDetail,
     error: companyDetailError,

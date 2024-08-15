@@ -42,8 +42,8 @@ export default function FinancingCard({ id, name, cash, click, devices_count, ma
           </Typography>
         </CardContent>
         <CardActions>
-          <Button color="primary" sx={{ mx: 'auto' }} type="submit">
-            <Link to={`/financing/filial/${id}`}>Batafsil ma'lumot</Link>
+          <Button sx={{ mx: 'auto' }} type="submit">
+            <Link style={{ textDecoration: 'none', color: 'blue' }}   to={`/financing/filial/${id}`}>Batafsil ma'lumot</Link>
           </Button>
         </CardActions>
       </Card>
