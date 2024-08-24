@@ -1,4 +1,4 @@
-## Minimal UI ([Free version](https://minimal-kit-react.vercel.app/))
+## Minimal UI ([Free version](https://free.minimals.cc/))
 
 ![license](https://img.shields.io/badge/license-MIT-blue.svg)
 
@@ -8,12 +8,12 @@
 
 ## Pages
 
-- [Dashboard](https://minimal-kit-react.vercel.app/)
-- [Users](https://minimal-kit-react.vercel.app/user)
-- [Products](https://minimal-kit-react.vercel.app/products)
-- [Blog](https://minimal-kit-react.vercel.app/blog)
-- [Sign in](https://minimal-kit-react.vercel.app/sign-in)
-- [Not found](https://minimal-kit-react.vercel.app/404)
+- [Dashboard](https://free.minimals.cc/)
+- [Users](https://free.minimals.cc/user)
+- [Products](https://free.minimals.cc/products)
+- [Blog](https://free.minimals.cc/blog)
+- [Sign in](https://free.minimals.cc/sign-in)
+- [Not found](https://free.minimals.cc/404)
 
 ## Quick start
 
