@@ -1,22 +1,36 @@
-// .eslintignore
+# Build directories
 build/*
 dist/*
 public/*
 **/out/*
+**/.next/*
 **/node_modules/*
 
-**/.next/*
-next.config.js
+# src/
+**/reportWebVitals.*
+**/service-worker.*
+**/serviceWorkerRegistration.*
+**/setupTests.*
 
-vite.config.js
-vite.config.ts
+# eslintrc
+**/.eslintrc.*
 
-src/reportWebVitals.js
-src/service-worker.js
-src/serviceWorkerRegistration.js
-src/setupTests.js
+# prettier
+**/.prettier.*
+**/prettier.config.*
 
-src/reportWebVitals.ts
-src/service-worker.ts
-src/serviceWorkerRegistration.ts
-src/setupTests.ts
+# next
+**/next.config.*
+
+# vite
+**/vite.config.*
+
+# tailwind
+**/postcss.config.*
+**/tailwind.config.*
+
+# craco
+**/craco.config.*
+
+# misc
+**/jsconfig.json

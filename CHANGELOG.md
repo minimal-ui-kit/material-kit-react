@@ -1,8 +1,18 @@
+### v2.0.0
+
+###### Aug 24, 2024
+
+- [New] Migrate to typescript.
+- Upgrade and restructure the directory.
+- Upgrade some dependencies to the latest versions.
+
+---
+
 ### v1.8.0
 
 ###### Wed 11, 2023
 
-- Migrate to vite.js.
+- [New] Migrate to vite.js.
 - Upgrade and restructure the directory.
 - Upgrade some dependencies to the latest versions
 
