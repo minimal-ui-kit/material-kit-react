@@ -34,7 +34,7 @@
 | -                           | **TypeScript** version (Standard Plus and Extended license)                                             |
 | -                           | Design **Figma** file (Standard Plus and Extended license)                                              |
 | -                           | Authentication with **Amplify**, **Auth0**, **JWT**, **Firebase** and **Supabase**                      |
-| -                           | Light/dark mode, Right-to-left, form validation... ([+more components](https://minimals.cc/components)) |
+| -                           | Light/dark mode, right-to-left, form validation... ([+more components](https://minimals.cc/components)) |
 | -                           | Complete users flows                                                                                    |
 | -                           | 1 year of free updates / 6 months of technical support                                                  |
 | -                           | Learn more: [Package & license](https://docs.minimals.cc/package)                                       |
