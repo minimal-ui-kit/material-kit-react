@@ -1,12 +1,13 @@
 import type { BoxProps } from '@mui/material/Box';
 
-import { useId, forwardRef } from 'react';
+import { forwardRef, useId } from 'react';
 
 import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
 
 import { RouterLink } from 'src/routes/components';
 
+import logo from 'public/assets/images/logo.png';
 import { logoClasses } from './classes';
 
 // ----------------------------------------------------------------------
@@ -212,7 +213,8 @@ export const Logo = forwardRef<HTMLDivElement, LogoProps>(
         }}
         {...other}
       >
-        {isSingle ? singleLogo : fullLogo}
+        {/* {isSingle ? singleLogo : fullLogo} */}
+        <img src="/assets/images/logo.png" alt="logo" />
       </Box>
     );
   }

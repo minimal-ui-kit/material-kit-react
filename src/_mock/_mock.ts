@@ -1,4 +1,11 @@
+import { fShortenNumber } from 'src/utils/format-number';
+
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
 export const _id = (index: number) => `e99f09a7-dd88-49d5-b1c8-1daf80c2d7b${index}`;
+
+export const _amount = () =>
+  fShortenNumber(Math.ceil(Math.max(Math.random() * 500, Math.random() * 5000))).toString();
 
 export const _times = (index: number) =>
   // 'MM/DD/YYYY'
@@ -90,6 +97,9 @@ export const _company = (index: number) =>
     'Mitchell, Volkman and Prosacco',
     'Streich Group',
   ][index];
+
+export const _months = (length: number) =>
+  new Array(length).fill(0).map(() => MONTHS[Math.ceil(Math.random() * 11)]);
 
 export const _boolean = (index: number) =>
   [

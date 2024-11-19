@@ -16,9 +16,6 @@ import { varAlpha } from 'src/theme/styles';
 import { Logo } from 'src/components/logo';
 import { Scrollbar } from 'src/components/scrollbar';
 
-import { NavUpgrade } from '../components/nav-upgrade';
-import { WorkspacesPopover } from '../components/workspaces-popover';
-
 import type { WorkspacesPopoverProps } from '../components/workspaces-popover';
 
 // ----------------------------------------------------------------------
@@ -120,16 +117,20 @@ export function NavContent({ data, slots, workspaces, sx }: NavContentProps) {
   return (
     <>
       <Logo />
-
       {slots?.topArea}
-
-      <WorkspacesPopover data={workspaces} sx={{ my: 2 }} />
-
       <Scrollbar fillContent>
-        <Box component="nav" display="flex" flex="1 1 auto" flexDirection="column" sx={sx}>
+        <Box
+          component="nav"
+          display="flex"
+          flex="1 1 auto"
+          flexDirection="column"
+          sx={sx}
+          marginTop={2}
+        >
           <Box component="ul" gap={0.5} display="flex" flexDirection="column">
             {data.map((item) => {
               const isActived = item.path === pathname;
+              if (item.path === '/logout') return null;
 
               return (
                 <ListItem disableGutters disablePadding key={item.title}>
@@ -173,10 +174,32 @@ export function NavContent({ data, slots, workspaces, sx }: NavContentProps) {
           </Box>
         </Box>
       </Scrollbar>
-
       {slots?.bottomArea}
+      <ListItemButton
+        disableGutters
+        component={RouterLink}
+        href={data[data.length - 1].path}
+        sx={{
+          pl: 2,
+          py: 1,
+          gap: 2,
+          pr: 1.5,
+          marginBottom: 2,
+          borderRadius: 0.75,
+          typography: 'body2',
+          fontWeight: 'fontWeightMedium',
+          color: 'var(--layout-nav-item-color)',
+          minHeight: 'var(--layout-nav-item-height)',
+        }}
+      >
+        <Box component="span" sx={{ width: 24, height: 24 }}>
+          {data[data.length - 1].icon}
+        </Box>
 
-      <NavUpgrade />
+        <Box component="span" flexGrow={1}>
+          {data[data.length - 1].title}
+        </Box>
+      </ListItemButton>
     </>
   );
 }

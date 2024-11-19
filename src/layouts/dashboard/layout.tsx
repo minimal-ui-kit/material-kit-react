@@ -1,27 +1,28 @@
-import type { Theme, SxProps, Breakpoint } from '@mui/material/styles';
+import type { Breakpoint, SxProps, Theme } from '@mui/material/styles';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
+import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
 
-import { _langs, _notifications } from 'src/_mock';
+import { _notifications } from 'src/_mock';
 
 import { Iconify } from 'src/components/iconify';
 
-import { Main } from './main';
+import useAuth from 'src/hooks/useAuth';
+import { useRouter } from 'src/routes/hooks';
+import AuthService from 'src/services/auth';
 import { layoutClasses } from '../classes';
-import { NavMobile, NavDesktop } from './nav';
-import { navData } from '../config-nav-dashboard';
-import { Searchbar } from '../components/searchbar';
-import { _workspaces } from '../config-nav-workspace';
-import { MenuButton } from '../components/menu-button';
-import { LayoutSection } from '../core/layout-section';
-import { HeaderSection } from '../core/header-section';
 import { AccountPopover } from '../components/account-popover';
-import { LanguagePopover } from '../components/language-popover';
+import { MenuButton } from '../components/menu-button';
 import { NotificationsPopover } from '../components/notifications-popover';
+import { navData } from '../config-nav-dashboard';
+import { _workspaces } from '../config-nav-workspace';
+import { HeaderSection } from '../core/header-section';
+import { LayoutSection } from '../core/layout-section';
+import { Main } from './main';
+import { NavDesktop, NavMobile } from './nav';
 
 // ----------------------------------------------------------------------
 
@@ -35,10 +36,18 @@ export type DashboardLayoutProps = {
 
 export function DashboardLayout({ sx, children, header }: DashboardLayoutProps) {
   const theme = useTheme();
+  const { userExists } = useAuth();
+  const router = useRouter();
 
   const [navOpen, setNavOpen] = useState(false);
 
   const layoutQuery: Breakpoint = 'lg';
+
+  useEffect(() => {
+    if (!AuthService.hasToken()) {
+      router.replace('/signin');
+    }
+  }, [userExists, router]);
 
   return (
     <LayoutSection
@@ -80,16 +89,9 @@ export function DashboardLayout({ sx, children, header }: DashboardLayoutProps) 
             ),
             rightArea: (
               <Box gap={1} display="flex" alignItems="center">
-                <Searchbar />
-                <LanguagePopover data={_langs} />
                 <NotificationsPopover data={_notifications} />
                 <AccountPopover
                   data={[
-                    {
-                      label: 'Home',
-                      href: '/',
-                      icon: <Iconify width={22} icon="solar:home-angle-bold-duotone" />,
-                    },
                     {
                       label: 'Profile',
                       href: '#',
