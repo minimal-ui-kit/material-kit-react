@@ -1,22 +1,24 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import { LoadingButton } from '@mui/lab';
 import {
-  Modal,
-  Box,
-  Typography,
-  TextField,
-  Button,
   Autocomplete,
+  Box,
   Chip,
   IconButton,
   Link,
+  Modal,
+  TextField,
+  Typography,
 } from '@mui/material';
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { Iconify } from 'src/components/iconify';
+import useUser from 'src/hooks/useUser';
+import PayService from 'src/services/pay';
 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 interface PaymentFormModalProps {
   open: boolean;
-  amount: string;
+  amount?: string;
   handleClose: () => void;
 }
 
@@ -25,24 +27,46 @@ const PaymentFormModal: React.FC<PaymentFormModalProps> = ({
   amount: pledge,
   handleClose,
 }) => {
-  const [amount, setAmount] = useState<string>(pledge);
+  const { user } = useUser();
+
+  const [amount, setAmount] = useState<string>(user?.pledgeAmount ?? pledge ?? '');
   const [selectedMonths, setSelectedMonths] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const handleAmountChange = (event: ChangeEvent<HTMLInputElement>) => {
     setAmount(event.target.value);
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    setLoading(true);
     event.preventDefault();
-    console.log('Amount:', amount);
-    console.log('Selected Months:', selectedMonths);
+    await PayService.init(amount, selectedMonths);
+    closeModal();
+    setLoading(false);
+  };
+
+  const closeModal = () => {
+    setAmount('');
+    setSelectedMonths([]);
     handleClose();
   };
+
+  useEffect(() => {
+    setAmount(user?.pledgeAmount ?? '');
+  }, [user?.pledgeAmount]);
+
+  useEffect(() => {
+    if (open) {
+      setAmount(user?.pledgeAmount ?? '');
+    }
+  }, [open, user?.pledgeAmount]);
+
+  const hasValues = !!amount && !!selectedMonths.length;
 
   return (
     <Modal
       open={open}
-      onClose={handleClose}
+      onClose={closeModal}
       aria-labelledby="payment-form-title"
       aria-describedby="payment-form-description"
     >
@@ -69,13 +93,25 @@ const PaymentFormModal: React.FC<PaymentFormModalProps> = ({
         <Typography id="payment-form-title" variant="h6" component="h2" sx={{ mb: 2 }}>
           Contribute
         </Typography>
+        {!!selectedMonths.length && amount && (
+          <Typography variant="body2" sx={{ mb: 3, display: 'block' }}>
+            You are making a contribution of{' '}
+            <Typography variant="caption" fontWeight={700}>
+              GHS{amount}
+            </Typography>{' '}
+            for{' '}
+            <Typography variant="caption" fontWeight={700}>
+              {selectedMonths.join(', ')}
+            </Typography>
+          </Typography>
+        )}
         <form onSubmit={handleSubmit}>
           <TextField
             label="Amount (GHS)"
             type="number"
             fullWidth
             required
-            disabled
+            // disabled
             value={amount}
             onChange={handleAmountChange}
             sx={{ mb: 3 }}
@@ -89,7 +125,7 @@ const PaymentFormModal: React.FC<PaymentFormModalProps> = ({
             onChange={(event, newValue) => setSelectedMonths(newValue)}
             renderTags={(value, getTagProps) =>
               value.map((option, index) => (
-                <Chip variant="outlined" label={option} {...getTagProps({ index })} />
+                <Chip variant="outlined" label={option} {...getTagProps({ index })} key={option} />
               ))
             }
             renderInput={(params) => (
@@ -97,15 +133,21 @@ const PaymentFormModal: React.FC<PaymentFormModalProps> = ({
                 {...params}
                 label="Select Months"
                 placeholder="Choose one or more months"
-                required
               />
             )}
             sx={{ mb: 3 }}
           />
           <Box textAlign="center">
-            <Button type="submit" variant="contained" color="inherit" sx={{ mt: 2 }}>
+            <LoadingButton
+              disabled={!hasValues}
+              type="submit"
+              variant="contained"
+              color="inherit"
+              loading={loading}
+              sx={{ mt: 2 }}
+            >
               Submit
-            </Button>
+            </LoadingButton>
           </Box>
         </form>
       </Box>

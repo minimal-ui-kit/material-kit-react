@@ -3,14 +3,84 @@ import Grid from '@mui/material/Unstable_Grid2';
 
 import { DashboardContent } from 'src/layouts/dashboard';
 
+import { Box, LinearProgress, linearProgressClasses } from '@mui/material';
+import { useCallback, useEffect, useState } from 'react';
 import useUser from 'src/hooks/useUser';
+import { ContributionProps } from 'src/sections/contributions/contributions-table-row';
 import { ContributionsView } from 'src/sections/contributions/view';
+import ContributionService from 'src/services/cont';
+import { Contribution, ContributionStatus } from 'src/services/cont/contribute.dto';
+import StatsService from 'src/services/stats';
+import { Stats } from 'src/services/stats/stats.dto';
+import { UserRole } from 'src/services/user/user.dto';
+import { varAlpha } from 'src/theme/styles';
+import { errCb } from 'src/utils';
 import { AnalyticsWidgetSummary } from '../analytics-widget-summary';
 
 // ----------------------------------------------------------------------
 
 export function OverviewAnalyticsView() {
   const { user } = useUser();
+  const [loading, setLoading] = useState(true) 
+  const [data, setData] = useState<{stats:Stats,cons:ContributionProps[]}>()
+
+  const getStatus = (status: ContributionStatus):ContributionProps['status'] => {
+    if(status===ContributionStatus.Failed)return 'failed'
+    if(status === ContributionStatus.Pending) return 'pending'
+    return 'success'
+  }
+
+  const getContributions = useCallback((result:Contribution[]):ContributionProps[] => result.map(item=>
+     ({
+      amount:item.amount,
+      id: item.id,
+      months: item.months,
+      sender: item.donor,
+      status: getStatus(item.status),
+      timestamp: (item.completedAt||item.createdAt).toDate()
+    
+  })),[])
+
+  const init = useCallback(async () => {
+    try {
+      if(!user?.id) return
+      const isAdmin = user.role.includes(UserRole.Admin)
+      const [stats,cons] = await Promise.all([
+        StatsService.get(),
+        isAdmin
+          ? ContributionService.getAllLatest()
+          : ContributionService.getByUserId(user?.id!)
+      ])
+      setData({
+        stats,
+        cons:getContributions(cons)
+      })
+    } catch (error) {
+      errCb(error.message)
+    }finally{
+      setLoading(false)
+    }
+
+  },[user?.id,user?.role, getContributions])
+
+  useEffect(() => {
+    init()
+  }, [init])
+
+  if(loading){
+    return <Box display="flex" alignItems="center" justifyContent="center" flex="1 1 auto">
+    <LinearProgress
+      sx={{
+        width: 1,
+        maxWidth: 320,
+        bgcolor: (theme) => varAlpha(theme.vars.palette.text.primaryChannel, 0.16),
+        [`& .${linearProgressClasses.bar}`]: { bgcolor: 'text.primary' },
+      }}
+    />
+  </Box>
+  }
+  
+
   return (
     <DashboardContent maxWidth="xl">
       <Typography variant="h4" sx={{ mb: { xs: 3, md: 5 } }}>
@@ -18,11 +88,10 @@ export function OverviewAnalyticsView() {
       </Typography>
 
       <Grid container spacing={3}>
-        <Grid xs={12} sm={6} md={3}>
+        <Grid xs={12} sm={6} md={4}>
           <AnalyticsWidgetSummary
             title="No. of contributions"
-            // percent={2.6}
-            total={714000}
+            total={data?.stats.contributionCount||0}
             icon={<img alt="icon" src="/assets/icons/glass/ic-donate.svg" />}
             chart={{
               categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
@@ -31,11 +100,10 @@ export function OverviewAnalyticsView() {
           />
         </Grid>
 
-        <Grid xs={12} sm={6} md={3}>
+        <Grid xs={12} sm={6} md={4}>
           <AnalyticsWidgetSummary
             title="No. of Partners"
-            // percent={-0.1}
-            total={1352831}
+            total={data?.stats.partnersCount||0}
             color="secondary"
             icon={<img alt="icon" src="/assets/icons/glass/ic-glass-users.svg" />}
             chart={{
@@ -45,11 +113,10 @@ export function OverviewAnalyticsView() {
           />
         </Grid>
 
-        <Grid xs={12} sm={6} md={3}>
+        <Grid xs={12} sm={6} md={4}>
           <AnalyticsWidgetSummary
-            title="Total contributions"
-            // percent={2.8}
-            total={1723315}
+            title="Total contributions amount (GHS)"
+            total={`${data?.stats.totalAmount||0}`}
             color="warning"
             icon={<img alt="icon" src="/assets/icons/glass/ic-wallet.svg" />}
             chart={{
@@ -59,7 +126,7 @@ export function OverviewAnalyticsView() {
           />
         </Grid>
 
-        <Grid xs={12} sm={6} md={3}>
+        {/* <Grid xs={12} sm={6} md={3}>
           <AnalyticsWidgetSummary
             title="Messages"
             // percent={3.6}
@@ -71,7 +138,7 @@ export function OverviewAnalyticsView() {
               series: [],
             }}
           />
-        </Grid>
+        </Grid> */}
 
         {/* <Grid xs={12} md={6} lg={4}>
           <AnalyticsCurrentVisits
@@ -137,6 +204,7 @@ export function OverviewAnalyticsView() {
             ignoreDashContent
             noMultiSelect
             noPagination
+            data={data?.cons}
           />
         </Grid>
 

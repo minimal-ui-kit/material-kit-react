@@ -10,6 +10,7 @@ import PaymentFormModal from 'src/components/shared/modals/contributeForm';
 import { AuthLayout } from 'src/layouts/auth';
 import { DashboardLayout } from 'src/layouts/dashboard';
 import { varAlpha } from 'src/theme/styles';
+import useUser from 'src/hooks/useUser';
 
 const AppProvider = lazy(() => import('src/components/provider'));
 
@@ -40,6 +41,7 @@ const renderFallback = (
 );
 
 export function Router() {
+  const { user } = useUser();
   const [open, setOpen] = useState(false);
 
   const onOpen = () => {
@@ -76,7 +78,11 @@ export function Router() {
             <DashboardLayout>
               <Suspense fallback={renderFallback}>
                 <Outlet />
-                <PaymentFormModal amount="1000" open={open} handleClose={onClose} />
+                <PaymentFormModal
+                  amount={user?.pledgeAmount ?? ''}
+                  open={open}
+                  handleClose={onClose}
+                />
                 {contributeBtn}
               </Suspense>
             </DashboardLayout>

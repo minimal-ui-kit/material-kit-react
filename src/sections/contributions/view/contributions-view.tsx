@@ -32,6 +32,7 @@ interface ContributionsViewProps {
   hideBtn?: boolean;
   title?: string;
   noPagination?: boolean;
+  data?:ContributionProps[]
 }
 
 export function ContributionsView({
@@ -41,13 +42,14 @@ export function ContributionsView({
   hideBtn,
   noPagination,
   title = 'Contributions',
+  data = []
 }: ContributionsViewProps) {
   const table = useTable();
 
   const [filterName, setFilterName] = useState('');
 
   const dataFiltered: ContributionProps[] = applyFilter({
-    inputData: _contributions,
+    inputData: data,
     comparator: getComparator(table.order, table.orderBy),
     filterName,
   });

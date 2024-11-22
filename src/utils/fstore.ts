@@ -1,7 +1,11 @@
-import { doc } from 'firebase/firestore';
+import { doc, collection } from 'firebase/firestore';
 import { db } from 'src/configs';
 import { Collection } from 'src/constants/factory';
 
-export function docRef(id: string, collection: Collection) {
-  return doc(db, collection, id);
+export function docRef(id: string, col: Collection) {
+  return doc(db, col, id);
+}
+
+export function colRef(col:Collection){
+  return collection(db,col)
 }

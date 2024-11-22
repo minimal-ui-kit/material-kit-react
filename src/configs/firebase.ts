@@ -1,20 +1,22 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
-import { connectFirestoreEmulator, getFirestore } from 'firebase/firestore';
-import { connectFunctionsEmulator, getFunctions, httpsCallable } from 'firebase/functions';
 import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-  sendPasswordResetEmail,
+  User,
   confirmPasswordReset,
   connectAuthEmulator,
+  createUserWithEmailAndPassword,
+  getAuth,
   onAuthStateChanged,
-  User,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signOut,
 } from 'firebase/auth';
+import { connectFirestoreEmulator, getFirestore } from 'firebase/firestore';
+import { connectFunctionsEmulator, getFunctions, httpsCallable } from 'firebase/functions';
+import { ApiRoute } from '../constants/fxns';
 
-const USE_EMULATORS = true;
+
+const USE_EMULATORS = false;
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDY-1FezjbzGmq1j3WHWurbniF3IIdYmEY',
@@ -56,9 +58,9 @@ const db = getFirestore(app);
 const fxns = getFunctions(app);
 
 const fx = {
-  async call<T, B = any>(path: string, data: T) {
+  async call<T, B = any>(path: ApiRoute, data?: T) {
     const callable = httpsCallable<T, B>(fxns, path);
-    const result = await callable(data);
+    const result = await callable(data??null);
     return result.data;
   },
 };
@@ -74,4 +76,5 @@ const runEmulators = (val: boolean = USE_EMULATORS) => {
 
 runEmulators();
 
-export { app, db, auth, fx };
+export { app, auth, db, fx };
+
