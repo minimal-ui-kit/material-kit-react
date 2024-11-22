@@ -18,7 +18,7 @@ import { Chart, useChart } from 'src/components/chart';
 
 type Props = CardProps & {
   title: string;
-  total: number;
+  total: number|string;
   percent?: number;
   color?: ColorType;
   icon: React.ReactNode;

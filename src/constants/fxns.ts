@@ -3,4 +3,5 @@ export enum ApiRoute {
   InitPayment = 'initPay',
   PaymentHook = 'payHook',
   GetUser = 'getUser',
+  GetStats = 'getStats'
 }

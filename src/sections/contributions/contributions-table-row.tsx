@@ -21,7 +21,7 @@ export type ContributionProps = {
     name: string;
   };
   amount: string;
-  timestamp: string;
+  timestamp: Date;
   status: 'pending' | 'success' | 'failed';
   months: string[];
 };

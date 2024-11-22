@@ -72,7 +72,7 @@ export const _contributions: ContributionProps[] = [...Array(24)].map((_, index)
   sender: { id: `${_id(index)}'2'`, name: _fullName(index) },
   months: _months(Math.ceil(Math.random() * 3)),
   status: index % 4 ? 'success' : 'failed',
-  timestamp: new Date().toISOString(),
+  timestamp: new Date(),
   amount: _amount(),
 }));
 

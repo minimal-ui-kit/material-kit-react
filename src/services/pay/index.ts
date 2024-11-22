@@ -5,9 +5,12 @@ import { errCb } from 'src/utils';
 import { ContributeInit } from './pay.dto';
 
 export default class PayService {
-  static async init(amount: string | null = null) {
+  static async init(amount: string, months: string[]) {
     try {
-      const res = await fx.call<ContributeInit, { code: string }>(ApiRoute.InitPayment, { amount });
+      const res = await fx.call<ContributeInit, { code: string }>(ApiRoute.InitPayment, {
+        amount,
+        months,
+      });
       const popup = new PaystackPop();
       popup.resumeTransaction(res.code as any);
     } catch (error) {

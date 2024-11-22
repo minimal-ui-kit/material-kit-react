@@ -16,7 +16,6 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
   const fetchUser = useCallback(async () => {
     try {
       const res = await UserService.me();
-      console.log('USER>>>', res);
       if (res) {
         setUser(res);
       }
