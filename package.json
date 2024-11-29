@@ -9,6 +9,7 @@
     "dev": "vite",
     "start": "vite preview",
     "build": "tsc && vite build",
+    "host": "firebase deploy --only hosting",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint:fix": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\"",
     "fm:check": "prettier --check \"src/**/*.{js,jsx,ts,tsx}\"",

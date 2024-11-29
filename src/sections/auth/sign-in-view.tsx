@@ -113,6 +113,7 @@ export function SignInView() {
             required
             placeholder="Akwesi"
             onChange={(e) => updateField('fname', e.target.value)}
+            value={data.fname}
             InputLabelProps={{ shrink: true }}
             sx={{ mb: 3 }}
           />
@@ -124,6 +125,7 @@ export function SignInView() {
             placeholder="Gyamfi"
             onChange={(e) => updateField('lname', e.target.value)}
             InputLabelProps={{ shrink: true }}
+            value={data.lname}
             sx={{ mb: 3 }}
           />
         </Box>
@@ -133,6 +135,7 @@ export function SignInView() {
         name="email"
         label="Email address"
         placeholder="hello@gmail.com"
+        value={data.email}
         required
         onChange={(e) => updateField('email', e.target.value)}
         InputLabelProps={{ shrink: true }}
@@ -145,6 +148,7 @@ export function SignInView() {
             name="pledge"
             label="Monthly pledge (GHs)"
             placeholder="5000"
+            value={data.pledgeAmount}
             required
             type="number"
             onChange={(e) => updateField('pledgeAmount', e.target.value)}
@@ -170,6 +174,7 @@ export function SignInView() {
         fullWidth
         name="password"
         label="Password"
+        value={data.password}
         placeholder="*********"
         InputLabelProps={{ shrink: true }}
         required
@@ -192,6 +197,7 @@ export function SignInView() {
           name="confirmPassword"
           label="Confirm password"
           placeholder="*********"
+          value={confirmPass}
           required
           InputLabelProps={{ shrink: true }}
           FormHelperTextProps={{ sx: { color: 'tomato' } }}

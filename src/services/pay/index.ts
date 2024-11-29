@@ -13,9 +13,11 @@ export default class PayService {
       });
       const popup = new PaystackPop();
       popup.resumeTransaction(res.code as any);
+      return popup
     } catch (error) {
       const err = error as Error;
       errCb(err.message);
+      return null;
     }
   }
 }

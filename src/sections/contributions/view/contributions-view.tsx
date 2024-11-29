@@ -119,7 +119,7 @@ export function ContributionsView({
                       onSelectRow={() => table.onSelectRow(row.id)}
                     />
                   ))}
-
+                  
                 <TableEmptyRows
                   height={68}
                   emptyRows={emptyRows(table.page, table.rowsPerPage, _users.length)}

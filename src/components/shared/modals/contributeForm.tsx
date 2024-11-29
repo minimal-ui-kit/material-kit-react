@@ -9,10 +9,13 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import PaystackInline from '@paystack/inline-js';
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { Iconify } from 'src/components/iconify';
 import useUser from 'src/hooks/useUser';
+import { useRouter } from 'src/routes/hooks';
 import PayService from 'src/services/pay';
+import { errCb } from 'src/utils';
 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -28,6 +31,7 @@ const PaymentFormModal: React.FC<PaymentFormModalProps> = ({
   handleClose,
 }) => {
   const { user } = useUser();
+  const {refresh} = useRouter()
 
   const [amount, setAmount] = useState<string>(user?.pledgeAmount ?? pledge ?? '');
   const [selectedMonths, setSelectedMonths] = useState<string[]>([]);
@@ -38,11 +42,16 @@ const PaymentFormModal: React.FC<PaymentFormModalProps> = ({
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    setLoading(true);
+    try {
+      setLoading(true);
     event.preventDefault();
-    await PayService.init(amount, selectedMonths);
+    const pop = await PayService.init(amount, selectedMonths); 
     closeModal();
     setLoading(false);
+    } catch (error) {
+      errCb(error.message)
+    }
+    
   };
 
   const closeModal = () => {
@@ -84,7 +93,7 @@ const PaymentFormModal: React.FC<PaymentFormModalProps> = ({
         }}
       >
         <IconButton
-          onClick={handleClose}
+          onClick={handleClose} 
           sx={{ position: 'absolute', top: 8, right: 8 }}
           aria-label="close"
         >
@@ -111,7 +120,6 @@ const PaymentFormModal: React.FC<PaymentFormModalProps> = ({
             type="number"
             fullWidth
             required
-            // disabled
             value={amount}
             onChange={handleAmountChange}
             sx={{ mb: 3 }}

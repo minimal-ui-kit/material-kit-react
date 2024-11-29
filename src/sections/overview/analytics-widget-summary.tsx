@@ -43,23 +43,23 @@ export function AnalyticsWidgetSummary({
 
   const chartColors = [theme.palette[color].dark];
 
-  const chartOptions = useChart({
-    chart: { sparkline: { enabled: true } },
-    colors: chartColors,
-    xaxis: { categories: chart.categories },
-    grid: {
-      padding: {
-        top: 6,
-        left: 6,
-        right: 6,
-        bottom: 6,
-      },
-    },
-    tooltip: {
-      y: { formatter: (value: number) => fNumber(value), title: { formatter: () => '' } },
-    },
-    ...chart.options,
-  });
+  // const chartOptions = useChart({
+  //   chart: { sparkline: { enabled: true } },
+  //   colors: chartColors,
+  //   xaxis: { categories: chart.categories },
+  //   grid: {
+  //     padding: {
+  //       top: 6,
+  //       left: 6,
+  //       right: 6,
+  //       bottom: 6,
+  //     },
+  //   },
+  //   tooltip: {
+  //     y: { formatter: (value: number) => fNumber(value), title: { formatter: () => '' } },
+  //   },
+  //   ...chart.options,
+  // });
 
   return (
     <Card
@@ -91,13 +91,13 @@ export function AnalyticsWidgetSummary({
           <Box sx={{ typography: 'h4' }}>{fShortenNumber(total)}</Box>
         </Box>
 
-        <Chart
+        {/* <Chart
           type="line"
           series={[{ data: chart.series }]}
           options={chartOptions}
           width={84}
           height={56}
-        />
+        /> */}
       </Box>
 
       <SvgColor

@@ -38,12 +38,11 @@ export function OverviewAnalyticsView() {
       sender: item.donor,
       status: getStatus(item.status),
       timestamp: (item.completedAt||item.createdAt).toDate()
-    
   })),[])
 
   const init = useCallback(async () => {
+    if(!user?.id) return
     try {
-      if(!user?.id) return
       const isAdmin = user.role.includes(UserRole.Admin)
       const [stats,cons] = await Promise.all([
         StatsService.get(),
@@ -60,7 +59,6 @@ export function OverviewAnalyticsView() {
     }finally{
       setLoading(false)
     }
-
   },[user?.id,user?.role, getContributions])
 
   useEffect(() => {
@@ -121,7 +119,7 @@ export function OverviewAnalyticsView() {
             icon={<img alt="icon" src="/assets/icons/glass/ic-wallet.svg" />}
             chart={{
               categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
-              series: [],
+              series: [10,6,9],
             }}
           />
         </Grid>
