@@ -1,16 +1,17 @@
 import { Helmet } from 'react-helmet-async';
-
-import { CONFIG } from 'src/config-global';
+import { useTranslation } from 'react-i18next';
 
 import { ProductsView } from 'src/sections/product/view';
 
 // ----------------------------------------------------------------------
 
-export default function Page() {
+export default function ProductsPage() {
+  const { t } = useTranslation('products');
+
   return (
     <>
       <Helmet>
-        <title> {`Products - ${CONFIG.appName}`}</title>
+        <title>{t('list.helmet')}</title>
       </Helmet>
 
       <ProductsView />

@@ -1,0 +1,6 @@
+{
+  "notFound": {
+    "title": "404 sayfa bulunamadı!",
+    "helmet": "404 sayfa bulunamadı! | Hata - {appName}"
+  }
+} 

@@ -1,25 +1,34 @@
 import type { IconButtonProps } from '@mui/material/IconButton';
 
-import { useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Popover from '@mui/material/Popover';
 import MenuList from '@mui/material/MenuList';
 import IconButton from '@mui/material/IconButton';
 import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
+import { useTranslation } from 'react-i18next';
 
 // ----------------------------------------------------------------------
 
-export type LanguagePopoverProps = IconButtonProps & {
-  data?: {
-    value: string;
-    label: string;
-    icon: string;
-  }[];
-};
+export type LanguagePopoverProps = IconButtonProps;
 
-export function LanguagePopover({ data = [], sx, ...other }: LanguagePopoverProps) {
-  const [locale, setLocale] = useState<string>(data[0].value);
+const LANGUAGES = [
+  {
+    value: 'en',
+    label: 'English',
+    icon: '/assets/icons/flags/ic-flag-en.svg',
+  },
+  {
+    value: 'tr',
+    label: 'Türkçe',
+    icon: '/assets/icons/flags/ic-flag-tr.svg',
+  },
+];
+
+export function LanguagePopover({ sx, ...other }: LanguagePopoverProps) {
+  const { i18n } = useTranslation();
+  const [locale, setLocale] = useState<string>(i18n.language || LANGUAGES[0].value);
 
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
 
@@ -34,12 +43,13 @@ export function LanguagePopover({ data = [], sx, ...other }: LanguagePopoverProp
   const handleChangeLang = useCallback(
     (newLang: string) => {
       setLocale(newLang);
+      i18n.changeLanguage(newLang);
       handleClosePopover();
     },
-    [handleClosePopover]
+    [handleClosePopover, i18n]
   );
 
-  const currentLang = data.find((lang) => lang.value === locale);
+  const currentLang = LANGUAGES.find((lang) => lang.value === locale);
 
   const renderFlag = (label?: string, icon?: string) => (
     <Box
@@ -91,7 +101,7 @@ export function LanguagePopover({ data = [], sx, ...other }: LanguagePopoverProp
             },
           }}
         >
-          {data?.map((option) => (
+          {LANGUAGES.map((option) => (
             <MenuItem
               key={option.value}
               selected={option.value === currentLang?.value}

@@ -1,5 +1,7 @@
 import type { Theme, SxProps, CSSObject } from '@mui/material/styles';
 
+import React from "react";
+
 import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
 import GlobalStyles from '@mui/material/GlobalStyles';

@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import React, {lazy, Suspense} from 'react';
 import { Outlet, Navigate, useRoutes } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
@@ -8,16 +8,15 @@ import { varAlpha } from 'src/theme/styles';
 import { AuthLayout } from 'src/layouts/auth';
 import { DashboardLayout } from 'src/layouts/dashboard';
 
-// ----------------------------------------------------------------------
+import PrivateRoute from './private-route';
 
-export const HomePage = lazy(() => import('src/pages/home'));
-export const BlogPage = lazy(() => import('src/pages/blog'));
-export const UserPage = lazy(() => import('src/pages/user'));
-export const SignInPage = lazy(() => import('src/pages/sign-in'));
-export const ProductsPage = lazy(() => import('src/pages/products'));
-export const Page404 = lazy(() => import('src/pages/page-not-found'));
-
-// ----------------------------------------------------------------------
+// Lazy load pages
+const HomePage = lazy(() => import('src/pages/home'));
+const BlogPage = lazy(() => import('src/pages/blog'));
+const UserPage = lazy(() => import('src/pages/user'));
+const SignInPage = lazy(() => import('src/pages/sign-in'));
+const ProductsPage = lazy(() => import('src/pages/products'));
+const Page404 = lazy(() => import('src/pages/page-not-found'));
 
 const renderFallback = (
   <Box display="flex" alignItems="center" justifyContent="center" flex="1 1 auto">
@@ -36,11 +35,13 @@ export function Router() {
   return useRoutes([
     {
       element: (
-        <DashboardLayout>
-          <Suspense fallback={renderFallback}>
-            <Outlet />
-          </Suspense>
-        </DashboardLayout>
+        <PrivateRoute>
+          <DashboardLayout>
+            <Suspense fallback={renderFallback}>
+              <Outlet />
+            </Suspense>
+          </DashboardLayout>
+        </PrivateRoute>
       ),
       children: [
         { element: <HomePage />, index: true },
