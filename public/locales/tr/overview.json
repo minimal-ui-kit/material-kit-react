@@ -1,0 +1,57 @@
+{
+  "welcome": "Merhaba, Tekrar Hoş Geldiniz 👋",
+  "widgets": {
+    "weeklySales": "Haftalık Satışlar",
+    "newUsers": "Yeni Kullanıcılar",
+    "purchaseOrders": "Satın Alma Siparişleri",
+    "messages": "Mesajlar"
+  },
+  "charts": {
+    "currentVisits": {
+      "title": "Mevcut Ziyaretler",
+      "regions": {
+        "america": "Amerika",
+        "asia": "Asya",
+        "europe": "Avrupa",
+        "africa": "Afrika"
+      }
+    },
+    "websiteVisits": {
+      "title": "Website Ziyaretleri",
+      "subheader": "Geçen yıla göre (+%43)",
+      "teams": {
+        "teamA": "Takım A",
+        "teamB": "Takım B"
+      }
+    },
+    "conversionRates": {
+      "title": "Dönüşüm Oranları",
+      "subheader": "Geçen yıla göre (+%43)"
+    },
+    "currentSubject": {
+      "title": "Mevcut Konu",
+      "subjects": {
+        "english": "İngilizce",
+        "history": "Tarih",
+        "physics": "Fizik",
+        "geography": "Coğrafya",
+        "chinese": "Çince",
+        "math": "Matematik"
+      }
+    }
+  },
+  "sections": {
+    "news": {
+      "title": "Haberler"
+    },
+    "orderTimeline": {
+      "title": "Sipariş Zaman Çizelgesi"
+    },
+    "trafficBySite": {
+      "title": "Sitelere Göre Trafik"
+    },
+    "tasks": {
+      "title": "Görevler"
+    }
+  }
+} 

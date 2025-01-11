@@ -1,4 +1,121 @@
 {
   "welcome": "Welcome",
-  "getStarted": "Get Started"
+  "getStarted": "Get Started",
+  "months": {
+    "short": {
+      "jan": "Jan",
+      "feb": "Feb",
+      "mar": "Mar",
+      "apr": "Apr",
+      "may": "May",
+      "jun": "Jun",
+      "jul": "Jul",
+      "aug": "Aug",
+      "sep": "Sep",
+      "oct": "Oct",
+      "nov": "Nov",
+      "dec": "Dec"
+    },
+    "long": {
+      "january": "January",
+      "february": "February",
+      "march": "March",
+      "april": "April",
+      "may": "May",
+      "june": "June",
+      "july": "July",
+      "august": "August",
+      "september": "September",
+      "october": "October",
+      "november": "November",
+      "december": "December"
+    }
+  },
+  "actions": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "close": "Close",
+    "back": "Back"
+  },
+  "status": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "warning": "Warning"
+  },
+  "messages": {
+    "required": "This field is required",
+    "invalidEmail": "Invalid email address",
+    "error": "An error occurred",
+    "success": "Operation completed successfully"
+  },
+  "profile": {
+    "title": "Profile",
+    "subtitle": "Update your profile information and manage security settings",
+    "loading": "Loading...",
+    "name": "Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "phone": "Phone",
+    "phoneFormat": "(___) ___ __ __",
+    "about": "About",
+    "aboutPlaceholder": "Write a short bio about yourself...",
+    "save": "Save Changes",
+    "reset": "Reset",
+    "success": "Profile updated successfully",
+    "error": {
+      "update": "Error updating profile"
+    },
+    "tabs": {
+      "general": "General",
+      "security": "Security",
+      "notifications": "Notifications"
+    },
+    "security": {
+      "title": "Change Password",
+      "currentPassword": "Current Password",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm New Password",
+      "changePassword": "Change Password",
+      "passwordRules": "Password must meet the following requirements"
+    },
+    "notifications": {
+      "title": "Notification Preferences",
+      "manage": "Manage",
+      "email": {
+        "title": "Email Notifications",
+        "description": "Receive emails for important updates and notifications"
+      },
+      "push": {
+        "title": "Push Notifications",
+        "description": "Receive browser push notifications"
+      },
+      "monthly": {
+        "title": "Monthly Report",
+        "description": "Get a monthly summary of your activity"
+      },
+      "news": {
+        "title": "News & Updates",
+        "description": "Stay informed about new features and updates"
+      }
+    }
+  },
+  "validation": {
+    "required": "This field is required",
+    "invalidEmail": "Please enter a valid email address",
+    "invalidPhone": "Please enter a valid phone number",
+    "nameMinLength": "Name must be at least 2 characters",
+    "nameMaxLength": "Name cannot exceed 50 characters",
+    "aboutMaxLength": "About section cannot exceed 500 characters",
+    "passwordMinLength": "Password must be at least {{length}} characters",
+    "passwordRequireNumber": "Password must contain at least one number",
+    "passwordRequireUppercase": "Password must contain at least one uppercase letter",
+    "passwordRequireLowercase": "Password must contain at least one lowercase letter",
+    "passwordRequireSpecialChar": "Password must contain at least one special character",
+    "passwordsDoNotMatch": "Passwords do not match",
+    "passwordSameAsCurrent": "New password cannot be the same as current password"
+  }
 } 

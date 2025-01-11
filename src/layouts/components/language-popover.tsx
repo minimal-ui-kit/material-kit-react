@@ -1,5 +1,6 @@
 import type { IconButtonProps } from '@mui/material/IconButton';
 
+import { useTranslation } from 'react-i18next';
 import React, { useState, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
@@ -7,7 +8,6 @@ import Popover from '@mui/material/Popover';
 import MenuList from '@mui/material/MenuList';
 import IconButton from '@mui/material/IconButton';
 import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
-import { useTranslation } from 'react-i18next';
 
 // ----------------------------------------------------------------------
 
@@ -41,10 +41,10 @@ export function LanguagePopover({ sx, ...other }: LanguagePopoverProps) {
   }, []);
 
   const handleChangeLang = useCallback(
-    (newLang: string) => {
-      setLocale(newLang);
-      i18n.changeLanguage(newLang);
-      handleClosePopover();
+    async (newLang: string) => {
+        setLocale(newLang);
+        await i18n.changeLanguage(newLang);
+        handleClosePopover();
     },
     [handleClosePopover, i18n]
   );

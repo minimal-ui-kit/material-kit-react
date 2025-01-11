@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 
 import { jwtDecode } from 'jwt-decode';
-import React, { useMemo, useState, useEffect, createContext } from 'react';
+import React, { useMemo, useState, useEffect, useContext, createContext } from 'react';
 
 interface DecodedToken {
   sub: string;
@@ -102,4 +102,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   );
 
   return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;
+};
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
 };

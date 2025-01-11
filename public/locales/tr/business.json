@@ -1,0 +1,82 @@
+{
+  "partners": {
+    "title": "İş Ortakları",
+    "newCompany": "Yeni Şirket",
+    "addCompany": "Şirket Ekle",
+    "companyName": "Şirket Adı",
+    "phone": "Telefon",
+    "email": "E-posta",
+    "status": "Durum",
+    "active": "Aktif",
+    "passive": "Pasif",
+    "taxNumber": "Vergi Numarası",
+    "website": "Web Sitesi",
+    "address": "Adres",
+    "description": "Açıklama",
+    "cancel": "İptal",
+    "save": "Kaydet",
+    "edit": "Düzenle",
+    "delete": "Sil",
+    "companyDetails": "Şirket Detayları",
+    "foundedYear": "Kuruluş Yılı",
+    "employeeCount": "Çalışan Sayısı",
+    "certifications": "Sertifikalar",
+    "operationAreas": "Faaliyet Alanları",
+    "sections": {
+      "basicInfo": "Temel Bilgiler",
+      "companyDetails": "Şirket Detayları",
+      "insurance": "Sigorta Bilgileri",
+      "bankAccounts": "Banka Hesapları",
+      "description": "Açıklama",
+      "contacts": "İletişim Kişileri"
+    },
+    "insurance": {
+      "provider": "Sigorta Şirketi",
+      "policyNumber": "Poliçe Numarası",
+      "coverage": "Kapsam",
+      "expiryDate": "Bitiş Tarihi"
+    },
+    "bank": {
+      "name": "Banka",
+      "branch": "Şube",
+      "accountNumber": "Hesap Numarası",
+      "iban": "IBAN",
+      "currency": "Para Birimi"
+    },
+    "contacts": {
+      "new": "Yeni Kişi",
+      "mainContact": "Ana İletişim",
+      "contactMethod": {
+        "phone": "Telefon",
+        "email": "E-posta",
+        "whatsapp": "WhatsApp"
+      }
+    },
+    "tabs": {
+      "general": "Genel Bilgiler",
+      "contacts": "İletişim Kişileri",
+      "contracts": "Sözleşmeler",
+      "performance": "Performans",
+      "pricing": "Fiyatlandırma",
+      "analytics": "Analitik"
+    },
+    "validation": {
+      "companyNameRequired": "Şirket adı zorunludur",
+      "companyNameMin": "Şirket adı en az 2 karakter olmalıdır",
+      "companyNameMax": "Şirket adı en fazla 100 karakter olabilir",
+      "taxNumberRequired": "Vergi numarası zorunludur",
+      "taxNumberFormat": "Vergi numarası 10 haneli olmalıdır",
+      "phoneRequired": "Telefon numarası zorunludur",
+      "phoneFormat": "Geçerli bir telefon numarası giriniz (10-11 haneli)",
+      "emailRequired": "E-posta adresi zorunludur",
+      "addressRequired": "Adres zorunludur",
+      "addressMin": "Adres en az 10 karakter olmalıdır",
+      "addressMax": "Adres en fazla 500 karakter olabilir",
+      "descriptionMax": "Açıklama en fazla 1000 karakter olabilir",
+      "statusRequired": "Durum seçimi zorunludur",
+      "email": "Geçerli bir e-posta adresi giriniz",
+      "phone": "Geçerli bir telefon numarası giriniz",
+      "url": "Geçerli bir web sitesi adresi giriniz"
+    }
+  }
+} 

@@ -1,0 +1,82 @@
+{
+  "partners": {
+    "title": "Business Partners",
+    "newCompany": "New Company",
+    "addCompany": "Add Company",
+    "companyName": "Company Name",
+    "phone": "Phone",
+    "email": "Email",
+    "status": "Status",
+    "active": "Active",
+    "passive": "Passive",
+    "taxNumber": "Tax Number",
+    "website": "Website",
+    "address": "Address",
+    "description": "Description",
+    "cancel": "Cancel",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "companyDetails": "Company Details",
+    "foundedYear": "Founded Year",
+    "employeeCount": "Employee Count",
+    "certifications": "Certifications",
+    "operationAreas": "Operation Areas",
+    "sections": {
+      "basicInfo": "Basic Information",
+      "companyDetails": "Company Details",
+      "insurance": "Insurance Information",
+      "bankAccounts": "Bank Accounts",
+      "description": "Description",
+      "contacts": "Contact Persons"
+    },
+    "insurance": {
+      "provider": "Insurance Provider",
+      "policyNumber": "Policy Number",
+      "coverage": "Coverage",
+      "expiryDate": "Expiry Date"
+    },
+    "bank": {
+      "name": "Bank",
+      "branch": "Branch",
+      "accountNumber": "Account Number",
+      "iban": "IBAN",
+      "currency": "Currency"
+    },
+    "contacts": {
+      "new": "New Contact",
+      "mainContact": "Main Contact",
+      "contactMethod": {
+        "phone": "Phone",
+        "email": "Email",
+        "whatsapp": "WhatsApp"
+      }
+    },
+    "tabs": {
+      "general": "General Information",
+      "contacts": "Contact Persons",
+      "contracts": "Contracts",
+      "performance": "Performance",
+      "pricing": "Pricing",
+      "analytics": "Analytics"
+    },
+    "validation": {
+      "companyNameRequired": "Company name is required",
+      "companyNameMin": "Company name must be at least 2 characters",
+      "companyNameMax": "Company name cannot exceed 100 characters",
+      "taxNumberRequired": "Tax number is required",
+      "taxNumberFormat": "Tax number must be 10 digits",
+      "phoneRequired": "Phone number is required",
+      "phoneFormat": "Please enter a valid phone number (10-11 digits)",
+      "emailRequired": "Email address is required",
+      "addressRequired": "Address is required",
+      "addressMin": "Address must be at least 10 characters",
+      "addressMax": "Address cannot exceed 500 characters",
+      "descriptionMax": "Description cannot exceed 1000 characters",
+      "statusRequired": "Status selection is required",
+      "email": "Please enter a valid email address",
+      "phone": "Please enter a valid phone number",
+      "url": "Please enter a valid website URL"
+    }
+  }
+} 

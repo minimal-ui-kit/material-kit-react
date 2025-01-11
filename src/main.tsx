@@ -1,9 +1,10 @@
+import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
-import { Suspense, StrictMode } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 
 import { AuthProvider } from 'src/contexts/auth-context';
+import { UserProvider } from 'src/contexts/user-context';
 
 import './i18n';
 import App from './app';
@@ -15,9 +16,9 @@ root.render(
         <HelmetProvider>
             <BrowserRouter>
                 <AuthProvider>
-                    <Suspense>
+                    <UserProvider>
                         <App />
-                    </Suspense>
+                    </UserProvider>
                 </AuthProvider>
             </BrowserRouter>
         </HelmetProvider>

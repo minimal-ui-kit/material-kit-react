@@ -1,16 +1,39 @@
-import axiosInstance from "../../config/axios-instance";
-
-import type { UserProfile, UpdateUserProfileRequest, UpdateUserProfileResponse } from './user-service.type';
+import type { User } from 'src/contexts/user-context';
+import axiosInstance from '../../config/axios-instance';
 
 const BASE_URL = '/user';
 
 export const userService = {
-    getUserProfile: async (): Promise<UserProfile> => {
-        const response = await axiosInstance.get(`${BASE_URL}/profile`);
-        return response.data;
-    },
-    updateUserProfile: async (data: UpdateUserProfileRequest): Promise<UpdateUserProfileResponse> => {
-        const response = await axiosInstance.put(`${BASE_URL}/update-user-profile`, data);
-        return response.data;
-    },
+  getUserProfileByEmail: async (email: string): Promise<User> => {
+    const response = await axiosInstance.get(`${BASE_URL}/profile/${email}`);
+    return response.data;
+  },
+
+  updateUserProfile: async (data: Partial<User>): Promise<User> => {
+    const response = await axiosInstance.put(`${BASE_URL}/profile`, data);
+    return response.data;
+  },
+
+  updatePassword: async (currentPassword: string, newPassword: string): Promise<void> => {
+    await axiosInstance.put(`${BASE_URL}/password`, {
+      currentPassword,
+      newPassword,
+    });
+  },
+
+  uploadProfilePhoto: async (file: File): Promise<string> => {
+    const formData = new FormData();
+    formData.append('photo', file);
+
+    const response = await axiosInstance.put(`${BASE_URL}/photo`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data.avatarUrl;
+  },
+
+  updateNotifications: async (notifications: User['notifications']): Promise<void> => {
+    await axiosInstance.put(`${BASE_URL}/notifications`, { notifications });
+  },
 };

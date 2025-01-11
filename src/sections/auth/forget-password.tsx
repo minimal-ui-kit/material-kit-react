@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
@@ -17,19 +18,20 @@ interface ForgotPasswordProps {
 }
 
 export default function ForgotPassword({ open, handleClose }: ForgotPasswordProps) {
+  const { t } = useTranslation(['auth', 'common']);
   const [emailError, setEmailError] = useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState(false);
 
-  const validateEmail = () => {
+  const validateEmail = useCallback(() => {
     const email = document.getElementById('forgetPasswordEmail') as HTMLInputElement;
 
     let isValid = true;
 
     if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
       setEmailError(true);
-      setEmailErrorMessage('Please enter a valid email address.');
+      setEmailErrorMessage(t('resetPassword.emailErrorMessage'));
       isValid = false;
     } else {
       setEmailError(false);
@@ -37,9 +39,10 @@ export default function ForgotPassword({ open, handleClose }: ForgotPasswordProp
     }
 
     return isValid;
-  };
+  }, [t]);
 
-  const handleSubmit = useCallback(async () => {
+  const handleSubmit = useCallback(async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     if (!validateEmail()) {
       return;
     }
@@ -47,78 +50,81 @@ export default function ForgotPassword({ open, handleClose }: ForgotPasswordProp
     setLoading(true);
 
     try {
-      // Simüle edilmiş API çağrısı
+      // Simulated API call
       await new Promise((resolve) => setTimeout(resolve, 2000));
-      setSuccessMessage(true); // Başarılı mesajını göster
+      setSuccessMessage(true); // Show success message
       handleClose();
     } catch (error) {
       console.error('Password reset failed:', error);
     } finally {
       setLoading(false);
     }
-  }, [handleClose]);
+  }, [handleClose, validateEmail]);
 
   const handleSuccessClose = () => {
     setSuccessMessage(false);
   };
 
+  const handleDialogClose = () => {
+    setEmailError(false);
+    setEmailErrorMessage('');
+    handleClose();
+  };
+
   return (
-    <>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        PaperProps={{
-          component: 'form',
-          onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
-            event.preventDefault();
-            handleClose();
-          },
-          sx: { backgroundImage: 'none' },
-        }}
-      >
-        <DialogTitle>Reset password</DialogTitle>
-        <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>
-          <DialogContentText>
-            Enter your account&apos;s email address, and we&apos;ll send you a link to reset your
-            password.
-          </DialogContentText>
-          <TextField
-            error={emailError}
-            helperText={emailErrorMessage}
-            id="forgetPasswordEmail"
-            type="email"
-            name="email"
-            placeholder="your@email.com"
-            autoComplete="email"
-            label="Email address"
-            autoFocus
-            required
-            fullWidth
-            variant="outlined"
-            sx={{ mb: 3 }}
-            InputLabelProps={{ shrink: true }}
-            color={emailError ? 'error' : 'primary'}
-          />
-        </DialogContent>
-        <DialogActions sx={{ pb: 3, px: 3 }}>
-          <Button onClick={handleClose} disabled={loading}>
-            Cancel
-          </Button>
-          <Button variant="contained" type="submit" onClick={handleSubmit} disabled={loading}>
-            {loading ? 'Loading...' : 'Continue'}
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Snackbar
-        open={successMessage}
-        autoHideDuration={6000}
-        onClose={handleSuccessClose}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-      >
-        <Alert onClose={handleSuccessClose} severity="success" sx={{ width: '100%' }}>
-          Password reset link successfully sent!
-        </Alert>
-      </Snackbar>
-    </>
+      <>
+        <Dialog
+            open={open}
+            onClose={handleDialogClose}
+            PaperProps={{
+              component: 'form',
+              onSubmit: handleSubmit,
+              noValidate: true, // Disable HTML5 validation
+              sx: { backgroundImage: 'none' },
+            }}
+        >
+          <DialogTitle>{t('resetPassword.title')}</DialogTitle>
+          <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>
+            <DialogContentText>
+              {t('resetPassword.description')}
+            </DialogContentText>
+            <TextField
+                error={emailError}
+                helperText={emailErrorMessage}
+                id="forgetPasswordEmail"
+                type="email"
+                name="email"
+                placeholder={t('resetPassword.emailPlaceholder')}
+                autoComplete="email"
+                label={t('resetPassword.emailLabel')}
+                autoFocus
+                required
+                fullWidth
+                variant="outlined"
+                sx={{ mb: 3 }}
+                InputLabelProps={{ shrink: true }}
+                color={emailError ? 'error' : 'primary'}
+            />
+          </DialogContent>
+          <DialogActions sx={{ pb: 3, px: 3 }}>
+            <Button onClick={handleDialogClose} disabled={loading}>
+              {t('resetPassword.cancel')}
+            </Button>
+            <Button variant="contained" type="submit" disabled={loading}>
+              {loading ? t('resetPassword.loading') : t('resetPassword.continue')}
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Snackbar
+            open={successMessage}
+            autoHideDuration={6000}
+            onClose={handleSuccessClose}
+            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        >
+          <Alert onClose={handleSuccessClose} severity="success" sx={{ width: '100%' }}>
+            {t('resetPassword.successMessage')}
+          </Alert>
+        </Snackbar>
+      </>
   );
 }

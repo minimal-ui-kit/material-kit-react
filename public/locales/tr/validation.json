@@ -1,0 +1,35 @@
+{
+  "required": {
+    "firstName": "Ad alanı zorunludur",
+    "lastName": "Soyad alanı zorunludur",
+    "email": "E-posta alanı zorunludur",
+    "phone": "Telefon numarası zorunludur",
+    "password": "Şifre alanı zorunludur",
+    "currentPassword": "Mevcut şifre alanı zorunludur",
+    "newPassword": "Yeni şifre alanı zorunludur",
+    "confirmPassword": "Şifre tekrar alanı zorunludur"
+  },
+  "invalid": {
+    "email": "Geçerli bir e-posta adresi giriniz",
+    "phone": "Geçerli bir telefon numarası giriniz",
+    "password": "Geçerli bir şifre giriniz"
+  },
+  "length": {
+    "name": {
+      "min": "En az 2 karakter olmalıdır",
+      "max": "En fazla 50 karakter olmalıdır"
+    },
+    "about": {
+      "max": "En fazla 500 karakter olmalıdır"
+    }
+  },
+  "password": {
+    "uppercase": "En az bir büyük harf içermelidir",
+    "lowercase": "En az bir küçük harf içermelidir",
+    "number": "En az bir rakam içermelidir",
+    "special": "En az bir özel karakter içermelidir",
+    "match": "Şifreler eşleşmiyor",
+    "same": "Yeni şifre mevcut şifre ile aynı olamaz",
+    "min": "En az {{length}} karakter olmalıdır"
+  }
+} 

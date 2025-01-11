@@ -1,6 +1,6 @@
 import type { IconButtonProps } from '@mui/material/IconButton';
 
-import React, {useState, useCallback, useContext} from 'react';
+import React, {useState, useContext, useCallback} from 'react';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -15,6 +15,7 @@ import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
 import { useRouter, usePathname } from 'src/routes/hooks';
 
 import { _myAccount } from 'src/_mock';
+
 import {AuthContext} from "../../contexts/auth-context";
 
 // ----------------------------------------------------------------------

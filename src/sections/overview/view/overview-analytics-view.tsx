@@ -1,5 +1,6 @@
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
+import { useTranslation } from 'react-i18next';
 
 import { _tasks, _posts, _timeline } from 'src/_mock';
 import { DashboardContent } from 'src/layouts/dashboard';
@@ -17,21 +18,32 @@ import { AnalyticsConversionRates } from '../analytics-conversion-rates';
 // ----------------------------------------------------------------------
 
 export function OverviewAnalyticsView() {
+  const { t } = useTranslation(['overview', 'common']);
+
   return (
     <DashboardContent maxWidth="xl">
       <Typography variant="h4" sx={{ mb: { xs: 3, md: 5 } }}>
-        Hi, Welcome back 👋
+        {t('overview:welcome')}
       </Typography>
 
       <Grid container spacing={3}>
         <Grid xs={12} sm={6} md={3}>
           <AnalyticsWidgetSummary
-            title="Weekly sales"
+            title={t('overview:widgets.weeklySales')}
             percent={2.6}
             total={714000}
             icon={<img alt="icon" src="/assets/icons/glass/ic-glass-bag.svg" />}
             chart={{
-              categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
+              categories: [
+                t('common:months.short.jan'),
+                t('common:months.short.feb'),
+                t('common:months.short.mar'),
+                t('common:months.short.apr'),
+                t('common:months.short.may'),
+                t('common:months.short.jun'),
+                t('common:months.short.jul'),
+                t('common:months.short.aug')
+              ],
               series: [22, 8, 35, 50, 82, 84, 77, 12],
             }}
           />
@@ -39,13 +51,22 @@ export function OverviewAnalyticsView() {
 
         <Grid xs={12} sm={6} md={3}>
           <AnalyticsWidgetSummary
-            title="New users"
+            title={t('overview:widgets.newUsers')}
             percent={-0.1}
             total={1352831}
             color="secondary"
             icon={<img alt="icon" src="/assets/icons/glass/ic-glass-users.svg" />}
             chart={{
-              categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
+              categories: [
+                t('common:months.short.jan'),
+                t('common:months.short.feb'),
+                t('common:months.short.mar'),
+                t('common:months.short.apr'),
+                t('common:months.short.may'),
+                t('common:months.short.jun'),
+                t('common:months.short.jul'),
+                t('common:months.short.aug')
+              ],
               series: [56, 47, 40, 62, 73, 30, 23, 54],
             }}
           />
@@ -53,13 +74,22 @@ export function OverviewAnalyticsView() {
 
         <Grid xs={12} sm={6} md={3}>
           <AnalyticsWidgetSummary
-            title="Purchase orders"
+            title={t('overview:widgets.purchaseOrders')}
             percent={2.8}
             total={1723315}
             color="warning"
             icon={<img alt="icon" src="/assets/icons/glass/ic-glass-buy.svg" />}
             chart={{
-              categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
+              categories: [
+                t('common:months.short.jan'),
+                t('common:months.short.feb'),
+                t('common:months.short.mar'),
+                t('common:months.short.apr'),
+                t('common:months.short.may'),
+                t('common:months.short.jun'),
+                t('common:months.short.jul'),
+                t('common:months.short.aug')
+              ],
               series: [40, 70, 50, 28, 70, 75, 7, 64],
             }}
           />
@@ -67,13 +97,22 @@ export function OverviewAnalyticsView() {
 
         <Grid xs={12} sm={6} md={3}>
           <AnalyticsWidgetSummary
-            title="Messages"
+            title={t('overview:widgets.messages')}
             percent={3.6}
             total={234}
             color="error"
             icon={<img alt="icon" src="/assets/icons/glass/ic-glass-message.svg" />}
             chart={{
-              categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
+              categories: [
+                t('common:months.short.jan'),
+                t('common:months.short.feb'),
+                t('common:months.short.mar'),
+                t('common:months.short.apr'),
+                t('common:months.short.may'),
+                t('common:months.short.jun'),
+                t('common:months.short.jul'),
+                t('common:months.short.aug')
+              ],
               series: [56, 30, 23, 54, 47, 40, 62, 73],
             }}
           />
@@ -81,13 +120,13 @@ export function OverviewAnalyticsView() {
 
         <Grid xs={12} md={6} lg={4}>
           <AnalyticsCurrentVisits
-            title="Current visits"
+            title={t('overview:charts.currentVisits.title')}
             chart={{
               series: [
-                { label: 'America', value: 3500 },
-                { label: 'Asia', value: 2500 },
-                { label: 'Europe', value: 1500 },
-                { label: 'Africa', value: 500 },
+                { label: t('overview:charts.currentVisits.regions.america'), value: 3500 },
+                { label: t('overview:charts.currentVisits.regions.asia'), value: 2500 },
+                { label: t('overview:charts.currentVisits.regions.europe'), value: 1500 },
+                { label: t('overview:charts.currentVisits.regions.africa'), value: 500 },
               ],
             }}
           />
@@ -95,13 +134,23 @@ export function OverviewAnalyticsView() {
 
         <Grid xs={12} md={6} lg={8}>
           <AnalyticsWebsiteVisits
-            title="Website visits"
-            subheader="(+43%) than last year"
+            title={t('overview:charts.websiteVisits.title')}
+            subheader={t('overview:charts.websiteVisits.subheader')}
             chart={{
-              categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+              categories: [
+                t('common:months.short.jan'),
+                t('common:months.short.feb'),
+                t('common:months.short.mar'),
+                t('common:months.short.apr'),
+                t('common:months.short.may'),
+                t('common:months.short.jun'),
+                t('common:months.short.jul'),
+                t('common:months.short.aug'),
+                t('common:months.short.sep')
+              ],
               series: [
-                { name: 'Team A', data: [43, 33, 22, 37, 67, 68, 37, 24, 55] },
-                { name: 'Team B', data: [51, 70, 47, 67, 40, 37, 24, 70, 24] },
+                { name: t('overview:charts.websiteVisits.teams.teamA'), data: [43, 33, 22, 37, 67, 68, 37, 24, 55] },
+                { name: t('overview:charts.websiteVisits.teams.teamB'), data: [51, 70, 47, 67, 40, 37, 24, 70, 24] },
               ],
             }}
           />
