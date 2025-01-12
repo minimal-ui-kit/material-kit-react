@@ -29,7 +29,7 @@ export function CompanyTableRow({ row, selected, onSelectRow }: CompanyTableRowP
   const navigate = useNavigate();
 
   const handleNavigateToDetail = () => {
-    navigate(`/business-partners/${row.id}`);
+    navigate(`/company/${row.id}`);
   };
 
   return (
@@ -78,7 +78,7 @@ export function CompanyTableRow({ row, selected, onSelectRow }: CompanyTableRowP
       <TableCell align="right" onClick={(e) => e.stopPropagation()}>
         <IconButton 
           color="primary"
-          onClick={() => navigate(`/business-partners/${row.id}`)}
+          onClick={() => navigate(`/company/${row.id}`)}
         >
           <Iconify icon="solar:pen-bold" />
         </IconButton>

@@ -1,10 +1,10 @@
 import { Helmet } from 'react-helmet-async';
-import { Container, Typography, Card } from '@mui/material';
 
-import { CompanyList } from 'src/sections/business-partners/company-list';
 import { CONFIG } from 'src/config-global';
 
-export default function BusinessPartnersPage() {
+import { CompanyList } from 'src/sections/company/company-list';
+
+export default function CompanyListPage() {
   return (
     <>
       <Helmet>

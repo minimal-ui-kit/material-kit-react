@@ -18,8 +18,8 @@ const SignInPage = lazy(() => import('src/pages/sign-in'));
 const ProductsPage = lazy(() => import('src/pages/products'));
 const Page404 = lazy(() => import('src/pages/page-not-found'));
 const ProfilePage = lazy(() => import('src/pages/profile'));
-const BusinessPartnersPage = lazy(() => import('src/pages/business-partners'));
-const CompanyDetailPage = lazy(() => import('src/pages/company-detail'));
+const CompanyListPage = lazy(() => import('src/pages/company/company-list/company-list'));
+const CompanyDetailPage = lazy(() => import('src/pages/company/company-detail/company-detail'));
 
 const renderFallback = (
   <Box display="flex" alignItems="center" justifyContent="center" flex="1 1 auto">
@@ -52,8 +52,8 @@ export function Router() {
         { path: 'products', element: <ProductsPage /> },
         { path: 'blog', element: <BlogPage /> },
         { path: 'profile', element: <ProfilePage /> },
-        { path: 'business-partners', element: <BusinessPartnersPage /> },
-        { path: 'business-partners/:id', element: <CompanyDetailPage /> },
+        { path: 'company', element: <CompanyListPage /> },
+        { path: 'company/:id', element: <CompanyDetailPage /> },
       ],
     },
     {

@@ -44,7 +44,6 @@ export function ProfileView() {
 
   return (
     <DashboardContent>
-      <Container maxWidth="lg">
         <Box sx={{ mb: 5 }}>
           <Typography variant="h4" gutterBottom sx={{ color: 'primary.main' }}>
             {t('profile:title')}
@@ -111,7 +110,6 @@ export function ProfileView() {
             </TabPanel>
           </Card>
         </Stack>
-      </Container>
     </DashboardContent>
   );
 } 

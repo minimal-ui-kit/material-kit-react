@@ -23,11 +23,11 @@ export const paths = {
     products: path(ROOTS.DASHBOARD, '/products'),
     blog: path(ROOTS.DASHBOARD, '/blog'),
     partners: {
-      root: path(ROOTS.DASHBOARD, '/business-partners'),
-      list: path(ROOTS.DASHBOARD, '/business-partners'),
-      new: path(ROOTS.DASHBOARD, '/business-partners/new'),
-      edit: (id: string) => path(ROOTS.DASHBOARD, `/business-partners/${id}/edit`),
-      view: (id: string) => path(ROOTS.DASHBOARD, `/business-partners/${id}`),
+      root: path(ROOTS.DASHBOARD, '/company'),
+      list: path(ROOTS.DASHBOARD, '/company'),
+      new: path(ROOTS.DASHBOARD, '/company/new'),
+      edit: (id: string) => path(ROOTS.DASHBOARD, `/company/${id}/edit`),
+      view: (id: string) => path(ROOTS.DASHBOARD, `/company/${id}`),
     },
   },
 } as const; 

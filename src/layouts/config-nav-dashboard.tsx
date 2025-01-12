@@ -20,7 +20,7 @@ export const navData = [
   },
   {
     title: 'Companies',
-    path: '/business-partners',
+    path: '/company',
     icon: icon('ic-business'),
   },
   {

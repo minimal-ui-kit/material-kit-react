@@ -58,34 +58,34 @@ const WEBSITE_REGEX = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?
 
 const validationSchema = Yup.object({
   name: Yup.string()
-    .min(2, 'partners.validation.companyNameMin')
-    .max(100, 'partners.validation.companyNameMax')
-    .required('partners.validation.companyNameRequired'),
+    .min(2, 'company.validation.companyNameMin')
+    .max(100, 'company.validation.companyNameMax')
+    .required('company.validation.companyNameRequired'),
   phone: Yup.string()
-    .matches(PHONE_REGEX, 'partners.validation.phoneFormat')
-    .required('partners.validation.phoneRequired'),
+    .matches(PHONE_REGEX, 'company.validation.phoneFormat')
+    .required('company.validation.phoneRequired'),
   email: Yup.string()
-    .email('partners.validation.email')
-    .required('partners.validation.emailRequired'),
+    .email('company.validation.email')
+    .required('company.validation.emailRequired'),
   status: Yup.string()
     .oneOf(['active', 'passive'])
-    .required('partners.validation.statusRequired'),
+    .required('company.validation.statusRequired'),
   taxNumber: Yup.string()
-    .matches(TAX_NUMBER_REGEX, 'partners.validation.taxNumberFormat')
-    .required('partners.validation.taxNumberRequired'),
+    .matches(TAX_NUMBER_REGEX, 'company.validation.taxNumberFormat')
+    .required('company.validation.taxNumberRequired'),
   website: Yup.string()
-    .matches(WEBSITE_REGEX, 'partners.validation.url')
+    .matches(WEBSITE_REGEX, 'company.validation.url')
     .nullable(),
   address: Yup.string()
-    .min(10, 'partners.validation.addressMin')
-    .max(500, 'partners.validation.addressMax')
-    .required('partners.validation.addressRequired'),
+    .min(10, 'company.validation.addressMin')
+    .max(500, 'company.validation.addressMax')
+    .required('company.validation.addressRequired'),
   description: Yup.string()
-    .max(1000, 'partners.validation.descriptionMax'),
+    .max(1000, 'company.validation.descriptionMax'),
 });
 
 export function CompanyList() {
-  const { t } = useTranslation('business');
+  const { t } = useTranslation('company');
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState<'asc' | 'desc'>('asc');
   const [selected, setSelected] = useState<string[]>([]);
@@ -95,10 +95,10 @@ export function CompanyList() {
   const [openDialog, setOpenDialog] = useState(false);
 
   const TABLE_HEAD = [
-    { id: 'name', label: t('partners.companyName'), align: 'left' },
-    { id: 'phone', label: t('partners.phone'), align: 'left' },
-    { id: 'email', label: t('partners.email'), align: 'left' },
-    { id: 'status', label: t('partners.status'), align: 'left' },
+    { id: 'name', label: t('company.companyName'), align: 'left' },
+    { id: 'phone', label: t('company.phone'), align: 'left' },
+    { id: 'email', label: t('company.email'), align: 'left' },
+    { id: 'status', label: t('company.status'), align: 'left' },
     { id: 'actions', label: '', align: 'right' },
   ];
 
@@ -179,7 +179,7 @@ export function CompanyList() {
   return (
     <DashboardContent>
       <Box sx={{ mb: 5, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <Typography variant="h4">{t('partners.title')}</Typography>
+        <Typography variant="h4">{t('company.title')}</Typography>
         <Button
           variant="contained"
           color="inherit"
@@ -194,7 +194,7 @@ export function CompanyList() {
             px: 2,
           }}
         >
-          {t('partners.newCompany')}
+          {t('company.newCompany')}
         </Button>
       </Box>
 
@@ -259,7 +259,7 @@ export function CompanyList() {
         <DialogTitle>
           <Stack direction="row" alignItems="center" spacing={1}>
             <Iconify icon="solar:buildings-2-bold-duotone" sx={{ width: 24, height: 24 }} />
-            <Typography variant="h6">{t('partners.newCompany')}</Typography>
+            <Typography variant="h6">{t('company.newCompany')}</Typography>
           </Stack>
         </DialogTitle>
 
@@ -271,7 +271,7 @@ export function CompanyList() {
               <Grid item xs={12}>
                 <TextField
                   fullWidth
-                  label={t('partners.companyName')}
+                  label={t('company.companyName')}
                   name="name"
                   value={formik.values.name}
                   onChange={formik.handleChange}
@@ -291,7 +291,7 @@ export function CompanyList() {
               <Grid item xs={12} md={6}>
                 <TextField
                   fullWidth
-                  label={t('partners.taxNumber')}
+                  label={t('company.taxNumber')}
                   name="taxNumber"
                   value={formik.values.taxNumber}
                   onChange={(e) => {
@@ -318,7 +318,7 @@ export function CompanyList() {
               <Grid item xs={12} md={6}>
                 <TextField
                   fullWidth
-                  label={t('partners.website')}
+                  label={t('company.website')}
                   name="website"
                   value={formik.values.website}
                   onChange={formik.handleChange}
@@ -338,7 +338,7 @@ export function CompanyList() {
               <Grid item xs={12} md={6}>
                 <TextField
                   fullWidth
-                  label={t('partners.phone')}
+                  label={t('company.phone')}
                   name="phone"
                   value={formik.values.phone}
                   onChange={(e) => {
@@ -365,7 +365,7 @@ export function CompanyList() {
               <Grid item xs={12} md={6}>
                 <TextField
                   fullWidth
-                  label={t('partners.email')}
+                  label={t('company.email')}
                   name="email"
                   value={formik.values.email}
                   onChange={formik.handleChange}
@@ -386,7 +386,7 @@ export function CompanyList() {
                 <TextField
                   select
                   fullWidth
-                  label={t('partners.status')}
+                  label={t('company.status')}
                   name="status"
                   value={formik.values.status}
                   onChange={formik.handleChange}
@@ -418,7 +418,7 @@ export function CompanyList() {
                           bgcolor: 'success.main',
                         }}
                       />
-                      {t('partners.active')}
+                      {t('company.active')}
                     </Stack>
                   </MenuItem>
                   <MenuItem value="passive">
@@ -431,7 +431,7 @@ export function CompanyList() {
                           bgcolor: 'error.main',
                         }}
                       />
-                      {t('partners.passive')}
+                      {t('company.passive')}
                     </Stack>
                   </MenuItem>
                 </TextField>
@@ -442,7 +442,7 @@ export function CompanyList() {
                   fullWidth
                   multiline
                   rows={2}
-                  label={t('partners.address')}
+                  label={t('company.address')}
                   name="address"
                   value={formik.values.address}
                   onChange={formik.handleChange}
@@ -464,7 +464,7 @@ export function CompanyList() {
                   fullWidth
                   multiline
                   rows={2}
-                  label={t('partners.description')}
+                  label={t('company.description')}
                   name="description"
                   value={formik.values.description}
                   onChange={formik.handleChange}
@@ -487,30 +487,30 @@ export function CompanyList() {
         <Divider />
 
         <DialogActions sx={{ p: 2.5, gap: 2 }}>
-          <Button 
-            color="inherit" 
-            variant="outlined" 
+          <Button
+            color="inherit"
+            variant="outlined"
             onClick={handleCloseDialog}
             startIcon={<Iconify icon="eva:arrow-back-fill" />}
-            sx={{ 
+            sx={{
               borderColor: 'action.hover',
-              '&:hover': { bgcolor: 'action.hover' } 
+              '&:hover': { bgcolor: 'action.hover' }
             }}
           >
-            {t('partners.cancel')}
+            {t('company.cancel')}
           </Button>
-          <Button 
+          <Button
             variant="contained"
             onClick={() => formik.handleSubmit()}
             startIcon={<Iconify icon="eva:checkmark-fill" />}
-            sx={{ 
+            sx={{
               bgcolor: 'primary.main',
               color: 'primary.contrastText',
               '&:hover': { bgcolor: 'primary.dark' },
               px: 3,
             }}
           >
-            {t('partners.save')}
+            {t('company.save')}
           </Button>
         </DialogActions>
       </Dialog>

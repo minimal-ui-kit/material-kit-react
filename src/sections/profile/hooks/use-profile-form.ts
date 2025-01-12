@@ -1,14 +1,17 @@
-import type React from "react";
-
 import * as Yup from 'yup';
+import { useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 
 import { useUser } from 'src/contexts/user-context';
+import { useLoading } from "src/contexts/loading-context";
+import { useUnsavedChanges } from "src/contexts/unsaved-changes-context";
 
 export const useProfileForm = () => {
   const { t } = useTranslation();
   const { user, updateUser } = useUser();
+  const { showLoading, hideLoading } = useLoading();
+  const { setHasUnsavedChanges } = useUnsavedChanges();
 
   const validationSchema = Yup.object().shape({
     firstName: Yup.string()
@@ -41,10 +44,12 @@ export const useProfileForm = () => {
     enableReinitialize: true,
     validationSchema,
     onSubmit: async (values, { setSubmitting, setStatus }) => {
+      showLoading();
+      
       try {
         setStatus(null);
+        setSubmitting(true);
 
-        // Sadece değişen alanları gönder
         const updatedFields: Partial<typeof user> = {};
 
         if (values.firstName !== user?.firstName) updatedFields.firstName = values.firstName;
@@ -54,13 +59,27 @@ export const useProfileForm = () => {
 
         await updateUser(updatedFields);
         setStatus({ success: t('profile:success') });
+        setHasUnsavedChanges(false);
       } catch (error) {
+        console.error('Form submission error:', error);
         setStatus({ error: t('profile:error.update') });
       } finally {
+        hideLoading();
         setSubmitting(false);
       }
     },
   });
+
+  // Form değişikliklerini takip et
+  useEffect(() => {
+    const hasChanges = Object.keys(formik.values).some((key) => {
+      const value = formik.values[key as keyof typeof formik.values];
+      const initialValue = formik.initialValues[key as keyof typeof formik.initialValues];
+      return value !== initialValue;
+    });
+
+    setHasUnsavedChanges(hasChanges);
+  }, [formik.values, formik.initialValues, setHasUnsavedChanges, formik]);
 
   const formatPhoneNumber = (value: string) => {
     const numbersOnly = value.replace(/\D/g, '');

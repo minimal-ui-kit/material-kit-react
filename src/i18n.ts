@@ -9,7 +9,7 @@ i18n
   .use(initReactI18next)
   .init({
     fallbackLng: 'tr',
-    ns: ['common', 'auth', 'products', 'error', 'validation', 'profile'],
+    ns: ['common', 'auth', 'products', 'error', 'validation', 'company','profile'],
     defaultNS: 'common',
     debug: true,
     interpolation: {

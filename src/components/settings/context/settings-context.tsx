@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react';
+import { useContext, createContext } from 'react';
 
 export interface SettingsContextProps {
   themeStretch: boolean;

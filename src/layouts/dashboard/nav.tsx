@@ -16,7 +16,6 @@ import { varAlpha } from 'src/theme/styles';
 import { Logo } from 'src/components/logo';
 import { Scrollbar } from 'src/components/scrollbar';
 
-import BusinessIcon from '@mui/icons-material/Business';
 import { WorkspacesPopover } from '../components/workspaces-popover';
 
 import type { WorkspacesPopoverProps } from '../components/workspaces-popover';
@@ -45,7 +44,7 @@ const defaultNavItems = [
     icon: <Box component="i" className="eva eva-home-outline" />,
   },
   {
-    path: '/business-partners',
+    path: '/company',
     title: 'İş Ortakları',
     icon: <Box component="img" src="/assets/icons/navbar/ic-business.svg" sx={{ width: 24, height: 24 }} />,
   },

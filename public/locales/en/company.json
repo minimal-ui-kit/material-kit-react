@@ -1,6 +1,6 @@
 {
-  "partners": {
-    "title": "Business Partners",
+  "company": {
+    "title": "Companies",
     "newCompany": "New Company",
     "addCompany": "Add Company",
     "companyName": "Company Name",
