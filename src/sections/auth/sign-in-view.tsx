@@ -31,7 +31,7 @@ const SIGN_UP = {
   country: '',
   email: '',
   password: '',
-  pledgeAmount: '',
+  pledgeAmount: 0,
 };
 
 export function SignInView() {

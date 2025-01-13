@@ -1,4 +1,5 @@
 export interface ContributeInit {
-  amount: string | null;
+  amount: number | null;
   months: string[];
+  callbackUrl?: string;
 }

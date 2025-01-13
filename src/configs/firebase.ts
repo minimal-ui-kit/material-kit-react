@@ -15,7 +15,6 @@ import { connectFirestoreEmulator, getFirestore } from 'firebase/firestore';
 import { connectFunctionsEmulator, getFunctions, httpsCallable } from 'firebase/functions';
 import { ApiRoute } from '../constants/fxns';
 
-
 const USE_EMULATORS = false;
 
 const firebaseConfig = {
@@ -60,7 +59,7 @@ const fxns = getFunctions(app);
 const fx = {
   async call<T, B = any>(path: ApiRoute, data?: T) {
     const callable = httpsCallable<T, B>(fxns, path);
-    const result = await callable(data??null);
+    const result = await callable(data ?? null);
     return result.data;
   },
 };
@@ -77,4 +76,3 @@ const runEmulators = (val: boolean = USE_EMULATORS) => {
 runEmulators();
 
 export { app, auth, db, fx };
-

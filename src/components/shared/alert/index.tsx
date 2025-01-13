@@ -16,15 +16,17 @@ export interface AppAlertMethods {
 
 const AppAlert = forwardRef<AppAlertMethods>((_, ref) => {
   const [visible, setVisible] = useState(false);
+  const [show, setShow] = useState(visible)
   const dataRef = useRef<AppAlertProps | null>(null);
   const container = useRef();
 
   const handleOpenClose = (open: boolean, data?: AppAlertProps | null) => {
     if (open) {
       dataRef.current = data ?? null;
-      setVisible(true);
+      setVisible(open);
+      setShow(open)
     } else {
-      setVisible(false);
+      setVisible(open);
       dataRef.current = null;
     }
   };
@@ -36,6 +38,10 @@ const AppAlert = forwardRef<AppAlertMethods>((_, ref) => {
   const onClose = () => {
     setVisible(false);
   };
+
+  const onExited = () => {
+    setShow(false)
+  }
 
   useImperativeHandle(
     ref,
@@ -51,9 +57,9 @@ const AppAlert = forwardRef<AppAlertMethods>((_, ref) => {
   );
 
   return (
-    <Portal>
-      <Box sx={{ position: 'fixed', top: 20, right: 50, zIndex: 2000 }} ref={container}>
-        <Slide in={visible} container={container.current}>
+    show?<Portal>
+      <Box sx={{ position: 'fixed', top: 20, right: 50, zIndex:2000 }} ref={container}>
+        <Slide in={visible} onExited={onExited}  className='helloWorld' container={container.current}>
           <Alert
             severity={dataRef.current?.type}
             onClose={clearData}
@@ -68,7 +74,7 @@ const AppAlert = forwardRef<AppAlertMethods>((_, ref) => {
           </Alert>
         </Slide>
       </Box>
-    </Portal>
+    </Portal>:null
   );
 });
 

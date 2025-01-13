@@ -32,7 +32,8 @@ export default class AuthService {
   }
 
   static async logout() {
-    return auth.logout();
+    await auth.logout();
+    Cache.clear();
   }
 
   static setToken(token: string | null) {

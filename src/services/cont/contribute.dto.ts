@@ -1,9 +1,9 @@
-import { Timestamp } from "firebase/firestore";
+import { Timestamp } from 'firebase/firestore';
 
 export enum ContributionStatus {
-  Pending = "PENDING",
-  Failed = "FAILED",
-  Success = "COMPLETED",
+  Pending = 'PENDING',
+  Failed = 'FAILED',
+  Success = 'COMPLETED',
 }
 
 export interface Contribution {
@@ -21,8 +21,15 @@ export interface Contribution {
   };
 }
 
+export interface ContributionResponse
+  extends Omit<Contribution, 'createdAt' | 'modifiedAt' | 'completedAt'> {
+  createdAt: { _seconds: number; _nanoseconds: number };
+  modifiedAt: { _seconds: number; _nanoseconds: number } | null;
+  completedAt: { _seconds: number; _nanoseconds: number } | null;
+}
+
 export interface CreateContributionParams {
   amount: string;
   months: string[];
-  donor: Contribution["donor"];
+  donor: Contribution['donor'];
 }

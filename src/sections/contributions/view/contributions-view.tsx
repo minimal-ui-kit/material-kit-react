@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useContext, useMemo, useState } from 'react';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -9,11 +9,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 import Typography from '@mui/material/Typography';
 
-import { _contributions, _users } from 'src/_mock';
+import { _users } from 'src/_mock';
 import { DashboardContent } from 'src/layouts/dashboard';
 
 import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
+import { UserContext } from 'src/components/provider';
 
 import { ContributionTableHead } from '../contributions-table-head';
 import { TableEmptyRows } from '../table-empty-rows';
@@ -32,7 +33,8 @@ interface ContributionsViewProps {
   hideBtn?: boolean;
   title?: string;
   noPagination?: boolean;
-  data?:ContributionProps[]
+  data?: ContributionProps[];
+  loading?: boolean;
 }
 
 export function ContributionsView({
@@ -42,19 +44,26 @@ export function ContributionsView({
   hideBtn,
   noPagination,
   title = 'Contributions',
-  data = []
+  loading,
+  data = [],
 }: ContributionsViewProps) {
   const table = useTable();
 
   const [filterName, setFilterName] = useState('');
+  const { pay } = useContext(UserContext);
 
-  const dataFiltered: ContributionProps[] = applyFilter({
-    inputData: data,
-    comparator: getComparator(table.order, table.orderBy),
-    filterName,
-  });
+  const dataFiltered: ContributionProps[] = useMemo(
+    () =>
+      applyFilter({
+        inputData: data,
+        comparator: getComparator(table.order, table.orderBy),
+        filterName,
+      }),
+    [filterName, data, table.order, table.orderBy]
+  );
 
-  const notFound = !dataFiltered.length && !!filterName;
+  const notFound =
+    ((!dataFiltered.length && !!filterName) || (!dataFiltered.length && !filterName)) && !loading;
 
   const content = (
     <>
@@ -63,7 +72,12 @@ export function ContributionsView({
           {title}
         </Typography>
         {!hideBtn && (
-          <Button variant="contained" color="inherit" startIcon={<Iconify icon="mdi:donate" />}>
+          <Button
+            variant="contained"
+            color="inherit"
+            onClick={pay}
+            startIcon={<Iconify icon="mdi:donate" />}
+          >
             Contribute
           </Button>
         )}
@@ -98,7 +112,7 @@ export function ContributionsView({
                 }
                 headLabel={[
                   { id: 'name', label: 'Name' },
-                  { id: 'months', label: 'Months' },
+                  { id: 'months', label: 'Month(s)' },
                   { id: 'amount', label: 'Amount' },
                   { id: 'date', label: 'Date' },
                   { id: 'status', label: 'Status' },
@@ -119,7 +133,7 @@ export function ContributionsView({
                       onSelectRow={() => table.onSelectRow(row.id)}
                     />
                   ))}
-                  
+
                 <TableEmptyRows
                   height={68}
                   emptyRows={emptyRows(table.page, table.rowsPerPage, _users.length)}
@@ -130,7 +144,6 @@ export function ContributionsView({
             </Table>
           </TableContainer>
         </Scrollbar>
-
         {!noPagination && (
           <TablePagination
             component="div"

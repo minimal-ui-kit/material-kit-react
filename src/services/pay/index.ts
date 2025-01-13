@@ -5,15 +5,17 @@ import { errCb } from 'src/utils';
 import { ContributeInit } from './pay.dto';
 
 export default class PayService {
-  static async init(amount: string, months: string[]) {
+  static async init(amount: number, months: string[]) {
     try {
+      console.log(window.location);
       const res = await fx.call<ContributeInit, { code: string }>(ApiRoute.InitPayment, {
         amount,
         months,
+        callbackUrl: window.location.href,
       });
       const popup = new PaystackPop();
       popup.resumeTransaction(res.code as any);
-      return popup
+      return popup;
     } catch (error) {
       const err = error as Error;
       errCb(err.message);

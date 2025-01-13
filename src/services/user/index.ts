@@ -1,8 +1,8 @@
-import { getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { getDoc, getDocs, setDoc, updateDoc } from 'firebase/firestore';
 import { fx } from 'src/configs';
 import { Collection } from 'src/constants/factory';
 import { ApiRoute } from 'src/constants/fxns';
-import { docRef } from 'src/utils';
+import { colRef, docRef } from 'src/utils';
 import { User, UserUpdateBody } from './user.dto';
 
 export default class UserService {
@@ -22,8 +22,17 @@ export default class UserService {
     return data;
   }
 
-  static async update(id: string, data: UserUpdateBody) {
+  static async update(id: string, data: Partial<User>) {
     const ref = docRef(id, Collection.Users);
     await updateDoc(ref, data);
+  }
+
+  static async list() {
+    const ref = colRef(Collection.Users);
+    const { docs, empty } = await getDocs(ref);
+    if (!empty) {
+      return docs.map((doc) => doc.data() as User);
+    }
+    return [];
   }
 }

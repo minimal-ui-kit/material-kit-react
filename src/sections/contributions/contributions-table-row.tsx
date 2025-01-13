@@ -9,7 +9,7 @@ import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 
 import { Iconify } from 'src/components/iconify';
-import { Label } from 'src/components/label';
+import { Label, LabelColor } from 'src/components/label';
 import { fDateTime } from 'src/utils/format-time';
 
 // ----------------------------------------------------------------------
@@ -49,6 +49,12 @@ export function ContributionsTableRow({
     setOpenPopover(null);
   }, []);
 
+  const getStatus = (val: ContributionProps['status']): LabelColor => {
+    if (val === 'failed') return 'error';
+    if (val === 'pending') return 'info';
+    return 'success';
+  };
+
   return (
     <>
       <TableRow hover tabIndex={-1} role="checkbox" selected={selected}>
@@ -71,7 +77,7 @@ export function ContributionsTableRow({
         <TableCell>{fDateTime(row.timestamp)}</TableCell>
 
         <TableCell>
-          <Label color={(row.status === 'failed' && 'error') || 'success'}>{row.status}</Label>
+          <Label color={getStatus(row.status)}>{row.status}</Label>
         </TableCell>
       </TableRow>
 

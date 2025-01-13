@@ -21,7 +21,7 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 
 interface PaymentFormModalProps {
   open: boolean;
-  amount?: string;
+  amount?: string | number;
   handleClose: () => void;
 }
 
@@ -31,9 +31,9 @@ const PaymentFormModal: React.FC<PaymentFormModalProps> = ({
   handleClose,
 }) => {
   const { user } = useUser();
-  const {refresh} = useRouter()
+  const { refresh } = useRouter();
 
-  const [amount, setAmount] = useState<string>(user?.pledgeAmount ?? pledge ?? '');
+  const [amount, setAmount] = useState<number | string>(user?.pledgeAmount ?? pledge ?? '');
   const [selectedMonths, setSelectedMonths] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -44,14 +44,13 @@ const PaymentFormModal: React.FC<PaymentFormModalProps> = ({
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     try {
       setLoading(true);
-    event.preventDefault();
-    const pop = await PayService.init(amount, selectedMonths); 
-    closeModal();
-    setLoading(false);
+      event.preventDefault();
+      await PayService.init(Number(amount), selectedMonths);
+      closeModal();
+      setLoading(false);
     } catch (error) {
-      errCb(error.message)
+      errCb(error.message);
     }
-    
   };
 
   const closeModal = () => {
@@ -93,7 +92,7 @@ const PaymentFormModal: React.FC<PaymentFormModalProps> = ({
         }}
       >
         <IconButton
-          onClick={handleClose} 
+          onClick={handleClose}
           sx={{ position: 'absolute', top: 8, right: 8 }}
           aria-label="close"
         >
