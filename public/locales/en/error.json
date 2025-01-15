@@ -1,0 +1,6 @@
+{
+  "notFound": {
+    "title": "404 page not found!",
+    "helmet": "404 page not found! | Error - {appName}"
+  }
+} 

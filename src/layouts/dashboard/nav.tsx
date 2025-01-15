@@ -16,7 +16,6 @@ import { varAlpha } from 'src/theme/styles';
 import { Logo } from 'src/components/logo';
 import { Scrollbar } from 'src/components/scrollbar';
 
-import { NavUpgrade } from '../components/nav-upgrade';
 import { WorkspacesPopover } from '../components/workspaces-popover';
 
 import type { WorkspacesPopoverProps } from '../components/workspaces-popover';
@@ -38,9 +37,37 @@ export type NavContentProps = {
   sx?: SxProps<Theme>;
 };
 
+const defaultNavItems = [
+  {
+    path: '/',
+    title: 'Ana Sayfa',
+    icon: <Box component="i" className="eva eva-home-outline" />,
+  },
+  {
+    path: '/company',
+    title: 'İş Ortakları',
+    icon: <Box component="img" src="/assets/icons/navbar/ic-business.svg" sx={{ width: 24, height: 24 }} />,
+  },
+  {
+    path: '/user',
+    title: 'Kullanıcılar',
+    icon: <Box component="i" className="eva eva-people-outline" />,
+  },
+  {
+    path: '/products',
+    title: 'Ürünler',
+    icon: <Box component="i" className="eva eva-shopping-bag-outline" />,
+  },
+  {
+    path: '/blog',
+    title: 'Blog',
+    icon: <Box component="i" className="eva eva-file-text-outline" />,
+  },
+];
+
 export function NavDesktop({
   sx,
-  data,
+  data = defaultNavItems,
   slots,
   workspaces,
   layoutQuery,
@@ -175,8 +202,6 @@ export function NavContent({ data, slots, workspaces, sx }: NavContentProps) {
       </Scrollbar>
 
       {slots?.bottomArea}
-
-      <NavUpgrade />
     </>
   );
 }

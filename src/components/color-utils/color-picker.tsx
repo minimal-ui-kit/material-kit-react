@@ -89,7 +89,13 @@ export const ColorPicker = forwardRef<HTMLDivElement, BoxProps & ColorPickerProp
                   <Iconify
                     width={hasSelected ? 12 : 0}
                     icon="eva:checkmark-fill"
-                    sx={(theme) => ({
+                    sx={(theme: {
+                      palette: { getContrastText: (arg0: string) => any };
+                      transitions: {
+                        create: (arg0: string, arg1: { duration: any }) => any;
+                        duration: { shortest: any };
+                      };
+                    }) => ({
                       color: theme.palette.getContrastText(color),
                       transition: theme.transitions.create('all', {
                         duration: theme.transitions.duration.shortest,

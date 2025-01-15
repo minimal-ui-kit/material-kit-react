@@ -1,0 +1,43 @@
+{
+  "title": "Profile",
+  "subtitle": "Update your profile information and manage security settings",
+  "tabs": {
+    "general": "General Information",
+    "security": "Security",
+    "notifications": "Notifications"
+  },
+  "name": "First Name",
+  "lastName": "Last Name",
+  "email": "Email",
+  "phone": "Phone Number",
+  "phoneFormat": "(555) 555 55 55",
+  "about": "About Me",
+  "aboutPlaceholder": "Write a short bio about yourself...",
+  "save": "Save",
+  "reset": "Reset",
+  "success": "Your profile has been updated successfully",
+  "error": {
+    "update": "Failed to update your profile"
+  },
+  "loading": "Loading...",
+  "security": {
+    "title": "Change Password",
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm New Password",
+    "changePassword": "Change Password",
+    "success": "Your password has been changed successfully",
+    "error": "Failed to change your password"
+  },
+  "notifications": {
+    "title": "Notification Preferences",
+    "email": "Email Notifications",
+    "emailDesc": "Receive email notifications for important updates and information",
+    "push": "Push Notifications",
+    "pushDesc": "Receive push notifications through the application",
+    "sms": "SMS Notifications",
+    "smsDesc": "Receive SMS notifications for important updates",
+    "success": "Your notification preferences have been updated",
+    "error": "Failed to update your notification preferences"
+  }
+} 

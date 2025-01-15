@@ -1,0 +1,35 @@
+{
+  "required": {
+    "firstName": "First name is required",
+    "lastName": "Last name is required",
+    "email": "Email is required",
+    "phone": "Phone number is required",
+    "password": "Password is required",
+    "currentPassword": "Current password is required",
+    "newPassword": "New password is required",
+    "confirmPassword": "Confirm password is required"
+  },
+  "invalid": {
+    "email": "Please enter a valid email address",
+    "phone": "Please enter a valid phone number",
+    "password": "Please enter a valid password"
+  },
+  "length": {
+    "name": {
+      "min": "Must be at least 2 characters",
+      "max": "Must be at most 50 characters"
+    },
+    "about": {
+      "max": "Must be at most 500 characters"
+    }
+  },
+  "password": {
+    "uppercase": "Must contain at least one uppercase letter",
+    "lowercase": "Must contain at least one lowercase letter",
+    "number": "Must contain at least one number",
+    "special": "Must contain at least one special character",
+    "match": "Passwords do not match",
+    "same": "New password cannot be the same as current password",
+    "min": "Must be at least {{length}} characters"
+  }
+} 

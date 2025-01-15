@@ -3,6 +3,8 @@ import type { AppBarProps } from '@mui/material/AppBar';
 import type { ToolbarProps } from '@mui/material/Toolbar';
 import type { ContainerProps } from '@mui/material/Container';
 
+import React from "react";
+
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';

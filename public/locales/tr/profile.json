@@ -1,0 +1,53 @@
+{
+  "title": "Profil",
+  "subtitle": "Profil bilgilerinizi güncelleyin ve güvenlik ayarlarınızı yönetin",
+  "tabs": {
+    "general": "Genel Bilgiler",
+    "security": "Güvenlik",
+    "notifications": "Bildirimler"
+  },
+  "name": "Ad",
+  "lastName": "Soyad",
+  "email": "E-posta",
+  "phone": "Telefon Numarası",
+  "phoneFormat": "(___) ___ __ __",
+  "about": "Hakkımda",
+  "aboutPlaceholder": "Kendiniz hakkında kısa bir bilgi yazın...",
+  "save": "Kaydet",
+  "reset": "Sıfırla",
+  "success": "Profil bilgileriniz başarıyla güncellendi",
+  "error": {
+    "update": "Profil bilgileriniz güncellenirken bir hata oluştu"
+  },
+  "loading": "Yükleniyor...",
+  "security": {
+    "title": "Şifre Değiştir",
+    "currentPassword": "Mevcut Şifre",
+    "newPassword": "Yeni Şifre",
+    "confirmPassword": "Yeni Şifre (Tekrar)",
+    "changePassword": "Şifreyi Değiştir",
+    "passwordRules": "Şifre aşağıdaki kurallara uygun olmalıdır",
+    "success": "Şifreniz başarıyla değiştirildi",
+    "error": "Şifreniz değiştirilirken bir hata oluştu"
+  },
+  "notifications": {
+    "title": "Bildirim Tercihleri",
+    "manage": "Yönet",
+    "email": {
+      "title": "E-posta Bildirimleri",
+      "description": "Önemli güncellemeler ve bilgilendirmeler için e-posta bildirimleri alın"
+    },
+    "push": {
+      "title": "Anlık Bildirimler",
+      "description": "Uygulama üzerinden anlık bildirimler alın"
+    },
+    "monthly": {
+      "title": "Aylık Rapor",
+      "description": "Her ay sonunda aktivite özetinizi alın"
+    },
+    "news": {
+      "title": "Haberler ve Güncellemeler",
+      "description": "Yeni özellikler ve güncellemelerden haberdar olun"
+    }
+  }
+} 

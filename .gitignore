@@ -1,36 +1,63 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# dependencies
-node_modules
-.pnp
+# Bağımlılıklar
+/node_modules
+/.pnp
 .pnp.js
 
-# testing
-coverage
+# Test kapsama raporları
+/coverage
 
-# production
-.next
-.swc
-_static
-out
-dist
-build
+# Üretim derlemesi
+/build
+/dist
 
-# environment variables
+# Çevre değişkenleri
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
-# misc
-.DS_Store
-.vercel
-.netlify
-.unimportedrc.json
-tsconfig.tsbuildinfo
-.vscode
-
+# Günlük dosyaları
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# IDE ve editör dosyaları
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+*.sublime-workspace
+*.sublime-project
+
+# TypeScript derleme çıktıları
+*.tsbuildinfo
+
+# Geçici dosyalar
+.temp
+.tmp
+.cache
+
+# Sistem dosyaları
+Thumbs.db
+*.pem
+
+# Yerel SSL sertifikaları
+*.cert
+*.key
+
+# Yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
+
+# Diğer
+*.log
+.vercel

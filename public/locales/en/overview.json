@@ -1,0 +1,57 @@
+{
+  "welcome": "Hi, Welcome back 👋",
+  "widgets": {
+    "weeklySales": "Weekly Sales",
+    "newUsers": "New Users",
+    "purchaseOrders": "Purchase Orders",
+    "messages": "Messages"
+  },
+  "charts": {
+    "currentVisits": {
+      "title": "Current Visits",
+      "regions": {
+        "america": "America",
+        "asia": "Asia",
+        "europe": "Europe",
+        "africa": "Africa"
+      }
+    },
+    "websiteVisits": {
+      "title": "Website Visits",
+      "subheader": "(+43%) than last year",
+      "teams": {
+        "teamA": "Team A",
+        "teamB": "Team B"
+      }
+    },
+    "conversionRates": {
+      "title": "Conversion Rates",
+      "subheader": "(+43%) than last year"
+    },
+    "currentSubject": {
+      "title": "Current Subject",
+      "subjects": {
+        "english": "English",
+        "history": "History",
+        "physics": "Physics",
+        "geography": "Geography",
+        "chinese": "Chinese",
+        "math": "Math"
+      }
+    }
+  },
+  "sections": {
+    "news": {
+      "title": "News"
+    },
+    "orderTimeline": {
+      "title": "Order Timeline"
+    },
+    "trafficBySite": {
+      "title": "Traffic by Site"
+    },
+    "tasks": {
+      "title": "Tasks"
+    }
+  }
+} 
