@@ -19,13 +19,15 @@ const USE_EMULATORS = false;
 
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
-  authDomain: 'pabgm-39720.firebaseapp.com',
-  projectId: 'pabgm-39720',
-  storageBucket: 'pabgm-39720.firebasestorage.app',
-  messagingSenderId: '557051436284',
-  appId: '1:557051436284:web:96f2e80c4cc4c927638b79',
-  measurementId: 'G-VTGQQYSTP1',
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGE_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+  measurementId: process.env.me,
 };
+
+console.log(firebaseConfig);
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
