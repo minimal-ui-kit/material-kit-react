@@ -1,22 +1,24 @@
-import { HTMLAttributes, useCallback, useEffect, useState } from 'react';
+import type { CreateUserBody } from 'src/services/auth/auth.dto';
 
-import LoadingButton from '@mui/lab/LoadingButton';
+import { useState, useEffect, useCallback } from 'react';
+
 import Box from '@mui/material/Box';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
 import Link from '@mui/material/Link';
+import { Button } from '@mui/material';
+import Divider from '@mui/material/Divider';
 import TextField from '@mui/material/TextField';
+import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
+import LoadingButton from '@mui/lab/LoadingButton';
+import InputAdornment from '@mui/material/InputAdornment';
 
 import { useRouter } from 'src/routes/hooks';
 
-import { Button } from '@mui/material';
-import CountrySelect from 'src/components/country-select';
-import { Iconify } from 'src/components/iconify';
-import { CreateUserBody } from 'src/services/auth/auth.dto';
-import AuthService from 'src/services/auth';
 import { errCb } from 'src/utils';
+import AuthService from 'src/services/auth';
+
+import { Iconify } from 'src/components/iconify';
+import CountrySelect from 'src/components/country-select';
 
 // ----------------------------------------------------------------------
 
@@ -31,7 +33,8 @@ const SIGN_UP = {
   country: '',
   email: '',
   password: '',
-  pledgeAmount: '',
+  pledgeAmount: 0,
+  secret: '',
 };
 
 export function SignInView() {
@@ -62,7 +65,6 @@ export function SignInView() {
         }
       } else {
         const user = await AuthService.register(data as CreateUserBody);
-        console.log(user);
       }
       router.replace('/');
     } catch (error) {
@@ -77,7 +79,6 @@ export function SignInView() {
   };
 
   const checkPass = useCallback(() => {
-    console.log(data.password, confirmPass);
     if (data.password !== confirmPass && !isSignin) {
       return 'Passwords do not match';
     }
@@ -100,10 +101,27 @@ export function SignInView() {
   const passErr = checkPass();
   const emptyForm = checkEmptyForm();
 
-  console.log(emptyForm, data);
-
   const renderForm = (
     <Box display="flex" flexDirection="column" alignItems="flex-end">
+      {!isSignin && (
+        <TextField
+          fullWidth
+          name="code"
+          label="Secret code"
+          placeholder="xxxxxxxx"
+          type="password"
+          value={data.secret}
+          required
+          onChange={(e) => updateField('secret', e.target.value)}
+          InputLabelProps={{ shrink: true }}
+          sx={{ mb: 3 }}
+          helperText={
+            <Typography variant="caption" color="Highlight">
+              Enter the secret code provided in your invite message.
+            </Typography>
+          }
+        />
+      )}
       {!isSignin && (
         <Box display="flex" gap={2}>
           <TextField
@@ -113,6 +131,7 @@ export function SignInView() {
             required
             placeholder="Akwesi"
             onChange={(e) => updateField('fname', e.target.value)}
+            value={data.fname}
             InputLabelProps={{ shrink: true }}
             sx={{ mb: 3 }}
           />
@@ -124,6 +143,7 @@ export function SignInView() {
             placeholder="Gyamfi"
             onChange={(e) => updateField('lname', e.target.value)}
             InputLabelProps={{ shrink: true }}
+            value={data.lname}
             sx={{ mb: 3 }}
           />
         </Box>
@@ -133,6 +153,7 @@ export function SignInView() {
         name="email"
         label="Email address"
         placeholder="hello@gmail.com"
+        value={data.email}
         required
         onChange={(e) => updateField('email', e.target.value)}
         InputLabelProps={{ shrink: true }}
@@ -145,6 +166,7 @@ export function SignInView() {
             name="pledge"
             label="Monthly pledge (GHs)"
             placeholder="5000"
+            value={data.pledgeAmount}
             required
             type="number"
             onChange={(e) => updateField('pledgeAmount', e.target.value)}
@@ -170,6 +192,7 @@ export function SignInView() {
         fullWidth
         name="password"
         label="Password"
+        value={data.password}
         placeholder="*********"
         InputLabelProps={{ shrink: true }}
         required
@@ -192,6 +215,7 @@ export function SignInView() {
           name="confirmPassword"
           label="Confirm password"
           placeholder="*********"
+          value={confirmPass}
           required
           InputLabelProps={{ shrink: true }}
           FormHelperTextProps={{ sx: { color: 'tomato' } }}

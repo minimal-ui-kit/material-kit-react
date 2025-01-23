@@ -1,85 +1,105 @@
-import Typography from '@mui/material/Typography';
+import type { Contribution} from 'src/services/cont/contribute.dto';
+import type { Stats, UserStats } from 'src/services/stats/stats.dto';
+import type { ContributionProps } from 'src/sections/contributions/contributions-table-row';
+
+import { useState, useEffect, useCallback } from 'react';
+
 import Grid from '@mui/material/Unstable_Grid2';
-
-import { DashboardContent } from 'src/layouts/dashboard';
-
+import Typography from '@mui/material/Typography';
 import { Box, LinearProgress, linearProgressClasses } from '@mui/material';
-import { useCallback, useEffect, useState } from 'react';
+
+import { useRouter } from 'src/routes/hooks';
+
 import useUser from 'src/hooks/useUser';
-import { ContributionProps } from 'src/sections/contributions/contributions-table-row';
-import { ContributionsView } from 'src/sections/contributions/view';
-import ContributionService from 'src/services/cont';
-import { Contribution, ContributionStatus } from 'src/services/cont/contribute.dto';
-import StatsService from 'src/services/stats';
-import { Stats } from 'src/services/stats/stats.dto';
-import { UserRole } from 'src/services/user/user.dto';
+
 import { varAlpha } from 'src/theme/styles';
-import { errCb } from 'src/utils';
+import StatsService from 'src/services/stats';
+import ContributionService from 'src/services/cont';
+import { Cache, errCb, CacheKeys } from 'src/utils';
+import { DashboardContent } from 'src/layouts/dashboard';
+import { ContributionStatus } from 'src/services/cont/contribute.dto';
+
+import { ContributionsView } from 'src/sections/contributions/view';
+
 import { AnalyticsWidgetSummary } from '../analytics-widget-summary';
 
 // ----------------------------------------------------------------------
 
 export function OverviewAnalyticsView() {
   const { user } = useUser();
-  const [loading, setLoading] = useState(true) 
-  const [data, setData] = useState<{stats:Stats,cons:ContributionProps[]}>()
+  const isAdminMode = Cache.get(CacheKeys.AdminMode);
+  const { refresh } = useRouter();
 
-  const getStatus = (status: ContributionStatus):ContributionProps['status'] => {
-    if(status===ContributionStatus.Failed)return 'failed'
-    if(status === ContributionStatus.Pending) return 'pending'
-    return 'success'
-  }
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState<{ stats?: Stats | UserStats; cons?: ContributionProps[] }>();
 
-  const getContributions = useCallback((result:Contribution[]):ContributionProps[] => result.map(item=>
-     ({
-      amount:item.amount,
-      id: item.id,
-      months: item.months,
-      sender: item.donor,
-      status: getStatus(item.status),
-      timestamp: (item.completedAt||item.createdAt).toDate()
-    
-  })),[])
+  const getStatus = (status: ContributionStatus): ContributionProps['status'] => {
+    if (status === ContributionStatus.Failed) return 'failed';
+    if (status === ContributionStatus.Pending) return 'pending';
+    return 'success';
+  };
+
+  const getContributions = useCallback(
+    (result: Contribution[]): ContributionProps[] =>
+      result.map((item) => ({
+        amount: item.amount,
+        id: item.id,
+        months: item.months,
+        sender: item.donor,
+        status: getStatus(item.status),
+        timestamp: (item.completedAt || item.createdAt).toDate(),
+        code: item?.trxCode,
+      })),
+    []
+  );
+
+  const getStats = useCallback(async () => {
+    const stats = isAdminMode ? await StatsService.get() : await StatsService.getByUser();
+    setData((val) => (val ? { ...val, stats } : { stats }));
+  }, [isAdminMode]);
+
+  const onLatestContribution = useCallback(
+    (value: Contribution[]) => {
+      const cons = getContributions(value);
+      setData((val) => (val ? { ...val, cons } : { cons }));
+      getStats();
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [getContributions, getStats]
+  );
 
   const init = useCallback(async () => {
+    if (!user?.id) return;
     try {
-      if(!user?.id) return
-      const isAdmin = user.role.includes(UserRole.Admin)
-      const [stats,cons] = await Promise.all([
-        StatsService.get(),
-        isAdmin
-          ? ContributionService.getAllLatest()
-          : ContributionService.getByUserId(user?.id!)
-      ])
-      setData({
-        stats,
-        cons:getContributions(cons)
-      })
+      ContributionService.listenLatest(onLatestContribution, isAdminMode ? undefined : user.id);
+      await getStats();
     } catch (error) {
-      errCb(error.message)
-    }finally{
-      setLoading(false)
+      errCb(error.message);
+    } finally {
+      setLoading(false);
     }
-
-  },[user?.id,user?.role, getContributions])
+  }, [user?.id, onLatestContribution, isAdminMode, getStats]);
 
   useEffect(() => {
-    init()
-  }, [init])
+    init();
+  }, [init]);
 
-  if(loading){
-    return <Box display="flex" alignItems="center" justifyContent="center" flex="1 1 auto">
-    <LinearProgress
-      sx={{
-        width: 1,
-        maxWidth: 320,
-        bgcolor: (theme) => varAlpha(theme.vars.palette.text.primaryChannel, 0.16),
-        [`& .${linearProgressClasses.bar}`]: { bgcolor: 'text.primary' },
-      }}
-    />
-  </Box>
+  if (loading) {
+    return (
+      <Box display="flex" alignItems="center" justifyContent="center" flex="1 1 auto">
+        <LinearProgress
+          sx={{
+            width: 1,
+            maxWidth: 320,
+            bgcolor: (theme) => varAlpha(theme.vars.palette.text.primaryChannel, 0.16),
+            [`& .${linearProgressClasses.bar}`]: { bgcolor: 'text.primary' },
+          }}
+        />
+      </Box>
+    );
   }
-  
+
+  const mdQuery = isAdminMode ? 3 : 4;
 
   return (
     <DashboardContent maxWidth="xl">
@@ -88,10 +108,10 @@ export function OverviewAnalyticsView() {
       </Typography>
 
       <Grid container spacing={3}>
-        <Grid xs={12} sm={6} md={4}>
+        <Grid xs={12} md={mdQuery}>
           <AnalyticsWidgetSummary
             title="No. of contributions"
-            total={data?.stats.contributionCount||0}
+            total={data?.stats?.contributionCount || 0}
             icon={<img alt="icon" src="/assets/icons/glass/ic-donate.svg" />}
             chart={{
               categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
@@ -100,10 +120,14 @@ export function OverviewAnalyticsView() {
           />
         </Grid>
 
-        <Grid xs={12} sm={6} md={4}>
+        <Grid xs={12} md={mdQuery}>
           <AnalyticsWidgetSummary
-            title="No. of Partners"
-            total={data?.stats.partnersCount||0}
+            title={isAdminMode ? 'No. of Partners' : 'Pledge Amount (GHS)'}
+            total={
+              (isAdminMode
+                ? (data?.stats as Stats)?.partnersCount
+                : (data?.stats as UserStats).pledge) || 0
+            }
             color="secondary"
             icon={<img alt="icon" src="/assets/icons/glass/ic-glass-users.svg" />}
             chart={{
@@ -113,15 +137,30 @@ export function OverviewAnalyticsView() {
           />
         </Grid>
 
-        <Grid xs={12} sm={6} md={4}>
+        {isAdminMode ? (
+          <Grid xs={12} md={mdQuery}>
+            <AnalyticsWidgetSummary
+              title="Expected Monthly contributions (GHS)"
+              total={`${(data?.stats as Stats)?.expectedMonthly || 0}`}
+              color="info"
+              icon={<img alt="icon" src="/assets/icons/glass/ic-wallet.svg" />}
+              chart={{
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
+                series: [10, 6, 9],
+              }}
+            />
+          </Grid>
+        ) : null}
+
+        <Grid xs={12} md={mdQuery}>
           <AnalyticsWidgetSummary
-            title="Total contributions amount (GHS)"
-            total={`${data?.stats.totalAmount||0}`}
+            title="Total contributions (GHS)"
+            total={`${(isAdminMode ? (data?.stats as Stats)?.totalAmount : (data?.stats as UserStats).totalContribution) || 0}`}
             color="warning"
             icon={<img alt="icon" src="/assets/icons/glass/ic-wallet.svg" />}
             chart={{
               categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
-              series: [],
+              series: [10, 6, 9],
             }}
           />
         </Grid>
@@ -139,7 +178,6 @@ export function OverviewAnalyticsView() {
             }}
           />
         </Grid> */}
-
         {/* <Grid xs={12} md={6} lg={4}>
           <AnalyticsCurrentVisits
             title="Current visits"
@@ -153,7 +191,6 @@ export function OverviewAnalyticsView() {
             }}
           />
         </Grid> */}
-
         {/* <Grid xs={12} md={6} lg={8}>
           <AnalyticsWebsiteVisits
             title="Website visits"
@@ -181,7 +218,6 @@ export function OverviewAnalyticsView() {
             }}
           />
         </Grid> */}
-
         {/* <Grid xs={12} md={6} lg={4}>
           <AnalyticsCurrentSubject
             title="Current subject"
@@ -195,7 +231,6 @@ export function OverviewAnalyticsView() {
             }}
           />
         </Grid> */}
-
         <Grid xs={12}>
           <ContributionsView
             title="Recent Contributions"
@@ -204,14 +239,13 @@ export function OverviewAnalyticsView() {
             ignoreDashContent
             noMultiSelect
             noPagination
+            viewMore
             data={data?.cons}
           />
         </Grid>
-
         {/* <Grid xs={12} md={6} lg={4}>
           <AnalyticsOrderTimeline title="Order timeline" list={_timeline} />
         </Grid> */}
-
         {/* <Grid xs={12} md={6} lg={4}>
           <AnalyticsTrafficBySite
             title="Traffic by site"

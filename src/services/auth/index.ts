@@ -1,16 +1,23 @@
-import { User } from 'firebase/auth';
+import type { User } from 'firebase/auth';
+
 import { jwtDecode } from 'jwt-decode';
+
+import { hash } from 'src/utils/encrypt';
+
 import { auth } from 'src/configs/firebase';
 import { Cache, CacheKeys } from 'src/utils';
-import { hash } from 'src/utils/encrypt';
+
 import UserService from '../user';
 import { UserRole } from '../user/user.dto';
-import { CreateUserBody, UserLoginBody } from './auth.dto';
+
+import type { UserLoginBody, CreateUserBody } from './auth.dto';
 
 export default class AuthService {
   private static token: string | null = Cache.get(CacheKeys.Token);
 
   static async register(data: CreateUserBody) {
+    const valid = await UserService.validateSecret(data.secret);
+    if (!valid) throw new Error('INVALID_SECRET_KEY');
     const pass = hash(data.password!);
     const user = await auth.createUser(data.email, pass);
     const token = await user.user.getIdToken();
@@ -32,7 +39,8 @@ export default class AuthService {
   }
 
   static async logout() {
-    return auth.logout();
+    await auth.logout();
+    Cache.clear();
   }
 
   static setToken(token: string | null) {

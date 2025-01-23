@@ -1,16 +1,19 @@
 import { lazy, Suspense, useState } from 'react';
-import { Navigate, Outlet, useRoutes } from 'react-router-dom';
+import { Outlet, Navigate, useRoutes } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
+import { Fab } from '@mui/material';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 
-import { Fab } from '@mui/material';
-import { Iconify } from 'src/components/iconify';
-import PaymentFormModal from 'src/components/shared/modals/contributeForm';
+import useUser from 'src/hooks/useUser';
+import useAdmin from 'src/hooks/useAdmin';
+
+import { varAlpha } from 'src/theme/styles';
 import { AuthLayout } from 'src/layouts/auth';
 import { DashboardLayout } from 'src/layouts/dashboard';
-import { varAlpha } from 'src/theme/styles';
-import useUser from 'src/hooks/useUser';
+
+import { Iconify } from 'src/components/iconify';
+import PaymentFormModal from 'src/components/shared/modals/contributeForm';
 
 const AppProvider = lazy(() => import('src/components/provider'));
 
@@ -43,6 +46,7 @@ const renderFallback = (
 export function Router() {
   const { user } = useUser();
   const [open, setOpen] = useState(false);
+  const { isAdminMode } = useAdmin();
 
   const onOpen = () => {
     setOpen(true);
@@ -70,11 +74,21 @@ export function Router() {
     </Fab>
   );
 
+  const dashRoutes = [
+    { element: <HomePage />, index: true },
+    { path: 'user', element: <UserPage /> },
+    { path: 'products', element: <ProductsPage /> },
+    { path: 'blog', element: <BlogPage /> },
+    { path: 'contributions', element: <ContributionsPage /> },
+  ];
+
+  const routes = !isAdminMode ? dashRoutes.filter((route) => route.path !== 'user') : dashRoutes;
+
   return useRoutes([
     {
       element: (
         <Suspense fallback={renderFallback}>
-          <AppProvider>
+          <AppProvider pay={onOpen}>
             <DashboardLayout>
               <Suspense fallback={renderFallback}>
                 <Outlet />
@@ -89,13 +103,7 @@ export function Router() {
           </AppProvider>
         </Suspense>
       ),
-      children: [
-        { element: <HomePage />, index: true },
-        { path: 'user', element: <UserPage /> },
-        { path: 'products', element: <ProductsPage /> },
-        { path: 'blog', element: <BlogPage /> },
-        { path: 'contributions', element: <ContributionsPage /> },
-      ],
+      children: routes,
     },
     {
       path: 'signin',

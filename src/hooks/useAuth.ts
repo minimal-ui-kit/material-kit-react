@@ -1,5 +1,7 @@
-import { User } from 'firebase/auth';
-import React, { useEffect, useState } from 'react';
+import type { User } from 'firebase/auth';
+
+import { useState, useEffect } from 'react';
+
 import AuthService from 'src/services/auth';
 
 const useAuth = () => {

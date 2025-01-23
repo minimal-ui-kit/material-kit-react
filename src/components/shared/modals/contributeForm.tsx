@@ -1,24 +1,33 @@
+import type { FormEvent, ChangeEvent } from 'react';
+
+import React, { useState, useEffect } from 'react';
+
 import { LoadingButton } from '@mui/lab';
 import {
-  Autocomplete,
   Box,
   Chip,
-  IconButton,
   Link,
   Modal,
   TextField,
+  IconButton,
   Typography,
+  Autocomplete,
 } from '@mui/material';
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { Iconify } from 'src/components/iconify';
+
+import { useRouter } from 'src/routes/hooks';
+
 import useUser from 'src/hooks/useUser';
+
+import { errCb } from 'src/utils';
 import PayService from 'src/services/pay';
+
+import { Iconify } from 'src/components/iconify';
 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 interface PaymentFormModalProps {
   open: boolean;
-  amount?: string;
+  amount?: string | number;
   handleClose: () => void;
 }
 
@@ -28,8 +37,9 @@ const PaymentFormModal: React.FC<PaymentFormModalProps> = ({
   handleClose,
 }) => {
   const { user } = useUser();
+  const { refresh } = useRouter();
 
-  const [amount, setAmount] = useState<string>(user?.pledgeAmount ?? pledge ?? '');
+  const [amount, setAmount] = useState<number | string>(user?.pledgeAmount ?? pledge ?? '');
   const [selectedMonths, setSelectedMonths] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -38,11 +48,15 @@ const PaymentFormModal: React.FC<PaymentFormModalProps> = ({
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    setLoading(true);
-    event.preventDefault();
-    await PayService.init(amount, selectedMonths);
-    closeModal();
-    setLoading(false);
+    try {
+      setLoading(true);
+      event.preventDefault();
+      await PayService.init(Number(amount), selectedMonths);
+      closeModal();
+      setLoading(false);
+    } catch (error) {
+      errCb(error.message);
+    }
   };
 
   const closeModal = () => {
@@ -111,7 +125,6 @@ const PaymentFormModal: React.FC<PaymentFormModalProps> = ({
             type="number"
             fullWidth
             required
-            // disabled
             value={amount}
             onChange={handleAmountChange}
             sx={{ mb: 3 }}

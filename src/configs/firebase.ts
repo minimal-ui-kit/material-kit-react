@@ -1,32 +1,36 @@
 // Import the functions you need from the SDKs you need
+import type {
+  User} from 'firebase/auth';
+
 import { initializeApp } from 'firebase/app';
+import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore';
+import { getFunctions, httpsCallable, connectFunctionsEmulator } from 'firebase/functions';
 import {
-  User,
-  confirmPasswordReset,
-  connectAuthEmulator,
-  createUserWithEmailAndPassword,
   getAuth,
+  signOut,
   onAuthStateChanged,
+  connectAuthEmulator,
+  confirmPasswordReset,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
-  signOut,
+  createUserWithEmailAndPassword,
 } from 'firebase/auth';
-import { connectFirestoreEmulator, getFirestore } from 'firebase/firestore';
-import { connectFunctionsEmulator, getFunctions, httpsCallable } from 'firebase/functions';
-import { ApiRoute } from '../constants/fxns';
 
+import type { ApiRoute } from '../constants/fxns';
 
 const USE_EMULATORS = false;
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyDY-1FezjbzGmq1j3WHWurbniF3IIdYmEY',
-  authDomain: 'pabgm-39720.firebaseapp.com',
-  projectId: 'pabgm-39720',
-  storageBucket: 'pabgm-39720.firebasestorage.app',
-  messagingSenderId: '557051436284',
-  appId: '1:557051436284:web:96f2e80c4cc4c927638b79',
-  measurementId: 'G-VTGQQYSTP1',
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGE_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+  measurementId: process.env.me,
 };
+
+console.log(firebaseConfig);
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -60,7 +64,7 @@ const fxns = getFunctions(app);
 const fx = {
   async call<T, B = any>(path: ApiRoute, data?: T) {
     const callable = httpsCallable<T, B>(fxns, path);
-    const result = await callable(data??null);
+    const result = await callable(data ?? null);
     return result.data;
   },
 };
@@ -76,5 +80,4 @@ const runEmulators = (val: boolean = USE_EMULATORS) => {
 
 runEmulators();
 
-export { app, auth, db, fx };
-
+export { db, fx, app, auth };

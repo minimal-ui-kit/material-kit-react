@@ -1,5 +1,9 @@
-import { FormControl, InputLabel, MenuItem, Select, SelectProps } from '@mui/material';
+import type { SelectProps } from '@mui/material';
+
+import { Select, MenuItem, InputLabel, FormControl } from '@mui/material';
+
 import _countries from 'src/_mock/_countries';
+
 import { Iconify } from '../iconify';
 
 function CountrySelect({ label = 'Country', ...props }: SelectProps) {

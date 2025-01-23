@@ -1,16 +1,24 @@
-import { useCallback, useState } from 'react';
+import type { LabelColor } from 'src/components/label';
+
+import { useState, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
-import Checkbox from '@mui/material/Checkbox';
-import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
-import MenuList from '@mui/material/MenuList';
+import { Button } from '@mui/material';
 import Popover from '@mui/material/Popover';
-import TableCell from '@mui/material/TableCell';
+import Checkbox from '@mui/material/Checkbox';
+import MenuList from '@mui/material/MenuList';
 import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
+import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
 
-import { Iconify } from 'src/components/iconify';
-import { Label } from 'src/components/label';
+import useUser from 'src/hooks/useUser';
+
 import { fDateTime } from 'src/utils/format-time';
+
+import PayService from 'src/services/pay';
+
+import { Label } from 'src/components/label';
+import { Iconify } from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
@@ -24,6 +32,7 @@ export type ContributionProps = {
   timestamp: Date;
   status: 'pending' | 'success' | 'failed';
   months: string[];
+  code: string;
 };
 
 type ContributionsTableRowProps = {
@@ -40,6 +49,7 @@ export function ContributionsTableRow({
   onSelectRow,
 }: ContributionsTableRowProps) {
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
+  const { user } = useUser();
 
   const handleOpenPopover = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     setOpenPopover(event.currentTarget);
@@ -48,6 +58,16 @@ export function ContributionsTableRow({
   const handleClosePopover = useCallback(() => {
     setOpenPopover(null);
   }, []);
+
+  const getStatus = (val: ContributionProps['status']): LabelColor => {
+    if (val === 'failed') return 'error';
+    if (val === 'pending') return 'info';
+    return 'success';
+  };
+
+  const onResume = (code: string) => {
+    PayService.resume(code);
+  };
 
   return (
     <>
@@ -71,7 +91,19 @@ export function ContributionsTableRow({
         <TableCell>{fDateTime(row.timestamp)}</TableCell>
 
         <TableCell>
-          <Label color={(row.status === 'failed' && 'error') || 'success'}>{row.status}</Label>
+          <Label color={getStatus(row.status)}>{row.status}</Label>
+        </TableCell>
+
+        <TableCell>
+          <Box flex={1} display="flex" justifyContent="flex-end">
+            {row.status === 'pending' && row.sender.id === user?.id ? (
+              <Button onClick={() => onResume(row.code)} variant="contained">
+                Resume
+              </Button>
+            ) : (
+              ''
+            )}
+          </Box>
         </TableCell>
       </TableRow>
 

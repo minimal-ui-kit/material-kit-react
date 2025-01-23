@@ -9,7 +9,7 @@ export interface User {
   lname: string;
   email: string;
   country: string;
-  pledgeAmount: string;
+  pledgeAmount: number;
   role: UserRole[];
 }
 

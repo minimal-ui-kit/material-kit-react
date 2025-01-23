@@ -4,7 +4,8 @@ export interface CreateUserBody {
   email: string;
   password?: string;
   country: string;
-  pledgeAmount: string;
+  pledgeAmount: number;
+  secret: string;
 }
 
 export interface UserLoginBody {

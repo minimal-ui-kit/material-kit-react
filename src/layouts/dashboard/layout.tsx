@@ -1,28 +1,31 @@
-import type { Breakpoint, SxProps, Theme } from '@mui/material/styles';
+import type { Theme, SxProps, Breakpoint } from '@mui/material/styles';
 
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 
-import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
+import Alert from '@mui/material/Alert';
 import { useTheme } from '@mui/material/styles';
 
-import { _notifications } from 'src/_mock';
-
-import { Iconify } from 'src/components/iconify';
+import { useRouter } from 'src/routes/hooks';
 
 import useAuth from 'src/hooks/useAuth';
-import { useRouter } from 'src/routes/hooks';
+import useUser from 'src/hooks/useUser';
+import useAdmin from 'src/hooks/useAdmin';
+
 import AuthService from 'src/services/auth';
+import { UserRole } from 'src/services/user/user.dto';
+
+import ToggleSwitch from 'src/components/shared/switch/toggle';
+
+import { Main } from './main';
 import { layoutClasses } from '../classes';
-import { AccountPopover } from '../components/account-popover';
-import { MenuButton } from '../components/menu-button';
-import { NotificationsPopover } from '../components/notifications-popover';
+import { NavMobile, NavDesktop } from './nav';
 import { navData } from '../config-nav-dashboard';
 import { _workspaces } from '../config-nav-workspace';
+import { MenuButton } from '../components/menu-button';
 import { HeaderSection } from '../core/header-section';
 import { LayoutSection } from '../core/layout-section';
-import { Main } from './main';
-import { NavDesktop, NavMobile } from './nav';
+import { AccountPopover } from '../components/account-popover';
 
 // ----------------------------------------------------------------------
 
@@ -38,10 +41,18 @@ export function DashboardLayout({ sx, children, header }: DashboardLayoutProps) 
   const theme = useTheme();
   const { userExists } = useAuth();
   const router = useRouter();
+  const { user } = useUser();
+  const { isAdminMode, setIsAdmin } = useAdmin();
+
+  const isAdmin = !!user?.role.includes(UserRole.Admin);
 
   const [navOpen, setNavOpen] = useState(false);
 
   const layoutQuery: Breakpoint = 'lg';
+
+  const onToggleAdmin = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsAdmin(event.target.checked);
+  };
 
   useEffect(() => {
     if (!AuthService.hasToken()) {
@@ -49,6 +60,7 @@ export function DashboardLayout({ sx, children, header }: DashboardLayoutProps) 
     }
   }, [userExists, router]);
 
+  const navOptions = isAdminMode ? navData : navData.filter((nav) => nav.title !== 'Partners');
   return (
     <LayoutSection
       /** **************************************
@@ -89,20 +101,25 @@ export function DashboardLayout({ sx, children, header }: DashboardLayoutProps) 
             ),
             rightArea: (
               <Box gap={1} display="flex" alignItems="center">
-                <NotificationsPopover data={_notifications} />
+                {isAdmin && (
+                  <ToggleSwitch label="Admin Mode" onChange={onToggleAdmin} checked={isAdminMode} />
+                )}
+                {/* <NotificationsPopover data={_notifications} /> */}
                 <AccountPopover
-                  data={[
-                    {
-                      label: 'Profile',
-                      href: '#',
-                      icon: <Iconify width={22} icon="solar:shield-keyhole-bold-duotone" />,
-                    },
-                    {
-                      label: 'Settings',
-                      href: '#',
-                      icon: <Iconify width={22} icon="solar:settings-bold-duotone" />,
-                    },
-                  ]}
+                  data={
+                    [
+                      // {
+                      //   label: 'Profile',
+                      //   href: '#',
+                      //   icon: <Iconify width={22} icon="solar:shield-keyhole-bold-duotone" />,
+                      // },
+                      // {
+                      //   label: 'Settings',
+                      //   href: '#',
+                      //   icon: <Iconify width={22} icon="solar:settings-bold-duotone" />,
+                      // },
+                    ]
+                  }
                 />
               </Box>
             ),
@@ -113,7 +130,7 @@ export function DashboardLayout({ sx, children, header }: DashboardLayoutProps) 
        * Sidebar
        *************************************** */
       sidebarSection={
-        <NavDesktop data={navData} layoutQuery={layoutQuery} workspaces={_workspaces} />
+        <NavDesktop data={navOptions} layoutQuery={layoutQuery} workspaces={_workspaces} />
       }
       /** **************************************
        * Footer

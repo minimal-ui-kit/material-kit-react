@@ -1,13 +1,12 @@
 import type { BoxProps } from '@mui/material/Box';
 
-import { forwardRef, useId } from 'react';
+import { useId, forwardRef } from 'react';
 
 import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
 
 import { RouterLink } from 'src/routes/components';
 
-import logo from 'public/assets/images/logo.png';
 import { logoClasses } from './classes';
 
 // ----------------------------------------------------------------------

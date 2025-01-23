@@ -1,9 +1,11 @@
-import { getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { getDoc, setDoc, getDocs, updateDoc } from 'firebase/firestore';
+
 import { fx } from 'src/configs';
-import { Collection } from 'src/constants/factory';
+import { colRef, docRef } from 'src/utils';
 import { ApiRoute } from 'src/constants/fxns';
-import { docRef } from 'src/utils';
-import { User, UserUpdateBody } from './user.dto';
+import { Collection } from 'src/constants/factory';
+
+import type { User} from './user.dto';
 
 export default class UserService {
   static async get(id: string): Promise<User> {
@@ -22,8 +24,23 @@ export default class UserService {
     return data;
   }
 
-  static async update(id: string, data: UserUpdateBody) {
+  static async validateSecret(val: string) {
+    const ref = docRef(val, Collection.Secret);
+    const secretDoc = await getDoc(ref);
+    return secretDoc.exists();
+  }
+
+  static async update(id: string, data: Partial<User>) {
     const ref = docRef(id, Collection.Users);
     await updateDoc(ref, data);
+  }
+
+  static async list() {
+    const ref = colRef(Collection.Users);
+    const { docs, empty } = await getDocs(ref);
+    if (!empty) {
+      return docs.map((document) => document.data() as User);
+    }
+    return [];
   }
 }

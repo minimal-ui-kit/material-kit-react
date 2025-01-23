@@ -3,7 +3,6 @@ import type { IconButtonProps } from '@mui/material/IconButton';
 import { useState, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import Popover from '@mui/material/Popover';
 import Divider from '@mui/material/Divider';
@@ -14,7 +13,8 @@ import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
 
 import { useRouter, usePathname } from 'src/routes/hooks';
 
-import { _myAccount } from 'src/_mock';
+import useUser from 'src/hooks/useUser';
+
 
 // ----------------------------------------------------------------------
 
@@ -31,6 +31,7 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
   const router = useRouter();
 
   const pathname = usePathname();
+  const { user } = useUser();
 
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
 
@@ -64,8 +65,8 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
         }}
         {...other}
       >
-        <Avatar src={_myAccount.photoURL} alt={_myAccount.displayName} sx={{ width: 1, height: 1 }}>
-          {_myAccount.displayName.charAt(0).toUpperCase()}
+        <Avatar alt={user?.fname} sx={{ width: 1, height: 1 }}>
+          {user?.fname.charAt(0).toUpperCase()}
         </Avatar>
       </IconButton>
 
@@ -83,11 +84,11 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
       >
         <Box sx={{ p: 2, pb: 1.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {_myAccount?.displayName}
+            {`${user?.fname} ${user?.lname}`}
           </Typography>
 
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {_myAccount?.email}
+            {user?.email}
           </Typography>
         </Box>
 
