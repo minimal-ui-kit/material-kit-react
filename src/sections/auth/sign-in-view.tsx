@@ -32,6 +32,7 @@ const SIGN_UP = {
   email: '',
   password: '',
   pledgeAmount: 0,
+  secret: '',
 };
 
 export function SignInView() {
@@ -62,7 +63,6 @@ export function SignInView() {
         }
       } else {
         const user = await AuthService.register(data as CreateUserBody);
-        console.log(user);
       }
       router.replace('/');
     } catch (error) {
@@ -77,7 +77,6 @@ export function SignInView() {
   };
 
   const checkPass = useCallback(() => {
-    console.log(data.password, confirmPass);
     if (data.password !== confirmPass && !isSignin) {
       return 'Passwords do not match';
     }
@@ -100,10 +99,27 @@ export function SignInView() {
   const passErr = checkPass();
   const emptyForm = checkEmptyForm();
 
-  console.log(emptyForm, data);
-
   const renderForm = (
     <Box display="flex" flexDirection="column" alignItems="flex-end">
+      {!isSignin && (
+        <TextField
+          fullWidth
+          name="code"
+          label="Secret code"
+          placeholder="xxxxxxxx"
+          type="password"
+          value={data.secret}
+          required
+          onChange={(e) => updateField('secret', e.target.value)}
+          InputLabelProps={{ shrink: true }}
+          sx={{ mb: 3 }}
+          helperText={
+            <Typography variant="caption" color="Highlight">
+              Enter the secret code provided in your invite message.
+            </Typography>
+          }
+        />
+      )}
       {!isSignin && (
         <Box display="flex" gap={2}>
           <TextField

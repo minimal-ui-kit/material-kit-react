@@ -74,6 +74,7 @@ export const _contributions: ContributionProps[] = [...Array(24)].map((_, index)
   status: index % 4 ? 'success' : 'failed',
   timestamp: new Date(),
   amount: _amount(),
+  code: 's',
 }));
 
 // ----------------------------------------------------------------------

@@ -11,6 +11,9 @@ import TableRow from '@mui/material/TableRow';
 import { Iconify } from 'src/components/iconify';
 import { Label, LabelColor } from 'src/components/label';
 import { fDateTime } from 'src/utils/format-time';
+import { Button } from '@mui/material';
+import PayService from 'src/services/pay';
+import useUser from 'src/hooks/useUser';
 
 // ----------------------------------------------------------------------
 
@@ -24,6 +27,7 @@ export type ContributionProps = {
   timestamp: Date;
   status: 'pending' | 'success' | 'failed';
   months: string[];
+  code: string;
 };
 
 type ContributionsTableRowProps = {
@@ -40,6 +44,7 @@ export function ContributionsTableRow({
   onSelectRow,
 }: ContributionsTableRowProps) {
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
+  const { user } = useUser();
 
   const handleOpenPopover = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     setOpenPopover(event.currentTarget);
@@ -53,6 +58,10 @@ export function ContributionsTableRow({
     if (val === 'failed') return 'error';
     if (val === 'pending') return 'info';
     return 'success';
+  };
+
+  const onResume = (code: string) => {
+    PayService.resume(code);
   };
 
   return (
@@ -78,6 +87,18 @@ export function ContributionsTableRow({
 
         <TableCell>
           <Label color={getStatus(row.status)}>{row.status}</Label>
+        </TableCell>
+
+        <TableCell>
+          <Box flex={1} display="flex" justifyContent="flex-end">
+            {row.status === 'pending' && row.sender.id === user?.id ? (
+              <Button onClick={() => onResume(row.code)} variant="contained">
+                Resume
+              </Button>
+            ) : (
+              ''
+            )}
+          </Box>
         </TableCell>
       </TableRow>
 

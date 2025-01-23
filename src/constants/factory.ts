@@ -4,4 +4,5 @@ export enum Collection {
   Transactions = 'TRXS',
   AdminStats = 'ADMIN_STATS',
   PartnerStats = 'PARTNER_STATS',
+  Secret = 'SECRET',
 }

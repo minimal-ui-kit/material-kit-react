@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 
 import { CONFIG } from 'src/config-global';
 
-import PartnersView from 'src/sections/user/view/patners-view';
+import PartnersView from 'src/sections/user/view/partners-view';
 
 // ----------------------------------------------------------------------
 

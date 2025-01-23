@@ -24,7 +24,7 @@ export function OverviewAnalyticsView() {
   const { user } = useUser();
   const isAdminMode = Cache.get(CacheKeys.AdminMode);
   const { refresh } = useRouter();
-  console.log('ISS', isAdminMode);
+
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<{ stats?: Stats | UserStats; cons?: ContributionProps[] }>();
 
@@ -43,6 +43,7 @@ export function OverviewAnalyticsView() {
         sender: item.donor,
         status: getStatus(item.status),
         timestamp: (item.completedAt || item.createdAt).toDate(),
+        code: item?.trxCode,
       })),
     []
   );
@@ -54,7 +55,6 @@ export function OverviewAnalyticsView() {
 
   const onLatestContribution = useCallback(
     (value: Contribution[]) => {
-      console.log(value);
       const cons = getContributions(value);
       setData((val) => (val ? { ...val, cons } : { cons }));
       getStats();
@@ -234,6 +234,7 @@ export function OverviewAnalyticsView() {
             ignoreDashContent
             noMultiSelect
             noPagination
+            viewMore
             data={data?.cons}
           />
         </Grid>

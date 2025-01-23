@@ -18,7 +18,7 @@ import { ApiRoute } from '../constants/fxns';
 const USE_EMULATORS = false;
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyDY-1FezjbzGmq1j3WHWurbniF3IIdYmEY',
+  apiKey: process.env.FIREBASE_API_KEY,
   authDomain: 'pabgm-39720.firebaseapp.com',
   projectId: 'pabgm-39720',
   storageBucket: 'pabgm-39720.firebasestorage.app',

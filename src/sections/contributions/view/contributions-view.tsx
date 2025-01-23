@@ -13,8 +13,10 @@ import { _users } from 'src/_mock';
 import { DashboardContent } from 'src/layouts/dashboard';
 
 import { Iconify } from 'src/components/iconify';
-import { Scrollbar } from 'src/components/scrollbar';
+import Loader from 'src/components/loader';
 import { UserContext } from 'src/components/provider';
+import { Scrollbar } from 'src/components/scrollbar';
+import { useRouter } from 'src/routes/hooks';
 
 import { ContributionTableHead } from '../contributions-table-head';
 import { TableEmptyRows } from '../table-empty-rows';
@@ -35,6 +37,7 @@ interface ContributionsViewProps {
   noPagination?: boolean;
   data?: ContributionProps[];
   loading?: boolean;
+  viewMore?: boolean;
 }
 
 export function ContributionsView({
@@ -45,12 +48,18 @@ export function ContributionsView({
   noPagination,
   title = 'Contributions',
   loading,
+  viewMore,
   data = [],
 }: ContributionsViewProps) {
   const table = useTable();
 
   const [filterName, setFilterName] = useState('');
   const { pay } = useContext(UserContext);
+  const { push } = useRouter();
+
+  const onViewMore = () => {
+    push('/contributions');
+  };
 
   const dataFiltered: ContributionProps[] = useMemo(
     () =>
@@ -62,8 +71,7 @@ export function ContributionsView({
     [filterName, data, table.order, table.orderBy]
   );
 
-  const notFound =
-    ((!dataFiltered.length && !!filterName) || (!dataFiltered.length && !filterName)) && !loading;
+  const notFound = (!dataFiltered.length && !!filterName) || (!dataFiltered.length && !filterName);
 
   const content = (
     <>
@@ -81,79 +89,95 @@ export function ContributionsView({
             Contribute
           </Button>
         )}
+        {viewMore && (
+          <Button variant="text" onClick={onViewMore}>
+            View More
+          </Button>
+        )}
       </Box>
       <Card>
-        {!noToolbar && (
-          <ContributionsTableToolbar
-            numSelected={table.selected.length}
-            filterName={filterName}
-            onFilterName={(event: React.ChangeEvent<HTMLInputElement>) => {
-              setFilterName(event.target.value);
-              table.onResetPage();
-            }}
-          />
-        )}
-
-        <Scrollbar>
-          <TableContainer sx={{ overflow: 'unset' }}>
-            <Table sx={{ minWidth: 800 }}>
-              <ContributionTableHead
-                order={table.order}
-                orderBy={table.orderBy}
-                rowCount={_users.length}
+        {loading ? (
+          <Loader height="300px" />
+        ) : (
+          <>
+            {!noToolbar && (
+              <ContributionsTableToolbar
                 numSelected={table.selected.length}
-                noMultiSelect={noMultiSelect}
-                onSort={table.onSort}
-                onSelectAllRows={(checked) =>
-                  table.onSelectAllRows(
-                    checked,
-                    _users.map((user) => user.id)
-                  )
-                }
-                headLabel={[
-                  { id: 'name', label: 'Name' },
-                  { id: 'months', label: 'Month(s)' },
-                  { id: 'amount', label: 'Amount' },
-                  { id: 'date', label: 'Date' },
-                  { id: 'status', label: 'Status' },
-                ]}
+                filterName={filterName}
+                onFilterName={(event: React.ChangeEvent<HTMLInputElement>) => {
+                  setFilterName(event.target.value);
+                  table.onResetPage();
+                }}
               />
-              <TableBody>
-                {dataFiltered
-                  .slice(
-                    table.page * table.rowsPerPage,
-                    table.page * table.rowsPerPage + table.rowsPerPage
-                  )
-                  .map((row) => (
-                    <ContributionsTableRow
-                      noSelection={noMultiSelect}
-                      key={row.id}
-                      row={row}
-                      selected={table.selected.includes(row.id)}
-                      onSelectRow={() => table.onSelectRow(row.id)}
-                    />
-                  ))}
+            )}
 
-                <TableEmptyRows
-                  height={68}
-                  emptyRows={emptyRows(table.page, table.rowsPerPage, _users.length)}
-                />
+            <Scrollbar>
+              <TableContainer sx={{ overflow: 'unset' }}>
+                <Table sx={{ minWidth: 800 }}>
+                  <ContributionTableHead
+                    order={table.order}
+                    orderBy={table.orderBy}
+                    rowCount={_users.length}
+                    numSelected={table.selected.length}
+                    noMultiSelect={noMultiSelect}
+                    onSort={table.onSort}
+                    onSelectAllRows={(checked) =>
+                      table.onSelectAllRows(
+                        checked,
+                        _users.map((user) => user.id)
+                      )
+                    }
+                    headLabel={[
+                      { id: 'name', label: 'Name' },
+                      { id: 'months', label: 'Month(s)' },
+                      { id: 'amount', label: 'Amount' },
+                      { id: 'date', label: 'Date' },
+                      { id: 'status', label: 'Status' },
+                      { id: 'resume', label: '' },
+                    ]}
+                  />
+                  <TableBody>
+                    <>
+                      {dataFiltered
+                        .slice(
+                          table.page * table.rowsPerPage,
+                          table.page * table.rowsPerPage + table.rowsPerPage
+                        )
+                        .map((row) => (
+                          <ContributionsTableRow
+                            noSelection={noMultiSelect}
+                            key={row.id}
+                            row={row}
+                            selected={table.selected.includes(row.id)}
+                            onSelectRow={() => table.onSelectRow(row.id)}
+                          />
+                        ))}
 
-                {notFound && <TableNoData searchQuery={filterName} />}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Scrollbar>
-        {!noPagination && (
-          <TablePagination
-            component="div"
-            page={table.page}
-            count={_users.length}
-            rowsPerPage={table.rowsPerPage}
-            onPageChange={table.onChangePage}
-            rowsPerPageOptions={[5, 10, 25]}
-            onRowsPerPageChange={table.onChangeRowsPerPage}
-          />
+                      <TableEmptyRows
+                        height={68}
+                        emptyRows={emptyRows(table.page, table.rowsPerPage, _users.length)}
+                      />
+                      {notFound && (
+                        <TableNoData label="No contributions available" searchQuery={filterName} />
+                      )}
+                    </>
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Scrollbar>
+
+            {!noPagination && (
+              <TablePagination
+                component="div"
+                page={table.page}
+                count={_users.length}
+                rowsPerPage={table.rowsPerPage}
+                onPageChange={table.onChangePage}
+                rowsPerPageOptions={[5, 10, 25]}
+                onRowsPerPageChange={table.onChangeRowsPerPage}
+              />
+            )}
+          </>
         )}
       </Card>
     </>

@@ -8,11 +8,9 @@ import { ContributionsView } from './contributions-view';
 
 const ContributionsList = () => {
   const [data, setData] = useState<ContributionProps[]>();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { isAdminMode } = useAdmin();
   const { user } = useUser();
-
-  const pageRef = useRef(new Map<number, string>());
 
   const getStatus = (status: ContributionStatus): ContributionProps['status'] => {
     if (status === ContributionStatus.Failed) return 'failed';
@@ -29,12 +27,12 @@ const ContributionsList = () => {
         sender: item.donor,
         status: getStatus(item.status),
         timestamp: (item.completedAt || item.createdAt).toDate(),
+        code: item?.trxCode,
       })),
     []
   );
 
   const init = useCallback(async () => {
-    setLoading(true);
     const promise = isAdminMode
       ? ContributionService.getList({ count: 20, page: 1 })
       : ContributionService.getByUserId(user?.id!, 20);
@@ -53,7 +51,7 @@ const ContributionsList = () => {
     init();
   }, [init]);
 
-  return <ContributionsView loading={loading} data={data} noMultiSelect noPagination />;
+  return <ContributionsView noToolbar loading={loading} data={data} noMultiSelect noPagination />;
 };
 
 export default ContributionsList;

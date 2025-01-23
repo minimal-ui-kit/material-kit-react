@@ -12,6 +12,7 @@ export interface Contribution {
   amount: string;
   status: ContributionStatus;
   trxRef: string;
+  trxCode: string;
   createdAt: Timestamp;
   modifiedAt: Timestamp | null;
   completedAt: Timestamp | null;
