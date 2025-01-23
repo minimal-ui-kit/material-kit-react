@@ -1,7 +1,11 @@
-import React, { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
+import type { ReactNode} from 'react';
+import type { User } from 'src/services/user/user.dto';
+
+import React, { useMemo, useState, useEffect, useCallback } from 'react';
+
 import { useRouter } from 'src/routes/hooks';
+
 import UserService from 'src/services/user';
-import { User } from 'src/services/user/user.dto';
 import { Cache, CacheKeys } from 'src/utils';
 
 const IS_ADMIN_MODE = !!Cache.get<boolean>(CacheKeys.AdminMode);

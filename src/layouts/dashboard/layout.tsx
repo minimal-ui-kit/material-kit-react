@@ -1,29 +1,31 @@
-import type { Breakpoint, SxProps, Theme } from '@mui/material/styles';
+import type { Theme, SxProps, Breakpoint } from '@mui/material/styles';
 
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 
-import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
+import Alert from '@mui/material/Alert';
 import { useTheme } from '@mui/material/styles';
 
-import { Iconify } from 'src/components/iconify';
+import { useRouter } from 'src/routes/hooks';
 
-import ToggleSwitch from 'src/components/shared/switch/toggle';
-import useAdmin from 'src/hooks/useAdmin';
 import useAuth from 'src/hooks/useAuth';
 import useUser from 'src/hooks/useUser';
-import { useRouter } from 'src/routes/hooks';
+import useAdmin from 'src/hooks/useAdmin';
+
 import AuthService from 'src/services/auth';
 import { UserRole } from 'src/services/user/user.dto';
+
+import ToggleSwitch from 'src/components/shared/switch/toggle';
+
+import { Main } from './main';
 import { layoutClasses } from '../classes';
-import { AccountPopover } from '../components/account-popover';
-import { MenuButton } from '../components/menu-button';
+import { NavMobile, NavDesktop } from './nav';
 import { navData } from '../config-nav-dashboard';
 import { _workspaces } from '../config-nav-workspace';
+import { MenuButton } from '../components/menu-button';
 import { HeaderSection } from '../core/header-section';
 import { LayoutSection } from '../core/layout-section';
-import { Main } from './main';
-import { NavDesktop, NavMobile } from './nav';
+import { AccountPopover } from '../components/account-popover';
 
 // ----------------------------------------------------------------------
 

@@ -1,6 +1,7 @@
 import { fx } from 'src/configs';
 import { ApiRoute } from 'src/constants/fxns';
-import { Stats, UserStats } from './stats.dto';
+
+import type { Stats, UserStats } from './stats.dto';
 
 export default class StatsService {
   static async get() {

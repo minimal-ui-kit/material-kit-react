@@ -1,4 +1,4 @@
-import { payloadDeHash, payloadHash } from './encrypt';
+import { payloadHash, payloadDeHash } from './encrypt';
 
 export enum CacheKeys {
   Token = 'my.auth.id.t',

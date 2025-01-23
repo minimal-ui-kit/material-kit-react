@@ -1,5 +1,7 @@
-import { Box, Switch, SwitchProps, Typography } from '@mui/material'
-import { FC } from 'react'
+import type { FC } from 'react'
+import type { SwitchProps} from '@mui/material';
+
+import { Box, Switch, Typography } from '@mui/material'
 
 export interface ToggleSwitchProps extends SwitchProps {
     label:string

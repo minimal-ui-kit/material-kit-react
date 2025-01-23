@@ -1,6 +1,8 @@
+import type { FC } from 'react';
+import type { BoxProps } from '@mui/material/Box';
+
 import { Box, LinearProgress, linearProgressClasses } from '@mui/material';
-import { BoxProps } from '@mui/material/Box';
-import { FC } from 'react';
+
 import { varAlpha } from 'src/theme/styles';
 
 interface LoaderProps extends BoxProps {}

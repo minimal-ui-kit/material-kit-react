@@ -1,21 +1,27 @@
+import type { FormEvent, ChangeEvent } from 'react';
+
+import React, { useState, useEffect } from 'react';
+
 import { LoadingButton } from '@mui/lab';
 import {
-  Autocomplete,
   Box,
   Chip,
-  IconButton,
   Link,
   Modal,
   TextField,
+  IconButton,
   Typography,
+  Autocomplete,
 } from '@mui/material';
-import PaystackInline from '@paystack/inline-js';
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { Iconify } from 'src/components/iconify';
-import useUser from 'src/hooks/useUser';
+
 import { useRouter } from 'src/routes/hooks';
-import PayService from 'src/services/pay';
+
+import useUser from 'src/hooks/useUser';
+
 import { errCb } from 'src/utils';
+import PayService from 'src/services/pay';
+
+import { Iconify } from 'src/components/iconify';
 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 

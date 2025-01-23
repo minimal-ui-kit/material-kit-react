@@ -1,4 +1,5 @@
-import { useContext, useEffect, useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
+
 import { UserContext } from 'src/components/provider';
 
 const useUser = () => {

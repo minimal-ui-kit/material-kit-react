@@ -1,6 +1,11 @@
-import { Alert, AlertProps, Box, IconButton, Portal, Slide } from '@mui/material';
-import { forwardRef, useCallback, useImperativeHandle, useRef, useState } from 'react';
-import { Iconify, IconifyProps } from 'src/components/iconify';
+import type { AlertProps} from '@mui/material';
+import type { IconifyProps } from 'src/components/iconify';
+
+import { useRef, useState, forwardRef, useCallback, useImperativeHandle } from 'react';
+
+import { Box, Alert, Slide, Portal, IconButton } from '@mui/material';
+
+import { Iconify } from 'src/components/iconify';
 
 export interface AppAlertProps {
   id?: string;

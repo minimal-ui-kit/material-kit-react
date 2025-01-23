@@ -6,8 +6,8 @@ import { useScrollToTop } from 'src/hooks/use-scroll-to-top';
 
 import { ThemeProvider } from 'src/theme/theme-provider';
 
-import AppAlert from './components/shared/alert';
 import { AlertUtil } from './utils';
+import AppAlert from './components/shared/alert';
 
 // ----------------------------------------------------------------------
 

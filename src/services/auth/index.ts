@@ -1,11 +1,16 @@
-import { User } from 'firebase/auth';
+import type { User } from 'firebase/auth';
+
 import { jwtDecode } from 'jwt-decode';
+
+import { hash } from 'src/utils/encrypt';
+
 import { auth } from 'src/configs/firebase';
 import { Cache, CacheKeys } from 'src/utils';
-import { hash } from 'src/utils/encrypt';
+
 import UserService from '../user';
 import { UserRole } from '../user/user.dto';
-import { CreateUserBody, UserLoginBody } from './auth.dto';
+
+import type { UserLoginBody, CreateUserBody } from './auth.dto';
 
 export default class AuthService {
   private static token: string | null = Cache.get(CacheKeys.Token);

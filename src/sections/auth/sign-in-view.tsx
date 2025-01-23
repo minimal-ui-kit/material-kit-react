@@ -1,22 +1,24 @@
-import { HTMLAttributes, useCallback, useEffect, useState } from 'react';
+import type { CreateUserBody } from 'src/services/auth/auth.dto';
 
-import LoadingButton from '@mui/lab/LoadingButton';
+import { useState, useEffect, useCallback } from 'react';
+
 import Box from '@mui/material/Box';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
 import Link from '@mui/material/Link';
+import { Button } from '@mui/material';
+import Divider from '@mui/material/Divider';
 import TextField from '@mui/material/TextField';
+import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
+import LoadingButton from '@mui/lab/LoadingButton';
+import InputAdornment from '@mui/material/InputAdornment';
 
 import { useRouter } from 'src/routes/hooks';
 
-import { Button } from '@mui/material';
-import CountrySelect from 'src/components/country-select';
-import { Iconify } from 'src/components/iconify';
-import { CreateUserBody } from 'src/services/auth/auth.dto';
-import AuthService from 'src/services/auth';
 import { errCb } from 'src/utils';
+import AuthService from 'src/services/auth';
+
+import { Iconify } from 'src/components/iconify';
+import CountrySelect from 'src/components/country-select';
 
 // ----------------------------------------------------------------------
 

@@ -1,6 +1,8 @@
+import type { Collection } from 'src/constants/factory';
+
 import { doc, collection } from 'firebase/firestore';
+
 import { db } from 'src/configs';
-import { Collection } from 'src/constants/factory';
 
 export function docRef(id: string, col: Collection) {
   return doc(db, col, id);

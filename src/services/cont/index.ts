@@ -1,18 +1,22 @@
 import {
-  Timestamp,
-  getDoc,
-  getDocs,
   limit,
-  onSnapshot,
-  orderBy,
   query,
   where,
+  getDoc,
+  getDocs,
+  orderBy,
+  Timestamp,
+  onSnapshot,
 } from 'firebase/firestore';
+
 import { fx } from 'src/configs';
 import { Collection } from 'src/constants';
-import { ApiRoute } from 'src/constants/fxns';
 import { colRef, docRef } from 'src/utils';
-import { Contribution, ContributionResponse, ContributionStatus } from './contribute.dto';
+import { ApiRoute } from 'src/constants/fxns';
+
+import { ContributionStatus } from './contribute.dto';
+
+import type { Contribution, ContributionResponse} from './contribute.dto';
 
 export default class ContributionService {
   private static ref = colRef(Collection.Contributions);

@@ -1,17 +1,19 @@
 import { lazy, Suspense, useState } from 'react';
-import { Navigate, Outlet, useRoutes } from 'react-router-dom';
+import { Outlet, Navigate, useRoutes } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
+import { Fab } from '@mui/material';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 
-import { Fab } from '@mui/material';
-import { Iconify } from 'src/components/iconify';
-import PaymentFormModal from 'src/components/shared/modals/contributeForm';
-import { AuthLayout } from 'src/layouts/auth';
-import { DashboardLayout } from 'src/layouts/dashboard';
-import { varAlpha } from 'src/theme/styles';
 import useUser from 'src/hooks/useUser';
 import useAdmin from 'src/hooks/useAdmin';
+
+import { varAlpha } from 'src/theme/styles';
+import { AuthLayout } from 'src/layouts/auth';
+import { DashboardLayout } from 'src/layouts/dashboard';
+
+import { Iconify } from 'src/components/iconify';
+import PaymentFormModal from 'src/components/shared/modals/contributeForm';
 
 const AppProvider = lazy(() => import('src/components/provider'));
 

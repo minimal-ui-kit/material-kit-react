@@ -1,10 +1,16 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import useAdmin from 'src/hooks/useAdmin';
+import type { Contribution} from 'src/services/cont/contribute.dto';
+
+import { useState, useEffect, useCallback } from 'react';
+
 import useUser from 'src/hooks/useUser';
+import useAdmin from 'src/hooks/useAdmin';
+
 import ContributionService from 'src/services/cont';
-import { Contribution, ContributionStatus } from 'src/services/cont/contribute.dto';
-import { ContributionProps } from '../contributions-table-row';
+import { ContributionStatus } from 'src/services/cont/contribute.dto';
+
 import { ContributionsView } from './contributions-view';
+
+import type { ContributionProps } from '../contributions-table-row';
 
 const ContributionsList = () => {
   const [data, setData] = useState<ContributionProps[]>();

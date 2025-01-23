@@ -1,9 +1,12 @@
-import { ContributionProps } from 'src/sections/contributions/contributions-table-row';
-import { fShortenNumber } from 'src/utils/format-number';
+
+import type { ContributionProps } from 'src/sections/contributions/contributions-table-row';
+
 import {
   _id,
   _price,
   _times,
+  _months,
+  _amount,
   _company,
   _boolean,
   _fullName,
@@ -11,8 +14,6 @@ import {
   _postTitles,
   _description,
   _productNames,
-  _months,
-  _amount,
 } from './_mock';
 
 // ----------------------------------------------------------------------

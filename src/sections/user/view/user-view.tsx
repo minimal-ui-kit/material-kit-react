@@ -1,24 +1,25 @@
-import { useCallback, useState } from 'react';
+import type { User } from 'src/services/user/user.dto';
+
+import { useState, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableContainer from '@mui/material/TableContainer';
 import Typography from '@mui/material/Typography';
+import TableContainer from '@mui/material/TableContainer';
 
 import { _users } from 'src/_mock';
 import { DashboardContent } from 'src/layouts/dashboard';
 
-import { Scrollbar } from 'src/components/scrollbar';
-import { User } from 'src/services/user/user.dto';
-
 import Loader from 'src/components/loader';
-import { TableEmptyRows } from '../table-empty-rows';
+import { Scrollbar } from 'src/components/scrollbar';
+
 import { TableNoData } from '../table-no-data';
-import { UserTableHead } from '../user-table-head';
 import { UserTableRow } from '../user-table-row';
-import { applyFilter, emptyRows, getComparator } from '../utils';
+import { UserTableHead } from '../user-table-head';
+import { TableEmptyRows } from '../table-empty-rows';
+import { emptyRows, applyFilter, getComparator } from '../utils';
 
 // ----------------------------------------------------------------------
 

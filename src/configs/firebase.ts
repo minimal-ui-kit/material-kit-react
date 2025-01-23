@@ -1,19 +1,22 @@
 // Import the functions you need from the SDKs you need
+import type {
+  User} from 'firebase/auth';
+
 import { initializeApp } from 'firebase/app';
+import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore';
+import { getFunctions, httpsCallable, connectFunctionsEmulator } from 'firebase/functions';
 import {
-  User,
-  confirmPasswordReset,
-  connectAuthEmulator,
-  createUserWithEmailAndPassword,
   getAuth,
+  signOut,
   onAuthStateChanged,
+  connectAuthEmulator,
+  confirmPasswordReset,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
-  signOut,
+  createUserWithEmailAndPassword,
 } from 'firebase/auth';
-import { connectFirestoreEmulator, getFirestore } from 'firebase/firestore';
-import { connectFunctionsEmulator, getFunctions, httpsCallable } from 'firebase/functions';
-import { ApiRoute } from '../constants/fxns';
+
+import type { ApiRoute } from '../constants/fxns';
 
 const USE_EMULATORS = false;
 
@@ -77,4 +80,4 @@ const runEmulators = (val: boolean = USE_EMULATORS) => {
 
 runEmulators();
 
-export { app, auth, db, fx };
+export { db, fx, app, auth };

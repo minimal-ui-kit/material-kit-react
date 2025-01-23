@@ -1,4 +1,4 @@
-import { AppAlertMethods } from 'src/components/shared/alert';
+import type { AppAlertMethods } from 'src/components/shared/alert';
 
 export class AlertUtil {
   private static ref: AppAlertMethods | null;

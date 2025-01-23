@@ -1,9 +1,11 @@
-import { doc, getDoc, getDocs, setDoc, updateDoc } from 'firebase/firestore';
+import { getDoc, setDoc, getDocs, updateDoc } from 'firebase/firestore';
+
 import { fx } from 'src/configs';
-import { Collection } from 'src/constants/factory';
-import { ApiRoute } from 'src/constants/fxns';
 import { colRef, docRef } from 'src/utils';
-import { User, UserUpdateBody } from './user.dto';
+import { ApiRoute } from 'src/constants/fxns';
+import { Collection } from 'src/constants/factory';
+
+import type { User} from './user.dto';
 
 export default class UserService {
   static async get(id: string): Promise<User> {

@@ -1,8 +1,10 @@
 import PaystackPop from '@paystack/inline-js';
+
 import { fx } from 'src/configs';
-import { ApiRoute } from 'src/constants/fxns';
 import { errCb } from 'src/utils';
-import { ContributeInit } from './pay.dto';
+import { ApiRoute } from 'src/constants/fxns';
+
+import type { ContributeInit } from './pay.dto';
 
 export default class PayService {
   static async init(amount: number, months: string[]) {

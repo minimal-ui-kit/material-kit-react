@@ -1,6 +1,9 @@
-import { useEffect, useState } from 'react';
+import type { User } from 'src/services/user/user.dto';
+
+import { useState, useEffect } from 'react';
+
 import UserService from 'src/services/user';
-import { User } from 'src/services/user/user.dto';
+
 import { UserView } from './user-view';
 
 const PartnersView = () => {

@@ -1,5 +1,7 @@
-import { useCallback, useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
+
 import { useRouter } from 'src/routes/hooks';
+
 import AuthService from 'src/services/auth';
 
 function Logout() {

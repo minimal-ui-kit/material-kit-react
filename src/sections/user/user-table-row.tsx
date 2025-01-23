@@ -1,21 +1,25 @@
-import { useCallback, useState } from 'react';
+import { useState, useCallback } from 'react';
 
-import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
+import Avatar from '@mui/material/Avatar';
+import Popover from '@mui/material/Popover';
+import MenuList from '@mui/material/MenuList';
+import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
+import { CircularProgress } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
-import MenuList from '@mui/material/MenuList';
-import Popover from '@mui/material/Popover';
-import TableCell from '@mui/material/TableCell';
-import TableRow from '@mui/material/TableRow';
+
+import { useRouter } from 'src/routes/hooks';
+
+import useUser from 'src/hooks/useUser';
+
+import { fCurrency } from 'src/utils/format-number';
+
+import UserService from 'src/services/user';
+import { UserRole } from 'src/services/user/user.dto';
 
 import { Iconify } from 'src/components/iconify';
-import { fCurrency, fShortenNumber } from 'src/utils/format-number';
-import { UserRole } from 'src/services/user/user.dto';
-import useUser from 'src/hooks/useUser';
-import UserService from 'src/services/user';
-import { useRouter } from 'src/routes/hooks';
-import { CircularProgress } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
