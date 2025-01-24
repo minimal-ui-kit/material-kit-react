@@ -1,4 +1,4 @@
-import type { AlertProps} from '@mui/material';
+import type { AlertProps } from '@mui/material';
 import type { IconifyProps } from 'src/components/iconify';
 
 import { useRef, useState, forwardRef, useCallback, useImperativeHandle } from 'react';
@@ -80,9 +80,9 @@ const AppAlert = forwardRef<AppAlertMethods>((_, ref) => {
           container={container.current}
         >
           <Alert
-            severity={dataRef.current?.type}
+            severity={value?.type ?? 'error'}
             onClose={clearData}
-            icon={dataRef.current?.icon && <Iconify icon={dataRef.current?.icon} />}
+            icon={value?.icon && <Iconify icon={value.icon} />}
             action={
               <IconButton onClick={onClose}>
                 <Iconify icon="ic:round-close" />
