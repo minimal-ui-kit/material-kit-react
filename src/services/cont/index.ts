@@ -7,16 +7,17 @@ import {
   orderBy,
   Timestamp,
   onSnapshot,
+  deleteDoc,
 } from 'firebase/firestore';
 
-import { fx } from 'src/configs';
+import { db, fx } from 'src/configs';
 import { Collection } from 'src/constants';
 import { colRef, docRef } from 'src/utils';
 import { ApiRoute } from 'src/constants/fxns';
 
 import { ContributionStatus } from './contribute.dto';
 
-import type { Contribution, ContributionResponse} from './contribute.dto';
+import type { Contribution, ContributionResponse } from './contribute.dto';
 
 export default class ContributionService {
   private static ref = colRef(Collection.Contributions);
@@ -84,5 +85,13 @@ export default class ContributionService {
           : completedAt,
       })) as Contribution[],
     };
+  }
+
+  static async cancel(id: string) {
+    const data = await this.get(id);
+    if (data && data.status === ContributionStatus.Pending) {
+      const doc = docRef(id, Collection.Contributions);
+      await deleteDoc(doc);
+    }
   }
 }

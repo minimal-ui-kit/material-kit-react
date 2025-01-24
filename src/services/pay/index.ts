@@ -14,7 +14,6 @@ export default class PayService {
         months,
         callbackUrl: window.location.href,
       });
-      console.log('RES', res.code);
       const popup = new PaystackPop();
       popup.resumeTransaction(res.code as any);
       return popup;
@@ -27,7 +26,6 @@ export default class PayService {
 
   static async resume(code: string) {
     try {
-      console.log('Sume', code);
       const popup = new PaystackPop();
       popup.resumeTransaction(code as any);
       return popup;

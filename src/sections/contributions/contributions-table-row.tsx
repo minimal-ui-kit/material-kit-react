@@ -19,6 +19,8 @@ import PayService from 'src/services/pay';
 
 import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
+import ContributionService from 'src/services/cont';
+import { LoadingButton } from '@mui/lab';
 
 // ----------------------------------------------------------------------
 
@@ -49,6 +51,7 @@ export function ContributionsTableRow({
   onSelectRow,
 }: ContributionsTableRowProps) {
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
+  const [cancelling, setCancelling] = useState(false);
   const { user } = useUser();
 
   const handleOpenPopover = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
@@ -67,6 +70,12 @@ export function ContributionsTableRow({
 
   const onResume = (code: string) => {
     PayService.resume(code);
+  };
+
+  const onCancel = async (id: string) => {
+    setCancelling(true);
+    await ContributionService.cancel(id);
+    setCancelling(false);
   };
 
   return (
@@ -97,9 +106,19 @@ export function ContributionsTableRow({
         <TableCell>
           <Box flex={1} display="flex" justifyContent="flex-end">
             {row.status === 'pending' && row.sender.id === user?.id ? (
-              <Button onClick={() => onResume(row.code)} variant="contained">
-                Resume
-              </Button>
+              <Box gap="4px" flexDirection="row" display="flex">
+                <Button onClick={() => onResume(row.code)} variant="contained">
+                  Resume
+                </Button>
+                <LoadingButton
+                  variant="outlined"
+                  color="error"
+                  loading={cancelling}
+                  onClick={() => onCancel(row.id)}
+                >
+                  Cancel
+                </LoadingButton>
+              </Box>
             ) : (
               ''
             )}

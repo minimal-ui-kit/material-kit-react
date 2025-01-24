@@ -64,7 +64,7 @@ export function SignInView() {
           });
         }
       } else {
-        const user = await AuthService.register(data as CreateUserBody);
+        await AuthService.register(data as CreateUserBody);
       }
       router.replace('/');
     } catch (error) {
