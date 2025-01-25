@@ -265,7 +265,7 @@ export function SignInView() {
       </Box>
       <form>{renderForm}</form>
 
-      {isSignin && (
+      {/* {isSignin && (
         <>
           <Divider sx={{ my: 3, '&::before, &::after': { borderTopStyle: 'dashed' } }}>
             <Typography
@@ -282,7 +282,7 @@ export function SignInView() {
             </IconButton>
           </Box>
         </>
-      )}
+      )} */}
     </>
   );
 }
