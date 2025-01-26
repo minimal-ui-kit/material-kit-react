@@ -16,7 +16,8 @@ export default class AuthService {
   private static token: string | null = Cache.get(CacheKeys.Token);
 
   static async register(data: CreateUserBody) {
-    const valid = await UserService.validateSecret(data.secret);
+    const valid = await UserService.validateSecret(data.secret!);
+    delete data?.secret;
     if (!valid) throw new Error('INVALID_SECRET_KEY');
     const pass = hash(data.password!);
     const user = await auth.createUser(data.email, pass);
