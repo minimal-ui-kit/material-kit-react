@@ -212,7 +212,8 @@ export const Logo = forwardRef<HTMLDivElement, LogoProps>(
         }}
         {...other}
       >
-        {isSingle ? singleLogo : fullLogo}
+        {/* {isSingle ? singleLogo : fullLogo} */}
+        <img src="/assets/images/logo.png" alt="logo" />
       </Box>
     );
   }

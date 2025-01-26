@@ -1,85 +1,184 @@
+import type { Contribution} from 'src/services/cont/contribute.dto';
+import type { Stats, UserStats } from 'src/services/stats/stats.dto';
+import type { ContributionProps } from 'src/sections/contributions/contributions-table-row';
+
+import { useState, useEffect, useCallback } from 'react';
+
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
+import { Box, LinearProgress, linearProgressClasses } from '@mui/material';
 
-import { _tasks, _posts, _timeline } from 'src/_mock';
+import { useRouter } from 'src/routes/hooks';
+
+import useUser from 'src/hooks/useUser';
+
+import { varAlpha } from 'src/theme/styles';
+import StatsService from 'src/services/stats';
+import ContributionService from 'src/services/cont';
+import { Cache, errCb, CacheKeys } from 'src/utils';
 import { DashboardContent } from 'src/layouts/dashboard';
+import { ContributionStatus } from 'src/services/cont/contribute.dto';
 
-import { AnalyticsNews } from '../analytics-news';
-import { AnalyticsTasks } from '../analytics-tasks';
-import { AnalyticsCurrentVisits } from '../analytics-current-visits';
-import { AnalyticsOrderTimeline } from '../analytics-order-timeline';
-import { AnalyticsWebsiteVisits } from '../analytics-website-visits';
+import { ContributionsView } from 'src/sections/contributions/view';
+
 import { AnalyticsWidgetSummary } from '../analytics-widget-summary';
-import { AnalyticsTrafficBySite } from '../analytics-traffic-by-site';
-import { AnalyticsCurrentSubject } from '../analytics-current-subject';
-import { AnalyticsConversionRates } from '../analytics-conversion-rates';
 
 // ----------------------------------------------------------------------
 
 export function OverviewAnalyticsView() {
+  const { user } = useUser();
+  const isAdminMode = Cache.get(CacheKeys.AdminMode);
+  const { refresh } = useRouter();
+
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState<{ stats?: Stats | UserStats; cons?: ContributionProps[] }>();
+
+  const getStatus = (status: ContributionStatus): ContributionProps['status'] => {
+    if (status === ContributionStatus.Failed) return 'failed';
+    if (status === ContributionStatus.Pending) return 'pending';
+    return 'success';
+  };
+
+  const getContributions = useCallback(
+    (result: Contribution[]): ContributionProps[] =>
+      result.map((item) => ({
+        amount: item.amount,
+        id: item.id,
+        months: item.months,
+        sender: item.donor,
+        status: getStatus(item.status),
+        timestamp: (item.completedAt || item.createdAt).toDate(),
+        code: item?.trxCode,
+      })),
+    []
+  );
+
+  const getStats = useCallback(async () => {
+    const stats = isAdminMode ? await StatsService.get() : await StatsService.getByUser();
+    setData((val) => (val ? { ...val, stats } : { stats }));
+  }, [isAdminMode]);
+
+  const onLatestContribution = useCallback(
+    (value: Contribution[]) => {
+      const cons = getContributions(value);
+      setData((val) => (val ? { ...val, cons } : { cons }));
+      getStats();
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [getContributions, getStats]
+  );
+
+  const init = useCallback(async () => {
+    if (!user?.id) return;
+    try {
+      ContributionService.listenLatest(onLatestContribution, isAdminMode ? undefined : user.id);
+      await getStats();
+    } catch (error) {
+      errCb(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }, [user?.id, onLatestContribution, isAdminMode, getStats]);
+
+  useEffect(() => {
+    init();
+  }, [init]);
+
+  if (loading) {
+    return (
+      <Box display="flex" alignItems="center" justifyContent="center" flex="1 1 auto">
+        <LinearProgress
+          sx={{
+            width: 1,
+            maxWidth: 320,
+            bgcolor: (theme) => varAlpha(theme.vars.palette.text.primaryChannel, 0.16),
+            [`& .${linearProgressClasses.bar}`]: { bgcolor: 'text.primary' },
+          }}
+        />
+      </Box>
+    );
+  }
+
+  const mdQuery = isAdminMode ? 3 : 4;
+
   return (
     <DashboardContent maxWidth="xl">
       <Typography variant="h4" sx={{ mb: { xs: 3, md: 5 } }}>
-        Hi, Welcome back 👋
+        Hi, {user?.fname} 👋
       </Typography>
 
       <Grid container spacing={3}>
-        <Grid xs={12} sm={6} md={3}>
+        <Grid xs={12} md={mdQuery}>
           <AnalyticsWidgetSummary
-            title="Weekly sales"
-            percent={2.6}
-            total={714000}
-            icon={<img alt="icon" src="/assets/icons/glass/ic-glass-bag.svg" />}
+            title="No. of contributions"
+            total={data?.stats?.contributionCount || 0}
+            icon={<img alt="icon" src="/assets/icons/glass/ic-donate.svg" />}
             chart={{
               categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
-              series: [22, 8, 35, 50, 82, 84, 77, 12],
+              series: [],
             }}
           />
         </Grid>
 
-        <Grid xs={12} sm={6} md={3}>
+        <Grid xs={12} md={mdQuery}>
           <AnalyticsWidgetSummary
-            title="New users"
-            percent={-0.1}
-            total={1352831}
+            title={isAdminMode ? 'No. of Partners' : 'Pledge Amount (GHS)'}
+            total={
+              (isAdminMode
+                ? (data?.stats as Stats)?.partnersCount
+                : (data?.stats as UserStats).pledge) || 0
+            }
             color="secondary"
             icon={<img alt="icon" src="/assets/icons/glass/ic-glass-users.svg" />}
             chart={{
               categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
-              series: [56, 47, 40, 62, 73, 30, 23, 54],
+              series: [],
             }}
           />
         </Grid>
 
-        <Grid xs={12} sm={6} md={3}>
+        {isAdminMode ? (
+          <Grid xs={12} md={mdQuery}>
+            <AnalyticsWidgetSummary
+              title="Expected Monthly contributions (GHS)"
+              total={`${(data?.stats as Stats)?.expectedMonthly || 0}`}
+              color="info"
+              icon={<img alt="icon" src="/assets/icons/glass/ic-wallet.svg" />}
+              chart={{
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
+                series: [10, 6, 9],
+              }}
+            />
+          </Grid>
+        ) : null}
+
+        <Grid xs={12} md={mdQuery}>
           <AnalyticsWidgetSummary
-            title="Purchase orders"
-            percent={2.8}
-            total={1723315}
+            title="Total contributions (GHS)"
+            total={`${(isAdminMode ? (data?.stats as Stats)?.totalAmount : (data?.stats as UserStats).totalContribution) || 0}`}
             color="warning"
-            icon={<img alt="icon" src="/assets/icons/glass/ic-glass-buy.svg" />}
+            icon={<img alt="icon" src="/assets/icons/glass/ic-wallet.svg" />}
             chart={{
               categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
-              series: [40, 70, 50, 28, 70, 75, 7, 64],
+              series: [10, 6, 9],
             }}
           />
         </Grid>
 
-        <Grid xs={12} sm={6} md={3}>
+        {/* <Grid xs={12} sm={6} md={3}>
           <AnalyticsWidgetSummary
             title="Messages"
-            percent={3.6}
+            // percent={3.6}
             total={234}
             color="error"
             icon={<img alt="icon" src="/assets/icons/glass/ic-glass-message.svg" />}
             chart={{
               categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
-              series: [56, 30, 23, 54, 47, 40, 62, 73],
+              series: [],
             }}
           />
-        </Grid>
-
-        <Grid xs={12} md={6} lg={4}>
+        </Grid> */}
+        {/* <Grid xs={12} md={6} lg={4}>
           <AnalyticsCurrentVisits
             title="Current visits"
             chart={{
@@ -91,9 +190,8 @@ export function OverviewAnalyticsView() {
               ],
             }}
           />
-        </Grid>
-
-        <Grid xs={12} md={6} lg={8}>
+        </Grid> */}
+        {/* <Grid xs={12} md={6} lg={8}>
           <AnalyticsWebsiteVisits
             title="Website visits"
             subheader="(+43%) than last year"
@@ -119,9 +217,8 @@ export function OverviewAnalyticsView() {
               ],
             }}
           />
-        </Grid>
-
-        <Grid xs={12} md={6} lg={4}>
+        </Grid> */}
+        {/* <Grid xs={12} md={6} lg={4}>
           <AnalyticsCurrentSubject
             title="Current subject"
             chart={{
@@ -133,17 +230,23 @@ export function OverviewAnalyticsView() {
               ],
             }}
           />
+        </Grid> */}
+        <Grid xs={12}>
+          <ContributionsView
+            title="Recent Contributions"
+            hideBtn
+            noToolbar
+            ignoreDashContent
+            noMultiSelect
+            noPagination
+            viewMore
+            data={data?.cons}
+          />
         </Grid>
-
-        <Grid xs={12} md={6} lg={8}>
-          <AnalyticsNews title="News" list={_posts.slice(0, 5)} />
-        </Grid>
-
-        <Grid xs={12} md={6} lg={4}>
+        {/* <Grid xs={12} md={6} lg={4}>
           <AnalyticsOrderTimeline title="Order timeline" list={_timeline} />
-        </Grid>
-
-        <Grid xs={12} md={6} lg={4}>
+        </Grid> */}
+        {/* <Grid xs={12} md={6} lg={4}>
           <AnalyticsTrafficBySite
             title="Traffic by site"
             list={[
@@ -157,7 +260,7 @@ export function OverviewAnalyticsView() {
 
         <Grid xs={12} md={6} lg={8}>
           <AnalyticsTasks title="Tasks" list={_tasks} />
-        </Grid>
+        </Grid> */}
       </Grid>
     </DashboardContent>
   );
