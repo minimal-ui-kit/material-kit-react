@@ -26,6 +26,7 @@ export default class AuthService {
     delete data.password;
     return UserService.create({
       ...data,
+      pledgeAmount: Number(data.pledgeAmount),
       id: user.user.uid,
       role: [UserRole.Partner],
     });
