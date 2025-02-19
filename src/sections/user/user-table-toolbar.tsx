@@ -1,11 +1,25 @@
+import { useState} from 'react';
+
 import Tooltip from '@mui/material/Tooltip';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
 
 import { Iconify } from 'src/components/iconify';
+import { red } from '@mui/material/colors';
 
 // ----------------------------------------------------------------------
 
@@ -16,6 +30,31 @@ type UserTableToolbarProps = {
 };
 
 export function UserTableToolbar({ numSelected, filterName, onFilterName }: UserTableToolbarProps) {
+  // Confirm delete pop up will appear after delete button is clicked 
+  const [popUp, onPopUp] = useState(false);
+
+  const openPopUp = () => {
+	onPopUp(true);
+  };
+
+  const closePopUp = () => {
+	onPopUp(false);
+  };
+
+  // once click confirmed, remove from data 
+
+  // Make filter for subscription status
+  const [filter, onFilter] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState('all');
+
+  const openFilter = () => {
+	onFilter(true);
+  };
+
+  const closeFilter = () => {
+	onFilter(false);
+  };
+  
   return (
     <Toolbar
       sx={{
@@ -49,17 +88,70 @@ export function UserTableToolbar({ numSelected, filterName, onFilterName }: User
       )}
 
       {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton>
-            <Iconify icon="solar:trash-bin-trash-bold" />
-          </IconButton>
-        </Tooltip>
+		<>
+			<Tooltip title="Delete">
+			<IconButton onClick={openPopUp}>
+				<Iconify icon="solar:trash-bin-trash-bold" />
+			</IconButton>
+			</Tooltip>
+				<Dialog
+					open={popUp}
+					onClose={closePopUp}
+					aria-labelledby="alert-dialog-title"
+					aria-describedby="alert-dialog-description"
+				>
+					<DialogTitle id="alert-dialog-title">
+						Confirm Delete?
+					</DialogTitle>
+					<DialogContent>
+					<DialogContentText id="alert-dialog-description">
+						Once confirmed, all user data can not be recovered. 
+					</DialogContentText>
+					</DialogContent>
+					<DialogActions>
+					<Button sx={{ color: red[500] }} onClick={closePopUp}>Cancel</Button>
+					<Button onClick={closePopUp} autoFocus>
+						Confirm
+					</Button>
+					</DialogActions>
+				</Dialog>
+		</>
       ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <Iconify icon="ic:round-filter-list" />
-          </IconButton>
-        </Tooltip>
+		<Box>
+			<Tooltip title="Filter list">
+			<IconButton onClick={openFilter}>
+				<Iconify icon="ic:round-filter-list" />
+			</IconButton>
+			</Tooltip>
+			<Dialog
+					open={filter}
+					onClose={closeFilter}
+					aria-labelledby="filter-popUp"
+					aria-describedby="filter-description"
+				>
+					<DialogTitle id="filter-title">
+						Filter by Status
+					</DialogTitle>
+					<DialogContent>
+					<FormControl component="fieldset" sx={{ mt: 2 }}>
+						<RadioGroup
+						value={selectedFilter}
+						onChange={(event) => setSelectedFilter(event.target.value)}
+						>
+						<FormControlLabel value="all" control={<Radio />} label="All Users" />
+						<FormControlLabel value="active" control={<Radio />} label="Active Users" />
+						<FormControlLabel value="inactive" control={<Radio />} label="Inactive Users" />
+						</RadioGroup>
+					</FormControl>
+					</DialogContent>
+					<DialogActions>
+					<Button sx={{ color: red[500] }} onClick={closeFilter}>Cancel</Button>
+					<Button onClick={closeFilter} autoFocus>
+						Confirm
+					</Button>
+					</DialogActions>
+				</Dialog>
+		</Box>
       )}
     </Toolbar>
   );
