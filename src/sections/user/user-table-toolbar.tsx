@@ -27,9 +27,10 @@ type UserTableToolbarProps = {
   numSelected: number;
   filterName: string;
   onFilterName: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onFilterRole: (value: string) => void;
 };
 
-export function UserTableToolbar({ numSelected, filterName, onFilterName }: UserTableToolbarProps) {
+export function UserTableToolbar({ numSelected, filterName, onFilterName, onFilterRole }: UserTableToolbarProps) {
   // Confirm delete pop up will appear after delete button is clicked 
   const [popUp, onPopUp] = useState(false);
 
@@ -54,6 +55,13 @@ export function UserTableToolbar({ numSelected, filterName, onFilterName }: User
   const closeFilter = () => {
 	onFilter(false);
   };
+
+  // Once choose filter, filter staff data
+
+  const confirmFilter = () => {
+	onFilterRole(selectedFilter);
+	closeFilter();
+  }
   
   return (
     <Toolbar
@@ -130,7 +138,7 @@ export function UserTableToolbar({ numSelected, filterName, onFilterName }: User
 					aria-describedby="filter-description"
 				>
 					<DialogTitle id="filter-title">
-						Filter by Status
+						Filter by Employment Type
 					</DialogTitle>
 					<DialogContent>
 					<FormControl component="fieldset" sx={{ mt: 2 }}>
@@ -138,19 +146,20 @@ export function UserTableToolbar({ numSelected, filterName, onFilterName }: User
 						value={selectedFilter}
 						onChange={(event) => setSelectedFilter(event.target.value)}
 						>
-						<FormControlLabel value="all" control={<Radio />} label="All Users" />
-						<FormControlLabel value="active" control={<Radio />} label="Active Users" />
-						<FormControlLabel value="inactive" control={<Radio />} label="Inactive Users" />
+						<FormControlLabel value="all" control={<Radio />} label="All Staff" />
+						<FormControlLabel value="Part Time" control={<Radio />} label="Part Time" />
+						<FormControlLabel value="Full Time" control={<Radio />} label="Full Time" />
+						<FormControlLabel value="Manager" control={<Radio />} label="Managers" />
 						</RadioGroup>
 					</FormControl>
 					</DialogContent>
 					<DialogActions>
 					<Button sx={{ color: red[500] }} onClick={closeFilter}>Cancel</Button>
-					<Button onClick={closeFilter} autoFocus>
+					<Button onClick={confirmFilter} autoFocus>
 						Confirm
 					</Button>
 					</DialogActions>
-				</Dialog>
+			</Dialog>
 		</Box>
       )}
     </Toolbar>

@@ -2,13 +2,12 @@ import {
   _id,
   _price,
   _times,
-  _company,
-  _boolean,
   _fullName,
   _taskNames,
   _postTitles,
   _description,
   _productNames,
+  _contact,
 } from './_mock';
 
 // ----------------------------------------------------------------------
@@ -20,28 +19,23 @@ export const _myAccount = {
 };
 
 // ----------------------------------------------------------------------
+export const _roles = ['Assistant Manager', 'Manager', 'Counter Staff', 'Trainer'];
+export const _roleType = ['Manager', 'Part Time', "Full Time"];
 
-export const _users = [...Array(24)].map((_, index) => ({
-  id: _id(index),
-  name: _fullName(index),
-  company: _company(index),
-  isVerified: _boolean(index),
-  avatarUrl: `/assets/images/avatar/avatar-${index + 1}.webp`,
-  status: index % 4 ? 'active' : 'banned',
-  role:
-    [
-      'Leader',
-      'Hr Manager',
-      'UI Designer',
-      'UX Designer',
-      'UI/UX Designer',
-      'Project Manager',
-      'Backend Developer',
-      'Full Stack Designer',
-      'Front End Developer',
-      'Full Stack Developer',
-    ][index] || 'UI Designer',
-}));
+export const _users = [...Array(24)].map((_, index) => {
+  const role = _roles[index % _roles.length]; // Assigns role cyclically
+
+  return {
+    id: _id(index),
+    name: _fullName(index),
+    contact: _contact(index),
+    roleType: role.includes("Manager") ? "Manager" : (index % 2 ? "Part Time" : "Full Time"),
+    avatarUrl: `/assets/images/avatar/avatar-${index + 1}.webp`,
+    status: index % 4 ? 'active' : 'inactive',
+    role,
+  };
+});
+
 
 // ----------------------------------------------------------------------
 

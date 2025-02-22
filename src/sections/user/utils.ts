@@ -1,3 +1,8 @@
+import 
+{ _users,
+  _id,
+  _contact,
+} from 'src/_mock';
 import type { UserProps } from './user-table-row';
 
 // ----------------------------------------------------------------------
@@ -55,10 +60,11 @@ export function getComparator<Key extends keyof any>(
 type ApplyFilterProps = {
   inputData: UserProps[];
   filterName: string;
+  roleType: string;
   comparator: (a: any, b: any) => number;
 };
 
-export function applyFilter({ inputData, comparator, filterName }: ApplyFilterProps) {
+export function applyFilter({ inputData, comparator, filterName, roleType }: ApplyFilterProps) {
   const stabilizedThis = inputData.map((el, index) => [el, index] as const);
 
   stabilizedThis.sort((a, b) => {
@@ -75,5 +81,32 @@ export function applyFilter({ inputData, comparator, filterName }: ApplyFilterPr
     );
   }
 
+  if (roleType !== 'all') {
+    inputData = inputData.filter((user) => user.roleType === roleType);
+  }
+
   return inputData;
+}
+
+// ----------------------------------------------------------------------
+
+export type addStaffProps = {
+  name: string,
+  number: string,
+  role: string, 
+  roleType: string
+}
+export function addStaff({name, number, role, roleType}: addStaffProps) {
+    const index = _users.length + 1;
+    const newStaff = {
+        id: _id(index),
+        name,
+        contact: number,
+        roleType,
+        avatarUrl: `/assets/images/avatar/avatar-${index + 1}.webp`,
+        status: 'active',
+        role,
+    }
+    // store in db
+    _users.push(newStaff);
 }

@@ -16,6 +16,7 @@ export const UserPage = lazy(() => import('src/pages/user'));
 export const SignInPage = lazy(() => import('src/pages/sign-in'));
 export const ProductsPage = lazy(() => import('src/pages/products'));
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
+// export const StaffSchedule = lazy(() => import('src/pages/schedule'));
 
 // ----------------------------------------------------------------------
 
@@ -65,5 +66,9 @@ export function Router() {
       path: '*',
       element: <Navigate to="/404" replace />,
     },
+    // {
+    //   path: 'user/schedule',
+    //   element: <StaffSchedule />
+    // }
   ]);
 }

@@ -230,3 +230,10 @@ export const _productNames = (index: number) =>
     'Nike React Art3mis',
     'Nike React Infinity Run Flyknit A.I.R. Chaz Bear',
   ][index];
+  
+  export const _contact = (index: number) => 
+    ((Math.random() < 0.5 ? 8 : 9) * 10_000_000 + Math.floor(Math.random() * 10_000_000)).toString();
+  
+
+  
+  
