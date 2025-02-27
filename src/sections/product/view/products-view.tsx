@@ -14,6 +14,9 @@ import { CartIcon } from '../product-cart-widget';
 import { ProductFilters } from '../product-filters';
 
 import type { FiltersProps } from '../product-filters';
+import { Button } from '@mui/material';
+
+import { useParams } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
@@ -58,6 +61,7 @@ const defaultFilters = {
 };
 
 export function ProductsView() {
+
   const [sortBy, setSortBy] = useState('featured');
 
   const [openFilter, setOpenFilter] = useState(false);
@@ -131,7 +135,7 @@ export function ProductsView() {
       </Box>
 
       <Grid container spacing={3}>
-        {_products.map((product) => (
+        {_products.map((product) => (   
           <Grid key={product.id} xs={12} sm={6} md={3}>
             <ProductItem product={product} />
           </Grid>

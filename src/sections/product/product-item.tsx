@@ -8,6 +8,7 @@ import { fCurrency } from 'src/utils/format-number';
 
 import { Label } from 'src/components/label';
 import { ColorPreview } from 'src/components/color-utils';
+import { useRouter } from 'src/routes/hooks';
 
 // ----------------------------------------------------------------------
 
@@ -22,6 +23,9 @@ export type ProductItemProps = {
 };
 
 export function ProductItem({ product }: { product: ProductItemProps }) {
+
+  const router = useRouter();
+  
   const renderStatus = (
     <Label
       variant="inverted"
@@ -71,7 +75,7 @@ export function ProductItem({ product }: { product: ProductItemProps }) {
   );
 
   return (
-    <Card>
+    <Card onClick={() => {router.push("/product/" + product.id);}}>
       <Box sx={{ pt: '100%', position: 'relative' }}>
         {product.status && renderStatus}
 
