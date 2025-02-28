@@ -16,7 +16,6 @@ export default function Page() {
         <title> {`Products - ${CONFIG.appName}`}</title>
       </Helmet>
 
-      {/* <p>Hi, ProductId:</p> */}
       <ProductDetailPage />
     </>
   );

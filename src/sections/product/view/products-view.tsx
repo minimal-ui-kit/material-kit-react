@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 
 import { _products } from 'src/_mock';
 import { DashboardContent } from 'src/layouts/dashboard';
+import { useRouter } from 'src/routes/hooks';
 
 import { ProductItem } from '../product-item';
 import { ProductSort } from '../product-sort';
@@ -62,6 +63,8 @@ const defaultFilters = {
 
 export function ProductsView() {
 
+  const router = useRouter();
+
   const [sortBy, setSortBy] = useState('featured');
 
   const [openFilter, setOpenFilter] = useState(false);
@@ -92,6 +95,12 @@ export function ProductsView() {
     <DashboardContent>
       <Typography variant="h4" sx={{ mb: 5 }}>
         Products
+      </Typography>
+
+      <Typography variant="body2" sx={{ color: 'text.secondary', mb: 5 }}>
+        <Button variant="contained" color="primary" onClick={() => {router.push("/product-add-product");}}>
+          Add Product
+        </Button> 
       </Typography>
 
       <CartIcon totalItems={8} />
