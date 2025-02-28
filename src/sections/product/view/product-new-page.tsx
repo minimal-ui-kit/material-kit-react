@@ -1,6 +1,8 @@
 import { useForm } from 'react-hook-form';
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
 
+// ----------------------------------------------------------------------
+
 export function NewProductPage() {
     const { register, handleSubmit } = useForm();
 
@@ -11,7 +13,7 @@ export function NewProductPage() {
     return (
         <Container maxWidth="sm">
             <Typography variant="h3" gutterBottom>
-                Add New Product
+                Add New Activity
             </Typography>
 
             <Box component="form"
@@ -19,25 +21,30 @@ export function NewProductPage() {
             sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 <TextField
                     fullWidth
-                    label="Product Name"
-                    {...register('name', { required: 'Product name is required' })}
+                    label="Activity Name"
+                    {...register('name', { required: 'Activity name is required' })}
                 />
                 <TextField
                     fullWidth
-                    label="Product Description"
-                    {...register('description', { required: 'Product description is required' })}
+                    label="Activity Credit Price"
+                    {...register('price', { required: 'Activity credit price is required' })}
                 />
                 <TextField
                     fullWidth
-                    label="Product Price"
-                    {...register('price', { required: 'Product price is required' })}
+                    label="Activity Status"
+                    {...register('status', { required: 'Activity status is required' })}
+                />
+                <TextField
+                    fullWidth
+                    label="Activity Description"
+                    {...register('description', { required: 'Activity description is required' })}
                 />
                 <Button
                     type="submit"
                     variant="contained"
                     sx={{ mt: 3 }}
                 >
-                    Add Product
+                    Add Activity
                 </Button>
             </Box>
         </Container>

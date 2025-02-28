@@ -1,28 +1,55 @@
-import { useState, useCallback } from 'react';
-import { useParams } from 'react-router-dom';
+// import { useState, useCallback } from 'react';
+// import { useParams } from 'react-router-dom';
+import { Container, Typography, Box, Button, Card, CardContent, Stack } from '@mui/material';
+import { useRouter } from 'src/routes/hooks';
 
 // ----------------------------------------------------------------
 
 export function ProductDetailPage() {
-    const { productId } = useParams();
+    // const { productId } = useParams();
+
+    const router = useRouter();
       
           const data = {
-              name: 'Product Name',
-              price: 100,
+              name: 'Activity Name',
+              creditcost: 5,
               status: 'sale',
-              color: 'red',
-              size: 'M',
-              description: 'Product Description',
+              description: 'Activity Description',
           };
 
-    return (
-        <div>
-            <h1>{data.name}</h1>
-            <p>{data.price}</p>
-            <p>{data.status}</p>
-            <p>{data.color}</p>
-            <p>{data.size}</p>
-            <p>{data.description}</p>
-        </div>
-    );
+          return (
+            <Container maxWidth="sm">
+              <Card sx={{ mt: 4, p: 3, boxShadow: 3 }}>
+                <CardContent>
+                  <Typography variant="h4" gutterBottom>
+                    {data.name}
+                  </Typography>
+        
+                  <Stack spacing={1} sx={{ mb: 2 }}>
+                    <Typography variant="body1">
+                      <strong>Credit Cost:</strong> {data.creditcost}
+                    </Typography>
+                    <Typography variant="body1">
+                      <strong>Status:</strong> {data.status}
+                    </Typography>
+                    <Typography variant="body1">
+                      <strong>Description:</strong> {data.description}
+                    </Typography>
+                  </Stack>
+        
+                  <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
+                    <Button variant="contained" color="secondary" onClick={() => (router.push("/product-customers"))}>
+                      View Customers
+                    </Button>
+                    <Button variant="contained" color="primary">
+                      Edit Activity
+                    </Button>
+                    <Button variant="contained" color="error">
+                      Delete Activity
+                    </Button>
+                  </Box>
+                </CardContent>
+              </Card>
+            </Container>
+          );
 }
