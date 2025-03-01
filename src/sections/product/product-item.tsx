@@ -75,7 +75,7 @@ export function ProductItem({ product }: { product: ProductItemProps }) {
   );
 
   return (
-    <Card onClick={() => {router.push("/product/" + product.id);}}>
+    <Card onClick={() => {router.push(`/product/${product.id}`);}}>
       <Box sx={{ pt: '100%', position: 'relative' }}>
         {product.status && renderStatus}
 
