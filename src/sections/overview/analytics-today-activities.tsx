@@ -13,14 +13,12 @@ import { useTable } from '../user/view';
 import type { ActivityProp } from './view';
 import { visuallyHidden } from '../user/utils';
 
-export function TodayActivities() {
-    const table = useTable();
-    const [filterName, setFilterName] = useState('');
+type ActivityTableToolbarProps = {
+  filterName: string;
+  onFilterName: (event: React.ChangeEvent<HTMLInputElement>) => void;
+};
 
-    const onFilterName = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-        setFilterName(event.target.value);
-        table.onResetPage();
-    }, [table]);
+export function TodayActivities({filterName, onFilterName}: ActivityTableToolbarProps) {
     
     return (
             <Toolbar
@@ -68,7 +66,7 @@ export function ActivityTableHead({
                     key={headCell.id}
                     align={headCell.align || 'left'}
                     sortDirection={orderBy === headCell.id ? order : false}
-                    sx={{ width: headCell.width, minWidth: headCell.minWidth }}
+                    sx={{ width: headCell.width, minWidth: headCell.minWidth}}
                 >
                     <TableSortLabel
                     hideSortIcon

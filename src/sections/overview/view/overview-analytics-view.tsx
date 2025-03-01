@@ -4,6 +4,7 @@ import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
+import TablePagination from '@mui/material/TablePagination';
 import { Card } from '@mui/material';
 
 import { _tasks, _posts, _timeline, _activity } from 'src/_mock';
@@ -11,7 +12,9 @@ import { DashboardContent } from 'src/layouts/dashboard';
 
 import { Scrollbar } from 'src/components/scrollbar';
 import { useTable } from 'src/sections/user/view';
-import { getComparator } from 'src/sections/user/utils';
+import { getComparator, emptyRows } from 'src/sections/user/utils';
+import { TableEmptyRows } from 'src/sections/user/table-empty-rows';
+import { TableNoData } from 'src/sections/user/table-no-data';
 import { AnalyticsNews } from '../analytics-news';
 import { AnalyticsTasks } from '../analytics-tasks';
 import { AnalyticsCurrentVisits } from '../analytics-current-visits';
@@ -99,11 +102,16 @@ export function OverviewAnalyticsView() {
     </Typography>
 
 	<Card>
-		<TodayActivities/>
+		<TodayActivities
+			filterName={filterName}
+			onFilterName={(event: React.ChangeEvent<HTMLInputElement>) => {
+				setFilterName(event.target.value);
+				table.onResetPage();
+			  }}/>
 
 		<Scrollbar>
 			<TableContainer sx={{ overflow: 'unset' }}>
-				<Table sx={{ minWidth: 800 }}>
+				<Table sx={{ minWidth: 800}}>
 					<ActivityTableHead
 					order={table.order}
 					orderBy={table.orderBy}
@@ -128,16 +136,26 @@ export function OverviewAnalyticsView() {
 							/>
 						))}
 
-						{/* <TableEmptyRows
+						<TableEmptyRows
 						height={68}
-						emptyRows={emptyRows(table.page, table.rowsPerPage, _users.length)}
+						emptyRows={emptyRows(table.page, table.rowsPerPage, _activity.length)}
 						/>
 
-						{notFound && <TableNoData searchQuery={filterName} />} */}
+						{notFound && <TableNoData searchQuery={filterName} />}
 					</TableBody>
 				</Table>
 			</TableContainer>
 		</Scrollbar>
+
+    <TablePagination
+        component="div"
+        page={table.page}
+        count={dataFiltered.length}
+        rowsPerPage={table.rowsPerPage}
+        onPageChange={table.onChangePage}
+        rowsPerPageOptions={[5, 10, 25]}
+        onRowsPerPageChange={table.onChangeRowsPerPage}
+    />
 	</Card>
 		
 	<Grid container spacing={3} sx={{ mt: 5 }}>
