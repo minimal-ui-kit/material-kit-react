@@ -56,7 +56,7 @@ export function UserView() {
             setFilterName(event.target.value);
             table.onResetPage();
           }}
-		  onFilterRole={(value) => {
+		    onFilterRole={(value) => {
             filterRoleType(value);
             table.onResetPage();
           }}

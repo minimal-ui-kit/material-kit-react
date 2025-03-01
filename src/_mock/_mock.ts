@@ -1,3 +1,5 @@
+import { Sign, sign } from "crypto";
+
 export const _id = (index: number) => `e99f09a7-dd88-49d5-b1c8-1daf80c2d7b${index}`;
 
 export const _times = (index: number) =>
@@ -234,6 +236,103 @@ export const _productNames = (index: number) =>
   export const _contact = (index: number) => 
     ((Math.random() < 0.5 ? 8 : 9) * 10_000_000 + Math.floor(Math.random() * 10_000_000)).toString();
   
-
+export const _activity = [
+    {
+      id: _id(0),
+      name: 'Activity 1',
+      date: new Date('2023-11-08'),
+      start: '08:00',
+      end: '10:00',
+      signups: 10,
+    },
+    {
+      id: _id(1),
+      name: 'Activity 2',
+      date: new Date('2024-04-09'),
+      start: '09:00',
+      end: '11:00',
+      signups: 20,
+    },
+    {
+      id: _id(2),
+      name: 'Activity 3',
+      date: new Date('2023-09-12'),
+      start: '10:00',
+      end: '12:00',
+      signups: 13,
+    },
+    {
+      id: _id(3),
+      name: 'Activity 4',
+      date: new Date('2024-01-01'),
+      start: '11:00',
+      end: '13:00',
+      signups: 15,
+    },
+    {
+      id: _id(4),
+      name: 'Activity 5',
+      date: new Date('2024-04-23'),
+      start: '12:00',
+      end: '14:00',
+      signups: 18,
+    },
+    {
+      id: _id(5),
+      name: 'Activity 6',
+      date: new Date('2024-02-29'),
+      start: '13:00',
+      end: '15:00',
+      signups: 22,
+    },
+    {
+      id: _id(6),
+      name: 'Activity 7',
+      date: new Date('2024-05-14'),
+      start: '14:00',
+      end: '16:00',
+      signups: 25,  
+    },
+    {
+      id: _id(7),
+      name: 'Activity 8',
+      date: new Date('2024-01-13'),
+      start: '15:00',
+      end: '17:00',
+      signups: 28,
+    },
+    {
+      id: _id(8),
+      name: 'Activity 9',
+      date: new Date('2024-06-22'),
+      start: '16:00',
+      end: '18:00',
+      signups: 30,
+    },
+    {
+      id: _id(9),
+      name: 'Activity 10',
+      date: new Date('2023-10-05'),
+      start: '17:00',
+      end: '19:00',
+      signups: 35,
+    },
+    {
+      id: _id(10),
+      name: 'Activity 11',
+      date: new Date('2024-07-11'),
+      start: '18:00',
+      end: '20:00',
+      signups: 40,
+    },
+    {
+      id: _id(11),
+      name: 'Activity 12',
+      date: new Date('2024-05-22'),
+      start: '19:00',
+      end: '21:00',
+      signups: 45,
+    }
+]
   
   
