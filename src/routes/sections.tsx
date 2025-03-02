@@ -53,7 +53,7 @@ export function Router() {
         { path: 'blog', element: <BlogPage /> },
         { path: 'product/:productId', element: <ProductsDetailsPage /> },
         { path: 'product-add-product', element: <NewProductPage /> },
-        { path: 'product-customers', element: <ProductCustomerPage /> },
+        { path: 'product/:productId/customers', element: <ProductCustomerPage /> },
       ],
     },
     {

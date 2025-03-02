@@ -334,5 +334,32 @@ export const _activity = [
       signups: 45,
     }
 ]
+
+export const _customers = [
+    {
+      id: _id(0),
+      name: _fullName(0),
+      email: 'abcd@gmail.com',
+      phone: _contact(0),
+      date: '11/08/2023',
+      credits: 7,
+    },
+    {
+      id: _id(1),
+      name: _fullName(1),
+      email: 'abc@gmail.com',
+      phone: _contact(1),
+      date: '04/09/2024',
+      credits: 5,
+    },
+    {
+      id: _id(2),
+      name: _fullName(2),
+      email: 'efg@gmail.com',
+      phone: _contact(2),
+      date: '09/12/2023',
+      credits: 9,
+    }
+  ];
   
   

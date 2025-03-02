@@ -45,7 +45,7 @@ export function TodayActivities({filterName, onFilterName}: ActivityTableToolbar
 
 // ----------------------------------------------------------------------
 
-type ActivityTableHeadProps = {
+export type ActivityTableHeadProps = {
     orderBy: string;
     order: 'asc' | 'desc';
     onSort: (id: string) => void;
