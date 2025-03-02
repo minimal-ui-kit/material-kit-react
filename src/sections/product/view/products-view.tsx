@@ -4,10 +4,13 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2';
 import Pagination from '@mui/material/Pagination';
 import Typography from '@mui/material/Typography';
+import { Button } from '@mui/material';
 
 import { _products } from 'src/_mock';
 import { DashboardContent } from 'src/layouts/dashboard';
 import { useRouter } from 'src/routes/hooks';
+
+import { useParams } from 'react-router-dom';
 
 import { ProductItem } from '../product-item';
 import { ProductSort } from '../product-sort';
@@ -15,9 +18,7 @@ import { CartIcon } from '../product-cart-widget';
 import { ProductFilters } from '../product-filters';
 
 import type { FiltersProps } from '../product-filters';
-import { Button } from '@mui/material';
 
-import { useParams } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
