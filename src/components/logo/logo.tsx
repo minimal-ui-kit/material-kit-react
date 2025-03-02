@@ -36,7 +36,7 @@ export const Logo = forwardRef<HTMLDivElement, LogoProps>(
       <Box
         alt="Single logo"
         component="img"
-        src={`/wyd_logo.png`}
+        src="/wyd_logo.png"
         width="100%"
         height="100%"
       />
@@ -46,7 +46,7 @@ export const Logo = forwardRef<HTMLDivElement, LogoProps>(
       <Box
         alt="Full logo"
         component="img"
-        src={`/wyd_logo.png`}
+        src="/wyd_logo.png"
         width="100%"
         height="100%"
       />
