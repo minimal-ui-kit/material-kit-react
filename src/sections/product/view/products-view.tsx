@@ -94,15 +94,18 @@ export function ProductsView() {
 
   return (
     <DashboardContent>
-      <Typography variant="h4" sx={{ mb: 5 }}>
-        Activities
-      </Typography>
 
-      <Typography variant="body2" sx={{ color: 'text.secondary', mb: 5 }}>
+      <Box display="flex" justifyContent="space-between" alignItems="center" sx={{ mb: 5 }}>
+        <Typography variant="h4" sx={{ mb: 2 }}>
+          Activities
+        </Typography>
+
+        <Typography variant="body2" sx={{ color: 'text.secondary', mb: 2 }}>
         <Button variant="contained" color="primary" onClick={() => {router.push("/product-add-product");}}>
           Add Activity
         </Button> 
       </Typography>
+      </Box>
 
       <CartIcon totalItems={0} />
 
