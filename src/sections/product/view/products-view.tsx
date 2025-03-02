@@ -18,7 +18,7 @@ import { CartIcon } from '../product-cart-widget';
 import { ProductFilters } from '../product-filters';
 
 import type { FiltersProps } from '../product-filters';
-import { stat } from 'fs';
+// import { stat } from 'fs';
 
 
 // ----------------------------------------------------------------------
