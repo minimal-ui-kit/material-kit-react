@@ -2,11 +2,10 @@
 // import { useParams } from 'react-router-dom';
 import { Container, Typography, Box, Button, Card, CardContent, Stack } from '@mui/material';
 import { useRouter } from 'src/routes/hooks';
-
+import { ProductItemProps } from 'src/sections/product/product-item';
 // ----------------------------------------------------------------
 
-export function ProductDetailPage() {
-    // const { productId } = useParams();
+export function ProductDetailPage({ product }: { product: ProductItemProps }) {
 
     const router = useRouter();
       
@@ -38,7 +37,7 @@ export function ProductDetailPage() {
                   </Stack>
         
                   <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
-                    <Button variant="contained" color="secondary" onClick={() => (router.push("/product-customers"))}>
+                    <Button variant="contained" color="secondary" onClick={() => (router.push(`/product/${product.id}/customers`))}>
                       View Customers
                     </Button>
                     <Button variant="contained" color="primary">
