@@ -72,9 +72,5 @@ export function Router() {
       path: '*',
       element: <Navigate to="/404" replace />,
     },
-    // {
-    //   path: 'user/schedule',
-    //   element: <StaffSchedule />
-    // }
   ]);
 }
