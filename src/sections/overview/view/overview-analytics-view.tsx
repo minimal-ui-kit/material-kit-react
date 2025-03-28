@@ -11,10 +11,10 @@ import { _tasks, _posts, _timeline, _activity } from 'src/_mock';
 import { DashboardContent } from 'src/layouts/dashboard';
 
 import { Scrollbar } from 'src/components/scrollbar';
-import { useTable } from 'src/sections/user/view';
-import { getComparator, emptyRows } from 'src/sections/user/utils';
-import { TableEmptyRows } from 'src/sections/user/table-empty-rows';
-import { TableNoData } from 'src/sections/user/table-no-data';
+import { useTable } from 'src/sections/Bookings/view';
+import { getComparator, emptyRows } from 'src/sections/Bookings/utils';
+import { TableEmptyRows } from 'src/sections/Bookings/table-empty-rows';
+import { TableNoData } from 'src/sections/Bookings/table-no-data';
 import { AnalyticsNews } from '../analytics-news';
 import { AnalyticsTasks } from '../analytics-tasks';
 import { AnalyticsCurrentVisits } from '../analytics-current-visits';

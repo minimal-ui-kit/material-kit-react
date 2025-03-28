@@ -16,32 +16,22 @@ import { Iconify } from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
-export type UserProps = {
+export type BookingProp = {
   id: string;
-  name: string;
-  role: string;
+  customerName: string;
+  activityName: string;
   status: string;
-  contact: string;
-  avatarUrl: string;
-  roleType: string;
+  creditSpent: Number;
+  date: string;
 };
 
 type UserTableRowProps = {
-  row: UserProps;
+  row: BookingProp;
   selected: boolean;
   onSelectRow: () => void;
 };
 
 export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) {
-  const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
-
-  const handleOpenPopover = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-    setOpenPopover(event.currentTarget);
-  }, []);
-
-  const handleClosePopover = useCallback(() => {
-    setOpenPopover(null);
-  }, []);
 
   return (
     <>
@@ -52,25 +42,22 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
 
         <TableCell component="th" scope="row">
           <Box gap={2} display="flex" alignItems="center">
-            <Avatar alt={row.name} src={row.avatarUrl} />
-            {row.name}
+            {/* Get customer avatar from db */}
+            <Avatar alt={row.customerName} src={row.date} />
+            {row.customerName}
           </Box>
         </TableCell>
 
-        <TableCell>{row.contact}</TableCell>
+        <TableCell>{row.activityName}</TableCell>
 
-        <TableCell>{row.role}</TableCell>
+        <TableCell>{row.creditSpent.valueOf()}</TableCell>
 
         <TableCell>
-          {row.roleType}
+          {row.date}
         </TableCell>
 
         <TableCell>
           <Label color={(row.status === 'inactive' && 'error') || 'success'}>{row.status}</Label>
-        </TableCell>
-
-        <TableCell>
-          <Button variant="contained" disabled={row.status === 'inactive'}>View Schedule</Button>
         </TableCell>
       </TableRow>
     </>

@@ -48,7 +48,7 @@ export function Router() {
       ),
       children: [
         { element: <HomePage />, index: true },
-        { path: 'user', element: <UserPage /> },
+        { path: 'bookings', element: <UserPage /> },
         { path: 'products', element: <ProductsPage /> },
         { path: 'blog', element: <BlogPage /> },
         { path: 'product/:productId', element: <ProductsDetailsPage /> },
@@ -72,9 +72,5 @@ export function Router() {
       path: '*',
       element: <Navigate to="/404" replace />,
     },
-    // {
-    //   path: 'user/schedule',
-    //   element: <StaffSchedule />
-    // }
   ]);
 }

@@ -24,6 +24,7 @@
   },
   "packageManager": "yarn@1.22.22",
   "dependencies": {
+    "@date-io/date-fns": "^3.2.0",
     "@emotion/cache": "^11.13.1",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
@@ -31,7 +32,8 @@
     "@fontsource/barlow": "^5.0.14",
     "@iconify/react": "^5.0.2",
     "@mui/lab": "^5.0.0-alpha.173",
-    "@mui/material": "^5.16.7",
+    "@mui/material": "^5.16.14",
+    "@mui/x-date-pickers": "^7.27.1",
     "apexcharts": "^3.52.0",
     "dayjs": "^1.11.13",
     "history": "^5.3.0",

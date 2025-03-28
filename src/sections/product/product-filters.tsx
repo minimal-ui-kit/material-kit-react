@@ -6,25 +6,29 @@ import Button from '@mui/material/Button';
 import Drawer from '@mui/material/Drawer';
 import Rating from '@mui/material/Rating';
 import Divider from '@mui/material/Divider';
-import Checkbox from '@mui/material/Checkbox';
-import FormGroup from '@mui/material/FormGroup';
+// import Checkbox from '@mui/material/Checkbox';
+// import FormGroup from '@mui/material/FormGroup';
 import RadioGroup from '@mui/material/RadioGroup';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import { Slider } from '@mui/material';
+// import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+// import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+// import TextField from '@mui/material/TextField';
 
 import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
-import { ColorPicker } from 'src/components/color-utils';
 
 // ----------------------------------------------------------------------
 
 export type FiltersProps = {
-  price: string;
   rating: string;
-  gender: string[];
-  colors: string[];
-  category: string;
+  creditRange: number[];
+  status: string;
+  vacanciesRange: number[];
+  // dateRange: [Date | null, Date | null];
 };
 
 type ProductFiltersProps = {
@@ -36,11 +40,11 @@ type ProductFiltersProps = {
   onResetFilter: () => void;
   onSetFilters: (updateState: Partial<FiltersProps>) => void;
   options: {
-    colors: string[];
     ratings: string[];
-    categories: { value: string; label: string }[];
-    genders: { value: string; label: string }[];
-    price: { value: string; label: string }[];
+    creditRange: number[];
+    status: { value: string; label: string }[];
+    vacanciesRange: number[];
+    // dateRange: [Date | null, Date | null];
   };
 };
 
@@ -54,85 +58,6 @@ export function ProductFilters({
   onCloseFilter,
   onResetFilter,
 }: ProductFiltersProps) {
-  const renderGender = (
-    <Stack spacing={1}>
-      <Typography variant="subtitle2">Gender</Typography>
-      <FormGroup>
-        {options.genders.map((option) => (
-          <FormControlLabel
-            key={option.value}
-            control={
-              <Checkbox
-                checked={filters.gender.includes(option.value)}
-                onChange={() => {
-                  const checked = filters.gender.includes(option.value)
-                    ? filters.gender.filter((value) => value !== option.value)
-                    : [...filters.gender, option.value];
-
-                  onSetFilters({ gender: checked });
-                }}
-              />
-            }
-            label={option.label}
-          />
-        ))}
-      </FormGroup>
-    </Stack>
-  );
-
-  const renderCategory = (
-    <Stack spacing={1}>
-      <Typography variant="subtitle2">Category</Typography>
-      <RadioGroup>
-        {options.categories.map((option) => (
-          <FormControlLabel
-            key={option.value}
-            value={option.value}
-            control={
-              <Radio
-                checked={filters.category.includes(option.value)}
-                onChange={() => onSetFilters({ category: option.value })}
-              />
-            }
-            label={option.label}
-          />
-        ))}
-      </RadioGroup>
-    </Stack>
-  );
-
-  const renderColors = (
-    <Stack spacing={1}>
-      <Typography variant="subtitle2">Colors</Typography>
-      <ColorPicker
-        selected={filters.colors}
-        onSelectColor={(colors) => onSetFilters({ colors: colors as string[] })}
-        colors={options.colors}
-        limit={6}
-      />
-    </Stack>
-  );
-
-  const renderPrice = (
-    <Stack spacing={1}>
-      <Typography variant="subtitle2">Price</Typography>
-      <RadioGroup>
-        {options.price.map((option) => (
-          <FormControlLabel
-            key={option.value}
-            value={option.value}
-            control={
-              <Radio
-                checked={filters.price.includes(option.value)}
-                onChange={() => onSetFilters({ price: option.value })}
-              />
-            }
-            label={option.label}
-          />
-        ))}
-      </RadioGroup>
-    </Stack>
-  );
 
   const renderRating = (
     <Stack spacing={1}>
@@ -165,6 +90,81 @@ export function ProductFilters({
       ))}
     </Stack>
   );
+
+  const renderCreditRange = (
+    <Stack spacing={1}>
+      <Typography variant="subtitle2">Credits</Typography>
+      <Typography variant="body2">
+        {filters.creditRange[0]} - {filters.creditRange[1]} credits
+      </Typography>
+      <Slider
+        value={filters.creditRange}
+        onChange={(_, newValue) => onSetFilters({ creditRange: newValue as number[] })}
+        valueLabelDisplay="auto"
+        min={0}
+        max={15}
+        sx={{ color: "blue" }}
+      />
+    </Stack>
+  );
+  
+  const renderStatusFilter = (
+    <Stack spacing={1}>
+      <Typography variant="subtitle2">Status</Typography>
+      <RadioGroup>
+        {options.status.map((option) => (
+          <FormControlLabel
+            key={option.value}
+            value={option.value}
+            control={
+              <Radio
+                checked={filters.status === option.value}
+                onChange={() => onSetFilters({ status: option.value })}
+              />
+            }
+            label={option.label}
+          />
+        ))}
+      </RadioGroup>
+    </Stack>
+  );  
+
+  const renderVacanciesFilter = (
+    <Stack spacing={1}>
+      <Typography variant="subtitle2">Vacancies</Typography>
+      <Typography variant="body2">
+        {filters.vacanciesRange[0]} - {filters.vacanciesRange[1]} spots
+      </Typography>
+      <Slider
+        value={filters.vacanciesRange}
+        onChange={(_, newValue) => onSetFilters({ vacanciesRange: newValue as number[] })}
+        valueLabelDisplay="auto"
+        min={options.vacanciesRange[0]}
+        max={options.vacanciesRange[1]}
+        sx={{ color: "green" }}
+      />
+    </Stack>
+  );  
+
+  // const renderDateFilter = (
+  //   <LocalizationProvider dateAdapter={AdapterDateFns}>
+  //     <Stack spacing={1}>
+  //       <Typography variant="subtitle2">Select Date Range</Typography>
+  //       <DesktopDatePicker
+  //         label="Start Date"
+  //         value={filters.dateRange[0]}
+  //         onChange={(newDate) => onSetFilters({ dateRange: [newDate, filters.dateRange[1]] })}
+  //       />
+  //       <DatePicker
+  //         label="End Date"
+  //         value={filters.dateRange[1]}
+  //         onChange={(newDate) => onSetFilters({ dateRange: [filters.dateRange[0], newDate] })}
+  //         renderInput={(params) => <TextField {...params} fullWidth />}
+  //       />
+  //     </Stack>
+  //   </LocalizationProvider>
+  // );
+  
 
   return (
     <>
@@ -209,11 +209,11 @@ export function ProductFilters({
 
         <Scrollbar>
           <Stack spacing={3} sx={{ p: 3 }}>
-            {renderGender}
-            {renderCategory}
-            {renderColors}
-            {renderPrice}
             {renderRating}
+            {renderCreditRange}
+            {renderStatusFilter}
+            {renderVacanciesFilter}
+            {/* {renderDateFilter} */}
           </Stack>
         </Scrollbar>
       </Drawer>
