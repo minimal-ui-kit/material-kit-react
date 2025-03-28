@@ -12,6 +12,8 @@ import { Iconify } from 'src/components/iconify';
 import type { ActivityProp } from './view';
 import { visuallyHidden } from '../Bookings/utils';
 
+import { useRouter } from '../../routes/hooks';
+
 type ActivityTableToolbarProps = {
   filterName: string;
   onFilterName: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -90,6 +92,7 @@ export function ActivityTableHead({
 // ----------------------------------------------------------------------
 
 export function ActivityTableRow({ row }: { row: ActivityProp }) {
+    const router = useRouter();  
     const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
   
     const handleOpenPopover = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
@@ -116,7 +119,7 @@ export function ActivityTableRow({ row }: { row: ActivityProp }) {
           <TableCell>{row.signups}</TableCell>
 
           <TableCell>
-            <Button variant="contained">View Activity</Button>
+            <Button variant="contained" onClick={() => router.push(`/product/${row.id}`)}>View Activity</Button>
           </TableCell>
         </TableRow>
       </>
