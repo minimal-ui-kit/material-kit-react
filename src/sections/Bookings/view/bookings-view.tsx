@@ -32,13 +32,13 @@ export function UserView() {
   const table = useTable();
 
   const [filterName, setFilterName] = useState('');
-  const [roleType, filterRoleType] = useState('all');
+  const [status, filterStatus] = useState('all');
 
   const dataFiltered: BookingProp[] = applyFilter({
     inputData: _bookings,
     comparator: getComparator(table.order, table.orderBy),
     filterName,
-	  roleType
+	  status
   });
 
   const notFound = !dataFiltered.length && !!filterName;
@@ -56,8 +56,8 @@ export function UserView() {
             setFilterName(event.target.value);
             table.onResetPage();
           }}
-		    onFilterRole={(value) => {
-            filterRoleType(value);
+		    onFilterStatus={(value) => {
+            filterStatus(value);
             table.onResetPage();
           }}
         />

@@ -27,10 +27,10 @@ type UserTableToolbarProps = {
   numSelected: number;
   filterName: string;
   onFilterName: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onFilterRole: (value: string) => void;
+  onFilterStatus: (value: string) => void;
 };
 
-export function UserTableToolbar({ numSelected, filterName, onFilterName, onFilterRole }: UserTableToolbarProps) {
+export function UserTableToolbar({ numSelected, filterName, onFilterName, onFilterStatus }: UserTableToolbarProps) {
   // Confirm delete pop up will appear after delete button is clicked 
   const [popUp, onPopUp] = useState(false);
 
@@ -59,7 +59,7 @@ export function UserTableToolbar({ numSelected, filterName, onFilterName, onFilt
   // Once choose filter, filter staff data
 
   const confirmFilter = () => {
-	onFilterRole(selectedFilter);
+	onFilterStatus(selectedFilter);
 	closeFilter();
   }
   
@@ -138,7 +138,7 @@ export function UserTableToolbar({ numSelected, filterName, onFilterName, onFilt
 					aria-describedby="filter-description"
 				>
 					<DialogTitle id="filter-title">
-						Filter by Employment Type
+						Filter by Status
 					</DialogTitle>
 					<DialogContent>
 					<FormControl component="fieldset" sx={{ mt: 2 }}>
@@ -146,10 +146,9 @@ export function UserTableToolbar({ numSelected, filterName, onFilterName, onFilt
 						value={selectedFilter}
 						onChange={(event) => setSelectedFilter(event.target.value)}
 						>
-						<FormControlLabel value="all" control={<Radio />} label="All Staff" />
-						<FormControlLabel value="Part Time" control={<Radio />} label="Part Time" />
-						<FormControlLabel value="Full Time" control={<Radio />} label="Full Time" />
-						<FormControlLabel value="Manager" control={<Radio />} label="Managers" />
+						<FormControlLabel value="all" control={<Radio />} label="All" />
+						<FormControlLabel value="cancelled" control={<Radio />} label="Cancelled" />
+						<FormControlLabel value="completed" control={<Radio />} label="Completed" />
 						</RadioGroup>
 					</FormControl>
 					</DialogContent>
