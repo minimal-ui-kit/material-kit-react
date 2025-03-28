@@ -2,12 +2,12 @@ import { useState } from "react";
 import { Typography, Box, Card, TableContainer, Table, TableBody, TableCell, TableRow } from "@mui/material";
 import { DashboardContent } from "src/layouts/dashboard";
 import { _customers } from "src/_mock";
-import { getComparator, emptyRows } from "src/sections/user/utils";
-import { useTable } from "src/sections/user/view";
+import { getComparator, emptyRows } from "src/sections/Bookings/utils";
+import { useTable } from "src/sections/Bookings/view";
 import { Scrollbar } from "src/components/scrollbar";
 import { TodayActivities, ActivityTableHead } from "../../overview/analytics-today-activities";
-import { TableEmptyRows } from "../../user/table-empty-rows";
-import { TableNoData } from "../../user/table-no-data";
+import { TableEmptyRows } from "../../Bookings/table-empty-rows";
+import { TableNoData } from "../../Bookings/table-no-data";
 
 export function ProductCustomerPage() {
     const table = useTable();

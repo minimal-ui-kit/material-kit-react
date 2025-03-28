@@ -10,21 +10,21 @@ import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
 // fetch from db
-import { _users } from 'src/_mock';
+import { _bookings } from 'src/_mock';
 import { DashboardContent } from 'src/layouts/dashboard';
 
 import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
 
 import { TableNoData } from '../table-no-data';
-import { UserHeader } from '../user-header';
-import { UserTableRow } from '../user-table-row';
+import { BookingsHeader } from '../bookings-header';
+import { UserTableRow } from '../bookings-table-row';
 import { UserTableHead } from '../user-table-head';
 import { TableEmptyRows } from '../table-empty-rows';
 import { UserTableToolbar } from '../user-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
 
-import type { UserProps } from '../user-table-row';
+import type { BookingProp } from '../bookings-table-row';
 
 // ----------------------------------------------------------------------
 
@@ -34,11 +34,11 @@ export function UserView() {
   const [filterName, setFilterName] = useState('');
   const [roleType, filterRoleType] = useState('all');
 
-  const dataFiltered: UserProps[] = applyFilter({
-    inputData: _users,
+  const dataFiltered: BookingProp[] = applyFilter({
+    inputData: _bookings,
     comparator: getComparator(table.order, table.orderBy),
     filterName,
-	roleType
+	  roleType
   });
 
   const notFound = !dataFiltered.length && !!filterName;
@@ -46,7 +46,7 @@ export function UserView() {
   return (
     <DashboardContent>
       
-	  <UserHeader/>
+	  <BookingsHeader/>
 
       <Card>
         <UserTableToolbar
@@ -68,20 +68,20 @@ export function UserView() {
               <UserTableHead
                 order={table.order}
                 orderBy={table.orderBy}
-                rowCount={_users.length}
+                rowCount={_bookings.length}
                 numSelected={table.selected.length}
                 onSort={table.onSort}
                 onSelectAllRows={(checked) =>
                   table.onSelectAllRows(
                     checked,
-                    _users.map((user) => user.id)
+                    _bookings.map((user) => user.id)
                   )
                 }
                 headLabel={[
-                  { id: 'name', label: 'Name' },
-                  { id: 'contact', label: 'Contact' },
-                  { id: 'role', label: 'Role' },
-                  { id: 'roleType', label: 'Type'},
+                  { id: 'customerName', label: 'Customer Name' },
+                  { id: 'activityName', label: 'Activity Name' },
+                  { id: 'creditSpent', label: 'Credit Spent' },
+                  { id: 'date', label: 'Date Booked'},
                   { id: 'status', label: 'Status' },
                   { id: '' },
                 ]}
@@ -103,7 +103,7 @@ export function UserView() {
 
                 <TableEmptyRows
                   height={68}
-                  emptyRows={emptyRows(table.page, table.rowsPerPage, _users.length)}
+                  emptyRows={emptyRows(table.page, table.rowsPerPage, _bookings.length)}
                 />
 
                 {notFound && <TableNoData searchQuery={filterName} />}

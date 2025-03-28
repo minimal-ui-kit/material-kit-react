@@ -9,9 +9,9 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
 import { Iconify } from 'src/components/iconify';
-import { useTable } from '../user/view';
+import { useTable } from '../Bookings/view';
 import type { ActivityProp } from './view';
-import { visuallyHidden } from '../user/utils';
+import { visuallyHidden } from '../Bookings/utils';
 
 type ActivityTableToolbarProps = {
   filterName: string;

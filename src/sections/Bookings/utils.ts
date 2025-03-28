@@ -3,7 +3,7 @@ import
   _id,
   _contact,
 } from 'src/_mock';
-import type { UserProps } from './user-table-row';
+import type { BookingProp } from './bookings-table-row';
 
 // ----------------------------------------------------------------------
 
@@ -58,7 +58,7 @@ export function getComparator<Key extends keyof any>(
 // ----------------------------------------------------------------------
 
 type ApplyFilterProps = {
-  inputData: UserProps[];
+  inputData: BookingProp[];
   filterName: string;
   roleType: string;
   comparator: (a: any, b: any) => number;
@@ -77,12 +77,8 @@ export function applyFilter({ inputData, comparator, filterName, roleType }: App
 
   if (filterName) {
     inputData = inputData.filter(
-      (user) => user.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+      (user) => user.customerName.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
     );
-  }
-
-  if (roleType !== 'all') {
-    inputData = inputData.filter((user) => user.roleType === roleType);
   }
 
   return inputData;
