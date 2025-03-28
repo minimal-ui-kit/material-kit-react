@@ -57,7 +57,7 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
         </TableCell>
 
         <TableCell>
-          <Label color={(row.status === 'inactive' && 'error') || 'success'}>{row.status}</Label>
+          <Label color={(row.status === 'cancelled' && 'error') || 'success'}>{row.status}</Label>
         </TableCell>
       </TableRow>
     </>
