@@ -60,11 +60,11 @@ export function getComparator<Key extends keyof any>(
 type ApplyFilterProps = {
   inputData: BookingProp[];
   filterName: string;
-  roleType: string;
+  status: string;
   comparator: (a: any, b: any) => number;
 };
 
-export function applyFilter({ inputData, comparator, filterName, roleType }: ApplyFilterProps) {
+export function applyFilter({ inputData, comparator, filterName, status }: ApplyFilterProps) {
   const stabilizedThis = inputData.map((el, index) => [el, index] as const);
 
   stabilizedThis.sort((a, b) => {
@@ -79,6 +79,12 @@ export function applyFilter({ inputData, comparator, filterName, roleType }: App
     inputData = inputData.filter(
       (user) => user.customerName.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
     );
+  }
+
+  console.log(status);
+
+  if (status !== 'all') {
+    inputData = inputData.filter((user) => user.status === status);
   }
 
   return inputData;

@@ -197,7 +197,7 @@ export const _bookings = [...Array(24)].map((_, index) => ({
   id: _id(index),
   customerName: _fullName(index),
   activityName: _productNames(index),
-  status: index % 2 ? 'completed' : 'pending',
+  status: index % 2 ? 'completed' : 'cancelled',
   creditSpent: _price(index),
   date: _times(index),
 }));
