@@ -10,7 +10,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
 // fetch from db
-import { _bookings } from 'src/_mock';
 import { DashboardContent } from 'src/layouts/dashboard';
 
 import { Iconify } from 'src/components/iconify';
@@ -33,9 +32,19 @@ export function UserView() {
 
   const [filterName, setFilterName] = useState('');
   const [status, filterStatus] = useState('all');
+  const [bookings, setBookings] = useState<BookingProp[]>([]);
+
+  fetch('http://localhost:3000/api/bookings/biz/65c345678901abcd12345678')
+    .then((response) => response.json())
+    .then((data) => {
+      setBookings(data);
+    })
+    .catch((error) => {
+      console.error('Error fetching bookings:', error);
+    });
 
   const dataFiltered: BookingProp[] = applyFilter({
-    inputData: _bookings,
+    inputData: bookings,
     comparator: getComparator(table.order, table.orderBy),
     filterName,
 	  status
@@ -68,13 +77,13 @@ export function UserView() {
               <UserTableHead
                 order={table.order}
                 orderBy={table.orderBy}
-                rowCount={_bookings.length}
+                rowCount={bookings.length}
                 numSelected={table.selected.length}
                 onSort={table.onSort}
                 onSelectAllRows={(checked) =>
                   table.onSelectAllRows(
                     checked,
-                    _bookings.map((user) => user.id)
+                    bookings.map((user) => user.id)
                   )
                 }
                 headLabel={[
@@ -103,7 +112,7 @@ export function UserView() {
 
                 <TableEmptyRows
                   height={68}
-                  emptyRows={emptyRows(table.page, table.rowsPerPage, _bookings.length)}
+                  emptyRows={emptyRows(table.page, table.rowsPerPage, bookings.length)}
                 />
 
                 {notFound && <TableNoData searchQuery={filterName} />}
