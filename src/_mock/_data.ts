@@ -16,6 +16,7 @@ export const _myAccount = {
   displayName: 'Jaydon Frankie',
   email: 'demo@minimals.cc',
   photoURL: '/assets/images/avatar/avatar-25.webp',
+  _id: '65c345678901abcd12345678'
 };
 
 // ----------------------------------------------------------------------
@@ -186,11 +187,14 @@ export const _notifications = [
 
 export const _bookings = [...Array(24)].map((_, index) => ({
   id: _id(index),
+  userId: _id(index),
+  businessId: _id(index),
+  activityId: _id(index),
   customerName: _fullName(index),
   activityName: _productNames(index),
   status: index % 2 ? 'completed' : 'cancelled',
   creditSpent: _price(index),
-  date: _times(index),
+  bookingDate: _times(index),
 }));
 
 

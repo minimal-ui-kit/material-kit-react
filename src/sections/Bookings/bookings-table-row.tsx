@@ -22,7 +22,10 @@ export type BookingProp = {
   activityName: string;
   status: string;
   creditSpent: Number;
-  date: string;
+  bookingDate: string;
+  userId: string;
+  businessId: string;
+  activityId: string;
 };
 
 type UserTableRowProps = {
@@ -43,7 +46,7 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
         <TableCell component="th" scope="row">
           <Box gap={2} display="flex" alignItems="center">
             {/* Get customer avatar from db */}
-            <Avatar alt={row.customerName} src={row.date} />
+            <Avatar alt={row.customerName} src={row.bookingDate} />
             {row.customerName}
           </Box>
         </TableCell>
@@ -53,7 +56,7 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
         <TableCell>{row.creditSpent.valueOf()}</TableCell>
 
         <TableCell>
-          {row.date}
+          {row.bookingDate}
         </TableCell>
 
         <TableCell>

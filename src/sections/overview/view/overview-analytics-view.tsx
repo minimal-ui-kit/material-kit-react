@@ -306,7 +306,7 @@ export function applyFinanceFilter({ inputData, date, comparator }: FinanceFiler
 	if (chosenDayjs) {
 		inputData = inputData.filter(
 			(booking) => {
-				const bookingDayjs = dayjs(booking.date, 'MM YYYY');
+				const bookingDayjs = dayjs(booking.bookingDate, 'MM YYYY');
 				return bookingDayjs.isSame(chosenDayjs, 'month') && bookingDayjs.isSame(chosenDayjs, 'year');
 			}
 		);
