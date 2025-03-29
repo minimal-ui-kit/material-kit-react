@@ -12,6 +12,15 @@ import {
 
 // ----------------------------------------------------------------------
 
+export const _myBusinessProfile = {
+  name: "Tech Solutions Inc.",
+  email: "contact@techsolutions.com",
+  phone: "+1 (234) 567-890",
+  address: "123 Tech Street, Silicon Valley, CA",
+};
+
+// ----------------------------------------------------------------------
+
 export const _myAccount = {
   displayName: 'Jaydon Frankie',
   email: 'demo@minimals.cc',

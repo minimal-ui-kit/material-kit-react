@@ -361,5 +361,3 @@ export const _customers = [
       credits: 9,
     }
   ];
-  
-  
