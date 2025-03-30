@@ -1,1 +1,2 @@
-export * from './products-view';
+export * from './scheduled-activities-view';
+export * from './one-time-activities-view';
