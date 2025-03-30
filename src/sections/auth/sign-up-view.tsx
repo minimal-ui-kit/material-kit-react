@@ -3,7 +3,8 @@ import PhoneInput, { CountryData } from "react-phone-input-2";
 import "react-phone-input-2/lib/material.css";
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
-import Divider from '@mui/material/Divider';
+import Snackbar from '@mui/material/Snackbar';
+import { Alert } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
@@ -27,6 +28,10 @@ export function SignUpView() {
         phone: "",
         address: "",
     });
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState("");
+    const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error">("success");
+
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({
@@ -51,18 +56,20 @@ export function SignUpView() {
             },
             body: JSON.stringify(formData),
         })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
+            .then((response) => response.json())
             .then((data) => {
-                localStorage.setItem('token', data.accessToken);
-                router.push('/');
-            })
-            .catch((error) => {
-                console.error('Error:', error);
+                if (data.status === "success") {
+                    setSnackbarMessage("Sign up successful!");
+                    setSnackbarSeverity("success");
+                    setOpenSnackbar(true);
+                    setTimeout(() => {
+                        router.push('/sign-in');
+                    }, 1500);
+                } else {
+                    setSnackbarMessage(data.message);
+                    setSnackbarSeverity("error");
+                    setOpenSnackbar(true);
+                }
             });
     }, [router, formData]);
 
@@ -159,6 +166,18 @@ export function SignUpView() {
             </Box>
 
             {renderForm}
+
+            <Snackbar
+                open={openSnackbar}
+                autoHideDuration={3000}
+                onClose={() => setOpenSnackbar(false)}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            >
+                <Alert severity={snackbarSeverity} onClose={() => setOpenSnackbar(false)}>
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
+
         </>
     );
 }

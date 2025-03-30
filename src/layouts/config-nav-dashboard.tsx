@@ -28,11 +28,11 @@ export const navData = [
       </Label>
     ),
   },
-  {
-    title: 'Sign in',
-    path: '/sign-in',
-    icon: icon('ic-lock'),
-  },
+  // {
+  //   title: 'Sign in',
+  //   path: '/sign-in',
+  //   icon: icon('ic-lock'),
+  // },
   // {
   //   title: 'Blog',
   //   path: '/blog',
