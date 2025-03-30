@@ -1,6 +1,6 @@
 import type { IconButtonProps } from '@mui/material/IconButton';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -11,10 +11,8 @@ import MenuList from '@mui/material/MenuList';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
-
+import { Profile } from 'src/sections/profile/view/profile-page';
 import { useRouter, usePathname } from 'src/routes/hooks';
-
-import { _myAccount } from 'src/_mock';
 
 // ----------------------------------------------------------------------
 
@@ -33,6 +31,33 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
   const pathname = usePathname();
 
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
+  const [profile, setProfile] = useState<Profile | null>(null);
+  
+    useEffect(() => {
+      fetch("http://localhost:3000/api/businesses/profile", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+        .then((response) => {
+          if (!response.ok) throw new Error("Failed to fetch profile");
+          return response.json();
+        })
+        .then((resData) => {
+          if (resData.status === "success") {
+            setProfile(resData.business);
+          } else {
+            console.error(resData.message);
+            router.push("/sign-in");
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          router.push("/sign-in");
+        });
+    }, [router]);
 
   const handleOpenPopover = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     setOpenPopover(event.currentTarget);
@@ -50,6 +75,10 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
     [handleClosePopover, router]
   );
 
+  if (!profile) {
+    return null; 
+  }
+
   return (
     <>
       <IconButton
@@ -64,8 +93,8 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
         }}
         {...other}
       >
-        <Avatar src={_myAccount.photoURL} alt={_myAccount.displayName} sx={{ width: 1, height: 1 }}>
-          {_myAccount.displayName.charAt(0).toUpperCase()}
+        <Avatar src={`http://localhost:3000/${profile.profileImage}`} alt={profile.name} sx={{ width: 1, height: 1 }}>
+          {profile.name.charAt(0).toUpperCase()}
         </Avatar>
       </IconButton>
 
@@ -83,11 +112,11 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
       >
         <Box sx={{ p: 2, pb: 1.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {_myAccount?.displayName}
+            {profile.name}
           </Typography>
 
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {_myAccount?.email}
+            {profile.email}
           </Typography>
         </Box>
 

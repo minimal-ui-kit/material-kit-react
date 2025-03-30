@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useMemo } from 'react';
 import Grid from '@mui/material/Unstable_Grid2';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 import { Card } from '@mui/material';
 
-import { _tasks, _posts, _timeline, _activity, _bookings } from 'src/_mock';
+import { _tasks, _posts, _timeline, _activity } from 'src/_mock';
 import { DashboardContent } from 'src/layouts/dashboard';
 
 import { BookingProp } from 'src/sections/Bookings/bookings-table-row';
@@ -39,9 +39,20 @@ export type ActivityProp = {
 export function OverviewAnalyticsView() {
 	const table = useTable();
 	const earningsTable = useTable();
-	
+
 	const [filterName, setFilterName] = useState('');
 	const [chooseDate, setChooseDate] = useState('');
+	const [bookings, setBookings] = useState<BookingProp[]>([]);
+	useEffect(() => {
+		fetch(`http://localhost:3000/api/bookings/biz/65c345678901abcd12345678${chooseDate}`)
+		.then((response) => response.json())
+		.then((data) => {
+			setBookings(data);
+		})
+		.catch((error) => {
+			console.error('Error fetching bookings:', error);
+		}); // This will log only when chooseDate changes
+	  }, [chooseDate]);
 
 	const dataFiltered: ActivityProp[] = applyFilter({
 		inputData: _activity,
@@ -51,12 +62,13 @@ export function OverviewAnalyticsView() {
 	const notFound = !dataFiltered.length && !!filterName;
 
 	const bookingsFiltered: BookingProp[] = applyFinanceFilter({
-		inputData: _bookings,
+		inputData: bookings,
 		comparator: getComparator(table.order, table.orderBy),
 		date: chooseDate,
 	});
 
-	const groupedBookings = groupBookingsByActivity(bookingsFiltered);
+	const groupedBookings = useMemo(() => 
+		groupBookingsByActivity(bookingsFiltered),[bookingsFiltered]);
 
 	return (
 		<DashboardContent maxWidth="xl">
@@ -100,13 +112,15 @@ export function OverviewAnalyticsView() {
 			</Typography>
 
 			<Card>
-				<FinanceToolbar 
+				<FinanceToolbar
 					chooseDate={chooseDate}
-					onChooseDate={(date: Dayjs | null) => {  // ✅ Accepts Dayjs | null
+					onChooseDate={(date: Dayjs | null) => {  // Accepts Dayjs | null
 						if (date) {
-							setChooseDate(date.format('MM YYYY'));  // ✅ Convert Dayjs to string
-							table.onResetPage();
+							const formattedDate = `?month=${date.format('MM_YYYY')}`;
+							setChooseDate(formattedDate);
+							earningsTable.onResetPage();
 						}
+						 // Convert Dayjs to string
 					}}
 				/>
 
@@ -130,15 +144,15 @@ export function OverviewAnalyticsView() {
 										earningsTable.page * earningsTable.rowsPerPage + earningsTable.rowsPerPage
 									)
 									.map((row) => (
-									<EarningsRow key={row.activityName} row={row} />
-								))}
+										<EarningsRow key={row.activityName} row={row} />
+									))}
 
 								<TableEmptyRows
 									height={68}
 									emptyRows={emptyRows(table.page, table.rowsPerPage, _activity.length)}
 								/>
 
-								{!groupedBookings || groupedBookings.length === 0 ? <TableNoData searchQuery={filterName} /> : null}
+								{!groupedBookings || groupedBookings.length === 0 ? <TableNoData searchQuery={chooseDate} /> : null}
 							</TableBody>
 							<TableBody>
 								<TotalEarnings bookings={bookingsFiltered} />
@@ -291,7 +305,7 @@ type FinanceFilerProps = {
 }
 
 export function applyFinanceFilter({ inputData, date, comparator }: FinanceFilerProps) {
-	const chosenDayjs = date ? dayjs(date, 'MM YYYY') : null;
+	const chosenDayjs = date ? dayjs(date.replace('?month=', ''), 'MM_YYYY') : null;
 
 	const stabilizedThis = inputData.map((el, index) => [el, index] as const);
 
@@ -306,7 +320,7 @@ export function applyFinanceFilter({ inputData, date, comparator }: FinanceFiler
 	if (chosenDayjs) {
 		inputData = inputData.filter(
 			(booking) => {
-				const bookingDayjs = dayjs(booking.bookingDate, 'MM YYYY');
+				const bookingDayjs = dayjs(booking.bookingDate);
 				return bookingDayjs.isSame(chosenDayjs, 'month') && bookingDayjs.isSame(chosenDayjs, 'year');
 			}
 		);
@@ -318,20 +332,19 @@ export function applyFinanceFilter({ inputData, date, comparator }: FinanceFiler
 // ----------------------------------------------------------------------
 
 export function groupBookingsByActivity(bookings: BookingProp[], cashPerCredit: number = 10): GroupedBooking[] {
-    if (!bookings || bookings.length === 0) return [];
+	if (!bookings || bookings.length === 0) return [];
 	const grouped: Record<string, GroupedBooking> = {};
+	bookings.forEach((booking) => {
+		if (!grouped[booking.activityId]) {
+			grouped[booking.activityId] = {
+				activityName: `Activity ${booking.activityId}`,
+				totalCredits: 0,
+				cashEarned: 0
+			};
+		}
+		grouped[booking.activityId].totalCredits += Number(booking.creditSpent);
+		grouped[booking.activityId].cashEarned = grouped[booking.activityId].totalCredits * cashPerCredit;
+	});
 
-    bookings.forEach((booking) => {
-        if (!grouped[booking.activityName]) {
-            grouped[booking.activityName] = {
-                activityName: booking.activityName,
-                totalCredits: 0,
-                cashEarned: 0
-            };
-        }
-        grouped[booking.activityName].totalCredits += Number(booking.creditSpent);
-        grouped[booking.activityName].cashEarned = grouped[booking.activityName].totalCredits * cashPerCredit;
-    });
-
-    return Object.values(grouped);
+	return Object.values(grouped);
 }

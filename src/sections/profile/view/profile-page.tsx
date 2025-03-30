@@ -1,7 +1,22 @@
 import { Card, CardContent, CardHeader, Avatar, Typography, Button, Grid } from "@mui/material";
 import { useRouter } from "src/routes/hooks";
 
-export function ProfileView({profile} : { profile: { name: string; email: string; phone: string; address: string; imageUrl?: string } }) {
+export type ProfileViewProps = {
+  profile: Profile;
+};
+
+export type Profile = {
+  _id: string;
+  name: string;
+  email: string;
+  password: string;
+  phone: string;
+  address: string;
+  profileImage: string;
+  created: string;
+};
+
+export function ProfileView({profile} : ProfileViewProps) {
   const router = useRouter();
 
   return (
@@ -10,7 +25,7 @@ export function ProfileView({profile} : { profile: { name: string; email: string
         <Card sx={{ p: 3, borderRadius: 3, boxShadow: 3 }}>
           {/* Profile Header */}
           <CardHeader
-            avatar={<Avatar src={profile.imageUrl || "/default-profile.png"} sx={{ width: 80, height: 80 }} />}
+            avatar={<Avatar src={`http://localhost:3000/${profile.profileImage}` || "/default-profile.png"} sx={{ width: 80, height: 80 }} />}
             title={<Typography variant="h5">{profile.name}</Typography>}
             subheader={<Typography variant="body2" color="text.secondary">{profile.email}</Typography>}
           />
