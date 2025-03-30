@@ -14,11 +14,11 @@ export const HomePage = lazy(() => import('src/pages/home'));
 export const BlogPage = lazy(() => import('src/pages/blog'));
 export const UserPage = lazy(() => import('src/pages/user'));
 export const SignInPage = lazy(() => import('src/pages/sign-in'));
-export const ProductsPage = lazy(() => import('src/pages/products'));
+export const ActivitiesPage = lazy(() => import('src/pages/activities'));
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
-// export const StaffSchedule = lazy(() => import('src/pages/schedule'));
 export const ProductsDetailsPage = lazy(() => import('src/pages/product-detail'));
-export const NewProductPage = lazy(() => import('src/pages/product-add-product'));
+export const NewScheduledActivity = lazy(() => import('src/pages/add-new-scheduled-activity'));
+export const NewOneTimeActivity = lazy(() => import('src/pages/add-new-one-time-activity'));
 export const ProductCustomerPage = lazy(() => import('src/pages/product-customers'));
 export const ProfilePage = lazy(() => import('src/pages/profile'));
 export const EditProfilePage = lazy(() => import('src/pages/edit-profile'));
@@ -51,10 +51,11 @@ export function Router() {
       children: [
         { element: <HomePage />, index: true },
         { path: 'bookings', element: <UserPage /> },
-        { path: 'products', element: <ProductsPage /> },
+        { path: 'activities', element: <ActivitiesPage /> },
         { path: 'blog', element: <BlogPage /> },
         { path: 'product/:productId', element: <ProductsDetailsPage /> },
-        { path: 'product-add-product', element: <NewProductPage /> },
+        { path: 'add-scheduled-activity', element: <NewScheduledActivity /> },
+        { path: 'add-one-time-activity', element: <NewOneTimeActivity /> },
         { path: 'product/:productId/customers', element: <ProductCustomerPage /> },
         { path: 'profile', element: <ProfilePage /> },
         { path: 'edit-profile', element: <EditProfilePage /> },

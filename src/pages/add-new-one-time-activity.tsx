@@ -1,6 +1,6 @@
 
 import { Helmet } from 'react-helmet-async';
-import { NewProductPage } from 'src/sections/product/view/product-new-page';
+import { NewOneTimeActivityPage } from 'src/sections/product/view/new-one-time-activity-page';
 import { CONFIG } from 'src/config-global';
 
 // ----------------------------------------------------------------------
@@ -9,10 +9,10 @@ export default function Page() {
     return (
         <>
           <Helmet>
-            <title> {`Add New Product - ${CONFIG.appName}`}</title>
+            <title> {`Add New One Time Activity - ${CONFIG.appName}`}</title>
           </Helmet>
     
-          <NewProductPage />
+          <NewOneTimeActivityPage />
         </>
       );
 }

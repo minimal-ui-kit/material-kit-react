@@ -18,8 +18,6 @@ import { CartIcon } from '../product-cart-widget';
 import { ProductFilters } from '../product-filters';
 
 import type { FiltersProps } from '../product-filters';
-// import { stat } from 'fs';
-
 
 // ----------------------------------------------------------------------
 
@@ -40,7 +38,7 @@ const defaultFilters = {
   // dateRange: [null, null],
 };
 
-export function ProductsView() {
+export function OneTimeActivitiesView() {
 
   const router = useRouter();
 
@@ -75,12 +73,12 @@ export function ProductsView() {
 
       <Box display="flex" justifyContent="space-between" alignItems="center" sx={{ mb: 5 }}>
         <Typography variant="h4" sx={{ mb: 2 }}>
-          Activities
+          One Time Activities
         </Typography>
 
         <Typography variant="body2" sx={{ color: 'text.secondary', mb: 2 }}>
-        <Button variant="contained" color="primary" onClick={() => {router.push("/product-add-product");}}>
-          Add Activity
+        <Button variant="contained" color="primary" onClick={() => {router.push("/add-one-time-activity");}}>
+          Add One Time Activity
         </Button> 
       </Typography>
       </Box>
@@ -116,10 +114,8 @@ export function ProductsView() {
             sortBy={sortBy}
             onSort={handleSort}
             options={[
-              { value: 'featured', label: 'Featured' },
               { value: 'newest', label: 'Newest' },
-              { value: 'priceDesc', label: 'Price: High-Low' },
-              { value: 'priceAsc', label: 'Price: Low-High' },
+              { value: 'oldest', label: 'Oldest' },
             ]}
           />
         </Box>
