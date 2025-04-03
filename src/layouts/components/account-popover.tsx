@@ -54,15 +54,14 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
     <>
       <IconButton
         onClick={handleOpenPopover}
-        sx={[
-          (theme) => ({
-            p: '2px',
-            width: 40,
-            height: 40,
-            background: `conic-gradient(${theme.vars.palette.primary.light}, ${theme.vars.palette.warning.light}, ${theme.vars.palette.primary.light})`,
-          }),
-          ...(Array.isArray(sx) ? sx : [sx]),
-        ]}
+        sx={{
+          p: '2px',
+          width: 40,
+          height: 40,
+          background: (theme) =>
+            `conic-gradient(${theme.vars.palette.primary.light}, ${theme.vars.palette.warning.light}, ${theme.vars.palette.primary.light})`,
+          ...sx,
+        }}
         {...other}
       >
         <Avatar src={_myAccount.photoURL} alt={_myAccount.displayName} sx={{ width: 1, height: 1 }}>

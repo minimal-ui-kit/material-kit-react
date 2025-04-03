@@ -1,6 +1,7 @@
-import type { Theme, SxProps, Breakpoint } from '@mui/material/styles';
+import type { Breakpoint } from '@mui/material/styles';
 
-import { useState } from 'react';
+import { merge } from 'es-toolkit';
+import { useBoolean } from 'minimal-shared/hooks';
 
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
@@ -8,136 +9,140 @@ import { useTheme } from '@mui/material/styles';
 
 import { _langs, _notifications } from 'src/_mock';
 
-import { Iconify } from 'src/components/iconify';
-
-import { Main } from './main';
-import { layoutClasses } from '../classes';
 import { NavMobile, NavDesktop } from './nav';
-import { navData } from '../config-nav-dashboard';
+import { layoutClasses } from '../core/classes';
+import { _account } from '../nav-config-account';
+import { dashboardLayoutVars } from './css-vars';
+import { navData } from '../nav-config-dashboard';
+import { MainSection } from '../core/main-section';
 import { Searchbar } from '../components/searchbar';
-import { _workspaces } from '../config-nav-workspace';
+import { _workspaces } from '../nav-config-workspace';
 import { MenuButton } from '../components/menu-button';
-import { LayoutSection } from '../core/layout-section';
 import { HeaderSection } from '../core/header-section';
+import { LayoutSection } from '../core/layout-section';
 import { AccountPopover } from '../components/account-popover';
 import { LanguagePopover } from '../components/language-popover';
 import { NotificationsPopover } from '../components/notifications-popover';
 
+import type { MainSectionProps } from '../core/main-section';
+import type { HeaderSectionProps } from '../core/header-section';
+import type { LayoutSectionProps } from '../core/layout-section';
+
 // ----------------------------------------------------------------------
 
-export type DashboardLayoutProps = {
-  sx?: SxProps<Theme>;
-  children: React.ReactNode;
-  header?: {
-    sx?: SxProps<Theme>;
+type LayoutBaseProps = Pick<LayoutSectionProps, 'sx' | 'children' | 'cssVars'>;
+
+export type DashboardLayoutProps = LayoutBaseProps & {
+  layoutQuery?: Breakpoint;
+  slotProps?: {
+    header?: HeaderSectionProps;
+    main?: MainSectionProps;
   };
 };
 
-export function DashboardLayout({ sx, children, header }: DashboardLayoutProps) {
+export function DashboardLayout({
+  sx,
+  cssVars,
+  children,
+  slotProps,
+  layoutQuery = 'lg',
+}: DashboardLayoutProps) {
   const theme = useTheme();
 
-  const [navOpen, setNavOpen] = useState(false);
+  const { value: open, onFalse: onClose, onTrue: onOpen } = useBoolean();
 
-  const layoutQuery: Breakpoint = 'lg';
+  const renderHeader = () => {
+    const headerSlotProps: HeaderSectionProps['slotProps'] = {
+      container: {
+        maxWidth: false,
+      },
+    };
+
+    const headerSlots: HeaderSectionProps['slots'] = {
+      topArea: (
+        <Alert severity="info" sx={{ display: 'none', borderRadius: 0 }}>
+          This is an info Alert.
+        </Alert>
+      ),
+      leftArea: (
+        <>
+          {/** @slot Nav mobile */}
+          <MenuButton
+            onClick={onOpen}
+            sx={{ mr: 1, ml: -1, [theme.breakpoints.up(layoutQuery)]: { display: 'none' } }}
+          />
+          <NavMobile data={navData} open={open} onClose={onClose} workspaces={_workspaces} />
+        </>
+      ),
+      rightArea: (
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0, sm: 0.75 } }}>
+          {/** @slot Searchbar */}
+          <Searchbar />
+
+          {/** @slot Language popover */}
+          <LanguagePopover data={_langs} />
+
+          {/** @slot Notifications popover */}
+          <NotificationsPopover data={_notifications} />
+
+          {/** @slot Account drawer */}
+          <AccountPopover data={_account} />
+        </Box>
+      ),
+    };
+
+    return (
+      <HeaderSection
+        disableElevation
+        layoutQuery={layoutQuery}
+        {...slotProps?.header}
+        slots={{ ...headerSlots, ...slotProps?.header?.slots }}
+        slotProps={merge(headerSlotProps, slotProps?.header?.slotProps ?? {})}
+        sx={slotProps?.header?.sx}
+      />
+    );
+  };
+
+  const renderFooter = () => null;
+
+  const renderMain = () => <MainSection {...slotProps?.main}>{children}</MainSection>;
 
   return (
     <LayoutSection
       /** **************************************
-       * Header
+       * @Header
        *************************************** */
-      headerSection={
-        <HeaderSection
-          layoutQuery={layoutQuery}
-          slotProps={{
-            container: {
-              maxWidth: false,
-              sx: { px: { [layoutQuery]: 5 } },
-            },
-          }}
-          sx={header?.sx}
-          slots={{
-            topArea: (
-              <Alert severity="info" sx={{ display: 'none', borderRadius: 0 }}>
-                This is an info Alert.
-              </Alert>
-            ),
-            leftArea: (
-              <>
-                <MenuButton
-                  onClick={() => setNavOpen(true)}
-                  sx={{
-                    ml: -1,
-                    [theme.breakpoints.up(layoutQuery)]: { display: 'none' },
-                  }}
-                />
-                <NavMobile
-                  data={navData}
-                  open={navOpen}
-                  onClose={() => setNavOpen(false)}
-                  workspaces={_workspaces}
-                />
-              </>
-            ),
-            rightArea: (
-              <Box gap={1} display="flex" alignItems="center">
-                <Searchbar />
-                <LanguagePopover data={_langs} />
-                <NotificationsPopover data={_notifications} />
-                <AccountPopover
-                  data={[
-                    {
-                      label: 'Home',
-                      href: '/',
-                      icon: <Iconify width={22} icon="solar:home-angle-bold-duotone" />,
-                    },
-                    {
-                      label: 'Profile',
-                      href: '#',
-                      icon: <Iconify width={22} icon="solar:shield-keyhole-bold-duotone" />,
-                    },
-                    {
-                      label: 'Settings',
-                      href: '#',
-                      icon: <Iconify width={22} icon="solar:settings-bold-duotone" />,
-                    },
-                  ]}
-                />
-              </Box>
-            ),
-          }}
-        />
-      }
+      headerSection={renderHeader()}
       /** **************************************
-       * Sidebar
+       * @Sidebar
        *************************************** */
       sidebarSection={
         <NavDesktop data={navData} layoutQuery={layoutQuery} workspaces={_workspaces} />
       }
       /** **************************************
-       * Footer
+       * @Footer
        *************************************** */
-      footerSection={null}
+      footerSection={renderFooter()}
       /** **************************************
-       * Style
+       * @Styles
        *************************************** */
-      cssVars={{
-        '--layout-nav-vertical-width': '300px',
-        '--layout-dashboard-content-pt': theme.spacing(1),
-        '--layout-dashboard-content-pb': theme.spacing(8),
-        '--layout-dashboard-content-px': theme.spacing(5),
-      }}
+      cssVars={{ ...dashboardLayoutVars(theme), ...cssVars }}
       sx={[
         {
-          [`& .${layoutClasses.hasSidebar}`]: {
+          [`& .${layoutClasses.sidebarContainer}`]: {
             [theme.breakpoints.up(layoutQuery)]: {
               pl: 'var(--layout-nav-vertical-width)',
+              transition: theme.transitions.create(['padding-left'], {
+                easing: 'var(--layout-transition-easing)',
+                duration: 'var(--layout-transition-duration)',
+              }),
             },
           },
         },
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
     >
-      <Main>{children}</Main>
+      {renderMain()}
     </LayoutSection>
   );
 }

@@ -10,15 +10,6 @@ import type {
   PaletteColorExtend,
   TypeBackgroundExtend,
 } from './core/palette';
-import type {
-  BgBlurMixin,
-  MaxLineMixin,
-  BgGradientMixin,
-  PaperStylesMixin,
-  TextGradientMixin,
-  MenuItemStylesMixin,
-  BorderGradientProps,
-} from './core/mixins';
 
 // ----------------------------------------------------------------------
 
@@ -32,7 +23,7 @@ import type {
  * https://mui.com/customization/palette/
  * @from {@link file://./core/palette.ts}
  */
-declare module '@mui/material/styles/createPalette' {
+declare module '@mui/material/styles' {
   // grey
   interface Color extends GreyExtend {}
   // text
@@ -43,7 +34,7 @@ declare module '@mui/material/styles/createPalette' {
   interface TypeBackground extends TypeBackgroundExtend {}
   // primary, secondary, info, success, warning, error
   interface PaletteColor extends PaletteColorExtend {}
-  interface SimplePaletteColorOptions extends PaletteColorExtend {}
+  interface SimplePaletteColorOptions extends Partial<PaletteColorExtend> {}
 }
 
 /**
@@ -51,8 +42,9 @@ declare module '@mui/material/styles/createPalette' {
  * https://mui.com/customization/typography/
  * @from {@link file://./core/typography.ts}
  */
-declare module '@mui/material/styles/createTypography' {
-  interface FontStyle extends FontStyleExtend {}
+declare module '@mui/material/styles' {
+  interface TypographyVariants extends FontStyleExtend {}
+  interface TypographyVariantsOptions extends Partial<FontStyleExtend> {}
 }
 
 declare module '@mui/material/styles' {
@@ -70,36 +62,5 @@ declare module '@mui/material/styles' {
     customShadows: CustomShadows;
     typography: Theme['typography'];
     transitions: Theme['transitions'];
-  }
-}
-
-/** **************************************
- * EXTEND MIXINS
- *************************************** */
-/**
- * @from {@link file://./core/mixins.ts}
- */
-declare module '@mui/material/styles/createMixins' {
-  interface Mixins {
-    hideScrollX: CSSObject;
-    hideScrollY: CSSObject;
-    borderGradient: BorderGradientProps;
-    bgGradient: BgGradientMixin;
-    bgBlur: BgBlurMixin;
-    textGradient: TextGradientMixin;
-    maxLine: MaxLineMixin;
-    menuItemStyles: MenuItemStylesMixin;
-    paperStyles: PaperStylesMixin;
-  }
-  interface MixinsOptions {
-    hideScrollX?: CSSObject;
-    hideScrollY?: CSSObject;
-    borderGradient?: BorderGradientProps;
-    bgGradient?: BgGradientMixin;
-    bgBlur?: BgBlurMixin;
-    textGradient?: TextGradientMixin;
-    maxLine?: MaxLineMixin;
-    menuItemStyles?: MenuItemStylesMixin;
-    paperStyles?: PaperStylesMixin;
   }
 }

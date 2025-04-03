@@ -41,7 +41,7 @@ const MuiCard: Components<Theme>['MuiCard'] = {
     root: ({ theme }) => ({
       zIndex: 0,
       position: 'relative',
-      boxShadow: theme.customShadows.card,
+      boxShadow: theme.vars.customShadows.card,
       borderRadius: theme.shape.borderRadius * 2,
     }),
   },
@@ -68,9 +68,7 @@ const MuiOutlinedInput: Components<Theme>['MuiOutlinedInput'] = {
 };
 
 const MuiPaper: Components<Theme>['MuiPaper'] = {
-  defaultProps: {
-    elevation: 0,
-  },
+  defaultProps: { elevation: 0 },
   styleOverrides: {
     root: { backgroundImage: 'none' },
     outlined: ({ theme }) => ({

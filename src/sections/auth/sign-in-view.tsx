@@ -2,11 +2,11 @@ import { useState, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
+import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import LoadingButton from '@mui/lab/LoadingButton';
 import InputAdornment from '@mui/material/InputAdornment';
 
 import { useRouter } from 'src/routes/hooks';
@@ -25,14 +25,22 @@ export function SignInView() {
   }, [router]);
 
   const renderForm = (
-    <Box display="flex" flexDirection="column" alignItems="flex-end">
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'flex-end',
+        flexDirection: 'column',
+      }}
+    >
       <TextField
         fullWidth
         name="email"
         label="Email address"
         defaultValue="hello@gmail.com"
-        InputLabelProps={{ shrink: true }}
         sx={{ mb: 3 }}
+        slotProps={{
+          inputLabel: { shrink: true },
+        }}
       />
 
       <Link variant="body2" color="inherit" sx={{ mb: 1.5 }}>
@@ -44,21 +52,23 @@ export function SignInView() {
         name="password"
         label="Password"
         defaultValue="@demo1234"
-        InputLabelProps={{ shrink: true }}
         type={showPassword ? 'text' : 'password'}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                <Iconify icon={showPassword ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
-              </IconButton>
-            </InputAdornment>
-          ),
+        slotProps={{
+          inputLabel: { shrink: true },
+          input: {
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                  <Iconify icon={showPassword ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
+                </IconButton>
+              </InputAdornment>
+            ),
+          },
         }}
         sx={{ mb: 3 }}
       />
 
-      <LoadingButton
+      <Button
         fullWidth
         size="large"
         type="submit"
@@ -67,24 +77,35 @@ export function SignInView() {
         onClick={handleSignIn}
       >
         Sign in
-      </LoadingButton>
+      </Button>
     </Box>
   );
 
   return (
     <>
-      <Box gap={1.5} display="flex" flexDirection="column" alignItems="center" sx={{ mb: 5 }}>
+      <Box
+        sx={{
+          gap: 1.5,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          mb: 5,
+        }}
+      >
         <Typography variant="h5">Sign in</Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography
+          variant="body2"
+          sx={{
+            color: 'text.secondary',
+          }}
+        >
           Don’t have an account?
           <Link variant="subtitle2" sx={{ ml: 0.5 }}>
             Get started
           </Link>
         </Typography>
       </Box>
-
       {renderForm}
-
       <Divider sx={{ my: 3, '&::before, &::after': { borderTopStyle: 'dashed' } }}>
         <Typography
           variant="overline"
@@ -93,16 +114,21 @@ export function SignInView() {
           OR
         </Typography>
       </Divider>
-
-      <Box gap={1} display="flex" justifyContent="center">
+      <Box
+        sx={{
+          gap: 1,
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
         <IconButton color="inherit">
-          <Iconify icon="logos:google-icon" />
+          <Iconify width={22} icon="socials:google" />
         </IconButton>
         <IconButton color="inherit">
-          <Iconify icon="eva:github-fill" />
+          <Iconify width={22} icon="socials:github" />
         </IconButton>
         <IconButton color="inherit">
-          <Iconify icon="ri:twitter-x-fill" />
+          <Iconify width={22} icon="socials:twitter" />
         </IconButton>
       </Box>
     </>

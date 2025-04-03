@@ -1,4 +1,3 @@
-import { forwardRef } from 'react';
 import { varAlpha, mergeClasses } from 'minimal-shared/utils';
 
 import { styled } from '@mui/material/styles';
@@ -20,15 +19,21 @@ export type ColorPreviewProps = React.ComponentProps<typeof ColorPreviewRoot> & 
   slotProps?: ColorPreviewSlotProps;
 };
 
-export const ColorPreview = forwardRef<HTMLUListElement, ColorPreviewProps>((props, ref) => {
-  const { sx, colors, limit = 3, size = 16, gap = 6, className, slotProps, ...other } = props;
-
+export function ColorPreview({
+  sx,
+  colors,
+  className,
+  slotProps,
+  gap = 6,
+  limit = 3,
+  size = 16,
+  ...other
+}: ColorPreviewProps) {
   const colorsRange = colors.slice(0, limit);
   const remainingColorCount = colors.length - limit;
 
   return (
     <ColorPreviewRoot
-      ref={ref}
       className={mergeClasses([colorPreviewClasses.root, className])}
       sx={sx}
       {...other}
@@ -59,7 +64,7 @@ export const ColorPreview = forwardRef<HTMLUListElement, ColorPreviewProps>((pro
       )}
     </ColorPreviewRoot>
   );
-});
+}
 
 // ----------------------------------------------------------------------
 

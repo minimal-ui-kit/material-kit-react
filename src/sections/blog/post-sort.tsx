@@ -37,16 +37,16 @@ export function PostSort({ options, sortBy, onSort, sx, ...other }: PostSortProp
         onClick={handleOpenPopover}
         endIcon={
           <Iconify
-            icon={openPopover ? 'eva:chevron-up-fill' : 'eva:chevron-down-fill'}
+            icon={openPopover ? 'eva:arrow-ios-upward-fill' : 'eva:arrow-ios-downward-fill'}
             sx={{
               ml: -0.5,
             }}
           />
         }
         sx={[
-          (theme) => ({
-            bgcolor: varAlpha(theme.vars.palette.grey['500Channel'], 0.08),
-          }),
+          {
+            bgcolor: (theme) => varAlpha(theme.vars.palette.grey['500Channel'], 0.08),
+          },
           ...(Array.isArray(sx) ? sx : [sx]),
         ]}
         {...other}

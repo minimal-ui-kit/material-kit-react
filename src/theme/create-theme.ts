@@ -2,32 +2,39 @@ import type { Theme } from '@mui/material/styles';
 
 import { createTheme as createMuiTheme } from '@mui/material/styles';
 
-import { mixins } from './core/mixins';
+import { shadows } from './core/shadows';
+import { palette } from './core/palette';
 import { themeConfig } from './theme-config';
-import { shadows, palette, typography, components, customShadows } from './core';
+import { components } from './core/components';
+import { typography } from './core/typography';
+import { customShadows } from './core/custom-shadows';
 
 import type { ThemeOptions } from './types';
 
 // ----------------------------------------------------------------------
 
-const baseTheme: ThemeOptions = {
+export const baseTheme: ThemeOptions = {
   colorSchemes: {
     light: {
       palette: palette.light,
-      shadows: shadows(),
-      customShadows: customShadows(),
+      shadows: shadows.light,
+      customShadows: customShadows.light,
     },
-    dark: {},
   },
-  mixins,
   components,
   typography,
   shape: { borderRadius: 8 },
   cssVariables: themeConfig.cssVariables,
 };
 
-export function createTheme(): Theme {
-  const theme = createMuiTheme(baseTheme);
+// ----------------------------------------------------------------------
+
+type CreateThemeProps = {
+  themeOverrides?: ThemeOptions;
+};
+
+export function createTheme({ themeOverrides = {} }: CreateThemeProps = {}): Theme {
+  const theme = createMuiTheme(baseTheme, themeOverrides);
 
   return theme;
 }

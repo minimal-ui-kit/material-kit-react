@@ -1,5 +1,4 @@
-import type { CSSObject, Breakpoint } from '@mui/material/styles';
-import type { TypographyOptions } from '@mui/material/styles/createTypography';
+import type { CSSObject, Breakpoint, TypographyVariantsOptions } from '@mui/material/styles';
 
 import { pxToRem, setFont } from 'minimal-shared/utils';
 
@@ -44,7 +43,7 @@ function responsiveFontSizes(obj: ResponsiveFontSizesInput): ResponsiveFontSizes
 const primaryFont = setFont(themeConfig.fontFamily.primary);
 const secondaryFont = setFont(themeConfig.fontFamily.secondary);
 
-export const typography: TypographyOptions = {
+export const typography: TypographyVariantsOptions = {
   fontFamily: primaryFont,
   fontSecondaryFamily: secondaryFont,
   fontWeightLight: '300',

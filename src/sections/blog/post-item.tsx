@@ -1,6 +1,6 @@
 import type { CardProps } from '@mui/material/Card';
+import type { IconifyName } from 'src/components/iconify';
 
-import dayjs from 'dayjs';
 import { varAlpha } from 'minimal-shared/utils';
 
 import Box from '@mui/material/Box';
@@ -9,6 +9,7 @@ import Card from '@mui/material/Card';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 
+import { fDate } from 'src/utils/format-time';
 import { fShortenNumber } from 'src/utils/format-number';
 
 import { Iconify } from 'src/components/iconify';
@@ -16,7 +17,7 @@ import { SvgColor } from 'src/components/svg-color';
 
 // ----------------------------------------------------------------------
 
-export type PostItemProps = {
+export type IPostItem = {
   id: string;
   title: string;
   coverUrl: string;
@@ -39,7 +40,7 @@ export function PostItem({
   latestPostLarge,
   ...other
 }: CardProps & {
-  post: PostItemProps;
+  post: IPostItem;
   latestPost: boolean;
   latestPostLarge: boolean;
 }) {
@@ -82,13 +83,13 @@ export function PostItem({
 
   const renderInfo = (
     <Box
-      gap={1.5}
-      display="flex"
-      flexWrap="wrap"
-      justifyContent="flex-end"
       sx={{
         mt: 3,
+        gap: 1.5,
+        display: 'flex',
+        flexWrap: 'wrap',
         color: 'text.disabled',
+        justifyContent: 'flex-end',
       }}
     >
       {[
@@ -98,15 +99,15 @@ export function PostItem({
       ].map((info, _index) => (
         <Box
           key={_index}
-          display="flex"
           sx={{
+            display: 'flex',
             ...((latestPostLarge || latestPost) && {
               opacity: 0.64,
               color: 'common.white',
             }),
           }}
         >
-          <Iconify width={16} icon={info.icon} sx={{ mr: 0.5 }} />
+          <Iconify width={16} icon={info.icon as IconifyName} sx={{ mr: 0.5 }} />
           <Typography variant="caption">{fShortenNumber(info.number)}</Typography>
         </Box>
       ))}
@@ -141,7 +142,7 @@ export function PostItem({
         }),
       }}
     >
-      {dayjs(post.postedAt).format('DD MMM YYYY h:mm a')}
+      {fDate(post.postedAt)}
     </Typography>
   );
 
@@ -149,10 +150,10 @@ export function PostItem({
     <SvgColor
       src="/assets/icons/shape-avatar.svg"
       sx={{
-        width: 88,
-        height: 36,
         left: 0,
+        width: 88,
         zIndex: 9,
+        height: 36,
         bottom: -16,
         position: 'absolute',
         color: 'background.paper',

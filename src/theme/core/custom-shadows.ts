@@ -2,7 +2,14 @@ import { varAlpha } from 'minimal-shared/utils';
 
 import { grey, info, error, common, primary, success, warning, secondary } from './palette';
 
+import type { ThemeColorScheme } from '../types';
+
 // ----------------------------------------------------------------------
+
+/**
+ * TypeScript (type definition and extension)
+ * @to {@link file://./../extend-theme-types.d.ts}
+ */
 
 export interface CustomShadows {
   z1?: string;
@@ -25,13 +32,11 @@ export interface CustomShadows {
 
 // ----------------------------------------------------------------------
 
-export function createShadowColor(colorChannel: string) {
+export function createShadowColor(colorChannel: string): string {
   return `0 8px 16px 0 ${varAlpha(colorChannel, 0.24)}`;
 }
 
-export function customShadows() {
-  const colorChannel = grey['500Channel'];
-
+function createCustomShadows(colorChannel: string): CustomShadows {
   return {
     z1: `0 1px 2px 0 ${varAlpha(colorChannel, 0.16)}`,
     z4: `0 4px 8px 0 ${varAlpha(colorChannel, 0.16)}`,
@@ -53,3 +58,7 @@ export function customShadows() {
     error: createShadowColor(error.mainChannel),
   };
 }
+
+export const customShadows: Partial<Record<ThemeColorScheme, CustomShadows>> = {
+  light: createCustomShadows(grey['500Channel']),
+};

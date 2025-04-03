@@ -18,17 +18,13 @@ import { Scrollbar } from 'src/components/scrollbar';
 import { NavUpgrade } from '../components/nav-upgrade';
 import { WorkspacesPopover } from '../components/workspaces-popover';
 
+import type { NavItem } from '../nav-config-dashboard';
 import type { WorkspacesPopoverProps } from '../components/workspaces-popover';
 
 // ----------------------------------------------------------------------
 
 export type NavContentProps = {
-  data: {
-    path: string;
-    title: string;
-    icon: React.ReactNode;
-    info?: React.ReactNode;
-  }[];
+  data: NavItem[];
   slots?: {
     topArea?: React.ReactNode;
     bottomArea?: React.ReactNode;
@@ -48,26 +44,23 @@ export function NavDesktop({
 
   return (
     <Box
-      sx={[
-        {
-          pt: 2.5,
-          px: 2.5,
-          top: 0,
-          left: 0,
-          height: 1,
-          display: 'none',
-          position: 'fixed',
-          flexDirection: 'column',
-          bgcolor: 'var(--layout-nav-bg)',
-          zIndex: 'var(--layout-nav-zIndex)',
-          width: 'var(--layout-nav-vertical-width)',
-          borderRight: `1px solid var(--layout-nav-border-color, ${varAlpha(theme.vars.palette.grey['500Channel'], 0.12)})`,
-          [theme.breakpoints.up(layoutQuery)]: {
-            display: 'flex',
-          },
+      sx={{
+        pt: 2.5,
+        px: 2.5,
+        top: 0,
+        left: 0,
+        height: 1,
+        display: 'none',
+        position: 'fixed',
+        flexDirection: 'column',
+        zIndex: 'var(--layout-nav-zIndex)',
+        width: 'var(--layout-nav-vertical-width)',
+        borderRight: `1px solid ${varAlpha(theme.vars.palette.grey['500Channel'], 0.12)}`,
+        [theme.breakpoints.up(layoutQuery)]: {
+          display: 'flex',
         },
-        ...(Array.isArray(sx) ? sx : [sx]),
-      ]}
+        ...sx,
+      }}
     >
       <NavContent data={data} slots={slots} workspaces={workspaces} />
     </Box>
@@ -97,18 +90,15 @@ export function NavMobile({
     <Drawer
       open={open}
       onClose={onClose}
-      sx={[
-        {
-          [`& .${drawerClasses.paper}`]: {
-            pt: 2.5,
-            px: 2.5,
-            overflow: 'unset',
-            bgcolor: 'var(--layout-nav-bg)',
-            width: 'var(--layout-nav-mobile-width)',
-          },
+      sx={{
+        [`& .${drawerClasses.paper}`]: {
+          pt: 2.5,
+          px: 2.5,
+          overflow: 'unset',
+          width: 'var(--layout-nav-mobile-width)',
+          ...sx,
         },
-        ...(Array.isArray(sx) ? sx : [sx]),
-      ]}
+      }}
     >
       <NavContent data={data} slots={slots} workspaces={workspaces} />
     </Drawer>
@@ -117,7 +107,7 @@ export function NavMobile({
 
 // ----------------------------------------------------------------------
 
-function NavContent({ data, slots, workspaces, sx }: NavContentProps) {
+export function NavContent({ data, slots, workspaces, sx }: NavContentProps) {
   const pathname = usePathname();
 
   return (
@@ -129,8 +119,25 @@ function NavContent({ data, slots, workspaces, sx }: NavContentProps) {
       <WorkspacesPopover data={workspaces} sx={{ my: 2 }} />
 
       <Scrollbar fillContent>
-        <Box component="nav" display="flex" flex="1 1 auto" flexDirection="column" sx={sx}>
-          <Box component="ul" gap={0.5} display="flex" flexDirection="column">
+        <Box
+          component="nav"
+          sx={[
+            {
+              display: 'flex',
+              flex: '1 1 auto',
+              flexDirection: 'column',
+            },
+            ...(Array.isArray(sx) ? sx : [sx]),
+          ]}
+        >
+          <Box
+            component="ul"
+            sx={{
+              gap: 0.5,
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
             {data.map((item) => {
               const isActived = item.path === pathname;
 
@@ -140,31 +147,33 @@ function NavContent({ data, slots, workspaces, sx }: NavContentProps) {
                     disableGutters
                     component={RouterLink}
                     href={item.path}
-                    sx={{
-                      pl: 2,
-                      py: 1,
-                      gap: 2,
-                      pr: 1.5,
-                      borderRadius: 0.75,
-                      typography: 'body2',
-                      fontWeight: 'fontWeightMedium',
-                      color: 'var(--layout-nav-item-color)',
-                      minHeight: 'var(--layout-nav-item-height)',
-                      ...(isActived && {
-                        fontWeight: 'fontWeightSemiBold',
-                        bgcolor: 'var(--layout-nav-item-active-bg)',
-                        color: 'var(--layout-nav-item-active-color)',
-                        '&:hover': {
-                          bgcolor: 'var(--layout-nav-item-hover-bg)',
-                        },
+                    sx={[
+                      (theme) => ({
+                        pl: 2,
+                        py: 1,
+                        gap: 2,
+                        pr: 1.5,
+                        borderRadius: 0.75,
+                        typography: 'body2',
+                        fontWeight: 'fontWeightMedium',
+                        color: theme.vars.palette.text.secondary,
+                        minHeight: 44,
+                        ...(isActived && {
+                          fontWeight: 'fontWeightSemiBold',
+                          color: theme.vars.palette.primary.main,
+                          bgcolor: varAlpha(theme.vars.palette.primary.mainChannel, 0.08),
+                          '&:hover': {
+                            bgcolor: varAlpha(theme.vars.palette.primary.mainChannel, 0.16),
+                          },
+                        }),
                       }),
-                    }}
+                    ]}
                   >
                     <Box component="span" sx={{ width: 24, height: 24 }}>
                       {item.icon}
                     </Box>
 
-                    <Box component="span" flexGrow={1}>
+                    <Box component="span" sx={{ flexGrow: 1 }}>
                       {item.title}
                     </Box>
 

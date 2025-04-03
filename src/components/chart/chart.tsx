@@ -1,4 +1,4 @@
-import { lazy, Suspense, forwardRef } from 'react';
+import { lazy, Suspense } from 'react';
 import { useIsClient } from 'minimal-shared/hooks';
 import { mergeClasses } from 'minimal-shared/utils';
 
@@ -15,16 +15,13 @@ const LazyChart = lazy(() =>
   import('react-apexcharts').then((module) => ({ default: module.default }))
 );
 
-export const Chart = forwardRef<HTMLDivElement, ChartProps>((props, ref) => {
-  const { type, series, options, slotProps, className, sx, ...other } = props;
-
+export function Chart({ type, series, options, slotProps, className, sx, ...other }: ChartProps) {
   const isClient = useIsClient();
 
   const renderFallback = () => <ChartLoading type={type} sx={slotProps?.loading} />;
 
   return (
     <ChartRoot
-      ref={ref}
       dir="ltr"
       className={mergeClasses([chartClasses.root, className])}
       sx={sx}
@@ -39,7 +36,7 @@ export const Chart = forwardRef<HTMLDivElement, ChartProps>((props, ref) => {
       )}
     </ChartRoot>
   );
-});
+}
 
 // ----------------------------------------------------------------------
 

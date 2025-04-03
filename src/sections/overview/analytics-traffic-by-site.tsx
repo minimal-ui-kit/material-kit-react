@@ -44,14 +44,10 @@ export function AnalyticsTrafficBySite({ title, subheader, list, sx, ...other }:
               border: `solid 1px ${varAlpha(theme.vars.palette.grey['500Channel'], 0.12)}`,
             })}
           >
-            {site.value === 'facebook' && (
-              <Iconify icon="eva:facebook-fill" color="#1877F2" width={32} />
-            )}
-            {site.value === 'google' && <Iconify icon="logos:google-icon" width={32} />}
-            {site.value === 'linkedin' && (
-              <Iconify icon="eva:linkedin-fill" color="#0A66C2" width={32} />
-            )}
-            {site.value === 'twitter' && <Iconify icon="ri:twitter-x-fill" width={32} />}
+            {site.value === 'twitter' && <Iconify width={32} icon="socials:twitter" />}
+            {site.value === 'facebook' && <Iconify width={32} icon="socials:facebook" />}
+            {site.value === 'google' && <Iconify width={32} icon="socials:google" />}
+            {site.value === 'linkedin' && <Iconify width={32} icon="socials:linkedin" />}
 
             <Typography variant="h6" sx={{ mt: 1 }}>
               {fShortenNumber(site.total)}

@@ -1,8 +1,6 @@
 import type { CardProps } from '@mui/material/Card';
 import type { TimelineItemProps } from '@mui/lab/TimelineItem';
 
-import dayjs from 'dayjs';
-
 import Card from '@mui/material/Card';
 import Timeline from '@mui/lab/Timeline';
 import TimelineDot from '@mui/lab/TimelineDot';
@@ -12,6 +10,8 @@ import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineSeparator from '@mui/lab/TimelineSeparator';
 import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineItem, { timelineItemClasses } from '@mui/lab/TimelineItem';
+
+import { fDateTime } from 'src/utils/format-time';
 
 // ----------------------------------------------------------------------
 
@@ -69,7 +69,7 @@ function Item({ item, lastItem, ...other }: ItemProps) {
         <Typography variant="subtitle2">{item.title}</Typography>
 
         <Typography variant="caption" sx={{ color: 'text.disabled' }}>
-          {dayjs(item.time).format('DD MMM YYYY h:mm a')}
+          {fDateTime(item.time)}
         </Typography>
       </TimelineContent>
     </TimelineItem>

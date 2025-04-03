@@ -74,7 +74,6 @@ export function ProductItem({ product }: { product: ProductItemProps }) {
     <Card>
       <Box sx={{ pt: '100%', position: 'relative' }}>
         {product.status && renderStatus}
-
         {renderImg}
       </Box>
 
@@ -83,7 +82,13 @@ export function ProductItem({ product }: { product: ProductItemProps }) {
           {product.name}
         </Link>
 
-        <Box display="flex" alignItems="center" justifyContent="space-between">
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
           <ColorPreview colors={product.colors} />
           {renderPrice}
         </Box>

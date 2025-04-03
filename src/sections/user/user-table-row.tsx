@@ -50,7 +50,13 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
         </TableCell>
 
         <TableCell component="th" scope="row">
-          <Box gap={2} display="flex" alignItems="center">
+          <Box
+            sx={{
+              gap: 2,
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
             <Avatar alt={row.name} src={row.avatarUrl} />
             {row.name}
           </Box>

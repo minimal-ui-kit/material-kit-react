@@ -185,18 +185,28 @@ export function ProductFilters({
         anchor="right"
         open={openFilter}
         onClose={onCloseFilter}
-        PaperProps={{
-          sx: { width: 280, overflow: 'hidden' },
+        slotProps={{
+          paper: {
+            sx: { width: 280, overflow: 'hidden' },
+          },
         }}
       >
-        <Box display="flex" alignItems="center" sx={{ pl: 2.5, pr: 1.5, py: 2 }}>
-          <Typography variant="h6" flexGrow={1}>
+        <Box
+          sx={{
+            py: 2,
+            pl: 2.5,
+            pr: 1.5,
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>
             Filters
           </Typography>
 
           <IconButton onClick={onResetFilter}>
             <Badge color="error" variant="dot" invisible={!canReset}>
-              <Iconify icon="solar:refresh-linear" />
+              <Iconify icon="solar:restart-bold" />
             </Badge>
           </IconButton>
 

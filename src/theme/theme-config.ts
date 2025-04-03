@@ -1,14 +1,12 @@
-import type { CommonColors } from '@mui/material/styles/createPalette';
+import type { CommonColors } from '@mui/material/styles';
 
+import type { ThemeCssVariables } from './types';
 import type { PaletteColorNoChannels } from './core/palette';
-import type { ThemeColorScheme, ThemeCssVariables } from './types';
 
 // ----------------------------------------------------------------------
 
 type ThemeConfig = {
   classesPrefix: string;
-  modeStorageKey: string;
-  defaultMode: ThemeColorScheme;
   cssVariables: ThemeCssVariables;
   fontFamily: Record<'primary' | 'secondary', string>;
   palette: Record<
@@ -27,8 +25,6 @@ export const themeConfig: ThemeConfig = {
   /** **************************************
    * Base
    *************************************** */
-  defaultMode: 'light',
-  modeStorageKey: 'theme-mode',
   classesPrefix: 'minimal',
   /** **************************************
    * Typography
@@ -101,10 +97,7 @@ export const themeConfig: ThemeConfig = {
       '800': '#1C252E',
       '900': '#141A21',
     },
-    common: {
-      black: '#000000',
-      white: '#FFFFFF',
-    },
+    common: { black: '#000000', white: '#FFFFFF' },
   },
   /** **************************************
    * Css variables

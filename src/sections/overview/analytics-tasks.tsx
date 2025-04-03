@@ -10,11 +10,11 @@ import Stack from '@mui/material/Stack';
 import Popover from '@mui/material/Popover';
 import Divider from '@mui/material/Divider';
 import MenuList from '@mui/material/MenuList';
-import MenuItem from '@mui/material/MenuItem';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import CardHeader from '@mui/material/CardHeader';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
 
 import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
@@ -117,7 +117,7 @@ function TaskItem({ item, selected, onChange, sx, ...other }: TaskItemProps) {
               disableRipple
               checked={selected}
               onChange={onChange}
-              inputProps={{ id: `${item.name}-checkbox` }}
+              slotProps={{ input: { id: `${item.name}-checkbox` } }}
             />
           }
           sx={{ flexGrow: 1, m: 0 }}
@@ -135,9 +135,24 @@ function TaskItem({ item, selected, onChange, sx, ...other }: TaskItemProps) {
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        <MenuList>
+        <MenuList
+          disablePadding
+          sx={{
+            p: 0.5,
+            gap: 0.5,
+            display: 'flex',
+            flexDirection: 'column',
+            [`& .${menuItemClasses.root}`]: {
+              pl: 1,
+              pr: 2,
+              gap: 2,
+              borderRadius: 0.75,
+              [`&.${menuItemClasses.selected}`]: { bgcolor: 'action.selected' },
+            },
+          }}
+        >
           <MenuItem onClick={handleMarkComplete}>
-            <Iconify icon="eva:checkmark-circle-2-fill" />
+            <Iconify icon="solar:check-circle-bold" />
             Mark complete
           </MenuItem>
 

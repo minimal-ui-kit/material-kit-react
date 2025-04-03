@@ -1,14 +1,15 @@
 import type { BoxProps } from '@mui/material/Box';
 import type { CardProps } from '@mui/material/Card';
 
-import dayjs from 'dayjs';
-
 import Box from '@mui/material/Box';
+import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import CardHeader from '@mui/material/CardHeader';
 import ListItemText from '@mui/material/ListItemText';
+
+import { fToNow } from 'src/utils/format-time';
 
 import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
@@ -83,20 +84,19 @@ function Item({ item, sx, ...other }: ItemProps) {
       />
 
       <ListItemText
-        primary={item.title}
+        primary={<Link color="inherit">{item.title}</Link>}
         secondary={item.description}
         slotProps={{
-          primary: { noWrap: true, sx: { typography: 'subtitle2' } },
+          primary: { noWrap: true },
           secondary: {
             noWrap: true,
-            component: 'span',
             sx: { mt: 0.5 },
           },
         }}
       />
 
-      <Box sx={{ flexShrink: 0, color: 'text.disabled', typography: 'caption' }}>
-        {dayjs(item.postedAt).toNow(true)}
+      <Box sx={{ flexShrink: 0, typography: 'caption', color: 'text.disabled' }}>
+        {fToNow(item.postedAt)}
       </Box>
     </Box>
   );

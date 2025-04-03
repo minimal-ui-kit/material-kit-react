@@ -1,58 +1,34 @@
-import type { BoxProps } from '@mui/material/Box';
 import type { Breakpoint } from '@mui/material/styles';
 import type { ContainerProps } from '@mui/material/Container';
 
-import Box from '@mui/material/Box';
-import { useTheme } from '@mui/material/styles';
+import { mergeClasses } from 'minimal-shared/utils';
+
 import Container from '@mui/material/Container';
 
-import { layoutClasses } from 'src/layouts/classes';
+import { layoutClasses } from '../core/classes';
 
 // ----------------------------------------------------------------------
 
-export function Main({ children, sx, ...other }: BoxProps) {
-  return (
-    <Box
-      component="main"
-      className={layoutClasses.main}
-      sx={[
-        {
-          display: 'flex',
-          flex: '1 1 auto',
-          flexDirection: 'column',
-        },
-        ...(Array.isArray(sx) ? sx : [sx]),
-      ]}
-      {...other}
-    >
-      {children}
-    </Box>
-  );
-}
-
-// ----------------------------------------------------------------------
-
-type DashboardContentProps = ContainerProps & {
+export type DashboardContentProps = ContainerProps & {
+  layoutQuery?: Breakpoint;
   disablePadding?: boolean;
 };
 
 export function DashboardContent({
   sx,
   children,
+  className,
   disablePadding,
-  maxWidth = 'xl',
+  maxWidth = 'lg',
+  layoutQuery = 'lg',
   ...other
 }: DashboardContentProps) {
-  const theme = useTheme();
-
-  const layoutQuery: Breakpoint = 'lg';
-
   return (
     <Container
-      className={layoutClasses.content}
-      maxWidth={maxWidth || false}
+      className={mergeClasses([layoutClasses.content, className])}
+      maxWidth={maxWidth}
       sx={[
-        {
+        (theme) => ({
           display: 'flex',
           flex: '1 1 auto',
           flexDirection: 'column',
@@ -70,7 +46,7 @@ export function DashboardContent({
               xl: 0,
             },
           }),
-        },
+        }),
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
       {...other}

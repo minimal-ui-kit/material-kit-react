@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid2';
+import Grid from '@mui/material/Grid';
 import Pagination from '@mui/material/Pagination';
 import Typography from '@mui/material/Typography';
 
@@ -86,20 +86,28 @@ export function ProductsView() {
 
   return (
     <DashboardContent>
+      <CartIcon totalItems={8} />
+
       <Typography variant="h4" sx={{ mb: 5 }}>
         Products
       </Typography>
-
-      <CartIcon totalItems={8} />
-
       <Box
-        display="flex"
-        alignItems="center"
-        flexWrap="wrap-reverse"
-        justifyContent="flex-end"
-        sx={{ mb: 5 }}
+        sx={{
+          mb: 5,
+          display: 'flex',
+          alignItems: 'center',
+          flexWrap: 'wrap-reverse',
+          justifyContent: 'flex-end',
+        }}
       >
-        <Box gap={1} display="flex" flexShrink={0} sx={{ my: 1 }}>
+        <Box
+          sx={{
+            my: 1,
+            gap: 1,
+            flexShrink: 0,
+            display: 'flex',
+          }}
+        >
           <ProductFilters
             canReset={canReset}
             filters={filters}

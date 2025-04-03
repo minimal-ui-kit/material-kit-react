@@ -1,6 +1,6 @@
 import type { Theme, SxProps } from '@mui/material/styles';
 
-import { forwardRef, useCallback } from 'react';
+import { useCallback } from 'react';
 import { varAlpha, mergeClasses } from 'minimal-shared/utils';
 
 import ButtonBase from '@mui/material/ButtonBase';
@@ -28,20 +28,18 @@ export type ColorPickerProps = Omit<React.ComponentProps<'ul'>, 'onChange'> & {
   slotProps?: ColorPickerSlotProps;
 };
 
-export const ColorPicker = forwardRef<HTMLUListElement, ColorPickerProps>((props, ref) => {
-  const {
-    sx,
-    value,
-    size = 36,
-    onChange,
-    slotProps,
-    className,
-    options = [],
-    limit = 'auto',
-    variant = 'circular',
-    ...other
-  } = props;
-
+export function ColorPicker({
+  sx,
+  value,
+  onChange,
+  slotProps,
+  className,
+  size = 36,
+  options = [],
+  limit = 'auto',
+  variant = 'circular',
+  ...other
+}: ColorPickerProps) {
   const isSingleSelect = typeof value === 'string';
 
   const handleSelect = useCallback(
@@ -65,7 +63,6 @@ export const ColorPicker = forwardRef<HTMLUListElement, ColorPickerProps>((props
 
   return (
     <ColorPickerRoot
-      ref={ref}
       limit={limit}
       className={mergeClasses([colorPickerClasses.root, className])}
       sx={[
@@ -111,7 +108,7 @@ export const ColorPicker = forwardRef<HTMLUListElement, ColorPickerProps>((props
       })}
     </ColorPickerRoot>
   );
-});
+}
 
 // ----------------------------------------------------------------------
 

@@ -1,6 +1,5 @@
 import type { IconButtonProps } from '@mui/material/IconButton';
 
-import dayjs from 'dayjs';
 import { useState, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
@@ -17,6 +16,8 @@ import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemButton from '@mui/material/ListItemButton';
+
+import { fToNow } from 'src/utils/format-time';
 
 import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
@@ -91,7 +92,15 @@ export function NotificationsPopover({ data = [], sx, ...other }: NotificationsP
           },
         }}
       >
-        <Box display="flex" alignItems="center" sx={{ py: 2, pl: 2.5, pr: 1.5 }}>
+        <Box
+          sx={{
+            py: 2,
+            pl: 2.5,
+            pr: 1.5,
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
           <Box sx={{ flexGrow: 1 }}>
             <Typography variant="subtitle1">Notifications</Typography>
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
@@ -102,7 +111,7 @@ export function NotificationsPopover({ data = [], sx, ...other }: NotificationsP
           {totalUnRead > 0 && (
             <Tooltip title=" Mark all as read">
               <IconButton color="primary" onClick={handleMarkAllAsRead}>
-                <Iconify icon="solar:check-read-outline" />
+                <Iconify icon="eva:done-all-fill" />
               </IconButton>
             </Tooltip>
           )}
@@ -183,7 +192,7 @@ function NotificationItem({ notification }: { notification: NotificationItemProp
             }}
           >
             <Iconify width={14} icon="solar:clock-circle-outline" />
-            {dayjs(notification.postedAt).toNow(true)}
+            {fToNow(notification.postedAt)}
           </Typography>
         }
       />

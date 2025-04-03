@@ -1,20 +1,16 @@
 import 'src/global.css';
 
-import dayjs from 'dayjs';
 import { useEffect } from 'react';
-import relativeTime from 'dayjs/plugin/relativeTime';
 
 import Fab from '@mui/material/Fab';
 
 import { usePathname } from 'src/routes/hooks';
 
-import { themeConfig, ThemeProvider } from 'src/theme';
+import { ThemeProvider } from 'src/theme/theme-provider';
 
 import { Iconify } from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
-
-dayjs.extend(relativeTime);
 
 type AppProps = {
   children: React.ReactNode;
@@ -32,23 +28,18 @@ export default function App({ children }: AppProps) {
         zIndex: 9,
         right: 20,
         bottom: 20,
-        width: 44,
-        height: 44,
+        width: 48,
+        height: 48,
         position: 'fixed',
         bgcolor: 'grey.800',
-        color: 'common.white',
       }}
     >
-      <Iconify width={24} icon="eva:github-fill" />
+      <Iconify width={24} icon="socials:github" sx={{ '--color': 'white' }} />
     </Fab>
   );
 
   return (
-    <ThemeProvider
-      noSsr
-      defaultMode={themeConfig.defaultMode}
-      modeStorageKey={themeConfig.modeStorageKey}
-    >
+    <ThemeProvider>
       {children}
       {githubButton()}
     </ThemeProvider>

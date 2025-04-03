@@ -1,22 +1,22 @@
-import type { Breakpoint } from '@mui/material/styles';
 import type { AppBarProps } from '@mui/material/AppBar';
-import type { ToolbarProps } from '@mui/material/Toolbar';
 import type { ContainerProps } from '@mui/material/Container';
+import type { Theme, SxProps, CSSObject, Breakpoint } from '@mui/material/styles';
 
-import { varAlpha } from 'minimal-shared/utils';
+import { useScrollOffsetTop } from 'minimal-shared/hooks';
+import { varAlpha, mergeClasses } from 'minimal-shared/utils';
 
-import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
+import { styled } from '@mui/material/styles';
 import Container from '@mui/material/Container';
-import { useTheme } from '@mui/material/styles';
 
-import { layoutClasses } from '../classes';
+import { layoutClasses } from './classes';
 
 // ----------------------------------------------------------------------
 
 export type HeaderSectionProps = AppBarProps & {
-  layoutQuery: Breakpoint;
+  layoutQuery?: Breakpoint;
+  disableOffset?: boolean;
+  disableElevation?: boolean;
   slots?: {
     leftArea?: React.ReactNode;
     rightArea?: React.ReactNode;
@@ -25,8 +25,8 @@ export type HeaderSectionProps = AppBarProps & {
     bottomArea?: React.ReactNode;
   };
   slotProps?: {
-    toolbar?: ToolbarProps;
     container?: ContainerProps;
+    centerArea?: React.ComponentProps<'div'> & { sx?: SxProps<Theme> };
   };
 };
 
@@ -34,75 +34,120 @@ export function HeaderSection({
   sx,
   slots,
   slotProps,
+  className,
+  disableOffset,
+  disableElevation,
   layoutQuery = 'md',
   ...other
 }: HeaderSectionProps) {
-  const theme = useTheme();
-
-  const toolbarStyles = {
-    default: {
-      ...theme.mixins.bgBlur({
-        color: varAlpha(theme.vars.palette.background.defaultChannel, 0.8),
-      }),
-      minHeight: 'auto',
-      height: 'var(--layout-header-mobile-height)',
-      transition: theme.transitions.create(['height', 'background-color'], {
-        easing: theme.transitions.easing.easeInOut,
-        duration: theme.transitions.duration.shorter,
-      }),
-      [theme.breakpoints.up('sm')]: {
-        minHeight: 'auto',
-      },
-      [theme.breakpoints.up(layoutQuery)]: {
-        height: 'var(--layout-header-desktop-height)',
-      },
-    },
-  };
+  const { offsetTop: isOffset } = useScrollOffsetTop();
 
   return (
-    <AppBar
+    <HeaderRoot
       position="sticky"
       color="transparent"
-      className={layoutClasses.header}
+      isOffset={isOffset}
+      disableOffset={disableOffset}
+      disableElevation={disableElevation}
+      className={mergeClasses([layoutClasses.header, className])}
       sx={[
-        {
-          boxShadow: 'none',
-          zIndex: 'var(--layout-header-zIndex)',
-        },
+        (theme) => ({
+          ...(isOffset && {
+            '--color': `var(--offset-color, ${theme.vars.palette.text.primary})`,
+          }),
+        }),
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
       {...other}
     >
       {slots?.topArea}
 
-      <Toolbar
-        disableGutters
-        {...slotProps?.toolbar}
-        sx={{
-          ...toolbarStyles.default,
-          ...slotProps?.toolbar?.sx,
-        }}
-      >
-        <Container
-          {...slotProps?.container}
-          sx={{
-            height: 1,
-            display: 'flex',
-            alignItems: 'center',
-            ...slotProps?.container?.sx,
-          }}
-        >
-          {slots?.leftArea}
+      <HeaderContainer layoutQuery={layoutQuery} {...slotProps?.container}>
+        {slots?.leftArea}
 
-          <Box sx={{ display: 'flex', flex: '1 1 auto', justifyContent: 'center' }}>
-            {slots?.centerArea}
-          </Box>
+        <HeaderCenterArea {...slotProps?.centerArea}>{slots?.centerArea}</HeaderCenterArea>
 
-          {slots?.rightArea}
-        </Container>
-      </Toolbar>
+        {slots?.rightArea}
+      </HeaderContainer>
 
       {slots?.bottomArea}
-    </AppBar>
+    </HeaderRoot>
   );
 }
+
+// ----------------------------------------------------------------------
+
+type HeaderRootProps = Pick<HeaderSectionProps, 'disableOffset' | 'disableElevation'> & {
+  isOffset: boolean;
+};
+
+const HeaderRoot = styled(AppBar, {
+  shouldForwardProp: (prop: string) =>
+    !['isOffset', 'disableOffset', 'disableElevation', 'sx'].includes(prop),
+})<HeaderRootProps>(({ isOffset, disableOffset, disableElevation, theme }) => {
+  const pauseZindex = { top: -1, bottom: -2 };
+
+  const pauseStyles: CSSObject = {
+    opacity: 0,
+    content: '""',
+    visibility: 'hidden',
+    position: 'absolute',
+    transition: theme.transitions.create(['opacity', 'visibility'], {
+      easing: theme.transitions.easing.easeInOut,
+      duration: theme.transitions.duration.shorter,
+    }),
+  };
+
+  const bgStyles: CSSObject = {
+    ...pauseStyles,
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    zIndex: pauseZindex.top,
+    backdropFilter: `blur(6px)`,
+    WebkitBackdropFilter: `blur(6px)`,
+    backgroundColor: varAlpha(theme.vars.palette.background.defaultChannel, 0.8),
+    ...(isOffset && {
+      opacity: 1,
+      visibility: 'visible',
+    }),
+  };
+
+  const shadowStyles: CSSObject = {
+    ...pauseStyles,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: 24,
+    margin: 'auto',
+    borderRadius: '50%',
+    width: `calc(100% - 48px)`,
+    zIndex: pauseZindex.bottom,
+    boxShadow: theme.vars.customShadows.z8,
+    ...(isOffset && { opacity: 0.48, visibility: 'visible' }),
+  };
+
+  return {
+    boxShadow: 'none',
+    zIndex: 'var(--layout-header-zIndex)',
+    ...(!disableOffset && { '&::before': bgStyles }),
+    ...(!disableElevation && { '&::after': shadowStyles }),
+  };
+});
+
+const HeaderContainer = styled(Container, {
+  shouldForwardProp: (prop: string) => !['layoutQuery', 'sx'].includes(prop),
+})<Pick<HeaderSectionProps, 'layoutQuery'>>(({ layoutQuery = 'md', theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  color: 'var(--color)',
+  height: 'var(--layout-header-mobile-height)',
+  [theme.breakpoints.up(layoutQuery)]: { height: 'var(--layout-header-desktop-height)' },
+}));
+
+const HeaderCenterArea = styled('div')(() => ({
+  display: 'flex',
+  flex: '1 1 auto',
+  justifyContent: 'center',
+}));

@@ -5,19 +5,30 @@ import Typography from '@mui/material/Typography';
 
 import { RouterLink } from 'src/routes/components';
 
-import { SimpleLayout } from 'src/layouts/simple';
+import { Logo } from 'src/components/logo';
 
 // ----------------------------------------------------------------------
 
 export function NotFoundView() {
   return (
-    <SimpleLayout content={{ compact: true }}>
-      <Container>
+    <>
+      <Logo sx={{ position: 'fixed', top: 20, left: 20 }} />
+
+      <Container
+        sx={{
+          py: 10,
+          flexGrow: 1,
+          display: 'flex',
+          alignItems: 'center',
+          flexDirection: 'column',
+          justifyContent: 'center',
+        }}
+      >
         <Typography variant="h3" sx={{ mb: 2 }}>
           Sorry, page not found!
         </Typography>
 
-        <Typography sx={{ color: 'text.secondary' }}>
+        <Typography sx={{ color: 'text.secondary', maxWidth: 480, textAlign: 'center' }}>
           Sorry, we couldn’t find the page you’re looking for. Perhaps you’ve mistyped the URL? Be
           sure to check your spelling.
         </Typography>
@@ -36,6 +47,6 @@ export function NotFoundView() {
           Go to home
         </Button>
       </Container>
-    </SimpleLayout>
+    </>
   );
 }

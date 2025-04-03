@@ -1,4 +1,3 @@
-import { forwardRef } from 'react';
 import { mergeClasses } from 'minimal-shared/utils';
 
 import { styled } from '@mui/material/styles';
@@ -9,24 +8,21 @@ import type { SvgColorProps } from './types';
 
 // ----------------------------------------------------------------------
 
-export const SvgColor = forwardRef<HTMLSpanElement, SvgColorProps>((props, ref) => {
-  const { src, className, sx, ...other } = props;
-
+export function SvgColor({ src, className, sx, ...other }: SvgColorProps) {
   return (
     <SvgRoot
-      ref={ref}
       className={mergeClasses([svgColorClasses.root, className])}
       sx={[
-        () => ({
+        {
           mask: `url(${src}) no-repeat center / contain`,
           WebkitMask: `url(${src}) no-repeat center / contain`,
-        }),
+        },
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
       {...other}
     />
   );
-});
+}
 
 // ----------------------------------------------------------------------
 

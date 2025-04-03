@@ -1,6 +1,7 @@
 import type { BoxProps } from '@mui/material/Box';
 
 import { useState, useCallback } from 'react';
+import { varAlpha } from 'minimal-shared/utils';
 
 import Box from '@mui/material/Box';
 import Slide from '@mui/material/Slide';
@@ -39,27 +40,25 @@ export function Searchbar({ sx, ...other }: BoxProps) {
 
         <Slide direction="down" in={open} mountOnEnter unmountOnExit>
           <Box
-            sx={[
-              {
-                ...theme.mixins.bgBlur({
-                  color: theme.vars.palette.background.default,
-                }),
-                top: 0,
-                left: 0,
-                zIndex: 99,
-                width: '100%',
-                display: 'flex',
-                position: 'absolute',
-                alignItems: 'center',
-                px: { xs: 3, md: 5 },
-                boxShadow: theme.customShadows.z8,
-                height: {
-                  xs: 'var(--layout-header-mobile-height)',
-                  md: 'var(--layout-header-desktop-height)',
-                },
+            sx={{
+              top: 0,
+              left: 0,
+              zIndex: 99,
+              width: '100%',
+              display: 'flex',
+              position: 'absolute',
+              alignItems: 'center',
+              px: { xs: 3, md: 5 },
+              boxShadow: theme.vars.customShadows.z8,
+              height: {
+                xs: 'var(--layout-header-mobile-height)',
+                md: 'var(--layout-header-desktop-height)',
               },
-              ...(Array.isArray(sx) ? sx : [sx]),
-            ]}
+              backdropFilter: `blur(6px)`,
+              WebkitBackdropFilter: `blur(6px)`,
+              backgroundColor: varAlpha(theme.vars.palette.background.defaultChannel, 0.8),
+              ...sx,
+            }}
             {...other}
           >
             <Input

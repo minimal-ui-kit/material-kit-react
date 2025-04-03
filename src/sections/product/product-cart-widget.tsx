@@ -9,11 +9,11 @@ import { Iconify } from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
-type Props = BoxProps & {
+type CartIconProps = BoxProps & {
   totalItems: number;
 };
 
-export function CartIcon({ totalItems, sx, ...other }: Props) {
+export function CartIcon({ totalItems, sx, ...other }: CartIconProps) {
   return (
     <Box
       component={RouterLink}
@@ -31,7 +31,7 @@ export function CartIcon({ totalItems, sx, ...other }: Props) {
           borderBottomLeftRadius: 16,
           bgcolor: 'background.paper',
           padding: theme.spacing(1, 3, 1, 2),
-          boxShadow: theme.customShadows.dropdown,
+          boxShadow: theme.vars.customShadows.dropdown,
           transition: theme.transitions.create(['opacity']),
           '&:hover': { opacity: 0.72 },
         }),

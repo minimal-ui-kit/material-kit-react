@@ -1,12 +1,11 @@
 import { useState, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid2';
+import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Pagination from '@mui/material/Pagination';
 
-import { _posts } from 'src/_mock';
 import { DashboardContent } from 'src/layouts/dashboard';
 
 import { Iconify } from 'src/components/iconify';
@@ -15,9 +14,15 @@ import { PostItem } from '../post-item';
 import { PostSort } from '../post-sort';
 import { PostSearch } from '../post-search';
 
+import type { IPostItem } from '../post-item';
+
 // ----------------------------------------------------------------------
 
-export function BlogView() {
+type Props = {
+  posts: IPostItem[];
+};
+
+export function BlogView({ posts }: Props) {
   const [sortBy, setSortBy] = useState('latest');
 
   const handleSort = useCallback((newSort: string) => {
@@ -26,8 +31,14 @@ export function BlogView() {
 
   return (
     <DashboardContent>
-      <Box display="flex" alignItems="center" mb={5}>
-        <Typography variant="h4" flexGrow={1}>
+      <Box
+        sx={{
+          mb: 5,
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
+        <Typography variant="h4" sx={{ flexGrow: 1 }}>
           Blog
         </Typography>
         <Button
@@ -39,8 +50,15 @@ export function BlogView() {
         </Button>
       </Box>
 
-      <Box display="flex" alignItems="center" justifyContent="space-between" sx={{ mb: 5 }}>
-        <PostSearch posts={_posts} />
+      <Box
+        sx={{
+          mb: 5,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
+        <PostSearch posts={posts} />
         <PostSort
           sortBy={sortBy}
           onSort={handleSort}
@@ -53,7 +71,7 @@ export function BlogView() {
       </Box>
 
       <Grid container spacing={3}>
-        {_posts.map((post, index) => {
+        {posts.map((post, index) => {
           const latestPostLarge = index === 0;
           const latestPost = index === 1 || index === 2;
 

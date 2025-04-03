@@ -1,3 +1,15 @@
+### v3.0.0
+
+###### Apr 3, 2025
+
+- Support MUI v7.
+- Support React v19.
+- Support Eslint v9.
+- Upgrade and restructure the directory.
+- Upgrade some dependencies to the latest versions.
+
+---
+
 ### v2.0.0
 
 ###### Aug 24, 2024

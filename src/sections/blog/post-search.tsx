@@ -6,12 +6,12 @@ import Autocomplete, { autocompleteClasses } from '@mui/material/Autocomplete';
 
 import { Iconify } from 'src/components/iconify';
 
-import type { PostItemProps } from './post-item';
+import type { IPostItem } from './post-item';
 
 // ----------------------------------------------------------------------
 
 type PostSearchProps = {
-  posts: PostItemProps[];
+  posts: IPostItem[];
   sx?: SxProps<Theme>;
 };
 
@@ -23,15 +23,13 @@ export function PostSearch({ posts, sx }: PostSearchProps) {
       popupIcon={null}
       slotProps={{
         paper: {
-          sx: [
-            {
-              width: 320,
-              [`& .${autocompleteClasses.option}`]: {
-                typography: 'body2',
-              },
+          sx: {
+            width: 320,
+            [`& .${autocompleteClasses.option}`]: {
+              typography: 'body2',
             },
-            ...(Array.isArray(sx) ? sx : [sx]),
-          ],
+            ...sx,
+          },
         },
       }}
       options={posts}
@@ -41,16 +39,18 @@ export function PostSearch({ posts, sx }: PostSearchProps) {
         <TextField
           {...params}
           placeholder="Search post..."
-          InputProps={{
-            ...params.InputProps,
-            startAdornment: (
-              <InputAdornment position="start">
-                <Iconify
-                  icon="eva:search-fill"
-                  sx={{ ml: 1, width: 20, height: 20, color: 'text.disabled' }}
-                />
-              </InputAdornment>
-            ),
+          slotProps={{
+            input: {
+              ...params.InputProps,
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Iconify
+                    icon="eva:search-fill"
+                    sx={{ ml: 1, width: 20, height: 20, color: 'text.disabled' }}
+                  />
+                </InputAdornment>
+              ),
+            },
           }}
         />
       )}

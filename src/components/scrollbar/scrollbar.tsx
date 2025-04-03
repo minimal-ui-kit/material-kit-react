@@ -1,4 +1,3 @@
-import { forwardRef } from 'react';
 import SimpleBar from 'simplebar-react';
 import { mergeClasses } from 'minimal-shared/utils';
 
@@ -10,9 +9,15 @@ import type { ScrollbarProps } from './types';
 
 // ----------------------------------------------------------------------
 
-export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>((props, ref) => {
-  const { slotProps, children, fillContent = true, className, sx, ...other } = props;
-
+export function Scrollbar({
+  sx,
+  ref,
+  children,
+  className,
+  slotProps,
+  fillContent = true,
+  ...other
+}: ScrollbarProps) {
   return (
     <ScrollbarRoot
       scrollableNodeProps={{ ref }}
@@ -32,7 +37,7 @@ export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>((props, ref)
       {children}
     </ScrollbarRoot>
   );
-});
+}
 
 // ----------------------------------------------------------------------
 

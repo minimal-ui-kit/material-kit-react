@@ -1,6 +1,6 @@
 import type { LinkProps } from '@mui/material/Link';
 
-import { useId, forwardRef } from 'react';
+import { useId } from 'react';
 import { mergeClasses } from 'minimal-shared/utils';
 
 import Link from '@mui/material/Link';
@@ -17,9 +17,14 @@ export type LogoProps = LinkProps & {
   disabled?: boolean;
 };
 
-export const Logo = forwardRef<HTMLAnchorElement, LogoProps>((props, ref) => {
-  const { className, href = '/', isSingle = true, disabled, sx, ...other } = props;
-
+export function Logo({
+  sx,
+  disabled,
+  className,
+  href = '/',
+  isSingle = true,
+  ...other
+}: LogoProps) {
   const theme = useTheme();
 
   const gradientId = useId();
@@ -28,29 +33,6 @@ export const Logo = forwardRef<HTMLAnchorElement, LogoProps>((props, ref) => {
   const PRIMARY_LIGHT = theme.vars.palette.primary.light;
   const PRIMARY_MAIN = theme.vars.palette.primary.main;
   const PRIMARY_DARKER = theme.vars.palette.primary.dark;
-
-  /*
-    * OR using local (public folder)
-    *
-    const singleLogo = (
-      <img
-        alt="Single logo"
-        src={`${CONFIG.assetsDir}/logo/logo-single.svg`}
-        width="100%"
-        height="100%"
-      />
-    );
-
-    const fullLogo = (
-      <img
-        alt="Full logo"
-        src={`${CONFIG.assetsDir}/logo/logo-full.svg`}
-        width="100%"
-        height="100%"
-      />
-    );
-    *
-    */
 
   const singleLogo = (
     <svg
@@ -184,19 +166,18 @@ export const Logo = forwardRef<HTMLAnchorElement, LogoProps>((props, ref) => {
 
   return (
     <LogoRoot
-      ref={ref}
       component={RouterLink}
       href={href}
       aria-label="Logo"
       underline="none"
       className={mergeClasses([logoClasses.root, className])}
       sx={[
-        () => ({
+        {
           width: 40,
           height: 40,
           ...(!isSingle && { width: 102, height: 36 }),
           ...(disabled && { pointerEvents: 'none' }),
-        }),
+        },
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
       {...other}
@@ -204,7 +185,7 @@ export const Logo = forwardRef<HTMLAnchorElement, LogoProps>((props, ref) => {
       {isSingle ? singleLogo : fullLogo}
     </LogoRoot>
   );
-});
+}
 
 // ----------------------------------------------------------------------
 
