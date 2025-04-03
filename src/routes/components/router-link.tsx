@@ -1,7 +1,7 @@
-import type { LinkProps } from 'react-router-dom';
+import type { LinkProps } from 'react-router';
 
 import { forwardRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 // ----------------------------------------------------------------------
 

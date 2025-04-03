@@ -1,62 +1,42 @@
 import { forwardRef } from 'react';
+import { upperFirst } from 'es-toolkit';
+import { mergeClasses } from 'minimal-shared/utils';
 
-import Box from '@mui/material/Box';
-import { useTheme } from '@mui/material/styles';
-
-import { StyledLabel } from './styles';
 import { labelClasses } from './classes';
+import { LabelRoot, LabelIcon } from './styles';
 
 import type { LabelProps } from './types';
 
 // ----------------------------------------------------------------------
 
-export const Label = forwardRef<HTMLSpanElement, LabelProps>(
-  (
-    { children, color = 'default', variant = 'soft', startIcon, endIcon, sx, className, ...other },
-    ref
-  ) => {
-    const theme = useTheme();
+export const Label = forwardRef<HTMLSpanElement, LabelProps>((props, ref) => {
+  const {
+    endIcon,
+    children,
+    startIcon,
+    className,
+    disabled,
+    variant = 'soft',
+    color = 'default',
+    sx,
+    ...other
+  } = props;
 
-    const iconStyles = {
-      width: 16,
-      height: 16,
-      '& svg, img': {
-        width: 1,
-        height: 1,
-        objectFit: 'cover',
-      },
-    };
+  return (
+    <LabelRoot
+      ref={ref}
+      color={color}
+      variant={variant}
+      disabled={disabled}
+      className={mergeClasses([labelClasses.root, className])}
+      sx={sx}
+      {...other}
+    >
+      {startIcon && <LabelIcon className={labelClasses.icon}>{startIcon}</LabelIcon>}
 
-    return (
-      <StyledLabel
-        ref={ref}
-        component="span"
-        className={labelClasses.root.concat(className ? ` ${className}` : '')}
-        ownerState={{ color, variant }}
-        sx={{ ...(startIcon && { pl: 0.75 }), ...(endIcon && { pr: 0.75 }), ...sx }}
-        theme={theme}
-        {...other}
-      >
-        {startIcon && (
-          <Box component="span" className={labelClasses.icon} sx={{ mr: 0.75, ...iconStyles }}>
-            {startIcon}
-          </Box>
-        )}
+      {typeof children === 'string' ? upperFirst(children) : children}
 
-        {typeof children === 'string' ? sentenceCase(children) : children}
-
-        {endIcon && (
-          <Box component="span" className={labelClasses.icon} sx={{ ml: 0.75, ...iconStyles }}>
-            {endIcon}
-          </Box>
-        )}
-      </StyledLabel>
-    );
-  }
-);
-
-// ----------------------------------------------------------------------
-
-function sentenceCase(string: string): string {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}
+      {endIcon && <LabelIcon className={labelClasses.icon}>{endIcon}</LabelIcon>}
+    </LabelRoot>
+  );
+});

@@ -5,8 +5,6 @@ import Alert from '@mui/material/Alert';
 
 import { RouterLink } from 'src/routes/components';
 
-import { stylesMode } from 'src/theme/styles';
-
 import { Logo } from 'src/components/logo';
 
 import { Main } from './main';
@@ -71,22 +69,26 @@ export function AuthLayout({ sx, children, header }: AuthLayoutProps) {
        * Style
        *************************************** */
       cssVars={{ '--layout-auth-content-width': '420px' }}
-      sx={{
-        '&::before': {
-          width: 1,
-          height: 1,
-          zIndex: -1,
-          content: "''",
-          opacity: 0.24,
-          position: 'fixed',
-          backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center center',
-          backgroundImage: `url(/assets/background/overlay.jpg)`,
-          [stylesMode.dark]: { opacity: 0.08 },
-        },
-        ...sx,
-      }}
+      sx={[
+        (theme) => ({
+          '&::before': {
+            width: 1,
+            height: 1,
+            zIndex: -1,
+            content: "''",
+            opacity: 0.24,
+            position: 'fixed',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center center',
+            backgroundImage: `url(/assets/background/overlay.jpg)`,
+            ...theme.applyStyles('dark', {
+              opacity: 0.08,
+            }),
+          },
+        }),
+        ...(Array.isArray(sx) ? sx : [sx]),
+      ]}
     >
       <Main layoutQuery={layoutQuery}>{children}</Main>
     </LayoutSection>

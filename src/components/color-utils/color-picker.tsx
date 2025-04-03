@@ -1,107 +1,182 @@
-import type { BoxProps } from '@mui/material/Box';
+import type { Theme, SxProps } from '@mui/material/styles';
 
 import { forwardRef, useCallback } from 'react';
+import { varAlpha, mergeClasses } from 'minimal-shared/utils';
 
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
 import ButtonBase from '@mui/material/ButtonBase';
-import { alpha as hexAlpha } from '@mui/material/styles';
-
-import { varAlpha } from 'src/theme/styles';
+import { styled, alpha as hexAlpha } from '@mui/material/styles';
 
 import { Iconify } from '../iconify';
-
-import type { ColorPickerProps } from './types';
+import { colorPickerClasses } from './classes';
 
 // ----------------------------------------------------------------------
 
-export const ColorPicker = forwardRef<HTMLDivElement, BoxProps & ColorPickerProps>(
-  ({ colors, selected, onSelectColor, limit = 'auto', sx, slotProps, ...other }, ref) => {
-    const singleSelect = typeof selected === 'string';
+export type ColorPickerSlotProps = {
+  item?: React.ComponentProps<typeof ItemRoot>;
+  itemContainer?: React.ComponentProps<typeof ItemContainer>;
+  icon?: React.ComponentProps<typeof ItemIcon>;
+};
 
-    const handleSelect = useCallback(
-      (color: string) => {
-        if (singleSelect) {
-          if (color !== selected) {
-            onSelectColor(color);
-          }
-        } else {
-          const newSelected = selected.includes(color)
-            ? selected.filter((value) => value !== color)
-            : [...selected, color];
+export type ColorPickerProps = Omit<React.ComponentProps<'ul'>, 'onChange'> & {
+  sx?: SxProps<Theme>;
+  size?: number;
+  options?: string[];
+  limit?: 'auto' | number;
+  value?: string | string[];
+  variant?: 'circular' | 'rounded' | 'square';
+  onChange?: (value: string | string[]) => void;
+  slotProps?: ColorPickerSlotProps;
+};
 
-          onSelectColor(newSelected);
+export const ColorPicker = forwardRef<HTMLUListElement, ColorPickerProps>((props, ref) => {
+  const {
+    sx,
+    value,
+    size = 36,
+    onChange,
+    slotProps,
+    className,
+    options = [],
+    limit = 'auto',
+    variant = 'circular',
+    ...other
+  } = props;
+
+  const isSingleSelect = typeof value === 'string';
+
+  const handleSelect = useCallback(
+    (color: string) => {
+      if (isSingleSelect) {
+        if (color !== value) {
+          onChange?.(color);
         }
-      },
-      [onSelectColor, selected, singleSelect]
-    );
+      } else {
+        const selected = value as string[];
 
-    return (
-      <Box
-        ref={ref}
-        component="ul"
-        sx={{
-          flexWrap: 'wrap',
-          flexDirection: 'row',
-          display: 'inline-flex',
-          ...(limit !== 'auto' && {
-            width: limit * 36,
-            justifyContent: 'flex-end',
-          }),
-          ...sx,
-        }}
-        {...other}
-      >
-        {colors.map((color) => {
-          const hasSelected = singleSelect ? selected === color : selected.includes(color);
+        const newSelected = selected.includes(color)
+          ? selected.filter((currentColor) => currentColor !== color)
+          : [...selected, color];
 
-          return (
-            <Box component="li" key={color} sx={{ display: 'inline-flex' }}>
-              <ButtonBase
-                aria-label={color}
-                onClick={() => handleSelect(color)}
-                sx={{
-                  width: 36,
-                  height: 36,
-                  borderRadius: '50%',
-                  ...slotProps?.button,
-                }}
+        onChange?.(newSelected);
+      }
+    },
+    [onChange, value, isSingleSelect]
+  );
+
+  return (
+    <ColorPickerRoot
+      ref={ref}
+      limit={limit}
+      className={mergeClasses([colorPickerClasses.root, className])}
+      sx={[
+        {
+          '--item-size': `${size}px`,
+          '--item-radius':
+            (variant === 'circular' && '50%') ||
+            (variant === 'rounded' && 'calc(var(--item-size) / 6)') ||
+            '0px',
+        },
+        ...(Array.isArray(sx) ? sx : [sx]),
+      ]}
+      {...other}
+    >
+      {options.map((color) => {
+        const hasSelected = isSingleSelect ? value === color : (value as string[]).includes(color);
+
+        return (
+          <li key={color}>
+            <ItemRoot
+              aria-label={color}
+              onClick={() => handleSelect(color)}
+              className={colorPickerClasses.item.root}
+              {...slotProps?.item}
+            >
+              <ItemContainer
+                color={color}
+                hasSelected={hasSelected}
+                className={colorPickerClasses.item.container}
+                {...slotProps?.itemContainer}
               >
-                <Stack
-                  alignItems="center"
-                  justifyContent="center"
-                  sx={(theme) => ({
-                    width: 20,
-                    height: 20,
-                    bgcolor: color,
-                    borderRadius: '50%',
-                    border: `solid 1px ${varAlpha(theme.vars.palette.grey['500Channel'], 0.16)}`,
-                    ...(hasSelected && {
-                      transform: 'scale(1.3)',
-                      boxShadow: `4px 4px 8px 0 ${hexAlpha(color, 0.48)}`,
-                      outline: `solid 2px ${hexAlpha(color, 0.08)}`,
-                      transition: theme.transitions.create('all', {
-                        duration: theme.transitions.duration.shortest,
-                      }),
-                    }),
-                  })}
-                >
-                  <Iconify
-                    width={hasSelected ? 12 : 0}
-                    icon="eva:checkmark-fill"
-                    sx={(theme) => ({
-                      color: theme.palette.getContrastText(color),
-                      transition: theme.transitions.create('all', {
-                        duration: theme.transitions.duration.shortest,
-                      }),
-                    })}
-                  />
-                </Stack>
-              </ButtonBase>
-            </Box>
-          );
-        })}
-      </Box>
-    );
-  }
-);
+                <ItemIcon
+                  color={color}
+                  hasSelected={hasSelected}
+                  icon="eva:checkmark-fill"
+                  className={colorPickerClasses.item.icon}
+                  {...slotProps?.icon}
+                />
+              </ItemContainer>
+            </ItemRoot>
+          </li>
+        );
+      })}
+    </ColorPickerRoot>
+  );
+});
+
+// ----------------------------------------------------------------------
+
+const ColorPickerRoot = styled('ul', {
+  shouldForwardProp: (prop: string) => !['limit', 'sx'].includes(prop),
+})<Pick<ColorPickerProps, 'limit'>>(({ limit }) => ({
+  flexWrap: 'wrap',
+  flexDirection: 'row',
+  display: 'inline-flex',
+  '& > li': { display: 'inline-flex' },
+  ...(typeof limit === 'number' && {
+    justifyContent: 'flex-end',
+    width: `calc(var(--item-size) * ${limit})`,
+  }),
+}));
+
+const ItemRoot = styled(ButtonBase)(() => ({
+  width: 'var(--item-size)',
+  height: 'var(--item-size)',
+  borderRadius: 'var(--item-radius)',
+}));
+
+const ItemContainer = styled('span', {
+  shouldForwardProp: (prop: string) => !['color', 'hasSelected', 'sx'].includes(prop),
+})<{ color: string; hasSelected: boolean }>(({ color, theme }) => ({
+  alignItems: 'center',
+  display: 'inline-flex',
+  borderRadius: 'inherit',
+  justifyContent: 'center',
+  backgroundColor: color,
+  width: 'calc(var(--item-size) - 16px)',
+  height: 'calc(var(--item-size) - 16px)',
+  border: `solid 1px ${varAlpha(theme.vars.palette.grey['500Channel'], 0.16)}`,
+  transition: theme.transitions.create(['all'], {
+    duration: theme.transitions.duration.shortest,
+  }),
+  variants: [
+    {
+      props: { hasSelected: true },
+      style: {
+        width: 'calc(var(--item-size) - 8px)',
+        height: 'calc(var(--item-size) - 8px)',
+        outline: `solid 2px ${hexAlpha(color, 0.08)}`,
+        boxShadow: `4px 4px 8px 0 ${hexAlpha(color, 0.48)}`,
+      },
+    },
+  ],
+}));
+
+const ItemIcon = styled(Iconify, {
+  shouldForwardProp: (prop: string) => !['color', 'hasSelected', 'sx'].includes(prop),
+})<{ color: string; hasSelected: boolean }>(({ color, theme }) => ({
+  width: 0,
+  height: 0,
+  color: theme.palette.getContrastText(color),
+  transition: theme.transitions.create(['all'], {
+    duration: theme.transitions.duration.shortest,
+  }),
+  variants: [
+    {
+      props: { hasSelected: true },
+      style: {
+        width: 'calc(var(--item-size) / 2.4)',
+        height: 'calc(var(--item-size) / 2.4)',
+      },
+    },
+  ],
+}));

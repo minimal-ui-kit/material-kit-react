@@ -105,9 +105,9 @@ export function ProductFilters({
     <Stack spacing={1}>
       <Typography variant="subtitle2">Colors</Typography>
       <ColorPicker
-        selected={filters.colors}
-        onSelectColor={(colors) => onSetFilters({ colors: colors as string[] })}
-        colors={options.colors}
+        options={options.colors}
+        value={filters.colors}
+        onChange={(colors) => onSetFilters({ colors: colors as string[] })}
         limit={6}
       />
     </Stack>

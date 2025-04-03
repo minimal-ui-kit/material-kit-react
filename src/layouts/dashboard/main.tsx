@@ -15,12 +15,14 @@ export function Main({ children, sx, ...other }: BoxProps) {
     <Box
       component="main"
       className={layoutClasses.main}
-      sx={{
-        display: 'flex',
-        flex: '1 1 auto',
-        flexDirection: 'column',
-        ...sx,
-      }}
+      sx={[
+        {
+          display: 'flex',
+          flex: '1 1 auto',
+          flexDirection: 'column',
+        },
+        ...(Array.isArray(sx) ? sx : [sx]),
+      ]}
       {...other}
     >
       {children}
@@ -49,26 +51,28 @@ export function DashboardContent({
     <Container
       className={layoutClasses.content}
       maxWidth={maxWidth || false}
-      sx={{
-        display: 'flex',
-        flex: '1 1 auto',
-        flexDirection: 'column',
-        pt: 'var(--layout-dashboard-content-pt)',
-        pb: 'var(--layout-dashboard-content-pb)',
-        [theme.breakpoints.up(layoutQuery)]: {
-          px: 'var(--layout-dashboard-content-px)',
-        },
-        ...(disablePadding && {
-          p: {
-            xs: 0,
-            sm: 0,
-            md: 0,
-            lg: 0,
-            xl: 0,
+      sx={[
+        {
+          display: 'flex',
+          flex: '1 1 auto',
+          flexDirection: 'column',
+          pt: 'var(--layout-dashboard-content-pt)',
+          pb: 'var(--layout-dashboard-content-pb)',
+          [theme.breakpoints.up(layoutQuery)]: {
+            px: 'var(--layout-dashboard-content-px)',
           },
-        }),
-        ...sx,
-      }}
+          ...(disablePadding && {
+            p: {
+              xs: 0,
+              sm: 0,
+              md: 0,
+              lg: 0,
+              xl: 0,
+            },
+          }),
+        },
+        ...(Array.isArray(sx) ? sx : [sx]),
+      ]}
       {...other}
     >
       {children}

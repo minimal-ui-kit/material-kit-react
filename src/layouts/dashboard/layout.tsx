@@ -126,14 +126,16 @@ export function DashboardLayout({ sx, children, header }: DashboardLayoutProps) 
         '--layout-dashboard-content-pb': theme.spacing(8),
         '--layout-dashboard-content-px': theme.spacing(5),
       }}
-      sx={{
-        [`& .${layoutClasses.hasSidebar}`]: {
-          [theme.breakpoints.up(layoutQuery)]: {
-            pl: 'var(--layout-nav-vertical-width)',
+      sx={[
+        {
+          [`& .${layoutClasses.hasSidebar}`]: {
+            [theme.breakpoints.up(layoutQuery)]: {
+              pl: 'var(--layout-nav-vertical-width)',
+            },
           },
         },
-        ...sx,
-      }}
+        ...(Array.isArray(sx) ? sx : [sx]),
+      ]}
     >
       <Main>{children}</Main>
     </LayoutSection>

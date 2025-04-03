@@ -36,18 +36,20 @@ export function Main({ sx, children, layoutQuery, ...other }: MainProps) {
     <Box
       component="main"
       className={layoutClasses.main}
-      sx={{
-        display: 'flex',
-        flex: '1 1 auto',
-        alignItems: 'center',
-        flexDirection: 'column',
-        p: theme.spacing(3, 2, 10, 2),
-        [theme.breakpoints.up(layoutQuery)]: {
-          justifyContent: 'center',
-          p: theme.spacing(10, 0, 10, 0),
+      sx={[
+        {
+          display: 'flex',
+          flex: '1 1 auto',
+          alignItems: 'center',
+          flexDirection: 'column',
+          p: theme.spacing(3, 2, 10, 2),
+          [theme.breakpoints.up(layoutQuery)]: {
+            justifyContent: 'center',
+            p: theme.spacing(10, 0, 10, 0),
+          },
         },
-        ...sx,
-      }}
+        ...(Array.isArray(sx) ? sx : [sx]),
+      ]}
       {...other}
     >
       {renderContent}

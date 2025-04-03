@@ -1,4 +1,7 @@
+import { createClasses } from 'src/theme/create-classes';
+
+// ----------------------------------------------------------------------
+
 export const iconifyClasses = {
-  root: 'mnl__icon__root',
-  flag: 'mnl__icon__flag',
+  root: createClasses('iconify__root'),
 };

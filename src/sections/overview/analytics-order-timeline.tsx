@@ -1,6 +1,8 @@
 import type { CardProps } from '@mui/material/Card';
 import type { TimelineItemProps } from '@mui/lab/TimelineItem';
 
+import dayjs from 'dayjs';
+
 import Card from '@mui/material/Card';
 import Timeline from '@mui/lab/Timeline';
 import TimelineDot from '@mui/lab/TimelineDot';
@@ -10,8 +12,6 @@ import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineSeparator from '@mui/lab/TimelineSeparator';
 import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineItem, { timelineItemClasses } from '@mui/lab/TimelineItem';
-
-import { fDateTime } from 'src/utils/format-time';
 
 // ----------------------------------------------------------------------
 
@@ -26,20 +26,13 @@ type Props = CardProps & {
   }[];
 };
 
-export function AnalyticsOrderTimeline({ title, subheader, list, ...other }: Props) {
+export function AnalyticsOrderTimeline({ title, subheader, list, sx, ...other }: Props) {
   return (
-    <Card {...other}>
+    <Card sx={sx} {...other}>
       <CardHeader title={title} subheader={subheader} />
 
       <Timeline
-        sx={{
-          m: 0,
-          p: 3,
-          [`& .${timelineItemClasses.root}:before`]: {
-            flex: 0,
-            padding: 0,
-          },
-        }}
+        sx={{ m: 0, p: 3, [`& .${timelineItemClasses.root}:before`]: { flex: 0, padding: 0 } }}
       >
         {list.map((item, index) => (
           <Item key={item.id} item={item} lastItem={index === list.length - 1} />
@@ -76,7 +69,7 @@ function Item({ item, lastItem, ...other }: ItemProps) {
         <Typography variant="subtitle2">{item.title}</Typography>
 
         <Typography variant="caption" sx={{ color: 'text.disabled' }}>
-          {fDateTime(item.time)}
+          {dayjs(item.time).format('DD MMM YYYY h:mm a')}
         </Typography>
       </TimelineContent>
     </TimelineItem>

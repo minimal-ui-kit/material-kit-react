@@ -1,5 +1,6 @@
 import type { IconButtonProps } from '@mui/material/IconButton';
 
+import dayjs from 'dayjs';
 import { useState, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
@@ -16,8 +17,6 @@ import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemButton from '@mui/material/ListItemButton';
-
-import { fToNow } from 'src/utils/format-time';
 
 import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
@@ -184,7 +183,7 @@ function NotificationItem({ notification }: { notification: NotificationItemProp
             }}
           >
             <Iconify width={14} icon="solar:clock-circle-outline" />
-            {fToNow(notification.postedAt)}
+            {dayjs(notification.postedAt).toNow(true)}
           </Typography>
         }
       />

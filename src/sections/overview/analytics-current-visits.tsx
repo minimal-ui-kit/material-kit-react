@@ -25,15 +25,15 @@ type Props = CardProps & {
   };
 };
 
-export function AnalyticsCurrentVisits({ title, subheader, chart, ...other }: Props) {
+export function AnalyticsCurrentVisits({ title, subheader, chart, sx, ...other }: Props) {
   const theme = useTheme();
 
   const chartSeries = chart.series.map((item) => item.value);
 
   const chartColors = chart.colors ?? [
     theme.palette.primary.main,
-    theme.palette.warning.main,
-    theme.palette.secondary.dark,
+    theme.palette.warning.light,
+    theme.palette.info.dark,
     theme.palette.error.main,
   ];
 
@@ -54,16 +54,19 @@ export function AnalyticsCurrentVisits({ title, subheader, chart, ...other }: Pr
   });
 
   return (
-    <Card {...other}>
+    <Card sx={sx} {...other}>
       <CardHeader title={title} subheader={subheader} />
 
       <Chart
         type="pie"
         series={chartSeries}
         options={chartOptions}
-        width={{ xs: 240, xl: 260 }}
-        height={{ xs: 240, xl: 260 }}
-        sx={{ my: 6, mx: 'auto' }}
+        sx={{
+          my: 6,
+          mx: 'auto',
+          width: { xs: 240, xl: 260 },
+          height: { xs: 240, xl: 260 },
+        }}
       />
 
       <Divider sx={{ borderStyle: 'dashed' }} />

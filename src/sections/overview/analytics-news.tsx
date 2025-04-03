@@ -1,6 +1,8 @@
 import type { BoxProps } from '@mui/material/Box';
 import type { CardProps } from '@mui/material/Card';
 
+import dayjs from 'dayjs';
+
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Button from '@mui/material/Button';
@@ -8,30 +10,32 @@ import Avatar from '@mui/material/Avatar';
 import CardHeader from '@mui/material/CardHeader';
 import ListItemText from '@mui/material/ListItemText';
 
-import { fToNow } from 'src/utils/format-time';
-
 import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
-
-import type { PostItemProps } from '../blog/post-item';
 
 // ----------------------------------------------------------------------
 
 type Props = CardProps & {
   title?: string;
   subheader?: string;
-  list: PostItemProps[];
+  list: {
+    id: string;
+    title: string;
+    coverUrl: string;
+    description: string;
+    postedAt: string | number | null;
+  }[];
 };
 
-export function AnalyticsNews({ title, subheader, list, ...other }: Props) {
+export function AnalyticsNews({ title, subheader, list, sx, ...other }: Props) {
   return (
-    <Card {...other}>
+    <Card sx={sx} {...other}>
       <CardHeader title={title} subheader={subheader} sx={{ mb: 1 }} />
 
       <Scrollbar sx={{ minHeight: 405 }}>
         <Box sx={{ minWidth: 640 }}>
-          {list.map((post) => (
-            <PostItem key={post.id} item={post} />
+          {list.map((item) => (
+            <Item key={item.id} item={item} />
           ))}
         </Box>
       </Scrollbar>
@@ -51,18 +55,24 @@ export function AnalyticsNews({ title, subheader, list, ...other }: Props) {
 
 // ----------------------------------------------------------------------
 
-function PostItem({ sx, item, ...other }: BoxProps & { item: Props['list'][number] }) {
+type ItemProps = BoxProps & {
+  item: Props['list'][number];
+};
+
+function Item({ item, sx, ...other }: ItemProps) {
   return (
     <Box
-      sx={{
-        py: 2,
-        px: 3,
-        gap: 2,
-        display: 'flex',
-        alignItems: 'center',
-        borderBottom: (theme) => `dashed 1px ${theme.vars.palette.divider}`,
-        ...sx,
-      }}
+      sx={[
+        (theme) => ({
+          py: 2,
+          px: 3,
+          gap: 2,
+          display: 'flex',
+          alignItems: 'center',
+          borderBottom: `dashed 1px ${theme.vars.palette.divider}`,
+        }),
+        ...(Array.isArray(sx) ? sx : [sx]),
+      ]}
       {...other}
     >
       <Avatar
@@ -75,12 +85,18 @@ function PostItem({ sx, item, ...other }: BoxProps & { item: Props['list'][numbe
       <ListItemText
         primary={item.title}
         secondary={item.description}
-        primaryTypographyProps={{ noWrap: true, typography: 'subtitle2' }}
-        secondaryTypographyProps={{ mt: 0.5, noWrap: true, component: 'span' }}
+        slotProps={{
+          primary: { noWrap: true, sx: { typography: 'subtitle2' } },
+          secondary: {
+            noWrap: true,
+            component: 'span',
+            sx: { mt: 0.5 },
+          },
+        }}
       />
 
       <Box sx={{ flexShrink: 0, color: 'text.disabled', typography: 'caption' }}>
-        {fToNow(item.postedAt)}
+        {dayjs(item.postedAt).toNow(true)}
       </Box>
     </Box>
   );

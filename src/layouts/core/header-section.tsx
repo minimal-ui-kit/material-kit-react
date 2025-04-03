@@ -3,13 +3,13 @@ import type { AppBarProps } from '@mui/material/AppBar';
 import type { ToolbarProps } from '@mui/material/Toolbar';
 import type { ContainerProps } from '@mui/material/Container';
 
+import { varAlpha } from 'minimal-shared/utils';
+
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import { useTheme } from '@mui/material/styles';
-
-import { bgBlur, varAlpha } from 'src/theme/styles';
 
 import { layoutClasses } from '../classes';
 
@@ -41,7 +41,9 @@ export function HeaderSection({
 
   const toolbarStyles = {
     default: {
-      ...bgBlur({ color: varAlpha(theme.vars.palette.background.defaultChannel, 0.8) }),
+      ...theme.mixins.bgBlur({
+        color: varAlpha(theme.vars.palette.background.defaultChannel, 0.8),
+      }),
       minHeight: 'auto',
       height: 'var(--layout-header-mobile-height)',
       transition: theme.transitions.create(['height', 'background-color'], {
@@ -62,11 +64,13 @@ export function HeaderSection({
       position="sticky"
       color="transparent"
       className={layoutClasses.header}
-      sx={{
-        boxShadow: 'none',
-        zIndex: 'var(--layout-header-zIndex)',
-        ...sx,
-      }}
+      sx={[
+        {
+          boxShadow: 'none',
+          zIndex: 'var(--layout-header-zIndex)',
+        },
+        ...(Array.isArray(sx) ? sx : [sx]),
+      ]}
       {...other}
     >
       {slots?.topArea}

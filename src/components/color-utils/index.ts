@@ -1,4 +1,4 @@
-export type * from './types';
+export * from './classes';
 
 export * from './color-picker';
 

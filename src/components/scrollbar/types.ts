@@ -8,8 +8,8 @@ export type ScrollbarProps = SimplebarProps & {
   children?: React.ReactNode;
   fillContent?: boolean;
   slotProps?: {
-    wrapper?: SxProps<Theme>;
-    contentWrapper?: SxProps<Theme>;
-    content?: Partial<SxProps<Theme>>;
+    wrapperSx?: SxProps<Theme>;
+    contentSx?: SxProps<Theme>;
+    contentWrapperSx?: SxProps<Theme>;
   };
 };

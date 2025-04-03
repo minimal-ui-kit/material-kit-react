@@ -4,8 +4,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-import { textGradient } from 'src/theme/styles';
-
 // ----------------------------------------------------------------------
 
 export function NavUpgrade({ sx, ...other }: StackProps) {
@@ -14,13 +12,19 @@ export function NavUpgrade({ sx, ...other }: StackProps) {
       display="flex"
       alignItems="center"
       flexDirection="column"
-      sx={{ mb: 4, textAlign: 'center', ...sx }}
+      sx={[
+        {
+          mb: 4,
+          textAlign: 'center',
+        },
+        ...(Array.isArray(sx) ? sx : [sx]),
+      ]}
       {...other}
     >
       <Typography
         variant="h6"
         sx={(theme) => ({
-          ...textGradient(
+          ...theme.mixins.textGradient(
             `to right, ${theme.vars.palette.secondary.main}, ${theme.vars.palette.warning.main}`
           ),
         })}

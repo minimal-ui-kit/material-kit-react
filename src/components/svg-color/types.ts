@@ -1,7 +1,8 @@
-import type { BoxProps } from '@mui/material/Box';
+import type { Theme, SxProps } from '@mui/material/styles';
 
 // ----------------------------------------------------------------------
 
-export type SvgColorProps = BoxProps & {
+export type SvgColorProps = React.ComponentProps<'span'> & {
   src: string;
+  sx?: SxProps<Theme>;
 };

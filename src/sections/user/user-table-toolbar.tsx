@@ -18,16 +18,16 @@ type UserTableToolbarProps = {
 export function UserTableToolbar({ numSelected, filterName, onFilterName }: UserTableToolbarProps) {
   return (
     <Toolbar
-      sx={{
+      sx={(theme) => ({
         height: 96,
         display: 'flex',
         justifyContent: 'space-between',
-        p: (theme) => theme.spacing(0, 1, 0, 3),
+        p: theme.spacing(0, 1, 0, 3),
         ...(numSelected > 0 && {
           color: 'primary.main',
           bgcolor: 'primary.lighter',
         }),
-      }}
+      })}
     >
       {numSelected > 0 ? (
         <Typography component="div" variant="subtitle1">

@@ -1,24 +1,26 @@
-import type {} from '@mui/lab/themeAugmentation';
-import type {} from '@mui/material/themeCssVarsAugmentation';
+import type { Theme } from '@mui/material/styles';
+import type { ThemeProviderProps as MuiThemeProviderProps } from '@mui/material/styles/ThemeProvider';
 
 import CssBaseline from '@mui/material/CssBaseline';
-import { Experimental_CssVarsProvider as CssVarsProvider } from '@mui/material/styles';
+import { ThemeProvider as ThemeVarsProvider } from '@mui/material/styles';
 
 import { createTheme } from './create-theme';
 
+import type {} from './extend-theme-types';
+
 // ----------------------------------------------------------------------
 
-type Props = {
-  children: React.ReactNode;
+export type ThemeProviderProps = Omit<MuiThemeProviderProps, 'theme'> & {
+  theme?: Theme;
 };
 
-export function ThemeProvider({ children }: Props) {
+export function ThemeProvider({ children, ...other }: ThemeProviderProps) {
   const theme = createTheme();
 
   return (
-    <CssVarsProvider theme={theme}>
+    <ThemeVarsProvider disableTransitionOnChange theme={theme} {...other}>
       <CssBaseline />
       {children}
-    </CssVarsProvider>
+    </ThemeVarsProvider>
   );
 }

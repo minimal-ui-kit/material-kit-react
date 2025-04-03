@@ -2,6 +2,6 @@ export * from './chart';
 
 export * from './use-chart';
 
-export type * from './types';
+export * from './components';
 
-export * from './chart-legends';
+export type * from './types';

@@ -1,3 +1,5 @@
+export * from './mixins';
+
 export * from './shadows';
 
 export * from './palette';

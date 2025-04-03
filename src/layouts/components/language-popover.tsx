@@ -54,12 +54,14 @@ export function LanguagePopover({ data = [], sx, ...other }: LanguagePopoverProp
     <>
       <IconButton
         onClick={handleOpenPopover}
-        sx={{
-          width: 40,
-          height: 40,
-          ...(openPopover && { bgcolor: 'action.selected' }),
-          ...sx,
-        }}
+        sx={[
+          {
+            width: 40,
+            height: 40,
+            ...(openPopover && { bgcolor: 'action.selected' }),
+          },
+          ...(Array.isArray(sx) ? sx : [sx]),
+        ]}
         {...other}
       >
         {renderFlag(currentLang?.label, currentLang?.icon)}

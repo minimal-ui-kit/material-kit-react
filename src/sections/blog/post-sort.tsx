@@ -1,13 +1,12 @@
 import type { ButtonProps } from '@mui/material/Button';
 
 import { useState, useCallback } from 'react';
+import { varAlpha } from 'minimal-shared/utils';
 
 import Button from '@mui/material/Button';
 import Popover from '@mui/material/Popover';
 import MenuList from '@mui/material/MenuList';
 import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
-
-import { varAlpha } from 'src/theme/styles';
 
 import { Iconify } from 'src/components/iconify';
 
@@ -44,10 +43,12 @@ export function PostSort({ options, sortBy, onSort, sx, ...other }: PostSortProp
             }}
           />
         }
-        sx={{
-          bgcolor: (theme) => varAlpha(theme.vars.palette.grey['500Channel'], 0.08),
-          ...sx,
-        }}
+        sx={[
+          (theme) => ({
+            bgcolor: varAlpha(theme.vars.palette.grey['500Channel'], 0.08),
+          }),
+          ...(Array.isArray(sx) ? sx : [sx]),
+        ]}
         {...other}
       >
         {options.find((option) => option.value === sortBy)?.label}

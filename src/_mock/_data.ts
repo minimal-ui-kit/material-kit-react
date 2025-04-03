@@ -21,7 +21,7 @@ export const _myAccount = {
 
 // ----------------------------------------------------------------------
 
-export const _users = [...Array(24)].map((_, index) => ({
+export const _users = Array.from({ length: 24 }, (_, index) => ({
   id: _id(index),
   name: _fullName(index),
   company: _company(index),
@@ -45,7 +45,7 @@ export const _users = [...Array(24)].map((_, index) => ({
 
 // ----------------------------------------------------------------------
 
-export const _posts = [...Array(23)].map((_, index) => ({
+export const _posts = Array.from({ length: 23 }, (_, index) => ({
   id: _id(index),
   title: _postTitles(index),
   description: _description(index),
@@ -74,7 +74,7 @@ const COLORS = [
   '#FFC107',
 ];
 
-export const _products = [...Array(24)].map((_, index) => {
+export const _products = Array.from({ length: 24 }, (_, index) => {
   const setIndex = index + 1;
 
   return {
@@ -118,7 +118,7 @@ export const _langs = [
 
 // ----------------------------------------------------------------------
 
-export const _timeline = [...Array(5)].map((_, index) => ({
+export const _timeline = Array.from({ length: 5 }, (_, index) => ({
   id: _id(index),
   title: [
     '1983, orders, $4220',
@@ -133,7 +133,7 @@ export const _timeline = [...Array(5)].map((_, index) => ({
 
 // ----------------------------------------------------------------------
 
-export const _tasks = [...Array(5)].map((_, index) => ({
+export const _tasks = Array.from({ length: 5 }, (_, index) => ({
   id: _id(index),
   name: _taskNames(index),
 }));

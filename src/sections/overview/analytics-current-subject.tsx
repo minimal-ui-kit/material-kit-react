@@ -24,7 +24,7 @@ type Props = CardProps & {
   };
 };
 
-export function AnalyticsCurrentSubject({ title, subheader, chart, ...other }: Props) {
+export function AnalyticsCurrentSubject({ title, subheader, chart, sx, ...other }: Props) {
   const theme = useTheme();
 
   const chartColors = chart.colors ?? [
@@ -39,22 +39,26 @@ export function AnalyticsCurrentSubject({ title, subheader, chart, ...other }: P
     fill: { opacity: 0.48 },
     xaxis: {
       categories: chart.categories,
-      labels: { style: { colors: [...Array(6)].map(() => theme.palette.text.secondary) } },
+      labels: { style: { colors: Array.from({ length: 6 }, () => theme.palette.text.secondary) } },
     },
     ...chart.options,
   });
 
   return (
-    <Card {...other}>
+    <Card sx={sx} {...other}>
       <CardHeader title={title} subheader={subheader} />
 
       <Chart
         type="radar"
         series={chart.series}
         options={chartOptions}
-        width={300}
-        height={300}
-        sx={{ my: 1, mx: 'auto' }}
+        slotProps={{ loading: { py: 2.5 } }}
+        sx={{
+          my: 1,
+          mx: 'auto',
+          width: 300,
+          height: 300,
+        }}
       />
 
       <Divider sx={{ borderStyle: 'dashed' }} />

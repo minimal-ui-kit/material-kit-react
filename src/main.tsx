@@ -1,22 +1,30 @@
-import ReactDOM from 'react-dom/client';
-import { Suspense, StrictMode } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';
+import { Outlet, RouterProvider, createBrowserRouter } from 'react-router';
 
 import App from './app';
+import { routesSection } from './routes/sections';
 
 // ----------------------------------------------------------------------
 
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+const router = createBrowserRouter([
+  {
+    Component: () => (
+      <App>
+        <Outlet />
+      </App>
+    ),
+    children: routesSection,
+  },
+]);
+
+const root = createRoot(document.getElementById('root')!);
 
 root.render(
   <StrictMode>
     <HelmetProvider>
-      <BrowserRouter>
-        <Suspense>
-          <App />
-        </Suspense>
-      </BrowserRouter>
+      <RouterProvider router={router} />
     </HelmetProvider>
   </StrictMode>
 );

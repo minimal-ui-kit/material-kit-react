@@ -1,21 +1,29 @@
 import 'src/global.css';
 
+import dayjs from 'dayjs';
+import { useEffect } from 'react';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
 import Fab from '@mui/material/Fab';
 
-import { Router } from 'src/routes/sections';
+import { usePathname } from 'src/routes/hooks';
 
-import { useScrollToTop } from 'src/hooks/use-scroll-to-top';
-
-import { ThemeProvider } from 'src/theme/theme-provider';
+import { themeConfig, ThemeProvider } from 'src/theme';
 
 import { Iconify } from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
-export default function App() {
+dayjs.extend(relativeTime);
+
+type AppProps = {
+  children: React.ReactNode;
+};
+
+export default function App({ children }: AppProps) {
   useScrollToTop();
 
-  const githubButton = (
+  const githubButton = () => (
     <Fab
       size="medium"
       aria-label="Github"
@@ -36,9 +44,25 @@ export default function App() {
   );
 
   return (
-    <ThemeProvider>
-      <Router />
-      {githubButton}
+    <ThemeProvider
+      noSsr
+      defaultMode={themeConfig.defaultMode}
+      modeStorageKey={themeConfig.modeStorageKey}
+    >
+      {children}
+      {githubButton()}
     </ThemeProvider>
   );
+}
+
+// ----------------------------------------------------------------------
+
+function useScrollToTop() {
+  const pathname = usePathname();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
 }

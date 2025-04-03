@@ -1,8 +1,8 @@
 import { useState, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid2';
 import Button from '@mui/material/Button';
-import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 import Pagination from '@mui/material/Pagination';
 
@@ -58,7 +58,14 @@ export function BlogView() {
           const latestPost = index === 1 || index === 2;
 
           return (
-            <Grid key={post.id} xs={12} sm={latestPostLarge ? 12 : 6} md={latestPostLarge ? 6 : 3}>
+            <Grid
+              key={post.id}
+              size={{
+                xs: 12,
+                sm: latestPostLarge ? 12 : 6,
+                md: latestPostLarge ? 6 : 3,
+              }}
+            >
               <PostItem post={post} latestPost={latestPost} latestPostLarge={latestPostLarge} />
             </Grid>
           );

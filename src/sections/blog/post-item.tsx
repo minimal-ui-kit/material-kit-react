@@ -1,15 +1,15 @@
 import type { CardProps } from '@mui/material/Card';
 
+import dayjs from 'dayjs';
+import { varAlpha } from 'minimal-shared/utils';
+
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 
-import { fDate } from 'src/utils/format-time';
 import { fShortenNumber } from 'src/utils/format-number';
-
-import { varAlpha } from 'src/theme/styles';
 
 import { Iconify } from 'src/components/iconify';
 import { SvgColor } from 'src/components/svg-color';
@@ -141,16 +141,16 @@ export function PostItem({
         }),
       }}
     >
-      {fDate(post.postedAt)}
+      {dayjs(post.postedAt).format('DD MMM YYYY h:mm a')}
     </Typography>
   );
 
   const renderShape = (
     <SvgColor
-      width={88}
-      height={36}
       src="/assets/icons/shape-avatar.svg"
       sx={{
+        width: 88,
+        height: 36,
         left: 0,
         zIndex: 9,
         bottom: -16,

@@ -1,4 +1,4 @@
-import type { BoxProps } from '@mui/material/Box';
+import type { Theme, SxProps } from '@mui/material/styles';
 
 // ----------------------------------------------------------------------
 
@@ -13,9 +13,11 @@ export type LabelColor =
 
 export type LabelVariant = 'filled' | 'outlined' | 'soft' | 'inverted';
 
-export interface LabelProps extends BoxProps {
+export interface LabelProps extends React.ComponentProps<'span'> {
+  sx?: SxProps<Theme>;
+  disabled?: boolean;
   color?: LabelColor;
   variant?: LabelVariant;
-  endIcon?: React.ReactElement | null;
-  startIcon?: React.ReactElement | null;
+  endIcon?: React.ReactNode;
+  startIcon?: React.ReactNode;
 }

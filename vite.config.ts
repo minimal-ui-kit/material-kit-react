@@ -13,6 +13,7 @@ export default defineConfig({
     checker({
       typescript: true,
       eslint: {
+        useFlatConfig: true,
         lintCommand: 'eslint "./src/**/*.{js,jsx,ts,tsx}"',
         dev: { logLevel: ['error'] },
       },
@@ -26,11 +27,11 @@ export default defineConfig({
     alias: [
       {
         find: /^~(.+)/,
-        replacement: path.join(process.cwd(), 'node_modules/$1'),
+        replacement: path.resolve(process.cwd(), 'node_modules/$1'),
       },
       {
         find: /^src(.+)/,
-        replacement: path.join(process.cwd(), 'src/$1'),
+        replacement: path.resolve(process.cwd(), 'src/$1'),
       },
     ],
   },

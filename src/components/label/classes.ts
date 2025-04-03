@@ -1,3 +1,8 @@
+import { createClasses } from 'src/theme/create-classes';
+
 // ----------------------------------------------------------------------
 
-export const labelClasses = { root: 'mnl__label__root', icon: 'mnl__label__icon' };
+export const labelClasses = {
+  root: createClasses('label__root'),
+  icon: createClasses('label__icon'),
+};

@@ -23,13 +23,15 @@ export function PostSearch({ posts, sx }: PostSearchProps) {
       popupIcon={null}
       slotProps={{
         paper: {
-          sx: {
-            width: 320,
-            [`& .${autocompleteClasses.option}`]: {
-              typography: 'body2',
+          sx: [
+            {
+              width: 320,
+              [`& .${autocompleteClasses.option}`]: {
+                typography: 'body2',
+              },
             },
-            ...sx,
-          },
+            ...(Array.isArray(sx) ? sx : [sx]),
+          ],
         },
       }}
       options={posts}

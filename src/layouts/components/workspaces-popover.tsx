@@ -1,14 +1,13 @@
 import type { ButtonBaseProps } from '@mui/material/ButtonBase';
 
 import { useState, useCallback } from 'react';
+import { varAlpha } from 'minimal-shared/utils';
 
 import Box from '@mui/material/Box';
 import Popover from '@mui/material/Popover';
 import MenuList from '@mui/material/MenuList';
 import ButtonBase from '@mui/material/ButtonBase';
 import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
-
-import { varAlpha } from 'src/theme/styles';
 
 import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
@@ -58,18 +57,20 @@ export function WorkspacesPopover({ data = [], sx, ...other }: WorkspacesPopover
       <ButtonBase
         disableRipple
         onClick={handleOpenPopover}
-        sx={{
-          pl: 2,
-          py: 3,
-          gap: 1.5,
-          pr: 1.5,
-          width: 1,
-          borderRadius: 1.5,
-          textAlign: 'left',
-          justifyContent: 'flex-start',
-          bgcolor: (theme) => varAlpha(theme.vars.palette.grey['500Channel'], 0.08),
-          ...sx,
-        }}
+        sx={[
+          (theme) => ({
+            pl: 2,
+            py: 3,
+            gap: 1.5,
+            pr: 1.5,
+            width: 1,
+            borderRadius: 1.5,
+            textAlign: 'left',
+            justifyContent: 'flex-start',
+            bgcolor: varAlpha(theme.vars.palette.grey['500Channel'], 0.08),
+          }),
+          ...(Array.isArray(sx) ? sx : [sx]),
+        ]}
         {...other}
       >
         {renderAvatar(workspace?.name, workspace?.logo)}

@@ -1,25 +1,26 @@
 {
   "compilerOptions": {
+    /* Bundler */
     "baseUrl": ".",
-    "target": "ESNext",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "strict": true,
-    "noEmit": true,
-    "allowJs": true,
     "module": "ESNext",
     "jsx": "react-jsx",
+    "allowJs": true,
+    "resolveJsonModule": true,
+
+    /* Build */
+    "target": "ES2020",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "moduleResolution": "bundler",
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "incremental": true,
     "skipLibCheck": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
     "esModuleInterop": true,
     "isolatedModules": true,
-    "strictNullChecks": true,
-    "resolveJsonModule": true,
-    "moduleResolution": "Node",
-    "noFallthroughCasesInSwitch": true,
-    "useUnknownInCatchVariables": false,
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true
+
+    /* Linting */
+    "strict": true,
+    "noEmit": true,
+    "strictNullChecks": true
   },
   "include": ["src"],
   "exclude": ["node_modules"],
