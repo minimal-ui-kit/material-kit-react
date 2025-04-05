@@ -1,7 +1,6 @@
 import { Controller, useForm } from 'react-hook-form';
 import { Box, Button, Container, TextField, Typography, RadioGroup, Radio, FormControl, FormLabel, FormControlLabel, Card, CardContent, Select, InputLabel, MenuItem, Slider } from "@mui/material";
 import { useRouter } from 'src/routes/hooks';
-import { v4 as uuidv4 } from 'uuid';
 
 // ----------------------------------------------------------------------
 
@@ -29,8 +28,6 @@ export function NewScheduledActivityPage() {
         const targetDay = dayMapping[frequencyDay]; // Numeric value of chosen day
     
         const activities = [];
-
-        const scheduleId = uuidv4(); // Generate a unique ID for the schedule
     
         // Generate recurring activities
         const currentDate = new Date(startDate);
@@ -48,7 +45,6 @@ export function NewScheduledActivityPage() {
                     dateCreated: new Date().toISOString(),
                     signUps: 0,
                     customers: [],
-                    scheduleId, // Add scheduleId to each activity
                 });
             }
             // Move to the next day
