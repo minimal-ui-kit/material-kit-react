@@ -13,13 +13,21 @@ import { useRouter } from 'src/routes/hooks';
 // ----------------------------------------------------------------------
 
 export type ProductItemProps = {
-  id: string;
+  _id: string;
   name: string;
   price: number;
   status: string;
   coverUrl: string;
   colors: string[];
   priceSale: number | null;
+  location: string;
+  description: string;
+  isOneTime: boolean;
+  totalSlots: number;
+  signUps: number;
+  creditCost: number;
+  frequencyTime: string;
+  duration: string;
 };
 
 export function ProductItem({ product }: { product: ProductItemProps }) {
@@ -75,7 +83,7 @@ export function ProductItem({ product }: { product: ProductItemProps }) {
   );
 
   return (
-    <Card onClick={() => {router.push(`/product/${product.id}`);}}>
+    <Card onClick={() => {router.push(`/product/${product._id}`);}}>
       <Box sx={{ pt: '100%', position: 'relative' }}>
         {product.status && renderStatus}
 

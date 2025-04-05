@@ -14,7 +14,6 @@ import { useParams } from 'react-router-dom';
 
 import { ScheduledActivityItem } from '../scheduled-activity-item';
 import { ProductSort } from '../product-sort';
-import { CartIcon } from '../product-cart-widget';
 import { ProductFilters } from '../product-filters';
 
 import type { FiltersProps } from '../product-filters';
@@ -106,8 +105,6 @@ export function ScheduledActivitiesView() {
         </Button> 
       </Typography>
       </Box>
-
-      <CartIcon totalItems={0} />
 
       <Box
         display="flex"
