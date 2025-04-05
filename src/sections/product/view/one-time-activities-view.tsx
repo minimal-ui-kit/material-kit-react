@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect} from 'react';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2';
@@ -9,9 +9,7 @@ import { Button } from '@mui/material';
 import { _products } from 'src/_mock';
 import { DashboardContent } from 'src/layouts/dashboard';
 import { useRouter } from 'src/routes/hooks';
-
-import { useParams } from 'react-router-dom';
-
+import { ScheduledActivityItem } from '../scheduled-activity-item';
 import { ProductItem } from '../product-item';
 import { ProductSort } from '../product-sort';
 import { ProductFilters } from '../product-filters';
@@ -41,6 +39,8 @@ export function OneTimeActivitiesView() {
 
   const router = useRouter();
 
+  const [activities, setActivities] = useState<any[]>([]);
+
   const [sortBy, setSortBy] = useState('featured');
 
   const [openFilter, setOpenFilter] = useState(false);
@@ -66,6 +66,28 @@ export function OneTimeActivitiesView() {
   const canReset = Object.keys(filters).some(
     (key) => filters[key as keyof FiltersProps] !== defaultFilters[key as keyof FiltersProps]
   );
+
+  useEffect(() => {
+      const fetchScheduledActivities = async () => {
+        try {
+          const response = await fetch(`http://localhost:3000/api/activities/all-business-activities?isOneTime=true`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          });
+    
+          const result = await response.json();
+          setActivities(result);
+          console.log('Scheduled Activities:', result);
+        } catch (error) {
+          console.error('Error fetching scheduled activities:', error);
+        }
+      };
+    
+      fetchScheduledActivities();
+    }, []);
 
   return (
     <DashboardContent>
@@ -119,11 +141,17 @@ export function OneTimeActivitiesView() {
       </Box>
 
       <Grid container spacing={3}>
-        {_products.map((product) => (   
-          <Grid key={product.id} xs={12} sm={6} md={3}>
-            <ProductItem product={product} />
+      {activities.length === 0 ? (
+        <Typography variant="body1" sx={{ mt: 4, ml: 2 }}>
+          No scheduled activities yet.
+        </Typography>
+      ) : (
+        activities.map((activity: any) => (
+          <Grid key={activity._id} xs={12} sm={6} md={3}>
+            <ScheduledActivityItem activity={activity} />
           </Grid>
-        ))}
+        ))
+      )}
       </Grid>
 
       <Pagination count={10} color="primary" sx={{ mt: 8, mx: 'auto' }} />

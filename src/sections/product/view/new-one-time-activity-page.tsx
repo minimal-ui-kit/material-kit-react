@@ -1,12 +1,14 @@
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { Box, Button, Container, TextField, Typography, RadioGroup, Radio, FormControl, FormLabel, FormControlLabel, Card, CardContent, Snackbar, Alert, Slider } from "@mui/material";
 import { useRouter } from "src/routes/hooks";
 import { useState } from "react";
+import { v4 as uuidv4 } from 'uuid';
+import { start } from 'repl';
 
 // ----------------------------------------------------------------------
 
 export function NewOneTimeActivityPage() {
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, control } = useForm();
     const Router = useRouter();
 
     const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -14,32 +16,60 @@ export function NewOneTimeActivityPage() {
     const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error">("success");
 
     const onSubmit = (data: any) => {
-        data.endDate = data.startDate;
+        const startDate = new Date(data.startDate);
+        const endDate = new Date(data.startDate);
         const date = new Date(data.startDate);
-        data.frequencyDay = date.toLocaleString('en-US', { weekday: 'long' });
-        data.isOneTime = true;
-        console.log(data);
+        const frequencyDay = date.toLocaleString('en-US', { weekday: 'long' });
+        const timeParts = data.frequencyTime.split(":"); // Extract hours and minutes from input
+        const hour = parseInt(timeParts[0], 10); // Convert to number
+        const minute = parseInt(timeParts[1], 10); // Convert to number
+
+        // Map day names to numeric values (Sunday = 0, Monday = 1, ..., Saturday = 6)
+        const dayMapping: { [key: string]: number } = {
+            "Sunday": 0, "Monday": 1, "Tuesday": 2, "Wednesday": 3,
+            "Thursday": 4, "Friday": 5, "Saturday": 6
+        };
+
+        const targetDay = dayMapping[frequencyDay];
+
+        const activities: any[] = []; // this is the fix
+
+        const scheduleId = uuidv4();
+        const currentDate = new Date(startDate);
+        const activityDate = new Date(currentDate);
+        activityDate.setHours(hour, minute, 0, 0);
+
+        activities.push({
+            ...data,
+            startDate: activityDate.toISOString(),
+            isOneTime: true,
+            dateCreated: new Date().toISOString(),
+            signUps: 0,
+            customers: [],
+            scheduleId,
+        });
         fetch('http://localhost:3000/api/activities/add-new-scheduled-activity', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
             },
-            body: JSON.stringify(data),
+            body: JSON.stringify(activities),
         })
             .then((response) => {
                 if (!response.ok) {
                     setSnackbarMessage(data.message);
-					setSnackbarSeverity("error");
-					setOpenSnackbar(true);
+                    setSnackbarSeverity("error");
+                    setOpenSnackbar(true);
                 } else {
                     setSnackbarMessage(data.message);
-					setSnackbarSeverity("success");
-					setOpenSnackbar(true);
+                    setSnackbarSeverity("success");
+                    setOpenSnackbar(true);
                     Router.push('/activities');
                 }
             });
+    }
 
-    };
     return (
         <Container maxWidth="sm">
             <Card sx={{ mt: 4, p: 3, boxShadow: 5, borderRadius: 2 }}>
@@ -52,13 +82,13 @@ export function NewOneTimeActivityPage() {
                     </Typography>
                     <FormControl>
                         <form onSubmit={handleSubmit(onSubmit)}>
-
+    
                             {/* Activity Name */}
                             <TextField
                                 fullWidth
                                 label="Activity Name"
                                 {...register('name', { required: 'Activity name is required' })}
-
+    
                                 sx={{ mb: 2 }}
                             />
                             {/* Activity Location */}
@@ -66,7 +96,7 @@ export function NewOneTimeActivityPage() {
                                 fullWidth
                                 label="Activity Location"
                                 {...register('location', { required: 'Activity location is required' })}
-
+    
                                 sx={{ mb: 2 }}
                             />
                             {/* Activity Description */}
@@ -90,16 +120,21 @@ export function NewOneTimeActivityPage() {
                             <Typography id="credit-cost-slider" gutterBottom>
                                 Credit Cost
                             </Typography>
-                            <Slider
-                                aria-label="credit-cost-label"
+                            <Controller
+                                name="creditCost"
+                                control={control}
                                 defaultValue={5}
-                                getAriaValueText={(value) => `${value}`}
-                                valueLabelDisplay="auto"
-                                shiftStep={1}
-                                step={1}
-                                marks
-                                min={1}
-                                max={15}
+                                render={({ field }) => (
+                                    <Slider
+                                        {...field}
+                                        aria-labelledby="credit-cost-slider"
+                                        valueLabelDisplay="auto"
+                                        step={1}
+                                        marks
+                                        min={1}
+                                        max={15}
+                                    />
+                                )}
                             />
                             {/* Activity Date */}
                             <TextField
@@ -113,7 +148,7 @@ export function NewOneTimeActivityPage() {
                             {/* Activity Time */}
                             <TextField
                                 fullWidth
-                                label="Start Time of Activity (24hr format)"
+                                label="Start Time of Activity (HH:MM)"
                                 {...register('frequencyTime', { required: 'Activity time is required' })}
                                 sx={{ mb: 2 }}
                             />
@@ -125,13 +160,13 @@ export function NewOneTimeActivityPage() {
                                 {...register('duration', { required: 'Activity duration is required' })}
                                 sx={{ mb: 2 }}
                             />
-
+    
                             <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}>
                                 <Button variant="contained" color="primary" type="submit" sx={{ px: 4 }}>
                                     Add Activity
                                 </Button>
                             </Box>
-
+    
                             <Box sx={{ mt: 2 }}>
                                 <Typography variant="body2" color="textSecondary">
                                     {`Activity Created: ${new Date().toLocaleString()}`}
@@ -153,4 +188,4 @@ export function NewOneTimeActivityPage() {
             </Snackbar>
         </Container>
     );
-}
+};

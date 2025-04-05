@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { Typography, Box, Card, TableContainer, Table, TableBody, TableCell, TableRow } from "@mui/material";
 import { DashboardContent } from "src/layouts/dashboard";
 import { _customers } from "src/_mock";
@@ -11,10 +12,32 @@ import { TableNoData } from "../../Bookings/table-no-data";
 
 export function ProductCustomerPage() {
     const table = useTable();
+	const {activityId} = useParams();
     const [filterName, setFilterName] = useState('');
+	const [customers, setCustomers] = useState<any[]>([]);
 
+	useEffect(() => {
+		fetch(`http://localhost:3000/api/bookings/activity/${activityId}`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('token')}`,
+			},
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				if (data.status === "success") {
+					setCustomers(data.customers);
+				} else {
+					console.error("Error fetching customers:", data.message);
+				}
+			})
+			.catch((error) => {
+				console.error("Error fetching customers:", error);
+			});
+	}, [activityId]);
     const dataFiltered: CustomerProps[] = applyFilter({
-        inputData: _customers,
+        inputData: customers,
         comparator: getComparator(table.order, table.orderBy),
         filterName,
     });
@@ -82,9 +105,9 @@ export type CustomerProps = {
     id: string;
     name: string;
     email: string;
-    phone: string;
-    date: string;
-    credits: number;
+    contact: string;
+    bookingDate: string;
+    credit: number;
 }
 
 export type CustomerFilterProps = {
@@ -127,10 +150,10 @@ export function CustomerTableRow({ row }: { row: CustomerProps }) {
   
           <TableCell>{row.email}</TableCell>
   
-          <TableCell>{row.phone}</TableCell>
-          <TableCell>{row.date}</TableCell>
+          <TableCell>{row.contact}</TableCell>
+          <TableCell>{row.bookingDate}</TableCell>
 
-          <TableCell>{row.credits}</TableCell>
+          <TableCell>{row.credit}</TableCell>
         </TableRow>
       </>
     );
