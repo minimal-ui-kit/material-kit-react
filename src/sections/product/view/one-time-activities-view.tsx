@@ -14,7 +14,6 @@ import { useParams } from 'react-router-dom';
 
 import { ProductItem } from '../product-item';
 import { ProductSort } from '../product-sort';
-import { CartIcon } from '../product-cart-widget';
 import { ProductFilters } from '../product-filters';
 
 import type { FiltersProps } from '../product-filters';
@@ -82,8 +81,6 @@ export function OneTimeActivitiesView() {
         </Button> 
       </Typography>
       </Box>
-
-      <CartIcon totalItems={0} />
 
       <Box
         display="flex"
