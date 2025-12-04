@@ -17,6 +17,11 @@ export const BlogPage = lazy(() => import('src/pages/blog'));
 export const UserPage = lazy(() => import('src/pages/user'));
 export const SignInPage = lazy(() => import('src/pages/sign-in'));
 export const ProductsPage = lazy(() => import('src/pages/products'));
+export const TeamsPage = lazy(() => import('src/pages/teams'));
+export const TeamDetailPage = lazy(() => import('src/pages/team-detail'));
+export const ProjectsPage = lazy(() => import('src/pages/projects'));
+export const ProjectDetailPage = lazy(() => import('src/pages/project-detail'));
+export const ChatPage = lazy(() => import('src/pages/chat'));
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
 
 const renderFallback = () => (
@@ -50,6 +55,11 @@ export const routesSection: RouteObject[] = [
     ),
     children: [
       { index: true, element: <DashboardPage /> },
+      { path: 'teams', element: <TeamsPage /> },
+      { path: 'teams/:id', element: <TeamDetailPage /> },
+      { path: 'projects', element: <ProjectsPage /> },
+      { path: 'projects/:id', element: <ProjectDetailPage /> },
+      { path: 'chat', element: <ChatPage /> },
       { path: 'user', element: <UserPage /> },
       { path: 'products', element: <ProductsPage /> },
       { path: 'blog', element: <BlogPage /> },

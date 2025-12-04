@@ -21,6 +21,7 @@ import { fToNow } from 'src/utils/format-time';
 
 import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
+import { useNotifications } from 'src/contexts/notification-context';
 
 // ----------------------------------------------------------------------
 
@@ -39,9 +40,22 @@ export type NotificationsPopoverProps = IconButtonProps & {
 };
 
 export function NotificationsPopover({ data = [], sx, ...other }: NotificationsPopoverProps) {
-  const [notifications, setNotifications] = useState(data);
+  const { notifications: contextNotifications, unreadCount, markAllAsRead } = useNotifications();
+  
+  // Use context notifications if available, otherwise fall back to prop data
+  const notifications = contextNotifications.length > 0 
+    ? contextNotifications.map((n) => ({
+        id: n.id,
+        type: n.type,
+        title: n.title,
+        isUnRead: !n.read,
+        description: n.message,
+        avatarUrl: null,
+        postedAt: n.createdAt,
+      }))
+    : data;
 
-  const totalUnRead = notifications.filter((item) => item.isUnRead === true).length;
+  const totalUnRead = unreadCount > 0 ? unreadCount : notifications.filter((item) => item.isUnRead === true).length;
 
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
 
@@ -54,13 +68,8 @@ export function NotificationsPopover({ data = [], sx, ...other }: NotificationsP
   }, []);
 
   const handleMarkAllAsRead = useCallback(() => {
-    const updatedNotifications = notifications.map((notification) => ({
-      ...notification,
-      isUnRead: false,
-    }));
-
-    setNotifications(updatedNotifications);
-  }, [notifications]);
+    markAllAsRead();
+  }, [markAllAsRead]);
 
   return (
     <>
@@ -162,10 +171,18 @@ export function NotificationsPopover({ data = [], sx, ...other }: NotificationsP
 // ----------------------------------------------------------------------
 
 function NotificationItem({ notification }: { notification: NotificationItemProps }) {
+  const { markAsRead } = useNotifications();
   const { avatarUrl, title } = renderContent(notification);
+
+  const handleClick = () => {
+    if (notification.isUnRead) {
+      markAsRead(notification.id);
+    }
+  };
 
   return (
     <ListItemButton
+      onClick={handleClick}
       sx={{
         py: 1.5,
         px: 2.5,
