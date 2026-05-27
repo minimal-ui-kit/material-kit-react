@@ -47,14 +47,16 @@ export function AnalyticsTasks({ title, subheader, list, sx, ...other }: Props) 
 
       <Scrollbar sx={{ minHeight: 304 }}>
         <Stack divider={<Divider sx={{ borderStyle: 'dashed' }} />} sx={{ minWidth: 560 }}>
-          {list.map((item) => (
-            <TaskItem
-              key={item.id}
-              item={item}
-              selected={selected.includes(item.id)}
-              onChange={() => handleClickComplete(item.id)}
-            />
-          ))}
+       
+        {list.map((item) => (
+  <TaskItem
+    key={item.id}
+    item={item}
+    selected={selected.includes(item.id)}
+    onChange={() => handleClickComplete(item.id)}
+    onComplete={handleClickComplete}
+  />
+))}
         </Stack>
       </Scrollbar>
     </Card>
@@ -67,14 +69,17 @@ type TaskItemProps = BoxProps & {
   selected: boolean;
   item: Props['list'][number];
   onChange: (id: string) => void;
+  onComplete: (id:string) => void;
+
 };
 
-function TaskItem({ item, selected, onChange, sx, ...other }: TaskItemProps) {
+function TaskItem({ item, selected, onChange, sx, onComplete, ...other }: TaskItemProps) {
   const menuActions = usePopover();
 
   const handleMarkComplete = () => {
     menuActions.onClose();
     console.info('MARK COMPLETE', item.id);
+    onComplete(item.id)  
   };
 
   const handleShare = () => {
